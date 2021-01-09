@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020. Plexus, Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@drawable/message_attachment_dialog"
+    android:layout_marginEnd="30dp"
+    android:layout_marginStart="30dp"
+    android:layout_marginBottom="15dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/gallery"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="53dp"
+                    android:layout_height="53dp"
+                    android:src="@drawable/image_outline"
+                    android:tint="@color/attachment_image_icon"
+                    android:padding="15dp"
+                    android:background="@drawable/circle"
+                    android:backgroundTint="@color/attachment_image"/>
+
+                <TextView android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="@string/attachment_gallery"/>
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/video"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="53dp"
+                    android:layout_height="53dp"
+                    android:src="@drawable/video_outline"
+                    android:padding="15dp"
+                    android:tint="@color/attachment_camera_icon"
+                    android:background="@drawable/circle"
+                    android:backgroundTint="@color/attachment_camera"/>
+
+                <TextView android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="@string/attachment_video"/>
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/file"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="53dp"
+                    android:layout_height="53dp"
+                    android:src="@drawable/file_outline"
+                    android:padding="15dp"
+                    android:tint="@color/attachment_file_icon"
+                    android:background="@drawable/circle"
+                    android:backgroundTint="@color/attachment_file"/>
+
+                <TextView android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/attachment_file"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/audio"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="53dp"
+                    android:layout_height="53dp"
+                    android:src="@drawable/audio"
+                    android:tint="@color/attachment_audio_icon"
+                    android:padding="15dp"
+                    android:background="@drawable/circle"
+                    android:backgroundTint="@color/attachment_audio"/>
+
+                <TextView android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="Audio"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/camera"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="53dp"
+                    android:layout_height="53dp"
+                    android:src="@drawable/camera_outline"
+                    android:padding="15dp"
+                    android:tint="@color/attachment_location_icon"
+                    android:backgroundTint="@color/attachment_location"
+                    android:background="@drawable/circle"/>
+
+                <TextView android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="Camera"/>
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/close"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="53dp"
+                    android:layout_height="53dp"
+                    android:src="@drawable/close"
+                    android:padding="15dp"
+                    android:tint="@color/white"
+                    android:background="@drawable/circle"
+                    android:backgroundTint="#212121"/>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Close"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

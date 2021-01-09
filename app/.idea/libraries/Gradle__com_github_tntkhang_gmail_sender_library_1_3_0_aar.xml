@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.tntkhang:gmail-sender-library:1.3.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f06ceac87638d01ae4ac1266ac05e6ac/jetified-gmail-sender-library-1.3.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f06ceac87638d01ae4ac1266ac05e6ac/jetified-gmail-sender-library-1.3.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f06ceac87638d01ae4ac1266ac05e6ac/jetified-gmail-sender-library-1.3.0/jars/libs/activation.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f06ceac87638d01ae4ac1266ac05e6ac/jetified-gmail-sender-library-1.3.0/jars/libs/additionnal.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f06ceac87638d01ae4ac1266ac05e6ac/jetified-gmail-sender-library-1.3.0/jars/libs/mail.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.tntkhang/gmail-sender-library/1.3.0/d22a6da7c6434ded71a22b6600e1793b308cc4a3/gmail-sender-library-1.3.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.tntkhang/gmail-sender-library/1.3.0/c7e7831c1219327fcde46562cb9363efb9d64c9d/gmail-sender-library-1.3.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

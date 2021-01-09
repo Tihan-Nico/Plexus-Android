@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020. Plexus, Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/toolbar"
+        app:contentInsetLeft="0dp">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/outline_close"
+            android:tint="@color/white" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:id="@+id/profile_image"
+        app:roundAsCircle="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:text="@string/restricted_accounts"
+        android:fontFamily="@font/roboto_bold"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray_scale"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:textAlignment="center"
+        android:text="@string/restrict_description"
+        android:fontFamily="@font/roboto"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bell_outline"
+            android:layout_gravity="center"
+            android:tint="@color/gray_scale"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray_scale"
+            android:layout_marginStart="15dp"
+            android:text="@string/we_wont_notify_the_user_that_you_have_restricted_them"
+            android:fontFamily="@font/roboto"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/message_text_outline"
+            android:layout_gravity="center"
+            android:tint="@color/gray_scale"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray_scale"
+            android:layout_marginStart="15dp"
+            android:text="@string/the_user_won_t_be_able_to_see_when_your_online_or_when_you_ve_read_their_messages"
+            android:fontFamily="@font/roboto"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/comment_multiple_outline"
+            android:layout_gravity="center"
+            android:tint="@color/gray_scale"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray_scale"
+            android:layout_marginStart="15dp"
+            android:text="@string/only_you_and_the_person_that_is_restricted_will_be_able_to_see_their_comments_on_your_posts"
+            android:fontFamily="@font/roboto"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/continue_button"
+            android:id="@+id/continue_btn"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/plexus"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="15dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

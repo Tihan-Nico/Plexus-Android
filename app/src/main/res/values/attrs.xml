@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020. Plexus, Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<resources>
+    <attr name="dotsColor" format="color" />
+    <attr name="selectedDotColor" format="color" />
+    <attr name="dotsStrokeColor" format="color" />
+    <attr name="dotsSize" format="dimension" />
+    <attr name="dotsWidthFactor" format="float" />
+    <attr name="dotsSpacing" format="dimension" />
+    <attr name="dotsCornerRadius" format="dimension" />
+    <attr name="dotsStrokeWidth" format="dimension" />
+    <attr name="stiffness" format="float" />
+    <attr name="dampingRatio" format="float" />
+    <attr name="progressMode" format="boolean" />
+
+    <declare-styleable name="Indicator">
+        <attr name="dotsColor" />
+        <attr name="selectedDotColor" />
+        <attr name="dotsSize" />
+        <attr name="dotsWidthFactor" />
+        <attr name="dotsSpacing" />
+        <attr name="dotsCornerRadius" />
+        <attr name="progressMode" />
+    </declare-styleable>
+
+    <declare-styleable name="SpringIndicator">
+        <attr name="dotsColor" />
+        <attr name="dotsSize" />
+        <attr name="dotsSpacing" />
+        <attr name="dotsCornerRadius" />
+        <attr name="dotsStrokeWidth" />
+        <attr name="dotsStrokeColor" />
+        <attr name="stiffness" />
+        <attr name="dampingRatio" />
+    </declare-styleable>
+
+    <declare-styleable name="SlideIndicator">
+        <attr name="dotsColor" />
+        <attr name="dotsSize" />
+        <attr name="dotsSpacing" />
+        <attr name="dotsCornerRadius" />
+        <attr name="dotsStrokeWidth" />
+        <attr name="dotsStrokeColor" />
+    </declare-styleable>
+
+    <attr name="emojiSize" format="dimension" />
+    <attr name="emojiBackground" format="color|reference" />
+    <attr name="emojiIcons" format="color|reference" />
+    <attr name="emojiDivider" format="color|reference" />
+    <declare-styleable name="EmojiButton">
+        <attr name="emojiSize" />
+    </declare-styleable>
+    <declare-styleable name="EmojiEditText">
+        <attr name="emojiSize" />
+    </declare-styleable>
+    <declare-styleable name="EmojiTextView">
+        <attr name="emojiSize" />
+    </declare-styleable>
+    <declare-styleable name="EmojiAutoCompleteTextView">
+        <attr name="emojiSize" />
+    </declare-styleable>
+    <declare-styleable name="EmojiMultiAutoCompleteTextView">
+        <attr name="emojiSize" />
+    </declare-styleable>
+
+    <declare-styleable name="OuterBorder">
+        <attr name="shape" format="string" />
+        <attr name="radius" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="ExpansionHeader">
+        <attr name="expansion_layout" format="reference" />
+        <attr name="expansion_toggleOnClick" format="boolean" />
+        <attr name="expansion_headerIndicator" format="reference" />
+        <attr name="expansion_headerIndicatorRotationExpanded" format="integer" />
+        <attr name="expansion_headerIndicatorRotationCollapsed" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="ExpansionLayout">
+        <attr name="expansion_expanded" format="boolean" />
+    </declare-styleable>
+
+    <attr name="expansion_openOnlyOne" format="boolean" />
+
+    <declare-styleable name="ExpansionsViewGroupFrameLayout">
+        <attr name="expansion_openOnlyOne" />
+    </declare-styleable>
+    <declare-styleable name="ExpansionsViewGroupLinearLayout">
+        <attr name="expansion_openOnlyOne" />
+    </declare-styleable>
+    <declare-styleable name="ExpansionsViewGroupRelativeLayout">
+        <attr name="expansion_openOnlyOne" />
+    </declare-styleable>
+    <declare-styleable name="ExpansionsViewGroupConstraintLayout">
+        <attr name="expansion_openOnlyOne" />
+    </declare-styleable>
+
+    <declare-styleable name="ColorSeeker">
+        <attr name="colorSeeds" format="reference" />
+        <attr name="barHeight" format="dimension" />
+        <attr name="thumbHeight" format="dimension" />
+        <attr name="showAlphaBar" format="boolean" />
+        <attr name="alphaBarPosition" format="integer" />
+        <attr name="colorBarPosition" format="integer" />
+        <attr name="bgColor" format="color" />
+        <attr name="barRadius" format="dimension" />
+        <attr name="barMargin" format="dimension" />
+        <attr name="maxPosition" format="integer" />
+        <attr name="isVertical" format="boolean" />
+        <attr name="disabledColor" format="color" />
+        <attr name="showThumb" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="PinViewTheme">
+        <attr name="pinViewStyle" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="OtpEditText">
+        <attr name="oev_length" format="integer|reference" />
+        <attr name="oev_primary_color" format="color|reference" />
+        <attr name="oev_secondary_color" format="color|reference" />
+        <attr name="oev_text_color" format="color|reference" />
+        <attr name="oev_box_style" format="string|reference" />
+        <attr name="oev_mask_input" format="boolean" />
+        <attr name="oev_mask_character" format="string|reference" />
+    </declare-styleable>
+
+    <attr name="gradientColor1" format="color" />
+    <attr name="gradientColor2" format="color" />
+    <attr name="gradientColor3" format="color" />
+    <attr name="gradientColor4" format="color" />
+    <attr name="gradientColor5" format="color" />
+    <attr name="gradientColor6" format="color" />
+
+    <declare-styleable name="PrideColorTextView">
+        <attr name="gradientColor1" />
+        <attr name="gradientColor2" />
+        <attr name="gradientColor3" />
+        <attr name="gradientColor4" />
+        <attr name="gradientColor5" />
+        <attr name="gradientColor6" />
+    </declare-styleable>
+
+    <declare-styleable name="PlexusSocialViewStyle">
+        <attr name="socialViewStyle" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="PlexusSocialView">
+
+        <!-- Determine whether each feature should be turned on/off.
+             Default is all true. -->
+        <attr name="PlexusSocialFlags">
+            <flag name="hashtag" value="1" />
+            <flag name="mention" value="2" />
+            <flag name="hyperlink" value="4" />
+        </attr>
+
+        <!-- Color of each feature.
+             If particular feature is not enabled, this value will be ignored.
+             Default is color accent of current theme. -->
+        <attr name="hashtagColor" format="color" />
+        <attr name="mentionColor" format="color" />
+        <attr name="hyperlinkColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="PlexusImageEditorView">
+        <attr name="photo_src" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="FrostedGlassView">
+        <attr name="downSampling" format="integer"/>
+        <attr name="blurRadius" format="float"/>
+    </declare-styleable>
+
+    <declare-styleable name="SlidingUpPanelLayout">
+        <attr name="panelHeight" format="dimension" />
+        <attr name="slidePanelOffset" format="dimension" />
+        <attr name="shadowHeight" format="dimension" />
+        <attr name="paralaxOffset" format="dimension" />
+        <attr name="directOffset" format="boolean" />
+        <attr name="fadeColor" format="color" />
+        <attr name="flingVelocity" format="integer" />
+        <attr name="dragView" format="reference" />
+        <attr name="dragViewClickable" format="boolean" />
+        <attr name="overlay" format="boolean"/>
+        <attr name="anchorPoint" format="float" />
+        <attr name="initialState" format="enum">
+            <enum name="expanded" value="0" />
+            <enum name="collapsed" value="1" />
+            <enum name="anchored" value="2" />
+            <enum name="hidden" value="3" />
+        </attr>
+    </declare-styleable>
+
+</resources>

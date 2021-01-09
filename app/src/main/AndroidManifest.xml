@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020. Plexus, Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.plexus">
+
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the "MyLocation" functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <application
+        android:name=".Plexus"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:logo="@drawable/logo"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/DarkTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/api_key_google_places" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8836858632277857~9009293039" />
+
+        <activity
+            android:name=".startup.SplashActivity"
+            android:theme="@style/SplashTheme"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity android:name=".startup.LoginUserActivity" />
+        <activity android:name=".startup.RegisterActivity" />
+        <activity android:name=".startup.LoginActivity" />
+        <activity
+            android:name=".main.activity.MainActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".story.activity.StoryActivity"
+            android:theme="@style/DarkTheme.StoryView" />
+        <activity android:name=".account.activity.EditProfileActivity" />
+        <activity android:name=".account.activity.FollowersActivity" />
+        <activity android:name=".story.activity.AddStoryActivity" />
+        <activity android:name=".posts.activity.comment.CommentActivity">
+            <intent-filter>
+                <action android:name="com.plexus.plexus_COMMENT_TARGET_NOTIFICATION" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".posts.activity.PostImageViewActivity" />
+        <activity android:name=".settings.activity.AboutActivity" />
+        <activity android:name=".report.ReportActivity" />
+        <activity android:name=".settings.activity.privacy.PrivacyActivity" />
+        <activity android:name=".account.FollowersActivity" />
+        <activity android:name=".account.activity.FollowingActivity" />
+        <activity android:name=".account.activity.settings.ProfileLogActivity" />
+        <activity android:name=".settings.activity.SettingsActivity" />
+        <activity android:name=".settings.activity.privacy.lockscreen.ChangePasswordActivity" />
+        <activity android:name=".settings.activity.manage_account.ChangeEmailActivity" />
+        <activity android:name=".settings.activity.LicensesActivity" />
+        <activity
+            android:name=".posts.activity.PostDetailActivity"
+            android:theme="@style/DarkTheme">
+            <intent-filter>
+                <action android:name="com.plexus.plexus_POST_TARGET_NOTIFICATION" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="plexus.dev"
+                    android:pathPrefix="/post" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".posts.activity.saved_posts.SavedPostsActivity" />
+        <activity android:name=".settings.activity.advance_features.AdvanceFeaturesActivity" />
+        <activity android:name=".settings.activity.advance_features.DisplayActivity" />
+        <activity android:name=".settings.activity.advance_features.StorageActivity" />
+        <activity android:name=".settings.activity.privacy.RestrictAccountsActivity" />
+        <activity android:name=".settings.activity.privacy.RestrictAccountDetailsActivity" />
+        <activity android:name=".settings.activity.experimental.ExperimentalActivity" />
+        <activity android:name=".account.activity.settings.ManagePlexusInfoActivity" />
+        <activity android:name=".account.activity.settings.ManageAccountActivity" />
+        <activity android:name=".settings.activity.manage_account.login_management.LoginManagementActivity" />
+        <activity android:name=".settings.activity.privacy.BlockedAccountsActivity" />
+        <activity android:name=".settings.activity.privacy.lockscreen.AppLockActivity" />
+        <activity android:name=".settings.activity.privacy.lockscreen.ConfirmPasswordActivity" />
+        <activity android:name=".settings.activity.privacy.lockscreen.CreatePasswordActivity" />
+        <activity android:name=".settings.activity.privacy.lockscreen.PasswordActivity" />
+        <activity android:name=".settings.activity.version.VersionActivity" />
+        <activity android:name=".account.activity.ProfileActivity">
+            <intent-filter>
+                <action android:name="com.plexus.plexus_PROFILE_TARGET_NOTIFICATION" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="plexus.dev"
+                    android:pathPrefix="/profile" />
+            </intent-filter>
+
+        </activity>
+        <activity android:name=".settings.activity.notices.NoticesActivity" />
+        <activity android:name=".settings.activity.manage_account.two_factor.TwoFactorAuthentication" />
+        <activity android:name=".settings.fragments.two_factor.TwoFactorCode" />
+        <activity android:name=".settings.fragments.two_factor.TwoFactorAddNumber" />
+        <activity android:name=".story.activity.ChooseStoryTypeActivity" />
+        <activity android:name=".account.activity.UserBannedActivity" />
+        <activity android:name=".settings.activity.time_spent.TimeSpentActivity" />
+        <activity android:name=".settings.activity.message.MessageSettingsActivity" />
+        <activity android:name=".startup.ForgotPasswordActivity" />
+        <activity android:name=".messaging.activity.ViewVideo" />
+        <activity android:name=".messaging.activity.ViewImage" />
+        <activity android:name=".messaging.activity.MessageUserActivity">
+            <intent-filter>
+                <action android:name="com.plexus.plexus_MESSAGE_TARGET_NOTIFICATION" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".posts.activity.saved_posts.CreateCollectionsSavesActivity" />
+        <activity android:name=".settings.test.TestFactor" />
+        <activity android:name=".posts.activity.CreatePostActivity" />
+        <activity android:name=".posts.activity.saved_posts.CollectionActivity" />
+        <activity android:name=".account.activity.AccountStatusActivity" />
+        <activity android:name=".information_centre.Covid_Information" />
+        <activity android:name=".posts.activity.HashTagViewActivity" />
+        <activity android:name=".editor.image.activity.EditImageActivity" />
+        <activity android:name=".posts.activity.PostVideoViewActivity" />
+        <activity android:name=".settings.activity.privacy.PostPrivacyActivity" />
+        <activity android:name=".startup.PermissionActivity" />
+        <activity android:name=".messaging.fragment.NewMessageFragment" />
+        <activity android:name=".groups.activity.GroupCreateActivity" />
+        <activity android:name=".groups.activity.GroupActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="plexus.dev"
+                    android:pathPrefix="/groups" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".groups.activity.GroupEditActivity">
+
+        </activity>
+        <activity android:name=".groups.activity.AllGroupActivity" />
+        <activity android:name=".groups.activity.GroupSettingsActivity" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_launcher_round" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <service android:name=".notifications.fcm.NotificationService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <receiver android:name=".core.background.UpgradeReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

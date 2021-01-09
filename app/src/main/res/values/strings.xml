@@ -1,0 +1,970 @@
+<!--
+  ~ Copyright (c) 2020. Plexus, Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<resources>
+    <string name="app_name">Plexus</string>
+
+    <!--Bottom Nav-->
+    <string name="profile_nav">Profile</string>
+    <string name="notifications_nav">Notifications</string>
+    <string name="add_nav">Add</string>
+    <string name="feed_nav">Feed</string>
+
+    <!--Login-->
+    <string name="sign_up">Sign Up</string>
+    <string name="header_login">Welcome back to Plexus</string>
+    <string name="sub_header_login">Fill out the form to continue</string>
+    <string name="don_t_have_an_account">Don\'t have an account ?</string>
+
+    <!--Registration Completion-->
+    <string name="welcome_header">Welcome to Plexus</string>
+    <string name="welcome_sub_header">Fill out the form to get started</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="country">Country</string>
+    <string name="select_a_country">Select a country</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="already_have_an_account">Already have an account ?</string>
+    <string name="sign_in">Sign In</string>
+
+    <string-array name="countries">
+        <item>Afghanistan</item>
+        <item>Albania</item>
+        <item>Algeria</item>
+        <item>Andorra</item>
+        <item>Angola</item>
+        <item>Antigua and Barbuda</item>
+        <item>Argentina</item>
+        <item>Armenia</item>
+        <item>Australia</item>
+        <item>Austria</item>
+        <item>Azerbaijan</item>
+        <item>Bahamas</item>
+        <item>Bahrain</item>
+        <item>Bangladesh</item>
+        <item>Barbados</item>
+        <item>Belarus</item>
+        <item>Belgium</item>
+        <item>Belize</item>
+        <item>Benin</item>
+        <item>Bhutan</item>
+        <item>Bolivia</item>
+        <item>Bosnia and Herzegovina</item>
+        <item>Botswana</item>
+        <item>Brazil</item>
+        <item>Brunei</item>
+        <item>Bulgaria</item>
+        <item>Burkina Faso</item>
+        <item>Burundi</item>
+        <item>Cabo Verde</item>
+        <item>Cambodia</item>
+        <item>Cameroon</item>
+        <item>Canada</item>
+        <item>Central African Republic (CAR)</item>
+        <item>Chad</item>
+        <item>Chile</item>
+        <item>China</item>
+        <item>Colombia</item>
+        <item>Comoros</item>
+        <item>Congo</item>
+        <item>Costa Rica</item>
+        <item>Cote d\'Ivoire</item>
+        <item>Croatia</item>
+        <item>Cuba</item>
+        <item>Cyprus</item>
+        <item>Czechia</item>
+        <item>Denmark</item>
+        <item>Djibouti</item>
+        <item>Dominica</item>
+        <item>Dominican Republic</item>
+        <item>Ecuador</item>
+        <item>Egypt</item>
+        <item>El Salvador</item>
+        <item>Equatorial Guinea</item>
+        <item>Eritrea</item>
+        <item>Estonia</item>
+        <item>Eswatini</item>
+        <item>Ethiopia</item>
+        <item>Fiji</item>
+        <item>Finland</item>
+        <item>France</item>
+        <item>Gabon</item>
+        <item>Gambia</item>
+        <item>Georgia</item>
+        <item>Germany</item>
+        <item>Ghana</item>
+        <item>Greece</item>
+        <item>Grenada</item>
+        <item>Guatemala</item>
+        <item>Guinea</item>
+        <item>Guinea-Bissau</item>
+        <item>Guyana</item>
+        <item>Haiti</item>
+        <item>Honduras</item>
+        <item>Hungary</item>
+        <item>Iceland</item>
+        <item>India</item>
+        <item>Indonesia</item>
+        <item>Iran</item>
+        <item>Iraq</item>
+        <item>Ireland</item>
+        <item>Israel</item>
+        <item>Italy</item>
+        <item>Jamaica</item>
+        <item>Japan</item>
+        <item>Jordan</item>
+        <item>Kazakhstan</item>
+        <item>Kenya</item>
+        <item>Kiribati</item>
+        <item>Kosovo</item>
+        <item>Kuwait</item>
+        <item>Kyrgyzstan</item>
+        <item>Laos</item>
+        <item>Latvia</item>
+        <item>Lebanon</item>
+        <item>Lesotho</item>
+        <item>Liberia</item>
+        <item>Libya</item>
+        <item>Liechtenstein</item>
+        <item>Lithuania</item>
+        <item>Luxembourg</item>
+        <item>Madagascar</item>
+        <item>Malawi</item>
+        <item>Malaysia</item>
+        <item>Maldives</item>
+        <item>Mali</item>
+        <item>Malta</item>
+        <item>Marshall Islands</item>
+        <item>Mauritania</item>
+        <item>Mauritius</item>
+        <item>Mexico</item>
+        <item>Micronesia</item>
+        <item>Moldova</item>
+        <item>Monaco</item>
+        <item>Mongolia</item>
+        <item>Montenegro</item>
+        <item>Morocco</item>
+        <item>Mozambique</item>
+        <item>Myanmar</item>
+        <item>Namibia</item>
+        <item>Nauru</item>
+        <item>Nepal</item>
+        <item>Netherlands</item>
+        <item>New Zealand</item>
+        <item>Nicaragua</item>
+        <item>Niger</item>
+        <item>Nigeria</item>
+        <item>North Korea</item>
+        <item>North Macedonia (formerly Macedonia)</item>
+        <item>Norway</item>
+        <item>Oman</item>
+        <item>Pakistan</item>
+        <item>Palau</item>
+        <item>Palestine</item>
+        <item>Panama</item>
+        <item>Papua New Guinea</item>
+        <item>Paraguay</item>
+        <item>Peru</item>
+        <item>Philippines</item>
+        <item>Poland</item>
+        <item>Portugal</item>
+        <item>Qatar</item>
+        <item>Romania</item>
+        <item>Russia</item>
+        <item>Rwanda</item>
+        <item>Saint Kitts and Nevis</item>
+        <item>Saint Lucia</item>
+        <item>Saint Vincent and the Grenadines</item>
+        <item>Samoa</item>
+        <item>San Marino</item>
+        <item>Sao Tome and Principe</item>
+        <item>Saudi Arabia</item>
+        <item>Senegal</item>
+        <item>Serbia</item>
+        <item>Seychelles</item>
+        <item>Sierra Leone</item>
+        <item>Singapore</item>
+        <item>Slovakia</item>
+        <item>Slovenia</item>
+        <item>Solomon Islands</item>
+        <item>Somalia</item>
+        <item>South Africa</item>
+        <item>South Korea</item>
+        <item>South Sudan</item>
+        <item>Spain</item>
+        <item>Sri Lanka</item>
+        <item>Sudan</item>
+        <item>Suriname</item>
+        <item>Sweden</item>
+        <item>Switzerland</item>
+        <item>Syria</item>
+        <item>Taiwan</item>
+        <item>Tajikistan</item>
+        <item>Tanzania</item>
+        <item>Thailand</item>
+        <item>Timor-Leste</item>
+        <item>Togo</item>
+        <item>Tonga</item>
+        <item>Trinidad and Tobago</item>
+        <item>Tunisia</item>
+        <item>Turkey</item>
+        <item>Turkmenistan</item>
+        <item>Tuvalu</item>
+        <item>Uganda</item>
+        <item>Ukraine</item>
+        <item>United Arab Emirates (UAE)</item>
+        <item>United Kingdom (UK)</item>
+        <item>United States of America (USA)</item>
+        <item>Uruguay</item>
+        <item>Uzbekistan</item>
+        <item>Vanuatu</item>
+        <item>Vatican City (Holy See)</item>
+        <item>Venezuela</item>
+        <item>Vietnam</item>
+        <item>Yemen</item>
+        <item>Zambia</item>
+        <item>Zimbabwe</item>
+    </string-array>
+
+    <!--Startup Profile Completion-->
+    <string name="toolbar_header">Profile</string>
+    <string name="about">About</string>
+    <string name="gender">Gender</string>
+    <string name="specify_your_gender">Specify your gender</string>
+    <string name="birthday">Birthday</string>
+    <string name="choose_your_birth_date">Choose your birth date</string>
+    <string name="finish">Finish</string>
+
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Rather not say</item>
+    </string-array>
+
+    <!--Profile-->
+    <string name="posts">Posts</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="change_cover">Change cover</string>
+    <string name="read_more">Read More</string>
+    <string name="you_have_been_banned_for_">"You have been banned for "</string>
+    <string name="couldn_t_find_the_users_account_at_this_moment">Couldn\'t find the users account at this moment</string>
+    <string name="this_account_is_private">This account is private</string>
+    <string name="follow_this_account_to_see_their_photos_and_to_contact_them">Follow this account to see their photos and to contact them</string>
+    <string name="your_saved_posts">Your Saved Posts</string>
+
+    <!--Edit Profile-->
+    <string name="image_header">Image</string>
+    <string name="details_header">Details</string>
+    <string name="bio">Bio</string>
+    <string name="feeling">Feeling</string>
+    <string name="website">Website</string>
+    <string name="account_header">Account</string>
+    <string name="you_can_t_edit_the_info_below">You can\'t edit the info below.</string>
+    <string name="plexus_id">Plexus ID</string>
+
+    <string-array name="feelings">
+        <item>Indifferent</item>
+        <item>Embarrassed</item>
+        <item>Joyful</item>
+        <item>Timid</item>
+        <item>Impatient</item>
+        <item>Mortified</item>
+        <item>Angry</item>
+        <item>Annoyed</item>
+        <item>Anxious</item>
+        <item>Worn-Out</item>
+        <item>Emotional</item>
+        <item>Awkward</item>
+        <item>Sad</item>
+        <item>Unbelievable</item>
+        <item>Peaceful</item>
+        <item>Content</item>
+        <item>Hopeful</item>
+        <item>Good</item>
+        <item>Grateful</item>
+        <item>Great</item>
+        <item>Afraid</item>
+        <item>Surprised</item>
+        <item>Confused</item>
+        <item>Loved</item>
+        <item>Suspicious</item>
+        <item>Pressure Overload</item>
+        <item>Tired</item>
+        <item>Jealous</item>
+        <item>Fatigued</item>
+        <item>Alone</item>
+        <item>Blissful</item>
+        <item>Hilarious</item>
+        <item>Excited</item>
+        <item>Shy</item>
+        <item>In Love</item>
+        <item>Fine</item>
+        <item>Cool</item>
+        <item>Broken</item>
+        <item>Beautiful</item>
+        <item>Irritated</item>
+        <item>Stunned</item>
+        <item>Love-Struck</item>
+        <item>Shocked</item>
+        <item>Mind Blown</item>
+        <item>Glad</item>
+        <item>Stressed Out</item>
+        <item>Scared</item>
+        <item>Confident</item>
+        <item>Mad</item>
+        <item>Gleeful</item>
+        <item>Startled</item>
+        <item>Devastated</item>
+        <item>Lost</item>
+    </string-array>
+
+
+    //FEEDBACK-STRINGS
+
+
+    //PLAYER
+
+
+    //COMMENTS
+
+
+    //EMOJI
+
+    //Notifications
+    <string name="following_notification">Started following you</string>
+    <string name="comment_notification">Commented on your post</string>
+    <string name="liked_notification">Liked your post</string>
+    <string name="shared_notification">Shared your post</string>
+
+
+    //CONNECT SERVICE
+
+
+    <!--Settings-->
+    <string name="license_load_error">An error occurred while loading this license.</string>
+    <string name="license_loading">Loading the license…</string>
+    <string name="accessibility_expand">Expand or collapse the library header.</string>
+    <string name="restrict_description">Avoid yourself from interacting with people you don\'t want to without having to block, mute or unfollow the people you may know.</string>
+    <string name="delete_cache_dialog">Your cached data will be deleted. However, files including photos shared in the chatroom will be maintained.\n\nDo you want to continue?</string>
+    <string name="time_taken">Time:</string>
+    <string name="kilobyte_per_sec">KB/s:</string>
+    <string name="download_speed">Download Speed:</string>
+    <string name="file_size">File size:</string>
+    <string name="poor_bandwidth">Network Connectivity is POOR</string>
+    <string name="average_bandwidth">Network Connectivity is AVERAGE</string>
+    <string name="good_bandwidth">Network Connectivity is GOOD</string>
+    <string name="mask_character">\u2022</string>
+    <string name="style_underline">underline</string>
+    <string name="settings_toolbar">Settings</string>
+    <string name="notices">Notices</string>
+    <string name="version">Version</string>
+    <string name="latest_version">Latest Version</string>
+    <string name="app_and_account_management_sub_header">App and Account Management</string>
+    <string name="experimental">Experimental</string>
+    <string name="privacy">Privacy</string>
+    <string name="manage_account">Manage Account</string>
+    <string name="media">Media</string>
+    <string name="advance_features">Advance Features</string>
+    <string name="policies_and_legal_sub_header">Policies and Legal</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="terms_of_use">Terms of Use</string>
+    <string name="data_policy">Data Policy</string>
+    <string name="community_rules">Community Rules</string>
+    <string name="about_toolbar">About</string>
+    <string name="version_about">Version:</string>
+    <string name="trademarks">Plexus and the Plexus logos are trademark of Plexus Inc. All rights reserved.</string>
+    <string name="open_source_description">Plexus for android is built using open source software:</string>
+    <string name="licenses">Licenses</string>
+    <string name="advance_features_toolbar">Advance Features</string>
+    <string name="storage">Storage</string>
+    <string name="network_test">Network Test</string>
+    <string name="blocked_accounts">Blocked Accounts</string>
+    <string name="current_email">Current email:</string>
+    <string name="change_email">Change Email</string>
+    <string name="enter_new_email">Enter new email</string>
+    <string name="change_password">Change Password</string>
+    <string name="change_password_for">Change password for</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="display">Display</string>
+    <string name="screen_orientation">Screen Orientation</string>
+    <string name="portrait">Portrait</string>
+    <string name="experimental_toolbar">Experimental</string>
+    <string name="notices_description">Show the notices section in the settings screen. The notices section let\'s you know about new features in latest updates of Plexus.</string>
+    <string name="version_description">When enabled Plexus will notify you when a new version of Plexus is available on the Play Store to download.</string>
+    <string name="experimental_notice">These features are in experimental phase and may be removed in future updates or added as a permanent feature.</string>
+    <string name="lock_screen">Lock Screen</string>
+    <string name="off">OFF</string>
+    <string name="passcode">Passcode</string>
+    <string name="use_fingerprint">Use Fingerprint</string>
+    <string name="change_passcode">Change Passcode</string>
+    <string name="lock_screen_notice">If you forget your passcode you need to delete the app and reinstall it. Note that your message history will be automatically restored when you reinstall the app.</string>
+    <string name="login_activity_toolbar">Login Activity</string>
+    <string name="manage_account_toolbar">Manage Account</string>
+    <string name="check_your_plexus_account_information_and_manage_it_safely">Check your Plexus Account information and manage it safely.</string>
+    <string name="account_information">Account Information</string>
+    <string name="manage_plexus_info">Manage Plexus Info</string>
+    <string name="protect_your_account">Protect Your Account</string>
+    <string name="two_factor_authentication">Two-Factor Authentication</string>
+    <string name="login_management">Login Management</string>
+    <string name="settings_sub_header">Settings</string>
+    <string name="manage_plexus_account_info">Manage Plexus Account Info</string>
+    <string name="collected_info_required">Collected Info [Required]</string>
+    <string name="username_profile_image_phone_number">Username, profile image, phone number</string>
+    <string name="manage_my_personal_info">Manage My Personal Info</string>
+    <string name="download_my_plexus_info">Download My Plexus Info</string>
+    <string name="unregister_from_plexus">Unregister From Plexus</string>
+    <string name="plexus_account">Plexus Account</string>
+    <string name="plexus_account_linked_services">Plexus Account / Linked Services</string>
+    <string name="plexus_services_description">You can manage your personal information for your Plexus Account and other Plexus services</string>
+    <string name="description_header_network">This test will identify and analyze the current network environment</string>
+    <string name="sub_description_network">* The data collected will be used to improve the quality of Plexus network connection</string>
+    <string name="sub_sub_description_network">* A small amount of data may be transferred during the test. The result will be automatically sent to the Plexus server once the test has been completed. (This may take up to 5 minutes.)</string>
+    <string name="start_test">Start Test</string>
+    <string name="enter_your_passcode">Enter your passcode</string>
+    <string name="confirm_your_passcode">Confirm your passcode</string>
+    <string name="unlock_plexus">Unlock Plexus</string>
+    <string name="app_privacy">App Privacy</string>
+    <string name="account_privacy">Account Privacy</string>
+    <string name="private_account">Private Account</string>
+    <string name="restricted_accounts">Restricted Accounts</string>
+    <string name="profile_activity_toolbar">Profile Activity</string>
+    <string name="search_user">Search User....</string>
+    <string name="we_wont_notify_the_user_that_you_have_restricted_them">We wont notify the user that you have restricted them</string>
+    <string name="the_user_won_t_be_able_to_see_when_your_online_or_when_you_ve_read_their_messages">The user won\'t be able to see when your online or when you\'ve read their messages</string>
+    <string name="only_you_and_the_person_that_is_restricted_will_be_able_to_see_their_comments_on_your_posts">Only you and the person that is restricted will be able to see their comments on your posts.</string>
+    <string name="continue_button">Continue</string>
+    <string name="available">Available</string>
+    <string name="external">External</string>
+    <string name="delete_cached_data">Delete Cached Data</string>
+    <string name="two_factor_authentication_toolbar">Two-Factor Authentication</string>
+    <string name="your_app_is_up_to_date">Your app is up to date</string>
+    <string name="current_version">Current Version </string>
+    <string name="no_posts">No Posts Uploaded</string>
+    <string name="no_posts_uploaded_yet">This user hasn\'t uploaded any posts yet</string>
+    <string name="delete_account_notice">Deleting your account is permanent. When you delete your Plexus account, you won\'t be able to retrieve the contents or information of your account in the future. All data related to your account gets deleted instantly once you confirm your password.</string>
+    <string name="time_on_plexus">Your Time Spent on Plexus</string>
+    <string-array name="voice_filter">
+        <item>Default</item>
+        <item>Chipmunk</item>
+    </string-array>
+    <string-array name="chat_options">
+        <item>Enable</item>
+        <item>Disable</item>
+    </string-array>
+
+    <!--Messaging-->
+    <string name="slide_to_cancel">"Slide to cancel"</string>
+    <string name="type_a_message">Type a message</string>
+    <bool name="is_right_to_left">false</bool>
+    <string name="message">Message</string>
+
+    //Invitation
+
+
+    //TimeAgo Helper
+
+
+    //Crash Activity
+
+
+    //Gallery
+
+
+    //Post
+
+    //Shortcuts
+
+
+    <string name="search">Search</string>
+    <string name="like">Like</string>
+    <string name="google_maps_key">AIzaSyCVB5qic3GVF923oiT7goM77Olzh4qu_nM</string>
+
+    <!--Video player accessibility strings-->
+    <string name="play">play</string>
+    <string name="pause">pause</string>
+    <string name="replay">replay</string>
+    <string name="attachment_gallery">Image</string>
+    <string name="attachment_camera">Camera</string>
+    <string name="attachment_file">File</string>
+
+    <!-- Time Ago-->
+    <string name="time_ago_suffix">ago</string>
+    <string name="time_ago_seconds">less than a minute</string>
+    <string name="time_ago_minute">about a minute</string>
+    <string name="time_ago_minutes">%d minutes</string>
+    <string name="time_ago_hour">about an hour</string>
+    <string name="time_ago_hours">about %d hours</string>
+    <string name="time_ago_day">a day</string>
+    <string name="time_ago_days">%d days</string>
+    <string name="time_ago_month">about a month</string>
+    <string name="time_ago_months">%d months</string>
+    <string name="time_ago_year">about a year</string>
+    <string name="time_ago_years">%d years</string>
+    <string name="time_ago_prefix" />
+    <string name="yesterday">Yesterday</string>
+    <string name="progress_uploading">Uploading Post</string>
+    <string name="upload_failure">Upload Failed</string>
+    <string name="upload_success">Upload Successful</string>
+    <string name="download_success">Download Successful</string>
+    <string name="download_failure">Download Failed</string>
+    <string name="progress_downloading">Downloading</string>
+    <string name="default_notification_channel_id">plexus_channel</string>
+    <string name="send_to">Send To:</string>
+    <string name="attachment_video">Video</string>
+
+    //Map
+    <string name="title_activity_maps">Map</string>
+    <string name="action_geolocate">Pick Place</string>
+    <string name="default_info_title">Default Location</string>
+    <string name="default_info_snippet">No places found, because location permission is disabled.</string>
+    <string name="api_key_google_places">AIzaSyD5DkG774Dv_58tfyhXgbeNDeohMu_4Y9Y</string>
+    <string name="update_available">Update Available</string>
+    <string name="punction">.</string>
+
+    //Editor
+    <string-array name="photo_editor_emoji">
+        <!-- Smiles -->
+        <item>u+1f604</item>
+        <item>u+1f603</item>
+        <item>u+1f600</item>
+        <item>u+1f60a</item>
+        <item>u+263a</item>
+        <item>u+1f609</item>
+        <item>u+1f60d</item>
+        <item>u+1f618</item>
+        <item>u+1f61a</item>
+        <item>u+1f617</item>
+        <item>u+1f619</item>
+        <item>u+1f61c</item>
+        <item>u+1f61d</item>
+        <item>u+1f61b</item>
+        <item>u+1f633</item>
+        <item>u+1f601</item>
+        <item>u+1f614</item>
+        <item>u+1f60c</item>
+        <item>u+1f612</item>
+        <item>u+1f61e</item>
+        <item>u+1f623</item>
+        <item>u+1f622</item>
+        <item>u+1f602</item>
+        <item>u+1f62d</item>
+        <item>u+1f62a</item>
+        <item>u+1f625</item>
+        <item>u+1f630</item>
+        <item>u+1f605</item>
+        <item>u+1f613</item>
+        <item>u+1f629</item>
+        <item>u+1f62b</item>
+        <item>u+1f628</item>
+        <item>u+1f631</item>
+        <item>u+1f620</item>
+        <item>u+1f621</item>
+        <item>u+1f624</item>
+
+        <!--People -->
+        <item>u+1f616</item>
+        <item>u+1f606</item>
+        <item>u+1f60b</item>
+        <item>u+1f637</item>
+        <item>u+1f60e</item>
+        <item>u+1f634</item>
+        <item>u+1f635</item>
+        <item>u+1f632</item>
+        <item>u+1f61f</item>
+        <item>u+1f626</item>
+        <item>u+1f627</item>
+        <item>u+1f608</item>
+        <item>u+1f47f</item>
+        <item>u+1f62e</item>
+        <item>u+1f62c</item>
+        <item>u+1f610</item>
+        <item>u+1f615</item>
+        <item>u+1f62f</item>
+        <item>u+1f636</item>
+        <item>u+1f607</item>
+        <item>u+1f60f</item>
+        <item>u+1f611</item>
+        <item>u+1f472</item>
+        <item>u+1f473</item>
+        <item>u+1f46e</item>
+        <item>u+1f477</item>
+        <item>u+1f482</item>
+        <item>u+1f476</item>
+        <item>u+1f466</item>
+        <item>u+1f467</item>
+        <item>u+1f468</item>
+        <item>u+1f469</item>
+        <item>u+1f474</item>
+        <item>u+1f475</item>
+        <item>u+1f471</item>
+        <item>u+1f47c</item>
+        <item>u+1f478</item>
+        <item>u+1f63a</item>
+        <item>u+1f638</item>
+        <item>u+1f63b</item>
+        <item>u+1f63d</item>
+        <item>u+1f63c</item>
+        <item>u+1f640</item>
+        <item>u+1f63f</item>
+        <item>u+1f639</item>
+        <item>u+1f63e</item>
+        <item>u+1f479</item>
+        <item>u+1f47a</item>
+        <item>u+1f648</item>
+        <item>u+1f649</item>
+        <item>u+1f64a</item>
+        <item>u+1f480</item>
+        <item>u+1f47d</item>
+        <item>u+1f4a9</item>
+        <item>u+1f525</item>
+        <item>u+2728</item>
+        <item>u+1f31f</item>
+        <item>u+1f4ab</item>
+        <item>u+1f4a5</item>
+        <item>u+1f4a2</item>
+        <item>u+1f4a6</item>
+        <item>u+1f4a7</item>
+        <item>u+1f4a4</item>
+        <item>u+1f4a8</item>
+        <item>u+1f442</item>
+        <item>u+1f440</item>
+        <item>u+1f443</item>
+        <item>u+1f445</item>
+        <item>u+1f444</item>
+        <item>u+1f44d</item>
+        <item>u+1f44e</item>
+        <item>u+1f44c</item>
+        <item>u+1f44a</item>
+        <item>u+270a</item>
+        <item>u+270c</item>
+        <item>u+1f44b</item>
+        <item>u+270b</item>
+        <item>u+1f450</item>
+        <item>u+1f446</item>
+        <item>u+1f447</item>
+        <item>u+1f449</item>
+        <item>u+1f448</item>
+        <item>u+1f64c</item>
+        <item>u+1f64f</item>
+        <item>u+261d</item>
+        <item>u+1f44f</item>
+        <item>u+1f4aa</item>
+        <item>u+1f6b6</item>
+        <item>u+1f3c3</item>
+        <item>u+1f483</item>
+        <item>u+1f46b</item>
+        <item>u+1f46a</item>
+        <item>u+1f46c</item>
+        <item>u+1f46d</item>
+        <item>u+1f48f</item>
+        <item>u+1f491</item>
+        <item>u+1f46f</item>
+        <item>u+1f646</item>
+        <item>u+1f645</item>
+        <item>u+1f481</item>
+        <item>u+1f64b</item>
+        <item>u+1f486</item>
+        <item>u+1f487</item>
+        <item>u+1f485</item>
+        <item>u+1f470</item>
+        <item>u+1f64e</item>
+        <item>u+1f64d</item>
+        <item>u+1f647</item>
+        <item>u+1f3a9</item>
+        <item>u+1f451</item>
+        <item>u+1f452</item>
+        <item>u+1f45f</item>
+        <item>u+1f45e</item>
+        <item>u+1f461</item>
+        <item>u+1f460</item>
+        <item>u+1f462</item>
+        <item>u+1f455</item>
+        <item>u+1f454</item>
+        <item>u+1f45a</item>
+        <item>u+1f457</item>
+        <item>u+1f3bd</item>
+        <item>u+1f456</item>
+        <item>u+1f458</item>
+        <item>u+1f459</item>
+        <item>u+1f4bc</item>
+        <item>u+1f45c</item>
+        <item>u+1f45d</item>
+        <item>u+1f45b</item>
+        <item>u+1f453</item>
+        <item>u+1f380</item>
+        <item>u+1f302</item>
+        <item>u+1f484</item>
+        <item>u+1f49b</item>
+        <item>u+1f499</item>
+        <item>u+1f49c</item>
+        <item>u+1f49a</item>
+        <item>u+2764</item>
+        <item>u+1f494</item>
+        <item>u+1f497</item>
+        <item>u+1f493</item>
+        <item>u+1f495</item>
+        <item>u+1f496</item>
+        <item>u+1f49e</item>
+        <item>u+1f498</item>
+        <item>u+1f48c</item>
+        <item>u+1f48b</item>
+        <item>u+1f48d</item>
+        <item>u+1f48e</item>
+        <item>u+1f464</item>
+        <item>u+1f465</item>
+        <item>u+1f4ac</item>
+        <item>u+1f463</item>
+        <item>u+1f4ad</item>
+
+        <!--  Nature-->
+        <item>u+1f436</item>
+        <item>u+1f43a</item>
+        <item>u+1f431</item>
+        <item>u+1f42d</item>
+        <item>u+1f439</item>
+        <item>u+1f430</item>
+        <item>u+1f438</item>
+        <item>u+1f42f</item>
+        <item>u+1f428</item>
+        <item>u+1f43b</item>
+        <item>u+1f437</item>
+        <item>u+1f43d</item>
+        <item>u+1f42e</item>
+        <item>u+1f417</item>
+        <item>u+1f435</item>
+        <item>u+1f412</item>
+        <item>u+1f434</item>
+        <item>u+1f411</item>
+        <item>u+1f418</item>
+        <item>u+1f43c</item>
+        <item>u+1f427</item>
+        <item>u+1f426</item>
+        <item>u+1f424</item>
+        <item>u+1f425</item>
+        <item>u+1f423</item>
+        <item>u+1f414</item>
+        <item>u+1f40d</item>
+        <item>u+1f422</item>
+        <item>u+1f41b</item>
+        <item>u+1f41d</item>
+        <item>u+1f41c</item>
+        <item>u+1f41e</item>
+        <item>u+1f40c</item>
+        <item>u+1f419</item>
+        <item>u+1f41a</item>
+        <item>u+1f420</item>
+        <item>u+1f41f</item>
+        <item>u+1f42c</item>
+        <item>u+1f433</item>
+        <item>u+1f40b</item>
+        <item>u+1f404</item>
+        <item>u+1f40f</item>
+        <item>u+1f400</item>
+        <item>u+1f403</item>
+        <item>u+1f405</item>
+        <item>u+1f407</item>
+        <item>u+1f409</item>
+        <item>u+1f40e</item>
+        <item>u+1f410</item>
+        <item>u+1f413</item>
+        <item>u+1f415</item>
+        <item>u+1f416</item>
+        <item>u+1f401</item>
+        <item>u+1f402</item>
+        <item>u+1f432</item>
+        <item>u+1f421</item>
+        <item>u+1f40a</item>
+        <item>u+1f42b</item>
+        <item>u+1f42a</item>
+        <item>u+1f406</item>
+        <item>u+1f408</item>
+        <item>u+1f429</item>
+        <item>u+1f43e</item>
+        <item>u+1f490</item>
+        <item>u+1f338</item>
+        <item>u+1f337</item>
+        <item>u+1f340</item>
+        <item>u+1f339</item>
+        <item>u+1f33b</item>
+        <item>u+1f33a</item>
+        <item>u+1f341</item>
+        <item>u+1f343</item>
+        <item>u+1f342</item>
+        <item>u+1f33f</item>
+        <item>u+1f33e</item>
+        <item>u+1f344</item>
+        <item>u+1f335</item>
+        <item>u+1f334</item>
+        <item>u+1f332</item>
+        <item>u+1f333</item>
+        <item>u+1f330</item>
+        <item>u+1f331</item>
+        <item>u+1f33c</item>
+        <item>u+1f310</item>
+        <item>u+1f31e</item>
+        <item>u+1f31d</item>
+        <item>u+1f31a</item>
+        <item>u+1f311</item>
+        <item>u+1f312</item>
+        <item>u+1f313</item>
+        <item>u+1f314</item>
+        <item>u+1f315</item>
+        <item>u+1f316</item>
+        <item>u+1f317</item>
+        <item>u+1f318</item>
+        <item>u+1f31c</item>
+        <item>u+1f31b</item>
+        <item>u+1f319</item>
+        <item>u+1f30d</item>
+        <item>u+1f30e</item>
+        <item>u+1f30f</item>
+        <item>u+1f30b</item>
+        <item>u+1f30c</item>
+        <item>u+1f320</item>
+        <item>u+2b50</item>
+        <item>u+2600</item>
+        <item>u+26c5</item>
+        <item>u+2601</item>
+        <item>u+26a1</item>
+        <item>u+2614</item>
+        <item>u+2744</item>
+        <item>u+26c4</item>
+        <item>u+1f300</item>
+        <item>u+1f301</item>
+        <item>u+1f308</item>
+        <item>u+1f30a</item>
+
+        <!--Places-->
+        <item>u+1f3e0</item>
+        <item>u+1f3e1</item>
+        <item>u+1f3eb</item>
+        <item>u+1f3e2</item>
+        <item>u+1f3e3</item>
+        <item>u+1f3e5</item>
+        <item>u+1f3e6</item>
+        <item>u+1f3ea</item>
+        <item>u+1f3e9</item>
+        <item>u+1f3e8</item>
+        <item>u+1f492</item>
+        <item>u+26ea</item>
+        <item>u+1f3ec</item>
+        <item>u+1f3e4</item>
+        <item>u+1f307</item>
+        <item>u+1f306</item>
+        <item>u+1f3ef</item>
+        <item>u+1f3f0</item>
+        <item>u+26fa</item>
+        <item>u+1f3ed</item>
+        <item>u+1f5fc</item>
+        <item>u+1f5fe</item>
+        <item>u+1f5fb</item>
+        <item>u+1f304</item>
+        <item>u+1f305</item>
+        <item>u+1f303</item>
+        <item>u+1f5fd</item>
+        <item>u+1f309</item>
+        <item>u+1f3a0</item>
+        <item>u+1f3a1</item>
+        <item>u+26f2</item>
+        <item>u+1f3a2</item>
+        <item>u+1f6a2</item>
+        <item>u+26f5</item>
+        <item>u+1f6a4</item>
+        <item>u+1f6a3</item>
+        <item>u+2693</item>
+        <item>u+1f680</item>
+        <item>u+2708</item>
+        <item>u+1f4ba</item>
+        <item>u+1f681</item>
+        <item>u+1f682</item>
+        <item>u+1f68a</item>
+        <item>u+1f689</item>
+        <item>u+1f69e</item>
+        <item>u+1f686</item>
+        <item>u+1f684</item>
+        <item>u+1f685</item>
+        <item>u+1f688</item>
+        <item>u+1f687</item>
+        <item>u+1f69d</item>
+        <item>u+1f68b</item>
+        <item>u+1f683</item>
+        <item>u+1f68e</item>
+        <item>u+1f68c</item>
+        <item>u+1f68d</item>
+        <item>u+1f699</item>
+        <item>u+1f698</item>
+        <item>u+1f697</item>
+        <item>u+1f695</item>
+        <item>u+1f696</item>
+        <item>u+1f69b</item>
+        <item>u+1f69a</item>
+        <item>u+1f6a8</item>
+        <item>u+1f693</item>
+        <item>u+1f694</item>
+        <item>u+1f692</item>
+        <item>u+1f691</item>
+        <item>u+1f690</item>
+        <item>u+1f6b2</item>
+        <item>u+1f6a1</item>
+        <item>u+1f69f</item>
+        <item>u+1f6a0</item>
+        <item>u+1f69c</item>
+        <item>u+1f488</item>
+        <item>u+1f68f</item>
+        <item>u+1f3ab</item>
+        <item>u+1f6a6</item>
+        <item>u+1f6a5</item>
+        <item>u+26a0</item>
+        <item>u+1f6a7</item>
+        <item>u+1f530</item>
+        <item>u+26fd</item>
+        <item>u+1f3ee</item>
+        <item>u+1f3b0</item>
+        <item>u+2668</item>
+        <item>u+1f5ff</item>
+        <item>u+1f3aa</item>
+        <item>u+1f3ad</item>
+        <item>u+1f4cd</item>
+        <item>u+1f6a9</item>
+    </string-array>
+
+    <string name="label_brush">Brush</string>
+    <string name="label_emoji">Emoji</string>
+    <string name="label_sticker">Sticker</string>
+    <string name="label_eraser">Eraser</string>
+    <string name="label_eraser_mode">Eraser Mode</string>
+    <string name="label_text">Text</string>
+    <string name="label_filter">Filter</string>
+    <string name="label_adjust">Adjust</string>
+    <string name="msg_save_image">Are you want to exit without saving image ?</string>
+    <string name="app_intent_name">PhotoEditor</string>
+    <string name="msg_save_image_to_share">Please save image to share</string>
+    <string name="msg_share_image">Share Image</string>
+    <string name="post_privacy">Post Privacy</string>
+    <string name="allow_download">Allow Download</string>
+    <string name="allow_screenshot">Allow Screenshots</string>
+    <string name="group_toolbar">Create Group</string>
+    <string name="edit_group">Edit Group</string>
+    <string name="create_group">Create Group</string>
+    <string name="location">Location</string>
+    <string name="group_type">Group Type</string>
+    <string name="group_color">Group Color</string>>
+
+</resources>

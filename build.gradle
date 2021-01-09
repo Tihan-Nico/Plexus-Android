@@ -1,0 +1,37 @@
+/*
+ * Copyright (c) 2020. This code is copyright of Plexus Inc. Any violation or distribution of this source code
+ * could result in legal action being taken upon the distributor. This code may not be edited in any way unless in a
+ *  controlled environment under Plexus's supervision. By editing this code while not under Plexus supervision may
+ *   result in suspension of user account and will lead to legal action.
+ */
+
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://dl.bintray.com/android/android-tools' }
+        
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.0.0-alpha04'
+        classpath 'com.google.gms:google-services:4.3.3'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

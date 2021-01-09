@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="top"
+        android:background="@color/toolbarColor">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Setup Profile"
+            android:textSize="20sp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/profile_image_data">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/profile_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:roundAsCircle="true"
+            app:backgroundImage="@color/thumbnail"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignEnd="@id/profile_image"
+            android:layout_alignBottom="@id/profile_image"
+            android:background="@drawable/circle_bg_light"
+            android:padding="6dp"
+            android:src="@drawable/camera_outline"
+            app:tint="@color/drawableTintColor" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/fullname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_bold"
+        android:layout_below="@id/profile_image_data"
+        android:text="Tihan-Nico Paxton"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Continue"
+        android:id="@+id/save"
+        android:layout_alignParentBottom="true"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/plexus"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="60dp"/>
+
+</RelativeLayout>

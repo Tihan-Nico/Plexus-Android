@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/facebook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:id="@+id/fb_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/facebook"
+            app:tint="@color/plexus"
+            android:layout_margin="15dp"/>
+
+        <TextView
+            android:id="@+id/facebook_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Facebook"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/plexus"/>
+
+        <RelativeLayout
+            android:id="@+id/fb_relative"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp">
+
+            <TextView
+                android:id="@+id/fb_account_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tihan-Nico Paxton"
+                android:textColor="@color/textColor"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:layout_toStartOf="@id/fb_connected"
+                android:layout_marginEnd="15dp"/>
+
+            <ImageView
+                android:id="@+id/fb_connected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/account_check_outline"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                app:tint="@color/plexus" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/twitter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:id="@+id/twitter_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/twitter"
+            app:tint="@color/drawableTintColor"
+            android:layout_margin="15dp"/>
+
+        <TextView
+            android:id="@+id/twitter_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Twitter"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/textDescriptionColor"/>
+
+        <RelativeLayout
+            android:id="@+id/twitter_relative"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/twitter_account_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tihan-Nico Paxton"
+                android:textColor="@color/textColor"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:layout_toStartOf="@id/twitter_connected"
+                android:layout_marginEnd="15dp"/>
+
+            <ImageView
+                android:id="@+id/twitter_connected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/account_check_outline"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                app:tint="@color/drawableTintColor" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

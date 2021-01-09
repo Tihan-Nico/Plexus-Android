@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020. Plexus, Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/voice_note"
+        android:layout_width="250dp"
+        android:layout_alignParentStart="true"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:background="@drawable/item_left"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/circle_bg_light"
+            android:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/audio"
+            android:tint="@color/white"
+            android:padding="10dp"
+            android:id="@+id/audio_image"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/play"
+            android:tint="@color/white"
+            android:id="@+id/play_audio"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/audio_image"
+            android:layout_centerVertical="true" />
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/play_audio"
+            android:layout_marginEnd="15dp"
+            android:progressTint="@color/white"
+            android:thumbTint="@color/white"
+            android:id="@+id/seekbar"
+            android:progressBackgroundTint="@color/colorPrimary"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

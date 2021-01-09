@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Apply for Plexus Verification"
+                android:textSize="16sp"
+                android:textColor="@color/textColor"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_margin="15dp"/>
+
+            <TextView
+                android:id="@+id/verification_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A verified badge is a check mark that appears next to your name on Plexus to indicate that your account is the authentic presence of you.\n\nSubmitting a request for verification does not guarantee that you will get verified. Check our requirements for receiving a verification. Learn More"
+                android:textColor="@color/textDescriptionColor"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/roboto"
+                    android:text="Username"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColor"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="14sp"
+                    android:enabled="false"
+                    android:backgroundTint="@color/textDescriptionColor"
+                    android:hint="tihannico"
+                    android:textColorHint="@color/textDescriptionColor"
+                    android:id="@+id/username"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/roboto"
+                    android:text="Account ID"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColor"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="14sp"
+                    android:enabled="false"
+                    android:backgroundTint="@color/textDescriptionColor"
+                    android:hint="knciw89fwncsncsjnc"
+                    android:textColorHint="@color/textDescriptionColor"
+                    android:id="@+id/user_id"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/roboto"
+                    android:text="Full Name"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColor"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="14sp"
+                    android:enabled="false"
+                    android:backgroundTint="@color/textDescriptionColor"
+                    android:hint="Tihan-Nico Paxton"
+                    android:textColorHint="@color/textDescriptionColor"
+                    android:id="@+id/fullname"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/roboto"
+                    android:text="Known As"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColor"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/textDescriptionColor"
+                    android:hint="Tihan-Nico Paxton"
+                    android:textColorHint="@color/textDescriptionColor"
+                    android:id="@+id/known_as"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/roboto"
+                    android:text="Category"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textColor"
+                        android:text="Select a category for your account"/>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@color/textDescriptionColor"
+                    android:layout_marginTop="3dp"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Please attach a photo of your ID"
+                    android:textSize="16sp"
+                    android:textColor="@color/textColor"
+                    android:layout_margin="15dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Choose File"
+                    android:textColor="@color/plexus"
+                    android:layout_margin="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="We require a government issued photo of your ID that shows your name and date of birth(e.g. driver's license, passport or national identification card) or official business documents(tax filing, recent utility bill or article of incorporation) in order to review your request. These documents gets deleted as soon as we are done reviewing your account."
+                android:textColor="@color/textDescriptionColor"
+                android:textSize="12sp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_up"
+                android:textAllCaps="false"
+                android:id="@+id/register"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/plexus"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="40dp"
+                android:enabled="false"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

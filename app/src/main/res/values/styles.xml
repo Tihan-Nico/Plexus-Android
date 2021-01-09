@@ -1,0 +1,106 @@
+<!--
+  ~ Copyright (c) 2020. Plexus, Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<resources>
+
+    <style name="DarkTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/plexus</item>
+        <item name="bottomSheetDialogTheme">@style/BaseBottomSheetDialog</item>
+        <item name="android:colorBackground">@color/backgroundColor</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="materialCardViewStyle">@style/DarkTheme.CardView</item>
+        <item name="android:navigationBarColor">@color/light_black</item>
+        <item name="android:statusBarColor">@color/statusBarColor</item>
+        <item name="extendedFloatingActionButtonStyle">@style/ExtendedFloatingActionButton</item>
+        <item name="floatingActionButtonStyle">@style/FloatingActionButton</item>
+        <item name="cardBackgroundColor">@color/cardBackgroundColor</item>
+        <item name="drawableTint">@color/drawableTintColor</item>
+    </style>
+
+    <style name="ExtendedFloatingActionButton" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
+        <item name="backgroundTint">@color/fabColor</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="iconTint">@color/drawableTintColor</item>
+    </style>
+
+    <style name="FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/fabColor</item>
+        <item name="tint">@color/plexus</item>
+    </style>
+
+    <style name="DarkTheme.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">@color/light_black</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="DarkTheme.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemTextColor">@color/colorPrimary</item>
+        <item name="itemIconTint">@color/white</item>
+    </style>
+
+    <style name="DarkTheme.StoryView" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="DarkTheme.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/bg_card</item>
+    </style>
+
+    <!-- set the rounded drawable as background to your bottom sheet -->
+    <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_sheet</item>
+    </style>
+
+    <style name="BaseBottomSheetDialog" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
+        <item name="android:windowIsFloating">true</item>
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
+
+    <style name="TextAttachmentOptions">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="AppThemeToolbar" parent="DarkTheme">
+        ....
+        <item name="android:drawableTint">@color/white</item>
+    </style>
+
+    <style name="Widget.PlexusSocialView" parent="android:Widget.TextView">
+        <item name="hashtagColor">?colorAccent</item>
+        <item name="mentionColor">?colorAccent</item>
+        <item name="hyperlinkColor">?colorAccent</item>
+    </style>
+
+    <style name="EditText">
+        <item name="android:singleLine">true</item>
+        <item name="colorControlNormal">#FFFFFF</item>
+        <item name="colorControlActivated">#FFFFFF</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+</resources>

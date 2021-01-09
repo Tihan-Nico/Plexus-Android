@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020. Plexus, Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/toolbar"
+        app:contentInsetLeft="0dp">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/back"
+            android:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/time_on_plexus"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="18sp"
+                    android:layout_margin="15dp"
+                    android:text="Your Time"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/plexus"
+                    android:fontFamily="@font/roboto_bold"
+                    android:layout_margin="15dp"
+                    android:text="3h 34m"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_scale"
+                android:fontFamily="@font/roboto"
+                android:textSize="12sp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:text="This is the amount of time you have spent on average using Plexus each day during the last 7 days. Time is counted while you're using the Plexus app on this particular device. This system is still in development and could change and be improved as we change our methods of calculating the time spent. Instead of using bar graphs we opted to show you how much time you spent in which part of Plexus."/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/toolbar"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:text="Timeline"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:text="1h 10m"
+                        android:textSize="12sp"
+                        android:id="@+id/home_total_time"
+                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/plexus"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:textColor="@color/gray_scale"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="12sp"
+                    android:text="Timeline is the most important part of Plexus seeing what friends and family post on Plexus. We do realise that this part of the app will be the most used. The amount of time you spent on the Timeline will be way more significant than any other part of Plexus."/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@color/guideline"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:text="Search"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:text="10m"
+                        android:textSize="12sp"
+                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/plexus"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:textColor="@color/gray_scale"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="12sp"
+                    android:text="What would Plexus be without searching for friends and family. Time spent here will probably not be the least spent on but be close to it. Your time spent here is basically almost nothing compared to other parts."/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@color/guideline"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:text="Notifications"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:text="42m"
+                        android:textSize="12sp"
+                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/plexus"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:textColor="@color/gray_scale"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="12sp"
+                    android:text="Notifications is probable the most irritating thing but not if you like sharing memes. We calculate your time spent in this section based on how much you interact with each notification, just because we can."/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@color/guideline"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:text="Profile"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:text="27m"
+                        android:textSize="12sp"
+                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/plexus"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:textColor="@color/gray_scale"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="12sp"
+                    android:text="Your profile is the most important thing you can have on Plexus. It shows who you are and what type of person you are. But if you are a memer it can get very funny looking at your own memes."/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@color/guideline"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:text="Settings"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:text="5m"
+                        android:textSize="12sp"
+                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/plexus"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:textColor="@color/gray_scale"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="12sp"
+                    android:text="Now this is where the magic happens. All the secret stuff are hidden in here maybe a easter egg also that gets you verified when you find it, who knows?!"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

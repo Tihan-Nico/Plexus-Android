@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    //Dark - for testing
+    <color name="colorPrimaryDarkExtra">#F56C49</color>
+    <color name="colorPrimaryLight">#4DF78361</color>
+    <color name="colorPrimary">#212121</color>
+    <color name="colorPrimaryDark">#121212</color>
+    <color name="colorAccent">#FFFFFF</color>
+    <color name="plexus">#f78361</color>
+    <color name="plexus_light">#D9CC775E</color>
+    <color name="thumbnail">#FF3A3939</color>
+    <color name="textColor">@color/white</color>
+    <color name="textDescriptionColor">#b0b3b8</color>
+    <color name="drawableTintColor">#b0b3b8</color>
+    <color name="backgroundColor">#18191a</color>
+    <color name="statusBarColor">#242526</color>
+    <color name="toolbarColor">#242526</color>
+    <color name="fabColor">#242526</color>
+    <color name="notificationRowColor">#242526</color>
+    <color name="cardBackgroundColor">#242526</color>
+    <color name="dialogColor">#242526</color>
+    <color name="bottomNavigationColor">#242526</color>
+    <color name="bottomNavigationTextIconColor">#3a3b3c</color>
+    <color name="profileBackgroundColor">#242526</color>
+    <color name="guidelineColor">#353232</color>
+
+
+    <color name="grayScale">#B8ACAC</color>
+    <color name="background_light">#212121</color>
+    <color name="black">#000000</color>
+    <color name="light_black">#222222</color>
+    <color name="white">#FFFFFF</color>
+    <color name="darkerGray">#424242</color>
+    <color name="guideline">#353232</color>
+    <color name="bg_card">#FF1D1C1C</color>
+    <color name="bottom_navigation">#151515</color>
+    <color name="post_background">#151515</color>
+    <color name="notice">#FF5252</color>
+    <color name="seekbar_thumb_outer_color">#4dffffff</color>
+    <color name="seekbar_thumb_inner_color">#ffffffff</color>
+    <color name="attachment_image">#8ddbf0</color>
+    <color name="attachment_image_icon">#0eacdc</color>
+    <color name="attachment_camera">#d1b5e5</color>
+    <color name="attachment_camera_icon">#8869d2</color>
+    <color name="attachment_file">#a2a6ff</color>
+    <color name="attachment_file_icon">#7960c5</color>
+    <color name="attachment_audio">#ffea96</color>
+    <color name="attachment_audio_icon">#ffc55d</color>
+    <color name="attachment_location">#abe9dd</color>
+    <color name="attachment_location_icon">#1cc0a7</color>
+    <color name="blue_color_picker">#0066FF</color>
+    <color name="brown_color_picker">#AF593E</color>
+    <color name="green_color_picker">#01A368</color>
+    <color name="orange_color_picker">#FF861F</color>
+    <color name="red_color_picker">#ED0A3F</color>
+    <color name="red_orange_color_picker">#FF3F34</color>
+    <color name="sky_blue_color_picker">#76D7EA</color>
+    <color name="violet_color_picker">#8359A3</color>
+    <color name="yellow_color_picker">#FBE870</color>
+    <color name="yellow_green_color_picker">#C5E17A</color>
+    <color name="black_alpha_54">#8a000000</color>
+    <color name="tool_bg">#151414</color>
+    <color name="semi_black_transparent">#99000000</color>
+    <color name="voiceNoteTrashcanTint">#ff7d8488</color>
+    <color name="list_item_sub_title">@color/black_alpha_54</color>
+</resources>

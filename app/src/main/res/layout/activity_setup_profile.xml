@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="top"
+        android:background="@color/toolbarColor">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Complete Setup"
+            android:textColor="@color/textColor"
+            android:textSize="20sp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cover Photo"
+                android:textColor="@color/textColor"
+                android:textSize="12sp"
+                android:layout_margin="15dp"/>
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/profile_cover"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                app:backgroundImage="@color/thumbnail"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:roundedCornerRadius="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/plexus"
+                android:id="@+id/select_image"
+                android:text="Select Image"
+                android:textSize="12sp"
+                android:layout_gravity="center"
+                android:layout_margin="15dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/about"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="15dp"
+                        android:textSize="12sp"
+                        android:textColor="@color/textColor"/>
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:inputType="textPersonName"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:backgroundTint="@color/grayScale"
+                        android:id="@+id/about"
+                        android:textColor="@color/textColor"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/gender_selection"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/gender"
+                                android:textColor="@color/textColor"
+                                android:fontFamily="@font/roboto"
+                                android:textSize="12sp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/textDescriptionColor"
+                                android:id="@+id/gender"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/roboto"
+                                android:text="@string/specify_your_gender"
+                                android:textSize="12sp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/birthday_selection"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/birthday"
+                                android:textColor="@color/textColor"
+                                android:fontFamily="@font/roboto"
+                                android:textSize="12sp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/textDescriptionColor"
+                                android:id="@+id/birthday"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/roboto"
+                                android:text="@string/choose_your_birth_date"
+                                android:textSize="12sp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/finish"
+                        android:id="@+id/save"
+                        android:textAllCaps="false"
+                        android:textColor="@color/textColor"
+                        android:backgroundTint="@color/plexus"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginTop="60dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
