@@ -112,11 +112,15 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <intent-filter android:autoVerify="true">
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="plexus.dev"
+                    android:pathPrefix="/post" />
 
                 <data
                     android:scheme="https"
@@ -131,7 +135,6 @@
         <activity android:name=".settings.activity.privacy.RestrictAccountsActivity" />
         <activity android:name=".settings.activity.privacy.RestrictAccountDetailsActivity" />
         <activity android:name=".settings.activity.experimental.ExperimentalActivity" />
-        <activity android:name=".settings.activity.manage_account.login_management.LoginManagementActivity" />
         <activity android:name=".settings.activity.privacy.BlockedAccountsActivity" />
         <activity android:name=".settings.activity.privacy.lockscreen.AppLockActivity" />
         <activity android:name=".settings.activity.privacy.lockscreen.ConfirmPasswordActivity" />
@@ -145,11 +148,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
-            <intent-filter android:autoVerify="true">
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="plexus.dev"
+                    android:path="/profile" />
 
                 <data
                     android:scheme="https"
@@ -183,7 +190,6 @@
         <activity android:name=".account.activity.AccountStatusActivity" />
         <activity android:name=".information_centre.Covid_Information" />
         <activity android:name=".posts.activity.HashTagViewActivity" />
-        <activity android:name=".editor.image.activity.EditImageActivity" />
         <activity android:name=".posts.activity.PostVideoViewActivity" />
         <activity android:name=".settings.activity.privacy.PostPrivacyActivity" />
         <activity android:name=".startup.PermissionActivity" />
@@ -192,9 +198,13 @@
         <activity android:name=".groups.activity.GroupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="plexus.dev"
+                    android:pathPrefix="/groups" />
 
                 <data
                     android:scheme="https"
@@ -230,13 +240,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <receiver android:name=".components.background.UpgradeReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REPLACED" />
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>

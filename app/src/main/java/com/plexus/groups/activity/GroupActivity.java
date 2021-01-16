@@ -1,6 +1,7 @@
 package com.plexus.groups.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -82,6 +83,11 @@ public class GroupActivity extends AppCompatActivity {
         groupID = intent.getStringExtra("group_id");
         userID = intent.getStringExtra("user_id");
         coverUrl = intent.getStringExtra("cover_url");
+
+        Uri data = getIntent().getData();
+        if (data != null) {
+            groupID = data.getQueryParameter("id");
+        }
 
         groupsPostList = new ArrayList<>();
 

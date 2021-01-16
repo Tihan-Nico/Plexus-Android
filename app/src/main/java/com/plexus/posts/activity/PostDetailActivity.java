@@ -85,6 +85,11 @@ public class PostDetailActivity extends AppCompatActivity {
         postid = intent.getStringExtra("postid");
         publisherid = intent.getStringExtra("publisherid");
 
+        Uri data = getIntent().getData();
+        if (data != null) {
+            postid = data.getQueryParameter("id");
+        }
+
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         recyclerView = findViewById(R.id.recycler_view);
