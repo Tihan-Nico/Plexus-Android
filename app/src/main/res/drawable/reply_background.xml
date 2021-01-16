@@ -19,7 +19,7 @@
     android:shape="rectangle">
 
     <solid
-        android:color="@color/toolbar"/>
+        android:color="@color/toolbarColor"/>
 
     <corners
         android:topLeftRadius="8dp"

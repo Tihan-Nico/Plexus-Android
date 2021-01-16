@@ -9,10 +9,6 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/account_status_profile"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"

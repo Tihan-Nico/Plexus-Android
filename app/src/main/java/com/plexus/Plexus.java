@@ -2,6 +2,7 @@ package com.plexus;
 
 import android.app.Application;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -20,12 +21,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.plexus.components.locale_changer.LocaleChanger;
 import com.plexus.model.account.Banned;
 import com.plexus.account.activity.UserBannedActivity;
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.twitter.TwitterEmojiProvider;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 /******************************************************************************
  * Copyright (c) 2020. Plexus, Inc.                                           *
@@ -54,17 +59,20 @@ public class Plexus extends Application {
         return mInstance;
   }
 
+    public static final List<Locale> SUPPORTED_LOCALES =
+            Arrays.asList(
+                    new Locale("en", "US"),
+                    new Locale("af", "ZA"),
+                    new Locale("fr", "FR")
+            );
+
   @RequiresApi(api = Build.VERSION_CODES.M)
   @Override
   public void onCreate() {
       super.onCreate();
-      FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-              .setPersistenceEnabled(true)
-              .setCacheSizeBytes(FirebaseFirestoreSettings.CACHE_SIZE_UNLIMITED)
-              .build();
-      db.setFirestoreSettings(settings);
       EmojiManager.install(new TwitterEmojiProvider());
       Fresco.initialize(this);
+      LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
       mInstance = this;
 
       firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -103,6 +111,12 @@ public class Plexus extends Application {
             }
         });
   }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleChanger.onConfigurationChanged();
+    }
 
   public RequestQueue getRequestQueue() {
       if (mRequestQueue == null) {

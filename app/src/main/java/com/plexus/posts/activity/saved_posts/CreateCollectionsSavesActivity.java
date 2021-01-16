@@ -21,8 +21,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.plexus.R;
-import com.plexus.core.components.compressor.Compressor;
-import com.plexus.utils.MasterCipher;
+import com.plexus.components.components.compressor.Compressor;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.ByteArrayOutputStream;

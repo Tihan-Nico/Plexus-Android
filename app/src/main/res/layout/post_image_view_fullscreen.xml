@@ -22,7 +22,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.plexus.core.components.ImageView.PhotoView
+    <com.plexus.components.components.ImageView.PhotoView
         android:id="@+id/image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

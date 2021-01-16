@@ -26,7 +26,7 @@ import com.bumptech.glide.request.target.Target;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.plexus.R;
-import com.plexus.core.components.ImageView.Constants;
+import com.plexus.components.components.ImageView.Constants;
 import com.plexus.groups.activity.GroupActivity;
 import com.plexus.model.group.Group;
 import com.plexus.utils.MasterCipher;

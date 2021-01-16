@@ -11,10 +11,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,14 +30,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
-import com.plexus.core.components.PlexusRecyclerView;
-import com.plexus.model.Notification;
+import com.plexus.components.components.PlexusRecyclerView;
+import com.plexus.model.notifications.PlexusNotification;
+import com.plexus.notifications.LookOutNotificationFragment;
 import com.plexus.notifications.NotificationAdapter;
+import com.plexus.notifications.PlexusNotificationFragment;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /******************************************************************************
  * Copyright (c) 2020. Plexus, Inc.                                           *
@@ -50,70 +60,49 @@ import java.util.Collections;
 
 public class NotificationsFragment extends Fragment {
 
-  PlexusRecyclerView recyclerView;
-  private NotificationAdapter notificationAdapter;
-  private ArrayList<Notification> notificationList;
   FirebaseUser firebaseUser;
-  FirebaseAuth firebaseAuth;
   ImageView clear_notifications;
 
-  View empty_state;
+  TabLayout tabLayout;
+  ViewPager viewPager;
 
-  @SuppressLint("ClickableViewAccessibility")
+  PlexusNotificationFragment plexusNotificationFragment;
+  LookOutNotificationFragment lookOutNotificationFragment;
+
   @Override
-  public View onCreateView(
-          LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_notification, container, false);
 
-    firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-    firebaseAuth = FirebaseAuth.getInstance();
-
     clear_notifications = view.findViewById(R.id.clear_notifications);
-    empty_state = view.findViewById(R.id.empty_state);
+    tabLayout = view.findViewById(R.id.tabLayout);
+    viewPager = view.findViewById(R.id.viewPager);
 
-    recyclerView = view.findViewById(R.id.recycler_view);
-    recyclerView.setHasFixedSize(true);
-    LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-    recyclerView.setLayoutManager(mLayoutManager);
-    notificationList = new ArrayList<>();
-    notificationAdapter = new NotificationAdapter(getContext(), notificationList);
-    recyclerView.setAdapter(notificationAdapter);
-    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), mLayoutManager.getOrientation());
-    recyclerView.addItemDecoration(dividerItemDecoration);
-    recyclerView.setEmptyView(empty_state);
+    firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-    clear_notifications.setOnClickListener(v -> deleteNotifications());
+    init();
 
     return view;
   }
 
-  private void readNotifications() {
-    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-    DatabaseReference reference =
-        FirebaseDatabase.getInstance()
-            .getReference("Users")
-            .child(firebaseUser.getUid())
-            .child("Notification");
+  private void init(){
 
-    reference.addValueEventListener(
-        new ValueEventListener() {
-          @Override
-          public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
-            notificationList.clear();
-            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-              Notification notification = snapshot.getValue(Notification.class);
-              notificationList.add(notification);
-            }
+    lookOutNotificationFragment = new LookOutNotificationFragment();
+    plexusNotificationFragment = new PlexusNotificationFragment();
 
-            Collections.reverse(notificationList);
-            notificationAdapter.notifyDataSetChanged();
-          }
+    tabLayout.setupWithViewPager(viewPager);
 
-          @Override
-          public void onCancelled(@NotNull DatabaseError databaseError) {
-          }
-        });
+    ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(), 0);
+    viewPagerAdapter.addFragment(plexusNotificationFragment, "Plexus");
+    viewPagerAdapter.addFragment(lookOutNotificationFragment, "LookOut");
+    viewPager.setAdapter(viewPagerAdapter);
+
+    BadgeDrawable badgeDrawable = tabLayout.getTabAt(0).getOrCreateBadge();
+    badgeDrawable.setVisible(false);
+    badgeDrawable.setNumber(1);
+
+    clear_notifications.setOnClickListener(v -> deleteNotifications());
   }
+
 
   private void deleteNotifications() {
     final Dialog dialog = new Dialog(getContext());
@@ -142,15 +131,37 @@ public class NotificationsFragment extends Fragment {
     dialog.show();
   }
 
-  @Override
-  public void onStart() {
-    super.onStart();
-    readNotifications();
-  }
+  private class ViewPagerAdapter extends FragmentPagerAdapter {
 
-  @Override
-  public void onResume() {
-    super.onResume();
-    readNotifications();
+    private List<Fragment> fragments = new ArrayList<>();
+    private List<String> fragmentTitles = new ArrayList<>();
+
+    public ViewPagerAdapter(FragmentManager supportFragmentManager, int behaviour) {
+      super(supportFragmentManager, behaviour);
+
+    }
+
+    public void addFragment(Fragment fragment, String title){
+      fragments.add(fragment);
+      fragmentTitles.add(title);
+    }
+
+    @NonNull
+    @NotNull
+    @Override
+    public Fragment getItem(int position) {
+      return fragments.get(position);
+    }
+
+    @Override
+    public int getCount() {
+      return fragments.size();
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+      return fragmentTitles.get(position);
+    }
   }
 }

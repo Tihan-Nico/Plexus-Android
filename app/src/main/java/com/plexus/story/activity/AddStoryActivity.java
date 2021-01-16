@@ -24,7 +24,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.plexus.R;
-import com.plexus.core.components.compressor.Compressor;
+import com.plexus.components.components.compressor.Compressor;
 import com.plexus.main.activity.MainActivity;
 import com.plexus.model.account.User;
 import com.plexus.utils.MasterCipher;

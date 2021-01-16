@@ -24,7 +24,7 @@
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/toolbar"
+        android:background="@color/toolbarColor"
         app:contentInsetLeft="0dp">
 
         <ImageView
@@ -94,7 +94,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/toolbar"
+                android:background="@color/toolbarColor"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -221,7 +221,7 @@
                     android:textColor="@color/gray_scale"
                     android:fontFamily="@font/roboto"
                     android:textSize="12sp"
-                    android:text="Notifications is probable the most irritating thing but not if you like sharing memes. We calculate your time spent in this section based on how much you interact with each notification, just because we can."/>
+                    android:text="Notifications is probable the most irritating thing but not if you like sharing memes. We calculate your time spent in this section based on how much you interact with each plexusNotification, just because we can."/>
 
                 <View
                     android:layout_width="match_parent"

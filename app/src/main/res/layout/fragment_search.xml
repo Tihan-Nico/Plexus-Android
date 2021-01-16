@@ -39,7 +39,7 @@
             app:civ_border_width="0.5dp"
             app:roundAsCircle="true" />
 
-        <com.plexus.core.components.socials.commons.SocialAutoCompleteTextView
+        <com.plexus.components.components.socials.commons.SocialAutoCompleteTextView
             android:id="@+id/search_bar"
             android:layout_width="wrap_content"
             android:layout_height="35dp"

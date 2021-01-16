@@ -1,9 +1,7 @@
 package com.plexus.settings.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,15 +11,13 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.plexus.R;
-import com.plexus.account.activity.settings.ManageAccountActivity;
+import com.plexus.account.AccountSettingsActivity;
 import com.plexus.settings.activity.advance_features.AdvanceFeaturesActivity;
 import com.plexus.settings.activity.experimental.ExperimentalActivity;
 import com.plexus.settings.activity.message.MessageSettingsActivity;
 import com.plexus.settings.activity.notices.NoticesActivity;
 import com.plexus.settings.activity.privacy.PrivacyActivity;
 import com.plexus.settings.activity.version.VersionActivity;
-
-import org.jsoup.Jsoup;
 
 /******************************************************************************
  * Copyright (c) 2020. Plexus, Inc.                                           *
@@ -80,16 +76,13 @@ public class SettingsActivity extends AppCompatActivity {
 
         privacy.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), PrivacyActivity.class)));
 
-        manage_account.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ManageAccountActivity.class)));
+        manage_account.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AccountSettingsActivity.class)));
 
         about.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AboutActivity.class)));
 
         notices.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), NoticesActivity.class)));
 
         message.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), MessageSettingsActivity.class)));
-
-        VersionChecker versionChecker = new VersionChecker();
-        versionChecker.execute();
 
     }
 
@@ -110,38 +103,6 @@ public class SettingsActivity extends AppCompatActivity {
         } else {
             version.setVisibility(View.VISIBLE);
             guideline_2.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    public class VersionChecker extends AsyncTask<String, String, String> {
-        private String newVersion;
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=" + getPackageName())
-                        .timeout(30000)
-                        .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                        .referrer("http://www.google.com")
-                        .get()
-                        .select(".hAyfc .htlgb")
-                        .get(7)
-                        .ownText();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return newVersion;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            String appVersionName = BuildConfig.VERSION_NAME;
-            if (!appVersionName.equals(newVersion)) {
-                update.setText(R.string.update_available);
-                update_available.setVisibility(View.VISIBLE);
-            }
         }
     }
 }

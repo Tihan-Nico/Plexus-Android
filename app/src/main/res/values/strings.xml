@@ -965,6 +965,9 @@
     <string name="create_group">Create Group</string>
     <string name="location">Location</string>
     <string name="group_type">Group Type</string>
-    <string name="group_color">Group Color</string>>
+    <string name="group_color">Group Color</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="timeline_management">Timeline Management</string>
+    <string name="notification_settings">Notification Settings</string>>
 
 </resources>

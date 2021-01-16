@@ -12,9 +12,8 @@ import android.text.style.ForegroundColorSpan;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.plexus.R;
+import com.plexus.components.locale_changer.base.LocaleChangerBaseActivity;
 
 /******************************************************************************
  * Copyright (c) 2020. Plexus, Inc.                                           *
@@ -32,7 +31,7 @@ import com.plexus.R;
  *  limitations under the License.                                            *
  ******************************************************************************/
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends LocaleChangerBaseActivity {
 
   private TextView open_source, legal, app_version;
   private ImageView back;

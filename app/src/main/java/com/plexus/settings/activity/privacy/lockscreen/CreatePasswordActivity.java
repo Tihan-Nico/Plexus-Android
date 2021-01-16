@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.plexus.R;
-import com.plexus.core.components.pinview.OtpEditText;
+import com.plexus.components.components.pinview.OtpEditText;
 
 
 /******************************************************************************

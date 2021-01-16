@@ -11,6 +11,7 @@
     <color name="thumbnail">#FF3A3939</color>
     <color name="textColor">@color/black</color>
     <color name="textDescriptionColor">#a6a5a9</color>
+    <color name="textSheetColor">@color/black</color>
     <color name="backgroundColor">#F7F7F7</color>
     <color name="drawableTintColor">@color/black</color>
     <color name="statusBarColor">#FFFFFF</color>

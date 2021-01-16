@@ -7,12 +7,10 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.plexus.lookout.R;
-import com.plexus.lookout.widgets.PlexusRecyclerView;
 
 public class TimelineActivity extends AppCompatActivity {
 
-    PlexusRecyclerView recyclerView;
+    /*PlexusRecyclerView recyclerView;
     ImageView back;
     View empty_view;
 
@@ -29,5 +27,5 @@ public class TimelineActivity extends AppCompatActivity {
 
         recyclerView.setEmptyView(empty_view);
 
-    }
+    }*/
 }

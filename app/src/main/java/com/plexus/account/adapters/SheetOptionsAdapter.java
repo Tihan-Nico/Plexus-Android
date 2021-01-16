@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.plexus.lookout.R;
-import com.plexus.lookout.model.account.SheetOptions;
+import com.plexus.R;
+import com.plexus.components.components.bottomsheet.model.SheetOptions;
 
 import java.util.ArrayList;
 
@@ -56,7 +56,7 @@ public class SheetOptionsAdapter extends BaseAdapter {
 
         LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.sheet_profile_item, null);
+            convertView = mInflater.inflate(R.layout.sheet_item, null);
             holder = new ViewHolder();
             holder.txtTitle = convertView.findViewById(R.id.text);
             holder.imageView = convertView.findViewById(R.id.icon);

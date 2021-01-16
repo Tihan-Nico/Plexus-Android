@@ -20,7 +20,7 @@
     android:layout_height="fill_parent"
     android:layout_gravity="center"
     android:fillViewport="true"
-    android:background="@color/toolbar">
+    android:background="@color/toolbarColor">
 
     <RelativeLayout
         android:layout_width="fill_parent"

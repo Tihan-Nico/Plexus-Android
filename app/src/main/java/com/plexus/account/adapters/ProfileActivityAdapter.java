@@ -55,7 +55,7 @@ public class ProfileActivityAdapter extends RecyclerView.Adapter<ProfileActivity
     @Override
     public ProfileActivityAdapter.ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.profile_activity_item, parent, false);
-        return new ProfileActivityAdapter.ImageViewHolder(view);
+        return new ImageViewHolder(view);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class ProfileActivityAdapter extends RecyclerView.Adapter<ProfileActivity
                 });
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder {
+    public static class ImageViewHolder extends RecyclerView.ViewHolder {
 
         SimpleDraweeView image;
         TextView title;

@@ -48,7 +48,7 @@
         android:layout_gravity="center"
         android:visibility="gone"/>
 
-    <com.plexus.core.components.socials.PlexusSocialTextView
+    <com.plexus.components.components.socials.PlexusSocialTextView
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

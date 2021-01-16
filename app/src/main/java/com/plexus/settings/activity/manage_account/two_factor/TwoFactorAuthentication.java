@@ -1,5 +1,6 @@
 package com.plexus.settings.activity.manage_account.two_factor;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -202,7 +203,7 @@ public class TwoFactorAuthentication extends AppCompatActivity {
                 phoneNumber,        // Phone number to verify
                 30,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
-                TaskExecutors.MAIN_THREAD,               // Activity (for callback binding)
+                (Activity) TaskExecutors.MAIN_THREAD,               // Activity (for callback binding)
                 mCallbacks);        // OnVerificationStateChangedCallbacks
     }
 

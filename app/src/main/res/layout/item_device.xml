@@ -70,7 +70,7 @@
         android:id="@+id/show_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_more_vert"
+        android:src="@drawable/more_vert"
         app:tint="@color/drawableTintColor"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"/>

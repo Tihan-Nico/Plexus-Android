@@ -23,8 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
-import com.plexus.core.background.DialogInformation;
-import com.plexus.core.components.socials.PlexusSocialTextView;
+import com.plexus.components.background.DialogInformation;
+import com.plexus.components.components.socials.PlexusSocialTextView;
 import com.plexus.model.Token;
 import com.plexus.model.group.GroupPosts;
 import com.plexus.model.account.User;
@@ -186,7 +186,7 @@ public class GroupPostAdapter extends RecyclerView.Adapter{
                         public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                             User user = snapshot.getValue(User.class);
 
-                            FirebaseNotificationHelper.initialize(com.plexus.core.Constants.FCM_KEY)
+                            FirebaseNotificationHelper.initialize(com.plexus.components.Constants.FCM_KEY)
                                     .defaultJson(false, getJsonBody(MasterCipher.decrypt(user.getName()), MasterCipher.decrypt(user.getImageurl()), postid))
                                     .receiverFirebaseToken(token.getToken())
                                     .send();

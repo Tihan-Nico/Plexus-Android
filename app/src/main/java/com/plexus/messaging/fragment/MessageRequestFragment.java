@@ -15,7 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
-import com.plexus.core.components.PlexusRecyclerView;
+import com.plexus.components.components.PlexusRecyclerView;
 import com.plexus.model.account.User;
 
 /******************************************************************************

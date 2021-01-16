@@ -25,8 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
-import com.plexus.core.background.DialogInformation;
-import com.plexus.model.Notification;
+import com.plexus.components.background.DialogInformation;
+import com.plexus.model.notifications.PlexusNotification;
 import com.plexus.model.account.User;
 import com.plexus.posts.activity.PostDetailActivity;
 import com.plexus.account.activity.ProfileActivity;
@@ -58,12 +58,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
   String postid;
   Context mContext;
-  List<Notification> mNotification;
+  List<PlexusNotification> mPlexusNotification;
   FirebaseUser firebaseUser;
 
-  public NotificationAdapter(Context context, List<Notification> notification) {
+  public NotificationAdapter(Context context, List<PlexusNotification> plexusNotification) {
     mContext = context;
-    mNotification = notification;
+    mPlexusNotification = plexusNotification;
   }
 
   @NonNull
@@ -75,60 +75,60 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
   @Override
   public void onBindViewHolder(@NonNull final NotificationAdapter.ImageViewHolder holder, final int position) {
-    final Notification notification = mNotification.get(position);
+    final PlexusNotification plexusNotification = mPlexusNotification.get(position);
     firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-    holder.notification_timestamp.setReferenceTime(Long.parseLong(notification.getTimestamp()));
-    getUserInfo(holder.profile_image, notification.getUserid());
-    getNotificationDescription(notification, holder.notification_description, notification.getUserid());
+    holder.notification_timestamp.setReferenceTime(Long.parseLong(plexusNotification.getTimestamp()));
+    getUserInfo(holder.profile_image, plexusNotification.getUserid());
+    getNotificationDescription(plexusNotification, holder.notification_description, plexusNotification.getUserid());
 
     SharedPreferences prefs = mContext.getSharedPreferences("plexus", MODE_PRIVATE);
-    postid = prefs.getString("postid", notification.getPostid());
+    postid = prefs.getString("postid", plexusNotification.getPostid());
 
-    if (!notification.isNotificationViewed()){
+    if (!plexusNotification.isNotificationViewed()){
       holder.notification_background.setBackgroundColor(Color.parseColor("#D9CC775E"));
     }
 
-    if (!notification.isNotificationRead()){
+    if (!plexusNotification.isNotificationRead()){
       readNotifications();
     }
 
     holder.itemView.setOnClickListener(
         view -> {
-          if (notification.isNotificationViewed()){
+          if (plexusNotification.isNotificationViewed()){
             Intent intent;
-            if (notification.isIspost()) {
+            if (plexusNotification.isIspost()) {
               intent = new Intent(mContext, PostDetailActivity.class);
-              intent.putExtra("postid", notification.getPostid());
-              intent.putExtra("publisherid", notification.getUserid());
+              intent.putExtra("postid", plexusNotification.getPostid());
+              intent.putExtra("publisherid", plexusNotification.getUserid());
 
             } else {
               intent = new Intent(mContext, ProfileActivity.class);
-              intent.putExtra("userid", notification.getUserid());
+              intent.putExtra("userid", plexusNotification.getUserid());
 
             }
             mContext.startActivity(intent);
           } else {
             Intent intent;
-            if (notification.isIspost()) {
+            if (plexusNotification.isIspost()) {
               intent = new Intent(mContext, PostDetailActivity.class);
-              intent.putExtra("postid", notification.getPostid());
-              intent.putExtra("publisherid", notification.getUserid());
+              intent.putExtra("postid", plexusNotification.getPostid());
+              intent.putExtra("publisherid", plexusNotification.getUserid());
             } else {
               intent = new Intent(mContext, ProfileActivity.class);
-              intent.putExtra("userid", notification.getUserid());
+              intent.putExtra("userid", plexusNotification.getUserid());
             }
-            viewedNotification(notification.getId());
+            viewedNotification(plexusNotification.getId());
             mContext.startActivity(intent);
           }
         });
 
-    holder.notification_menu.setOnClickListener(v -> DialogInformation.showNotificationBottomSheet(mContext, notification, notification.getUserid()));
+    holder.notification_menu.setOnClickListener(v -> DialogInformation.showNotificationBottomSheet(mContext, plexusNotification, plexusNotification.getUserid()));
 
   }
 
   @Override
   public int getItemCount() {
-    return mNotification == null ? 0 : mNotification.size();
+    return mPlexusNotification == null ? 0 : mPlexusNotification.size();
   }
 
   private void viewedNotification(String id){
@@ -142,8 +142,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
       @Override
       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-          Notification notification = snapshot.getValue(Notification.class);
-          if (notification != null ) {
+          PlexusNotification plexusNotification = snapshot.getValue(PlexusNotification.class);
+          if (plexusNotification != null ) {
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("notificationRead", true);
             snapshot.getRef().updateChildren(hashMap);
@@ -173,7 +173,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         });
   }
 
-  private void getNotificationDescription(Notification notification, TextView notification_description, String publisherid){
+  private void getNotificationDescription(PlexusNotification plexusNotification, TextView notification_description, String publisherid){
     DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(publisherid);
     reference.addListenerForSingleValueEvent(
             new ValueEventListener() {
@@ -181,16 +181,16 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
               public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
 
-                if (notification.isFollower()) {
+                if (plexusNotification.isFollower()) {
                   String sourceString = "<b>" + MessageFormat.format("{0} {1}", MasterCipher.decrypt(user.getName()), MasterCipher.decrypt(user.getSurname())) + "</b> " + "started following you.";
                   notification_description.setText(Html.fromHtml(sourceString));
-                } else if (notification.isComment()) {
+                } else if (plexusNotification.isComment()) {
                   String sourceString = "<b>" + MessageFormat.format("{0} {1}", MasterCipher.decrypt(user.getName()), MasterCipher.decrypt(user.getSurname())) + "</b> " + "commented on your post.";
                   notification_description.setText(Html.fromHtml(sourceString));
-                } else if (notification.isReaction()) {
+                } else if (plexusNotification.isReaction()) {
                   String sourceString = "<b>" + MessageFormat.format("{0} {1}", MasterCipher.decrypt(user.getName()), MasterCipher.decrypt(user.getSurname())) + "</b> " + "liked your post.";
                   notification_description.setText(Html.fromHtml(sourceString));
-                } else if (notification.isShared()){
+                } else if (plexusNotification.isShared()){
                   String sourceString = "<b>" +  MessageFormat.format("{0} {1}", MasterCipher.decrypt(user.getName()), MasterCipher.decrypt(user.getSurname())) + "</b> " + "shared your post.";
                   notification_description.setText(Html.fromHtml(sourceString));
                 }

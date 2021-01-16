@@ -3,10 +3,10 @@ package com.plexus.notifications.fcm;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static com.plexus.core.Constants.KEY_DATA;
-import static com.plexus.core.Constants.KEY_TEXT;
-import static com.plexus.core.Constants.KEY_TITLE;
-import static com.plexus.core.Constants.KEY_TO;
+import static com.plexus.components.Constants.KEY_DATA;
+import static com.plexus.components.Constants.KEY_TEXT;
+import static com.plexus.components.Constants.KEY_TITLE;
+import static com.plexus.components.Constants.KEY_TO;
 
 public class FirebaseNotificationHelper {
 

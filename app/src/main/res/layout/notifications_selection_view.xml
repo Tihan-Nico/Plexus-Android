@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/notification_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Likes"
+        android:fontFamily="@font/roboto"
+        android:textSize="14sp"
+        android:textColor="@color/textDescriptionColor"
+        android:layout_margin="15dp"/>
+
+    <RadioGroup
+        android:id="@+id/notifications_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/notification_on"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
+            android:text="On"
+            android:textSize="16sp"
+            android:padding="15dp" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/notification_off"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
+            android:text="Off"
+            android:textSize="16sp"
+            android:padding="15dp" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/notification_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tihan-Nico liked your post"
+        android:fontFamily="@font/roboto"
+        android:textSize="12sp"
+        android:textColor="@color/textDescriptionColor"
+        android:layout_margin="15dp"/>
+
+</LinearLayout>

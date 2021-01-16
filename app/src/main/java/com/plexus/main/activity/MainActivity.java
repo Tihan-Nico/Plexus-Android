@@ -32,7 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.plexus.R;
-import com.plexus.core.background.DialogInformation;
+import com.plexus.components.background.DialogInformation;
 import com.plexus.services.LocationService;
 import com.plexus.startup.PermissionActivity;
 import com.plexus.main.fragments.HomeFragment;
@@ -40,7 +40,7 @@ import com.plexus.main.fragments.NotificationsFragment;
 import com.plexus.main.fragments.ProfileFragment;
 import com.plexus.main.fragments.SearchFragment;
 import com.plexus.messaging.fragment.ChatlistFragment;
-import com.plexus.model.Notification;
+import com.plexus.model.notifications.PlexusNotification;
 import com.plexus.model.Token;
 import com.plexus.model.account.User;
 import com.plexus.utils.MasterCipher;
@@ -275,8 +275,8 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int unread = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Notification notification = snapshot.getValue(Notification.class);
-                    if (!notification.isNotificationRead()){
+                    PlexusNotification plexusNotification = snapshot.getValue(PlexusNotification.class);
+                    if (!plexusNotification.isNotificationRead()){
                         unread++;
                     }
                 }

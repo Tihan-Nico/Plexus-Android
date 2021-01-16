@@ -131,8 +131,6 @@
         <activity android:name=".settings.activity.privacy.RestrictAccountsActivity" />
         <activity android:name=".settings.activity.privacy.RestrictAccountDetailsActivity" />
         <activity android:name=".settings.activity.experimental.ExperimentalActivity" />
-        <activity android:name=".account.activity.settings.ManagePlexusInfoActivity" />
-        <activity android:name=".account.activity.settings.ManageAccountActivity" />
         <activity android:name=".settings.activity.manage_account.login_management.LoginManagementActivity" />
         <activity android:name=".settings.activity.privacy.BlockedAccountsActivity" />
         <activity android:name=".settings.activity.privacy.lockscreen.AppLockActivity" />
@@ -209,6 +207,15 @@
         </activity>
         <activity android:name=".groups.activity.AllGroupActivity" />
         <activity android:name=".groups.activity.GroupSettingsActivity" />
+        <activity android:name=".settings.activity.timeline.UnfollowActivity" />
+        <activity android:name=".settings.activity.timeline.FavouritesActivity" />
+        <activity android:name=".settings.activity.timeline.ReFollowActivity" />
+        <activity android:name=".settings.activity.timeline.TimelineActivity" />
+        <activity android:name=".settings.activity.notifications.NotificationsActivity" />
+        <activity android:name=".settings.activity.notifications.FollowersNotificationActivity" />
+        <activity android:name=".settings.activity.notifications.PostsNotificationActivity" />
+        <activity android:name=".settings.activity.notifications.LookoutNotificationActivity" />
+        <activity android:name=".settings.activity.notifications.MessagesNotificationActivity" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -224,7 +231,7 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".core.background.UpgradeReceiver">
+        <receiver android:name=".components.background.UpgradeReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REPLACED" />
                 <data android:scheme="package" />

@@ -28,14 +28,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.dynamiclinks.DynamicLink;
-import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
-import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.plexus.R;
-import com.plexus.core.components.bottomsheet.adapter.SheetOptionsAdapter;
-import com.plexus.core.components.bottomsheet.model.SheetOptions;
+import com.plexus.components.components.bottomsheet.adapter.SheetOptionsAdapter;
+import com.plexus.components.components.bottomsheet.model.SheetOptions;
 import com.plexus.model.posts.Post;
 import com.plexus.model.account.User;
 import com.plexus.posts.activity.saved_posts.SavedPostsActivity;
@@ -86,8 +83,8 @@ public class ProfileFragment extends Fragment {
     private BottomSheetDialog profile_sheet;
     private ProfilePostAdapter profilePostAdapter;
 
-    public static final String[] titles = new String[]{"Profile Activity", "Account Privacy", "Account Status", "Saved Posts", "Profile Link"};
-    public static final Integer[] images = {R.drawable.profile_activity, R.drawable.lock_outline, R.drawable.error, R.drawable.bookmark_multiple_outline, R.drawable.link_variant};
+    public static final String[] titles = new String[]{"Profile Activity", "Account Privacy", "Account Status", "Archive", "Saved Posts", "Profile Link"};
+    public static final Integer[] images = {R.drawable.profile_activity, R.drawable.lock_outline, R.drawable.error, R.drawable.archive_outline, R.drawable.bookmark_multiple_outline, R.drawable.link_variant};
 
     ArrayList<SheetOptions> rowItems;
 
@@ -154,7 +151,7 @@ public class ProfileFragment extends Fragment {
             }
 
             if (position == 4){
-                generateDynamicLink(generateDeepLinkUrl(firebaseUser.getUid()));
+                shareDeepLink(generateDeepLinkUrl(firebaseUser.getUid()));
             }
 
         });
@@ -292,56 +289,6 @@ public class ProfileFragment extends Fragment {
 
     private String generateDeepLinkUrl(String pushID) {
         return "https://plexus.dev/profile=" + pushID;
-    }
-
-    /**
-     * This will return a shrinked link using Firebase Dynamic Links , this method will shrink this lik plexus.dev/groups=pushID
-     * @param url of the custom page we created above with the custom data of the user
-     */
-    private void generateDynamicLink(String url) {
-        // setDomainUriPrefix should host a link like this https://plexus.dev/groups
-        // The androidParameters is just the package name of the app , this is because if the app is not installed it will prompt the user to the play store to download it, package example com.gaston.myapp
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-
-                FirebaseDynamicLinks.getInstance().createDynamicLink()
-                        .setLink(Uri.parse(url))
-                        .setDomainUriPrefix("https://plexus.dev/profile")
-                        .setAndroidParameters(
-                                new DynamicLink.AndroidParameters.Builder("com.plexus")
-                                        .setMinimumVersion(122)
-                                        .build())
-                        .setIosParameters(
-                                new DynamicLink.IosParameters.Builder("com.plexus")
-                                        .setAppStoreId("")
-                                        .setMinimumVersion("1.0.0")
-                                        .build())
-                        .setSocialMetaTagParameters(
-                                new DynamicLink.SocialMetaTagParameters.Builder()
-                                        .setTitle(MasterCipher.decrypt(user.getName()) + " " + MasterCipher.decrypt(user.getSurname()))
-                                        .setDescription(MasterCipher.decrypt(user.getBio()))
-                                        .setImageUrl(Uri.parse(MasterCipher.decrypt(user.getImageurl())))
-                                        .build())
-                        .buildShortDynamicLink(ShortDynamicLink.Suffix.SHORT)
-                        .addOnCompleteListener(getActivity(), task -> {
-                            if (task.isSuccessful()) {
-                                // we get the dynamic link generated and pass it to the shareDeepLink method
-                                Uri shortURL = task.getResult().getShortLink();
-                                shareDeepLink(shortURL.toString());
-                            } else {
-                                Toast.makeText(getContext(), "Failed to create link", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
     }
 
     private void shareDeepLink(String url){

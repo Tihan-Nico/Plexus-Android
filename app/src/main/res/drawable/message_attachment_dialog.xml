@@ -23,6 +23,6 @@
         android:radius="8dp"/>
 
     <solid
-        android:color="@color/toolbar"/>
+        android:color="@color/toolbarColor"/>
 
 </shape>

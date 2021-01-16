@@ -26,7 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
-import com.plexus.core.background.PlexusUpload;
+import com.plexus.components.background.PlexusUpload;
 import com.plexus.model.group.Group;
 import com.plexus.utils.MasterCipher;
 import com.theartofdev.edmodo.cropper.CropImage;

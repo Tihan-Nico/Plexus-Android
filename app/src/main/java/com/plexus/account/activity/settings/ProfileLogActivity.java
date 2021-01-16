@@ -18,6 +18,8 @@ import com.plexus.R;
 import com.plexus.model.account.ProfileLogger;
 import com.plexus.account.adapters.ProfileActivityAdapter;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -40,12 +42,11 @@ import java.util.List;
 
 public class ProfileLogActivity extends AppCompatActivity {
 
-    private ImageView back;
-    private RecyclerView recyclerView;
+    ImageView back;
+    RecyclerView recyclerView;
     private ProfileActivityAdapter profileActivityAdapter;
     private List<ProfileLogger> profileLoggerList;
-    private FirebaseUser firebaseUser;
-    private FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,6 @@ public class ProfileLogActivity extends AppCompatActivity {
         back.setOnClickListener(v -> finish());
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        firebaseAuth = FirebaseAuth.getInstance();
 
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(ProfileLogActivity.this);
@@ -78,7 +78,7 @@ public class ProfileLogActivity extends AppCompatActivity {
         reference.addValueEventListener(
                 new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                         profileLoggerList.clear();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             ProfileLogger profileLogger = snapshot.getValue(ProfileLogger.class);
@@ -90,7 +90,7 @@ public class ProfileLogActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {}
+                    public void onCancelled(@NotNull DatabaseError databaseError) {}
                 });
     }
 

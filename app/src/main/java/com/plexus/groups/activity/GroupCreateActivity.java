@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.plexus.R;
-import com.plexus.core.background.DialogInformation;
+import com.plexus.components.background.DialogInformation;
 import com.plexus.utils.MasterCipher;
 
 import java.text.SimpleDateFormat;

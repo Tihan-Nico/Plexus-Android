@@ -35,7 +35,7 @@
 
     </LinearLayout>
 
-    <com.plexus.core.components.PlayPause
+    <com.plexus.components.components.PlayPause
         android:id="@+id/play_pause"
         android:layout_width="24dp"
         android:layout_height="24dp"

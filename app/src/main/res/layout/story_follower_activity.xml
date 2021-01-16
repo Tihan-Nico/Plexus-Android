@@ -85,7 +85,7 @@
         android:src="@drawable/send_message"
         android:rotation="45"/>
 
-    <com.plexus.core.components.FrostedGlassView
+    <com.plexus.components.components.FrostedGlassView
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_below="@id/stories"
@@ -177,6 +177,6 @@
 
         </RelativeLayout>
 
-    </com.plexus.core.components.FrostedGlassView>
+    </com.plexus.components.components.FrostedGlassView>
 
 </RelativeLayout>

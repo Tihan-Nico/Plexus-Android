@@ -58,9 +58,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
-import com.plexus.core.background.PlexusDelete;
-import com.plexus.core.components.ImageView.Constants;
-import com.plexus.core.components.socials.PlexusSocialTextView;
+import com.plexus.components.background.PlexusDelete;
+import com.plexus.components.components.ImageView.Constants;
+import com.plexus.components.components.socials.PlexusSocialTextView;
 import com.plexus.model.Token;
 import com.plexus.model.posts.Post;
 import com.plexus.model.posts.SavedPostsCollection;
@@ -603,7 +603,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                         public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                             User user = snapshot.getValue(User.class);
 
-                            FirebaseNotificationHelper.initialize(com.plexus.core.Constants.FCM_KEY)
+                            FirebaseNotificationHelper.initialize(com.plexus.components.Constants.FCM_KEY)
                                     .defaultJson(false, getJsonBody(MasterCipher.decrypt(user.getName()), MasterCipher.decrypt(user.getImageurl()), message, click_action, postid, type))
                                     .receiverFirebaseToken(token.getToken())
                                     .send();

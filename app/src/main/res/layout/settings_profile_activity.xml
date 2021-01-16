@@ -24,7 +24,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/toolbar"
+        android:background="@color/toolbarColor"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar

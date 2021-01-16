@@ -20,6 +20,8 @@ import android.os.Environment;
 
 public class MediaUtil {
 
+    public static final String VIDEO_MP4 = "video/mp4";
+
     public static String getRootPath() {
         String sdPath;
         String ext1 = Environment.getExternalStorageState();

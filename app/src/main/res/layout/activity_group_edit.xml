@@ -22,7 +22,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:background="@color/toolbar"
+        android:background="@color/toolbarColor"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="top">

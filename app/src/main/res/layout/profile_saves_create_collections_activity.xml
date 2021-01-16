@@ -24,7 +24,7 @@
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/toolbar"
+        android:background="@color/toolbarColor"
         app:contentInsetLeft="0dp"
         android:id="@+id/toolbar">
 
@@ -77,7 +77,7 @@
         android:layout_height="150dp"
         android:id="@+id/collection_image"
         app:roundedCornerRadius="8dp"
-        app:backgroundImage="@color/toolbar"
+        app:backgroundImage="@color/toolbarColor"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"/>
 

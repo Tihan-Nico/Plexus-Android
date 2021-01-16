@@ -104,7 +104,7 @@
         android:textColor="@color/gray_scale"
         android:textSize="12sp" />
 
-    <com.plexus.core.components.socials.commons.SocialAutoCompleteTextView
+    <com.plexus.components.components.socials.commons.SocialAutoCompleteTextView
         android:id="@+id/post_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

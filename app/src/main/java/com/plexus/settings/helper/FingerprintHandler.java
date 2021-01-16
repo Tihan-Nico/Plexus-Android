@@ -14,7 +14,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 
 import com.plexus.R;
-import com.plexus.core.components.pinview.OtpEditText;
+import com.plexus.components.components.pinview.OtpEditText;
 import com.plexus.main.activity.MainActivity;
 
 import static android.content.Context.MODE_PRIVATE;

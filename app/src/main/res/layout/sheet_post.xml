@@ -15,6 +15,7 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -34,7 +35,7 @@
             android:layout_gravity="center"
             android:id="@+id/save"
             android:src="@drawable/bookmark_multiple_outline"
-            android:tint="@color/gray_scale" />
+            app:tint="@color/drawableTintColor" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -42,7 +43,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:text="Save Post"
-            android:textColor="@color/gray_scale" />
+            android:textColor="@color/textSheetColor" />
 
     </LinearLayout>
 
@@ -66,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/comment_edit_outline"
-            android:tint="@color/gray_scale" />
+            app:tint="@color/gray_scale" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -74,7 +75,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:text="Edit Post"
-            android:textColor="@color/gray_scale" />
+            android:textColor="@color/textSheetColor" />
 
     </LinearLayout>
 
@@ -91,6 +92,40 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
+        android:id="@+id/favourite"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/star_plus_outline"
+            app:tint="@color/drawableTintColor" />
+
+        <TextView
+            android:id="@+id/favourite_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:text="Add Tihan-Nico's post to your favourites "
+            android:textColor="@color/textSheetColor" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/line3"
+        android:layout_marginBottom="10dp"
+        android:background="@color/guideline" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:id="@+id/delete_posts"
         android:orientation="horizontal">
 
@@ -99,7 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/delete_forever_outline"
-            android:tint="@color/gray_scale" />
+            app:tint="@color/drawableTintColor" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -107,7 +142,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:text="Delete Post"
-            android:textColor="@color/gray_scale" />
+            android:textColor="@color/textSheetColor" />
 
     </LinearLayout>
 
@@ -116,7 +151,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
-        android:id="@+id/line3"
+        android:id="@+id/line4"
         android:background="@color/guideline" />
 
     <LinearLayout
@@ -132,7 +167,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/email_outline"
-            android:tint="@color/gray_scale" />
+            app:tint="@color/gray_scale" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -140,7 +175,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:text="Report Post"
-            android:textColor="@color/gray_scale" />
+            android:textColor="@color/textSheetColor" />
 
     </LinearLayout>
 
@@ -165,7 +200,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/link_variant"
-            android:tint="@color/gray_scale" />
+            app:tint="@color/gray_scale" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -173,7 +208,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:text="Copy Link"
-            android:textColor="@color/gray_scale" />
+            android:textColor="@color/textSheetColor" />
 
     </LinearLayout>
 

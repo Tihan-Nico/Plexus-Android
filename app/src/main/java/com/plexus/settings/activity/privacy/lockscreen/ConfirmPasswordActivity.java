@@ -12,7 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.plexus.R;
-import com.plexus.core.components.pinview.OtpEditText;
+import com.plexus.components.components.pinview.OtpEditText;
 
 /******************************************************************************
  * Copyright (c) 2020. Plexus, Inc.                                           *

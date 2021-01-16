@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
 
-    <com.plexus.core.components.videoView.VideoControlView
+    <com.plexus.components.components.videoView.VideoControlView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom" />

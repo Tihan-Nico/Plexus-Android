@@ -18,11 +18,11 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import static com.plexus.Plexus.TAG;
-import static com.plexus.core.Constants.APPLICATION_JSON;
-import static com.plexus.core.Constants.AUTHORIZATION;
-import static com.plexus.core.Constants.CONTENT_TYPE;
-import static com.plexus.core.Constants.FCM_URL;
-import static com.plexus.core.Constants.SUCCESS_CODE;
+import static com.plexus.components.Constants.APPLICATION_JSON;
+import static com.plexus.components.Constants.AUTHORIZATION;
+import static com.plexus.components.Constants.CONTENT_TYPE;
+import static com.plexus.components.Constants.FCM_URL;
+import static com.plexus.components.Constants.SUCCESS_CODE;
 
 public class NetworkCall extends AsyncTask<String, Void, String> {
     private FirebaseNotiCallBack firebaseNotiCallBack;

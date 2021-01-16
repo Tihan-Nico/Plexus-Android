@@ -21,7 +21,6 @@
             android:id="@+id/fb_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/facebook"
             app:tint="@color/plexus"
             android:layout_margin="15dp"/>
 
@@ -56,7 +55,6 @@
                 android:id="@+id/fb_connected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/account_check_outline"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 app:tint="@color/plexus" />
@@ -76,7 +74,6 @@
             android:id="@+id/twitter_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/twitter"
             app:tint="@color/drawableTintColor"
             android:layout_margin="15dp"/>
 
@@ -112,7 +109,6 @@
                 android:id="@+id/twitter_connected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/account_check_outline"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 app:tint="@color/drawableTintColor" />

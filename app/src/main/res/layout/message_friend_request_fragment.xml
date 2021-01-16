@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/toolbar"
-        android:background="@color/toolbar">
+        android:background="@color/toolbarColor">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <com.plexus.core.components.PlexusRecyclerView
+    <com.plexus.components.components.PlexusRecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recycler_view" />

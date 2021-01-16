@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/textColor"
+        android:text="Plexus may still send you important notifications about your account and content outside of the current plexusNotification settings."
+        android:textSize="16sp"
+        android:layout_margin="15dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/textDescriptionColor"
+        android:text="Push Notifications"
+        android:textSize="12sp"
+        android:layout_marginStart="15dp"/>
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pause All"
+        android:textSize="16sp"
+        android:textColor="@color/textColor"
+        android:padding="15dp"
+        android:thumbTint="@color/plexus"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/posts">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Posts and Comments"
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto"
+            android:padding="15dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/followers_and_following">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Following and Followers"
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto"
+            android:padding="15dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/messages">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Messages"
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto"
+            android:padding="15dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/LookOut">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LookOut"
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto"
+            android:padding="15dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/toolbar"
-        android:background="@color/toolbar"
+        android:background="@color/toolbarColor"
         app:menu="@menu/toolbar_message_new_chat"
         android:theme="@style/AppThemeToolbar">
 

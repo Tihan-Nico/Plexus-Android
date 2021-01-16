@@ -20,7 +20,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.plexus.R;
-import com.plexus.core.components.pinview.OtpEditText;
+import com.plexus.components.components.pinview.OtpEditText;
 import com.plexus.main.activity.MainActivity;
 import com.plexus.settings.helper.FingerprintHandler;
 
