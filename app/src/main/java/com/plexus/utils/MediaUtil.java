@@ -20,7 +20,20 @@ import android.os.Environment;
 
 public class MediaUtil {
 
-    public static final String VIDEO_MP4 = "video/mp4";
+    public static final String IMAGE_PNG         = "image/png";
+    public static final String IMAGE_JPEG        = "image/jpeg";
+    public static final String IMAGE_HEIC        = "image/heic";
+    public static final String IMAGE_HEIF        = "image/heif";
+    public static final String IMAGE_WEBP        = "image/webp";
+    public static final String IMAGE_GIF         = "image/gif";
+    public static final String AUDIO_AAC         = "audio/aac";
+    public static final String AUDIO_UNSPECIFIED = "audio/*";
+    public static final String VIDEO_MP4         = "video/mp4";
+    public static final String VIDEO_UNSPECIFIED = "video/*";
+    public static final String VCARD             = "text/x-vcard";
+    public static final String LONG_TEXT         = "text/x-plexus-plain";
+    public static final String VIEW_ONCE         = "application/x-plexus-view-once";
+    public static final String UNKNOWN           = "*/*";
 
     public static String getRootPath() {
         String sdPath;

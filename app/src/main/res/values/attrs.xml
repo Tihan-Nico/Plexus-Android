@@ -213,4 +213,13 @@
         <attr name="pickerColors" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="CameraView">
+        <attr name="camera" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="QrView">
+        <attr name="qr_foreground_color" format="color" />
+        <attr name="qr_background_color" format="color" />
+    </declare-styleable>
+
 </resources>
