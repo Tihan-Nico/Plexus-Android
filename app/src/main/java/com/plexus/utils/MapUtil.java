@@ -18,8 +18,8 @@ package com.plexus.utils;
 
 public class MapUtil {
 
-    public static String local(double latitudeFinal, double longitudeFinal){
-        return "https://maps.googleapis.com/maps/api/staticmap?center="+latitudeFinal+","+longitudeFinal+"&zoom=18&size=280x280&markers=color:red|"+latitudeFinal+","+longitudeFinal;
+    public static String local(double latitudeFinal, double longitudeFinal) {
+        return "https://maps.googleapis.com/maps/api/staticmap?center=" + latitudeFinal + "," + longitudeFinal + "&zoom=18&size=280x280&markers=color:red|" + latitudeFinal + "," + longitudeFinal;
     }
 
 }

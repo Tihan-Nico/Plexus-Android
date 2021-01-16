@@ -48,11 +48,11 @@ import java.util.HashMap;
 public class PrivacyActivity extends AppCompatActivity {
 
     public LinearLayout blocked_accounts, lock_screen, restricted_accounts, last_seen, screenshot_view, post_privacy;
+    ImageView back;
     private FirebaseUser firebaseUser;
     private SwitchMaterial set_account_private;
     private TextView last_seen_enabled, screenshot_enabled;
     private Dialog options_last_seen, options_screenshot;
-    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,11 +129,7 @@ public class PrivacyActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     if (dataSnapshot1.exists()) {
                         runOnUiThread(() -> {
-                            if (user.isPrivate_account()) {
-                                set_account_private.setChecked(true);
-                            } else {
-                                set_account_private.setChecked(false);
-                            }
+                            set_account_private.setChecked(user.isPrivate_account());
 
                         });
                     }
@@ -156,7 +152,7 @@ public class PrivacyActivity extends AppCompatActivity {
 
     }
 
-    private void getChatPrivacy(){
+    private void getChatPrivacy() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Privacy").child("Chat");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

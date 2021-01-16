@@ -3,6 +3,7 @@ package com.plexus.components.locale_changer.utils;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 
@@ -17,11 +18,12 @@ public class ActivityRecreationHelper {
 
     private static final Map<String, Locale> localesOnActivities = new HashMap<>();
 
-    private ActivityRecreationHelper(){
+    private ActivityRecreationHelper() {
     }
 
     /**
      * Call this method on the Activity onResume. It will recreate the Activity if a Locale change is detected.
+     *
      * @param activity
      */
     public static void onResume(Activity activity) {
@@ -37,6 +39,7 @@ public class ActivityRecreationHelper {
 
     /**
      * Call this method on the Activity onDestroy.
+     *
      * @param activity
      */
     public static void onDestroy(Activity activity) {
@@ -45,8 +48,9 @@ public class ActivityRecreationHelper {
 
     /**
      * Helper method to recreate the Activity. This method should be called after a Locale change.
+     *
      * @param activity the Activity that will be recreated
-     * @param animate a flag indicating if the recreation will be animated or not
+     * @param animate  a flag indicating if the recreation will be animated or not
      */
     public static void recreate(Activity activity, boolean animate) {
         Intent restartIntent = new Intent(activity, activity.getClass());

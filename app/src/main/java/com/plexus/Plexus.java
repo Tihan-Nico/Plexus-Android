@@ -20,10 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.plexus.account.activity.UserBannedActivity;
 import com.plexus.components.locale_changer.LocaleChanger;
 import com.plexus.model.account.Banned;
-import com.plexus.account.activity.UserBannedActivity;
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.twitter.TwitterEmojiProvider;
 
@@ -50,54 +49,54 @@ import java.util.Locale;
 
 public class Plexus extends Application {
 
-  public static final String TAG = Plexus.class.getSimpleName();
-  private static Plexus mInstance;
-  private RequestQueue mRequestQueue;
-  private FirebaseUser firebaseUser;
-  FirebaseFirestore db = FirebaseFirestore.getInstance();
-  public static synchronized Plexus getInstance() {
-        return mInstance;
-  }
-
+    public static final String TAG = Plexus.class.getSimpleName();
     public static final List<Locale> SUPPORTED_LOCALES =
             Arrays.asList(
                     new Locale("en", "US"),
                     new Locale("af", "ZA"),
                     new Locale("fr", "FR")
             );
+    private static Plexus mInstance;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private RequestQueue mRequestQueue;
+    private FirebaseUser firebaseUser;
 
-  @RequiresApi(api = Build.VERSION_CODES.M)
-  @Override
-  public void onCreate() {
-      super.onCreate();
-      EmojiManager.install(new TwitterEmojiProvider());
-      Fresco.initialize(this);
-      LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
-      mInstance = this;
+    public static synchronized Plexus getInstance() {
+        return mInstance;
+    }
 
-      firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-      if (firebaseUser != null) {
-          checkIfBanned();
-          status();
-      }
-  }
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        EmojiManager.install(new TwitterEmojiProvider());
+        Fresco.initialize(this);
+        LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
+        mInstance = this;
 
-  private void status(){
-      DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-      HashMap<String, Object> hashMap = new HashMap<>();
-      hashMap.put("online_presence", "Online");
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser != null) {
+            checkIfBanned();
+            status();
+        }
+    }
 
-      databaseReference.updateChildren(hashMap);
-  }
+    private void status() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("online_presence", "Online");
 
-  private void checkIfBanned(){
+        databaseReference.updateChildren(hashMap);
+    }
+
+    private void checkIfBanned() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Banned").child(firebaseUser.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Banned banned = dataSnapshot.getValue(Banned.class);
-                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    if(dataSnapshot1.exists()){
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    if (dataSnapshot1.exists()) {
                         if (banned != null && banned.isBanned()) {
                             startActivity(new Intent(getApplicationContext(), UserBannedActivity.class));
                         }
@@ -110,7 +109,7 @@ public class Plexus extends Application {
 
             }
         });
-  }
+    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -118,15 +117,15 @@ public class Plexus extends Application {
         LocaleChanger.onConfigurationChanged();
     }
 
-  public RequestQueue getRequestQueue() {
-      if (mRequestQueue == null) {
-          mRequestQueue = Volley.newRequestQueue(getApplicationContext());
-      }
-      return mRequestQueue;
-  }
+    public RequestQueue getRequestQueue() {
+        if (mRequestQueue == null) {
+            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+        }
+        return mRequestQueue;
+    }
 
-  public <T> void addToRequestQueue(Request<T> req) {
-      req.setTag(TAG);
-      getRequestQueue().add(req);
-  }
+    public <T> void addToRequestQueue(Request<T> req) {
+        req.setTag(TAG);
+        getRequestQueue().add(req);
+    }
 }

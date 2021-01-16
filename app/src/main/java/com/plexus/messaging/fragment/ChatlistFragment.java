@@ -22,8 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.jakewharton.rxbinding4.view.RxView;
 import com.plexus.R;
 import com.plexus.messaging.adapter.ChatlistAdapter;
-import com.plexus.model.messaging.Chatlist;
 import com.plexus.model.account.User;
+import com.plexus.model.messaging.Chatlist;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,14 +49,12 @@ import io.reactivex.rxjava3.disposables.Disposable;
 
 public class ChatlistFragment extends Fragment {
 
+    ImageView compose_message;
+    FirebaseUser fuser;
+    DatabaseReference reference;
     private RecyclerView recyclerView;
     private ChatlistAdapter userAdapter;
     private List<User> mUsers;
-    ImageView compose_message;
-
-    FirebaseUser fuser;
-    DatabaseReference reference;
-
     private List<Chatlist> usersList;
 
     @Override
@@ -109,10 +107,10 @@ public class ChatlistFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mUsers.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
-                    for (Chatlist chatlist : usersList){
-                        if (user.getId().equals(chatlist.getId())){
+                    for (Chatlist chatlist : usersList) {
+                        if (user.getId().equals(chatlist.getId())) {
                             mUsers.add(user);
                         }
                     }

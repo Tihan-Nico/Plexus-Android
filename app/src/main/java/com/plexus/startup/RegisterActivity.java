@@ -43,11 +43,11 @@ public class RegisterActivity extends AppCompatActivity {
     LinearLayout country_selection;
     Button register;
     TextView link_signin, country;
-    private Dialog countries;
     FirebaseAuth auth;
     DatabaseReference reference;
     ProgressDialog pd;
     TextView username_taken;
+    private Dialog countries;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Toast.makeText(RegisterActivity.this, "All fields are required!", Toast.LENGTH_SHORT).show();
                     } else if (str_password.length() < 6) {
                         Toast.makeText(RegisterActivity.this, "Password must have 6 characters!", Toast.LENGTH_SHORT).show();
-                    } else if (str_country.equals("Select a country")){
+                    } else if (str_country.equals("Select a country")) {
                         Toast.makeText(this, "Please select a country", Toast.LENGTH_SHORT).show();
                     } else {
                         register(str_username, str_name, str_surname, str_email, str_password, str_country);
@@ -175,8 +175,8 @@ public class RegisterActivity extends AppCompatActivity {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
-                    if (!singleSnapshot.exists()){
+                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                    if (!singleSnapshot.exists()) {
                         username_taken.setVisibility(View.VISIBLE);
                         username_taken.setText("Username is available");
                         username_taken.setTextColor(Color.GREEN);

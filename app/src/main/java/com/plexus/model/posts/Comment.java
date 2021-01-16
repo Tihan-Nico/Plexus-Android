@@ -17,59 +17,60 @@ package com.plexus.model.posts;
  ******************************************************************************/
 
 public class Comment {
-  private String comment;
-  private String publisher;
-  private String commentid;
-  private String timestamp;
-  private String type;
+    private String comment;
+    private String publisher;
+    private String commentid;
+    private String timestamp;
+    private String type;
 
-  public Comment(String comment, String publisher, String commentid, String timestamp, String type) {
-    this.comment = comment;
-    this.publisher = publisher;
-    this.commentid = commentid;
-    this.timestamp = timestamp;
-    this.type = type;
-  }
+    public Comment(String comment, String publisher, String commentid, String timestamp, String type) {
+        this.comment = comment;
+        this.publisher = publisher;
+        this.commentid = commentid;
+        this.timestamp = timestamp;
+        this.type = type;
+    }
 
-  public Comment() {}
+    public Comment() {
+    }
 
-  public String getComment() {
-    return comment;
-  }
+    public String getComment() {
+        return comment;
+    }
 
-  public void setComment(String comment) {
-    this.comment = comment;
-  }
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
-  public String getPublisher() {
-    return publisher;
-  }
+    public String getPublisher() {
+        return publisher;
+    }
 
-  public void setPublisher(String publisher) {
-    this.publisher = publisher;
-  }
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
 
-  public String getCommentid() {
-    return commentid;
-  }
+    public String getCommentid() {
+        return commentid;
+    }
 
-  public void setCommentid(String commentid) {
-    this.commentid = commentid;
-  }
+    public void setCommentid(String commentid) {
+        this.commentid = commentid;
+    }
 
-  public String getTimestamp() {
-    return timestamp;
-  }
+    public String getTimestamp() {
+        return timestamp;
+    }
 
-  public void setTimestamp(String timestamp) {
-    this.timestamp = timestamp;
-  }
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
 
-  public String getType() {
-    return type;
-  }
+    public String getType() {
+        return type;
+    }
 
-  public void setType(String type) {
-    this.type = type;
-  }
+    public void setType(String type) {
+        this.type = type;
+    }
 }

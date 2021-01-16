@@ -29,6 +29,17 @@ public class PermissionActivity extends AppCompatActivity {
             Manifest.permission.RECORD_AUDIO
     };
 
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,21 +58,10 @@ public class PermissionActivity extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(longTimed -> {
-                    if (hasPermissions(PermissionActivity.this, PERMISSIONS)){
+                    if (hasPermissions(PermissionActivity.this, PERMISSIONS)) {
                         finish();
                     }
                 });
-    }
-
-    public static boolean hasPermissions(Context context, String... permissions) {
-        if (context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
 }

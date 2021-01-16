@@ -20,7 +20,7 @@ import java.util.Locale;
 final class SingleAddressBottomSheet extends CoordinatorLayout {
 
     private TextView placeNameTextView;
-    private TextView                  placeAddressTextView;
+    private TextView placeAddressTextView;
     private ProgressBar placeProgressBar;
     private BottomSheetBehavior<View> bottomSheetBehavior;
 
@@ -50,9 +50,9 @@ final class SingleAddressBottomSheet extends CoordinatorLayout {
     }
 
     private void bindViews() {
-        placeNameTextView    = findViewById(R.id.text_view_place_name);
+        placeNameTextView = findViewById(R.id.text_view_place_name);
         placeAddressTextView = findViewById(R.id.text_view_place_address);
-        placeProgressBar     = findViewById(R.id.progress_bar_place);
+        placeProgressBar = findViewById(R.id.progress_bar_place);
     }
 
     public void showLoading() {
@@ -68,7 +68,7 @@ final class SingleAddressBottomSheet extends CoordinatorLayout {
 
         if (TextUtils.isEmpty(addressToString)) {
             String longString = Location.convert(longitude, Location.FORMAT_DEGREES);
-            String latString  = Location.convert(latitude,  Location.FORMAT_DEGREES);
+            String latString = Location.convert(latitude, Location.FORMAT_DEGREES);
 
             placeNameTextView.setText(String.format(Locale.getDefault(), "%s %s", latString, longString));
         } else {

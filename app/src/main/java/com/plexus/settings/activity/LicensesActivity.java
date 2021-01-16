@@ -33,8 +33,8 @@ import java.util.List;
 
 public class LicensesActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
     ImageView back;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

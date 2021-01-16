@@ -10,14 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.plexus.R;
-import com.plexus.model.Search;
 
 import java.util.List;
 
 public class RecentSearchAdapter extends RecyclerView.Adapter<RecentSearchAdapter.ViewHolder> {
 
     List<String> mSearches;
-    private Context mContext;
+    private final Context mContext;
 
     public RecentSearchAdapter(Context context, List<String> mSearches) {
         mContext = context;

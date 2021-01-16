@@ -105,7 +105,7 @@ public class GroupActivity extends AppCompatActivity {
         init();
     }
 
-    private void init(){
+    private void init() {
         getGroupData(groupID);
         getGroupSettings();
         addPostsToGroup();
@@ -115,7 +115,7 @@ public class GroupActivity extends AppCompatActivity {
         setupGroup();
     }
 
-    private void getGroupData(String groupID){
+    private void getGroupData(String groupID) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(groupID);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -134,14 +134,14 @@ public class GroupActivity extends AppCompatActivity {
         });
     }
 
-    private void getGroupSettings(){
+    private void getGroupSettings() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(groupID).child("Settings").child("Posting");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 GroupSettings groupSettings = snapshot.getValue(GroupSettings.class);
-                if (snapshot.exists()){
-                    if (!groupSettings.isPostApproval()){
+                if (snapshot.exists()) {
+                    if (!groupSettings.isPostApproval()) {
                         add_posts.setVisibility(View.GONE);
                     }
                 }
@@ -155,7 +155,7 @@ public class GroupActivity extends AppCompatActivity {
         });
     }
 
-    private void addPostsToGroup(){
+    private void addPostsToGroup() {
 
         image_upload.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), CreatePostActivity.class);
@@ -195,14 +195,14 @@ public class GroupActivity extends AppCompatActivity {
 
     }
 
-    private void getGroupMemberCount(String groupID){
+    private void getGroupMemberCount(String groupID) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(groupID).child("Members");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount() == 1){
+                if (snapshot.getChildrenCount() == 1) {
                     group_info.setText(MessageFormat.format("{0} Member", snapshot.getChildrenCount()));
-                }else if (snapshot.getChildrenCount() > 2){
+                } else if (snapshot.getChildrenCount() > 2) {
                     group_info.setText(MessageFormat.format("{0} Members", snapshot.getChildrenCount()));
                 }
             }
@@ -214,12 +214,12 @@ public class GroupActivity extends AppCompatActivity {
         });
     }
 
-    private void getGroupAdmin(String groupID){
+    private void getGroupAdmin(String groupID) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(groupID).child("Admins");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                if (userID.equals(firebaseUser.getUid())){
+                if (userID.equals(firebaseUser.getUid())) {
                     group_setup.setVisibility(View.VISIBLE);
                     group_edit.setVisibility(View.VISIBLE);
                 }
@@ -232,7 +232,7 @@ public class GroupActivity extends AppCompatActivity {
         });
     }
 
-    private void setupGroup(){
+    private void setupGroup() {
         LinearLayout invite_friends = group_setup.findViewById(R.id.invite_friends);
         LinearLayout edit_description = group_setup.findViewById(R.id.edit_description);
         LinearLayout add_group_cover = group_setup.findViewById(R.id.add_group_cover);
@@ -269,7 +269,7 @@ public class GroupActivity extends AppCompatActivity {
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                        if (snapshot.getChildrenCount() > 2){
+                        if (snapshot.getChildrenCount() > 2) {
                             invite_friends.setVisibility(View.GONE);
                         }
                     }
@@ -288,20 +288,20 @@ public class GroupActivity extends AppCompatActivity {
             }
         });
 
-        if (invite_friends.getVisibility() == View.GONE && edit_description.getVisibility() == View.GONE && add_group_cover.getVisibility() == View.GONE){
+        if (invite_friends.getVisibility() == View.GONE && edit_description.getVisibility() == View.GONE && add_group_cover.getVisibility() == View.GONE) {
             group_setup.setVisibility(View.GONE);
         }
 
     }
 
-    private void getGroupPosts(){
+    private void getGroupPosts() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts Groups");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                 groupsPostList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    if (snapshot.exists()){
+                    if (snapshot.exists()) {
                         GroupPosts groupPosts = snapshot.getValue(GroupPosts.class);
                         if (groupPosts.getPublisher().equals(firebaseUser.getUid())) {
                             groupsPostList.add(groupPosts);
@@ -322,7 +322,7 @@ public class GroupActivity extends AppCompatActivity {
         return "https://plexus.dev/groups?id=" + groupID;
     }
 
-    private void shareDeepLink(String url){
+    private void shareDeepLink(String url) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_TEXT, url);

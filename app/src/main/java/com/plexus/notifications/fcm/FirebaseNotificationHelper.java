@@ -17,7 +17,7 @@ public class FirebaseNotificationHelper {
     private String mFirebaseToken;
     private String mReceiverFirebaseToken;
     private FirebaseNotiCallBack callBack;
-    private String serverApiKey;
+    private final String serverApiKey;
     private boolean useDefaultJson;
     private String jsonObject;
 

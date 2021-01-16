@@ -15,8 +15,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
-import com.plexus.model.account.ProfileLogger;
 import com.plexus.account.adapters.ProfileActivityAdapter;
+import com.plexus.model.account.ProfileLogger;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -44,9 +44,9 @@ public class ProfileLogActivity extends AppCompatActivity {
 
     ImageView back;
     RecyclerView recyclerView;
+    FirebaseUser firebaseUser;
     private ProfileActivityAdapter profileActivityAdapter;
     private List<ProfileLogger> profileLoggerList;
-    FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,7 @@ public class ProfileLogActivity extends AppCompatActivity {
 
     }
 
-    private void readLog(){
+    private void readLog() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Activity Log");
 
@@ -90,7 +90,8 @@ public class ProfileLogActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onCancelled(@NotNull DatabaseError databaseError) {}
+                    public void onCancelled(@NotNull DatabaseError databaseError) {
+                    }
                 });
     }
 

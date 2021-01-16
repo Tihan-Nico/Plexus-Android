@@ -49,81 +49,81 @@ import java.util.List;
  ******************************************************************************/
 
 public final class LicenseAdapter extends RecyclerView.Adapter<ViewHolderBase>
-    implements ExpandableLibrary.ExpandListener {
-  private static final int TYPE_LIBRARY = 0;
-  private static final int TYPE_LICENSE = 1;
+        implements ExpandableLibrary.ExpandListener {
+    private static final int TYPE_LIBRARY = 0;
+    private static final int TYPE_LICENSE = 1;
 
-  private final List<ExpandableLibrary> libraries;
-  private LibrariesHolder holder;
+    private final List<ExpandableLibrary> libraries;
+    private LibrariesHolder holder;
 
-  /**
-   * Construct a new adapter to display a list of libraries and their licenses.
-   *
-   * @param libraries the libraries to display
-   */
-  public LicenseAdapter(@NonNull List<Library> libraries) {
-    List<ExpandableLibrary> wrappedLibraries = new ArrayList<>();
-    for (Library library : libraries) {
-      wrappedLibraries.add(new ExpandableLibrary(library, this));
-    }
-    this.libraries = Collections.unmodifiableList(wrappedLibraries);
-  }
-
-  @Override
-  public int getItemViewType(int position) {
-    return position % 2 == 0 ? TYPE_LIBRARY : TYPE_LICENSE;
-  }
-
-  @Override
-  public int getItemCount() {
-    return libraries.size() * 2;
-  }
-
-  @Override
-  public ViewHolderBase onCreateViewHolder(ViewGroup parent, int viewType) {
-    Context context = parent.getContext();
-
-    if (holder == null) {
-      if (context instanceof FragmentActivity) {
-        holder = ViewModelProviders.of((FragmentActivity) context).get(LibrariesHolder.class);
-      } else if (context instanceof Activity) {
-        holder = new LibrariesHolder(((Activity) context).getApplication());
-      } else {
-        holder = new LibrariesHolder((Application) context.getApplicationContext());
-      }
+    /**
+     * Construct a new adapter to display a list of libraries and their licenses.
+     *
+     * @param libraries the libraries to display
+     */
+    public LicenseAdapter(@NonNull List<Library> libraries) {
+        List<ExpandableLibrary> wrappedLibraries = new ArrayList<>();
+        for (Library library : libraries) {
+            wrappedLibraries.add(new ExpandableLibrary(library, this));
+        }
+        this.libraries = Collections.unmodifiableList(wrappedLibraries);
     }
 
-    if (viewType == TYPE_LIBRARY) {
-      return new LibraryViewHolder(LayoutInflater.from(context)
-          .inflate(R.layout.settings_library, parent, false));
-    } else if (viewType == TYPE_LICENSE) {
-      return new LicenseViewHolder(LayoutInflater.from(context)
-          .inflate(R.layout.settings_license, parent, false), holder);
-    } else {
-      throw new IllegalStateException("Unknown view type: " + viewType);
-    }
-  }
-
-  @Override
-  public void onBindViewHolder(@NonNull ViewHolderBase holder, int position) {
-    int type = getItemViewType(position);
-    if (type == TYPE_LIBRARY) {
-      holder.bind(libraries.get(position / 2));
-    } else if (type == TYPE_LICENSE) {
-      holder.bind(libraries.get((position - 1) / 2));
-    } else {
-      throw new IllegalStateException("Unknown view type: " + type);
-    }
-  }
-
-  @Override
-  public void onExpand(@NonNull ExpandableLibrary library, boolean expanded) {
-    int index = libraries.indexOf(library);
-
-    if (index == -1) {
-      throw new IllegalStateException("Could not find library: " + library);
+    @Override
+    public int getItemViewType(int position) {
+        return position % 2 == 0 ? TYPE_LIBRARY : TYPE_LICENSE;
     }
 
-    notifyItemRangeChanged(index * 2, 2);
-  }
+    @Override
+    public int getItemCount() {
+        return libraries.size() * 2;
+    }
+
+    @Override
+    public ViewHolderBase onCreateViewHolder(ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+
+        if (holder == null) {
+            if (context instanceof FragmentActivity) {
+                holder = ViewModelProviders.of((FragmentActivity) context).get(LibrariesHolder.class);
+            } else if (context instanceof Activity) {
+                holder = new LibrariesHolder(((Activity) context).getApplication());
+            } else {
+                holder = new LibrariesHolder((Application) context.getApplicationContext());
+            }
+        }
+
+        if (viewType == TYPE_LIBRARY) {
+            return new LibraryViewHolder(LayoutInflater.from(context)
+                    .inflate(R.layout.settings_library, parent, false));
+        } else if (viewType == TYPE_LICENSE) {
+            return new LicenseViewHolder(LayoutInflater.from(context)
+                    .inflate(R.layout.settings_license, parent, false), holder);
+        } else {
+            throw new IllegalStateException("Unknown view type: " + viewType);
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolderBase holder, int position) {
+        int type = getItemViewType(position);
+        if (type == TYPE_LIBRARY) {
+            holder.bind(libraries.get(position / 2));
+        } else if (type == TYPE_LICENSE) {
+            holder.bind(libraries.get((position - 1) / 2));
+        } else {
+            throw new IllegalStateException("Unknown view type: " + type);
+        }
+    }
+
+    @Override
+    public void onExpand(@NonNull ExpandableLibrary library, boolean expanded) {
+        int index = libraries.indexOf(library);
+
+        if (index == -1) {
+            throw new IllegalStateException("Could not find library: " + library);
+        }
+
+        notifyItemRangeChanged(index * 2, 2);
+    }
 }

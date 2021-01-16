@@ -44,74 +44,35 @@ import java.util.TimerTask;
  */
 public class AudioRecordView {
 
-    public enum UserBehaviour {
-        CANCELING,
-        LOCKING,
-        NONE
-    }
-
-    public enum RecordingBehaviour {
-        CANCELED,
-        LOCKED,
-        LOCK_DONE,
-        RELEASED
-    }
-
-    public interface RecordingListener {
-
-        void onRecordingStarted();
-
-        void onRecordingLocked();
-
-        void onRecordingCompleted();
-
-        void onRecordingCanceled();
-
-    }
-
-    private String TAG = "AudioRecordView";
-
+    boolean isLayoutDirectionRightToLeft;
+    int screenWidth, screenHeight;
+    private final String TAG = "AudioRecordView";
     private LinearLayout viewContainer, layoutAttachmentOptions;
     private View imageViewAudio, imageViewLockArrow, imageViewLock, imageViewMic, dustin, dustin_cover, imageViewStop, imageViewSend;
     private View layoutAttachment, layoutDustin, layoutMessage, imageViewAttachment, imageViewCamera, imageViewEmoji;
     private View layoutSlideCancel, layoutLock, layoutEffect1, layoutEffect2;
     private EditText editTextMessage;
     private TextView timeText, textViewSlide;
-
     private ImageView stop, audio, send;
-
     private Animation animBlink, animJump, animJumpFast;
-
     private boolean isDeleting;
     private boolean stopTrackingAction;
     private Handler handler;
-
     private int audioTotalTime;
     private TimerTask timerTask;
     private Timer audioTimer;
     private SimpleDateFormat timeFormatter;
-
     private float lastX, lastY;
     private float firstX, firstY;
-
     private float directionOffset, cancelOffset, lockOffset;
     private float dp = 0;
     private boolean isLocked = false;
-
     private UserBehaviour userBehaviour = UserBehaviour.NONE;
     private RecordingListener recordingListener;
-
-    boolean isLayoutDirectionRightToLeft;
-
-    int screenWidth, screenHeight;
-
     private List<AttachmentOption> attachmentOptionList;
     private AttachmentOptionsListener attachmentOptionsListener;
-
     private List<LinearLayout> layoutAttachments;
-
     private Context context;
-
     private boolean showCameraIcon = true, showAttachmentIcon = true, showEmojiIcon = true;
     private boolean removeAttachmentOptionAnimation;
 
@@ -882,5 +843,30 @@ public class AudioRecordView {
 
     private void showErrorLog(String s) {
         Log.e(TAG, s);
+    }
+
+    public enum UserBehaviour {
+        CANCELING,
+        LOCKING,
+        NONE
+    }
+
+    public enum RecordingBehaviour {
+        CANCELED,
+        LOCKED,
+        LOCK_DONE,
+        RELEASED
+    }
+
+    public interface RecordingListener {
+
+        void onRecordingStarted();
+
+        void onRecordingLocked();
+
+        void onRecordingCompleted();
+
+        void onRecordingCanceled();
+
     }
 }

@@ -13,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.plexus.R;
-import com.plexus.startup.LoginActivity;
 import com.plexus.settings.authentication.ReAuthenticationDialog;
+import com.plexus.startup.LoginActivity;
 
 /******************************************************************************
  * Copyright (c) 2020. Plexus, Inc.                                           *
@@ -36,10 +36,10 @@ public class ChangeEmailActivity extends AppCompatActivity {
 
     ImageView back;
     TextView email;
-    private EditText email_text;
     Button change_email;
     FirebaseUser firebaseUser;
     FirebaseAuth firebaseAuth;
+    private EditText email_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

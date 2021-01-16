@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+
 public abstract class SocialArrayAdapter<T> extends ArrayAdapter<T> {
     private final List<T> tempItems = new ArrayList<>();
     private Filter filter;

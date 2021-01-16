@@ -5,7 +5,7 @@ public class GroupRecommendation {
     private int id;
     private String groupId;
 
-    public GroupRecommendation(int id, String groupId){
+    public GroupRecommendation(int id, String groupId) {
         this.id = id;
         this.groupId = groupId;
     }

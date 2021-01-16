@@ -34,12 +34,11 @@ import java.util.Collections;
 public class PlexusNotificationFragment extends Fragment {
 
     PlexusRecyclerView recyclerView;
-    private NotificationAdapter notificationAdapter;
-    private ArrayList<PlexusNotification> plexusNotificationList;
     FirebaseUser firebaseUser;
     ImageView clear_notifications;
-
     View empty_state;
+    private NotificationAdapter notificationAdapter;
+    private ArrayList<PlexusNotification> plexusNotificationList;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -57,7 +56,7 @@ public class PlexusNotificationFragment extends Fragment {
         return view;
     }
 
-    private void init(){
+    private void init() {
 
         plexusNotificationList = new ArrayList<>();
 

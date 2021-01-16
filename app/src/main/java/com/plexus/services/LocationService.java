@@ -21,6 +21,40 @@ public class LocationService {
     boolean network_enabled = false;
 
     Context context;
+    LocationListener locationListenerNetwork = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            timer1.cancel();
+            locationResult.gotLocation(location);
+            lm.removeUpdates(this);
+            lm.removeUpdates(locationListenerGps);
+        }
+
+        public void onProviderDisabled(String provider) {
+        }
+
+        public void onProviderEnabled(String provider) {
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+    };
+    LocationListener locationListenerGps = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            timer1.cancel();
+            locationResult.gotLocation(location);
+            lm.removeUpdates(this);
+            lm.removeUpdates(locationListenerNetwork);
+        }
+
+        public void onProviderDisabled(String provider) {
+        }
+
+        public void onProviderEnabled(String provider) {
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+    };
 
     public void getLocation(Context mContext, LocationResult result) {
         //I use LocationResult callback class to pass location value from MyLocation to user code.
@@ -46,48 +80,16 @@ public class LocationService {
             if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListenerGps);
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListenerGps);
         if (network_enabled)
             lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListenerNetwork);
         timer1 = new Timer();
         timer1.schedule(new GetLastLocation(), 20000);
     }
 
-    LocationListener locationListenerGps = new LocationListener() {
-        public void onLocationChanged(Location location) {
-            timer1.cancel();
-            locationResult.gotLocation(location);
-            lm.removeUpdates(this);
-            lm.removeUpdates(locationListenerNetwork);
-        }
-
-        public void onProviderDisabled(String provider) {
-        }
-
-        public void onProviderEnabled(String provider) {
-        }
-
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-        }
-    };
-
-    LocationListener locationListenerNetwork = new LocationListener() {
-        public void onLocationChanged(Location location) {
-            timer1.cancel();
-            locationResult.gotLocation(location);
-            lm.removeUpdates(this);
-            lm.removeUpdates(locationListenerGps);
-        }
-
-        public void onProviderDisabled(String provider) {
-        }
-
-        public void onProviderEnabled(String provider) {
-        }
-
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-        }
-    };
+    public static abstract class LocationResult {
+        public abstract void gotLocation(Location location);
+    }
 
     public class GetLastLocation extends TimerTask {
         @Override
@@ -100,7 +102,7 @@ public class LocationService {
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
-                gps_loc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            gps_loc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (network_enabled)
                 net_loc = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
@@ -123,9 +125,5 @@ public class LocationService {
             }
             locationResult.gotLocation(null);
         }
-    }
-
-    public static abstract class LocationResult {
-        public abstract void gotLocation(Location location);
     }
 }

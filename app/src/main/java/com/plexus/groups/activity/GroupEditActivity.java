@@ -77,12 +77,12 @@ public class GroupEditActivity extends AppCompatActivity {
 
     }
 
-    private void init(){
+    private void init() {
         getGroupData();
         selectLocation();
     }
 
-    private void getGroupData(){
+    private void getGroupData() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(groupID);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -104,7 +104,7 @@ public class GroupEditActivity extends AppCompatActivity {
         });
     }
 
-    private void selectLocation(){
+    private void selectLocation() {
         Dialog countries = new Dialog(GroupEditActivity.this);
         countries.setContentView(R.layout.dialog_list_countries);
         countries.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -125,7 +125,7 @@ public class GroupEditActivity extends AppCompatActivity {
 
     }
 
-    private void updateLocation(String value){
+    private void updateLocation(String value) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Groups").child(groupID);
 
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -134,7 +134,7 @@ public class GroupEditActivity extends AppCompatActivity {
         reference.updateChildren(hashMap);
     }
 
-    private void editName(){
+    private void editName() {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(GroupEditActivity.this, R.style.BottomSheetDialogTheme);
         bottomSheetDialog.setContentView(R.layout.sheet_edit_name);
 
@@ -163,7 +163,7 @@ public class GroupEditActivity extends AppCompatActivity {
         reference.updateChildren(hashMap);
     }
 
-    private void editAbout(){
+    private void editAbout() {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(GroupEditActivity.this, R.style.BottomSheetDialogTheme);
         bottomSheetDialog.setContentView(R.layout.sheet_edit_about);
 
@@ -196,9 +196,9 @@ public class GroupEditActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK){
+            if (resultCode == RESULT_OK) {
                 imageUri = result.getUri();
 
                 PlexusUpload.uploadGroupCover(getApplicationContext(), imageUri, groupID);

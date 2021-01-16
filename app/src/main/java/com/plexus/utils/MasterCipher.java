@@ -3,6 +3,8 @@ package com.plexus.utils;
 import android.annotation.SuppressLint;
 import android.util.Base64;
 
+import java.nio.charset.StandardCharsets;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -24,9 +26,9 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class MasterCipher {
 
-    private static byte[] key = {127, 109, -51, 26, -105, 84, -120, -123, 68, 18, 99, 52, -3, -125, -119, -70};
-    private static SecretKeySpec SECRET_KEY_SPEC = new SecretKeySpec(key, "AES");
     private static final String ALGORITHM = "AES/ECB/PKCS5Padding";
+    private static final byte[] key = {127, 109, -51, 26, -105, 84, -120, -123, 68, 18, 99, 52, -3, -125, -119, -70};
+    private static final SecretKeySpec SECRET_KEY_SPEC = new SecretKeySpec(key, "AES");
     private static Cipher cipherE, cipherD;
 
 
@@ -53,7 +55,7 @@ public class MasterCipher {
             byte[] raw = Base64.decode(message, Base64.DEFAULT);
 
             byte[] decryptedBytes = cipherD.doFinal(raw);
-            String decryptedMessage = new String(decryptedBytes, "UTF8");
+            String decryptedMessage = new String(decryptedBytes, StandardCharsets.UTF_8);
             return decryptedMessage;
         } catch (Exception e) {
             e.getMessage();

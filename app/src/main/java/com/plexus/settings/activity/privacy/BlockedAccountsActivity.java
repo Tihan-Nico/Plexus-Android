@@ -17,8 +17,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
-import com.plexus.model.account.User;
 import com.plexus.account.adapters.BlockedUsersAdapter;
+import com.plexus.model.account.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +76,7 @@ public class BlockedAccountsActivity extends AppCompatActivity {
 
     }
 
-    private void blockedUsers(){
+    private void blockedUsers() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Blocked Users");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -114,7 +114,8 @@ public class BlockedAccountsActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {}
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
                 });
     }
 

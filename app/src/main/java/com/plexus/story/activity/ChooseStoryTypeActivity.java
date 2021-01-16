@@ -42,7 +42,7 @@ public class ChooseStoryTypeActivity extends AppCompatActivity {
 
     //vars
     private ArrayList<String> directories;
-    private String mAppend = "file:/";
+    private final String mAppend = "file:/";
     private String mSelectedImage;
 
     @Override

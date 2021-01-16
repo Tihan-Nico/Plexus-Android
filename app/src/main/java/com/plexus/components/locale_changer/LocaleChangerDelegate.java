@@ -9,9 +9,9 @@ import java.util.Locale;
  */
 class LocaleChangerDelegate {
 
-    private LocalePersistor persistor;
-    private LocaleResolver resolver;
-    private AppLocaleChanger appLocaleChanger;
+    private final LocalePersistor persistor;
+    private final LocaleResolver resolver;
+    private final AppLocaleChanger appLocaleChanger;
 
     private Locale currentLocale;
 
@@ -49,6 +49,10 @@ class LocaleChangerDelegate {
         initialize();
     }
 
+    Locale getLocale() {
+        return persistor.load();
+    }
+
     void setLocale(Locale supportedLocale) {
         try {
             currentLocale = resolver.resolve(supportedLocale);
@@ -61,10 +65,6 @@ class LocaleChangerDelegate {
             throw new IllegalArgumentException(e);
         }
 
-    }
-
-    Locale getLocale() {
-        return persistor.load();
     }
 
     Context configureBaseContext(Context context) {

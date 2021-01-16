@@ -25,7 +25,7 @@ public class Privacy {
     private String blocked_timestamp;
     private String blocked_platform;
 
-    public Privacy(){
+    public Privacy() {
 
     }
 

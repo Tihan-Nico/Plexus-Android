@@ -5,14 +5,14 @@ import android.os.Looper;
 
 public class Debouncer {
     private final Handler handler;
-    private final long    threshold;
+    private final long threshold;
 
     /**
      * @param threshold Only one runnable will be executed via {@link #publish(Runnable)} every
      *                  {@code threshold} milliseconds.
      */
     public Debouncer(long threshold) {
-        this.handler   = new Handler(Looper.getMainLooper());
+        this.handler = new Handler(Looper.getMainLooper());
         this.threshold = threshold;
     }
 

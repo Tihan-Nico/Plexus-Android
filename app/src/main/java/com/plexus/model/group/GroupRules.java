@@ -6,13 +6,13 @@ public class GroupRules {
     private String name;
     private String description;
 
-    public GroupRules(int id, String name, String description){
+    public GroupRules(int id, String name, String description) {
         this.description = description;
         this.name = name;
         this.description = description;
     }
 
-    public GroupRules(){
+    public GroupRules() {
 
     }
 

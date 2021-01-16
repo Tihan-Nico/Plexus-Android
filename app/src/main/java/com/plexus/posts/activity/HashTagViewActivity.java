@@ -17,9 +17,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
+import com.plexus.model.account.User;
 import com.plexus.model.posts.Hashtag;
 import com.plexus.model.posts.Post;
-import com.plexus.model.account.User;
 import com.plexus.posts.adapter.PostAdapter;
 import com.plexus.utils.MasterCipher;
 
@@ -71,7 +71,7 @@ public class HashTagViewActivity extends AppCompatActivity {
 
     }
 
-    private void getHashtagInformation(){
+    private void getHashtagInformation() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Hashtags").child(hashtag);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -83,7 +83,7 @@ public class HashTagViewActivity extends AppCompatActivity {
                 databaseReference1.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.getChildrenCount() == 1){
+                        if (snapshot.getChildrenCount() == 1) {
                             post_count.setText(MessageFormat.format("{0} person is talking about this", snapshot.getChildrenCount()));
                         } else {
                             post_count.setText(MessageFormat.format("{0} people are talking about this", snapshot.getChildrenCount()));
@@ -106,7 +106,7 @@ public class HashTagViewActivity extends AppCompatActivity {
 
     }
 
-    private void userName(String profileid, TextView textView){
+    private void userName(String profileid, TextView textView) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(profileid);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -123,13 +123,13 @@ public class HashTagViewActivity extends AppCompatActivity {
         });
     }
 
-    private void hashtagPosts(){
+    private void hashtagPosts() {
         myHashtagPosts = new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Hashtags").child(hashtag).child("Posts");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     myHashtagPosts.add(snapshot.getKey());
                 }
                 readPost();
@@ -142,13 +142,13 @@ public class HashTagViewActivity extends AppCompatActivity {
         });
     }
 
-    private void readPost(){
+    private void readPost() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                 postList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Post post = snapshot.getValue(Post.class);
                     for (String id : myHashtagPosts) {
                         if (post.getPostid().equals(id)) {

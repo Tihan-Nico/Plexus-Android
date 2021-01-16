@@ -46,10 +46,9 @@ public class ViewVideo extends AppCompatActivity {
     String messageid;
     Uri videoUrl;
     FirebaseUser firebaseUser;
-    private Toolbar toolbar;
-
     StorageTask uploadTask;
     StorageReference storageReference;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,15 +80,15 @@ public class ViewVideo extends AppCompatActivity {
 
     }
 
-    private void deleteMessage(){
+    private void deleteMessage() {
 
     }
 
-    private void forwardMessage(){
+    private void forwardMessage() {
 
     }
 
-    private void shareVideo(){
+    private void shareVideo() {
 
     }
 
@@ -115,7 +114,7 @@ public class ViewVideo extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.save:
                 return true;
             case R.id.forward:

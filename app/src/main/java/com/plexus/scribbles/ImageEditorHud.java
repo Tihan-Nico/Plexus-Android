@@ -26,6 +26,60 @@ import java.util.Set;
 
 public class ImageEditorHud extends LinearLayout {
 
+    private static final EventListener NULL_EVENT_LISTENER = new EventListener() {
+
+        @Override
+        public void onModeStarted(@NonNull Mode mode) {
+        }
+
+        @Override
+        public void onColorChange(int color) {
+        }
+
+        @Override
+        public void onBlurFacesToggled(boolean enabled) {
+        }
+
+        @Override
+        public void onUndo() {
+        }
+
+        @Override
+        public void onDelete() {
+        }
+
+        @Override
+        public void onSave() {
+        }
+
+        @Override
+        public void onFlipHorizontal() {
+        }
+
+        @Override
+        public void onRotate90AntiClockwise() {
+        }
+
+        @Override
+        public void onCropAspectLock(boolean locked) {
+        }
+
+        @Override
+        public boolean isCropAspectLocked() {
+            return false;
+        }
+
+        @Override
+        public void onRequestFullScreen(boolean fullScreen, boolean hideKeyboard) {
+        }
+
+        @Override
+        public void onDone() {
+        }
+    };
+    private final Map<Mode, Set<View>> visibilityModeMap = new HashMap<>();
+    private final Set<View> allViews = new HashSet<>();
+    private final Debouncer toastDebouncer = new Debouncer(3000);
     private View cropButton;
     private View cropFlipButton;
     private View cropRotateButton;
@@ -45,17 +99,12 @@ public class ImageEditorHud extends LinearLayout {
     private View blurToast;
     private VerticalSlideColorPicker colorPicker;
     private RecyclerView colorPalette;
-
-
     @NonNull
     private EventListener eventListener = NULL_EVENT_LISTENER;
+    private final VerticalSlideColorPicker.OnColorChangeListener standardOnColorChangeListener = selectedColor -> eventListener.onColorChange(selectedColor);
+    private final VerticalSlideColorPicker.OnColorChangeListener highlightOnColorChangeListener = selectedColor -> eventListener.onColorChange(withHighlighterAlpha(selectedColor));
     @Nullable
     private ColorPaletteAdapter colorPaletteAdapter;
-
-    private final Map<Mode, Set<View>> visibilityModeMap = new HashMap<>();
-    private final Set<View> allViews = new HashSet<>();
-    private final Debouncer toastDebouncer = new Debouncer(3000);
-
     private Mode currentMode;
     private boolean undoAvailable;
 
@@ -72,6 +121,10 @@ public class ImageEditorHud extends LinearLayout {
     public ImageEditorHud(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initialize();
+    }
+
+    private static int withHighlighterAlpha(int color) {
+        return color & ~0xff000000 | 0x60000000;
     }
 
     private void initialize() {
@@ -109,7 +162,7 @@ public class ImageEditorHud extends LinearLayout {
     }
 
     private void updateCropAspectLockImage(boolean cropAspectLocked) {
-        cropAspectLock.setImageDrawable(getResources().getDrawable(cropAspectLocked ? R.drawable.ic_crop_lock_32 : R.drawable.ic_crop_unlock_32));
+        cropAspectLock.setImageDrawable(getResources().getDrawable(cropAspectLocked ? R.drawable.lock_outline : R.drawable.lock_open_variant_outline));
     }
 
     private void initializeVisibilityMap() {
@@ -233,12 +286,24 @@ public class ImageEditorHud extends LinearLayout {
         updateButtonVisibility(mode);
 
         switch (mode) {
-            case NONE:      presentModeNone();      break;
-            case CROP:      presentModeCrop();      break;
-            case DRAW:      presentModeDraw();      break;
-            case BLUR:      presentModeBlur();      break;
-            case HIGHLIGHT: presentModeHighlight(); break;
-            case TEXT:      presentModeText();      break;
+            case NONE:
+                presentModeNone();
+                break;
+            case CROP:
+                presentModeCrop();
+                break;
+            case DRAW:
+                presentModeDraw();
+                break;
+            case BLUR:
+                presentModeBlur();
+                break;
+            case HIGHLIGHT:
+                presentModeHighlight();
+                break;
+            case TEXT:
+                presentModeText();
+                break;
         }
 
         if (notify) {
@@ -288,14 +353,6 @@ public class ImageEditorHud extends LinearLayout {
         colorPicker.setActiveColor(Color.WHITE);
     }
 
-    private final VerticalSlideColorPicker.OnColorChangeListener standardOnColorChangeListener = selectedColor -> eventListener.onColorChange(selectedColor);
-
-    private final VerticalSlideColorPicker.OnColorChangeListener highlightOnColorChangeListener = selectedColor -> eventListener.onColorChange(withHighlighterAlpha(selectedColor));
-
-    private static int withHighlighterAlpha(int color) {
-        return color & ~0xff000000 | 0x60000000;
-    }
-
     public void setUndoAvailability(boolean undoAvailable) {
         this.undoAvailable = undoAvailable;
 
@@ -315,69 +372,28 @@ public class ImageEditorHud extends LinearLayout {
 
     public interface EventListener {
         void onModeStarted(@NonNull Mode mode);
+
         void onColorChange(int color);
+
         void onBlurFacesToggled(boolean enabled);
+
         void onUndo();
+
         void onDelete();
+
         void onSave();
+
         void onFlipHorizontal();
+
         void onRotate90AntiClockwise();
+
         void onCropAspectLock(boolean locked);
+
         boolean isCropAspectLocked();
+
         void onRequestFullScreen(boolean fullScreen, boolean hideKeyboard);
+
         void onDone();
     }
-
-    private static final EventListener NULL_EVENT_LISTENER = new EventListener() {
-
-        @Override
-        public void onModeStarted(@NonNull Mode mode) {
-        }
-
-        @Override
-        public void onColorChange(int color) {
-        }
-
-        @Override
-        public void onBlurFacesToggled(boolean enabled) {
-        }
-
-        @Override
-        public void onUndo() {
-        }
-
-        @Override
-        public void onDelete() {
-        }
-
-        @Override
-        public void onSave() {
-        }
-
-        @Override
-        public void onFlipHorizontal() {
-        }
-
-        @Override
-        public void onRotate90AntiClockwise() {
-        }
-
-        @Override
-        public void onCropAspectLock(boolean locked) {
-        }
-
-        @Override
-        public boolean isCropAspectLocked() {
-            return false;
-        }
-
-        @Override
-        public void onRequestFullScreen(boolean fullScreen, boolean hideKeyboard) {
-        }
-
-        @Override
-        public void onDone() {
-        }
-    };
 
 }

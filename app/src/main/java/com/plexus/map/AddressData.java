@@ -7,28 +7,6 @@ import androidx.annotation.NonNull;
 
 public final class AddressData implements Parcelable {
 
-    private final double latitude;
-    private final double longitude;
-    private final String address;
-
-    AddressData(double latitude, double longitude, @NonNull String address) {
-        this.latitude  = latitude;
-        this.longitude = longitude;
-        this.address   = address;
-    }
-
-    public @NonNull String getAddress() {
-        return address;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
     public static final Parcelable.Creator<AddressData> CREATOR = new Creator<AddressData>() {
         @Override
         public AddressData createFromParcel(Parcel in) {
@@ -43,6 +21,28 @@ public final class AddressData implements Parcelable {
             return new AddressData[size];
         }
     };
+    private final double latitude;
+    private final double longitude;
+    private final String address;
+
+    AddressData(double latitude, double longitude, @NonNull String address) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.address = address;
+    }
+
+    public @NonNull
+    String getAddress() {
+        return address;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {

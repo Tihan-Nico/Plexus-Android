@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class TimeConverter {
 
     public static String getDurationBreakdown(long millis) {
-        if(millis < 0) {
+        if (millis < 0) {
             throw new IllegalArgumentException("Duration must be greater than zero!");
         }
 
@@ -39,7 +39,7 @@ public class TimeConverter {
         sb.append(seconds);
         sb.append("s");
 
-        return(sb.toString());
+        return (sb.toString());
     }
 
 }

@@ -15,8 +15,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
-import com.plexus.startup.LoginActivity;
 import com.plexus.model.account.Banned;
+import com.plexus.startup.LoginActivity;
 
 import java.util.HashMap;
 
@@ -59,7 +59,7 @@ public class UserBannedActivity extends AppCompatActivity {
                 long times = dataSnapshot.getChildrenCount();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     if (dataSnapshot1.exists()) {
-                        if(times == 3){
+                        if (times == 3) {
                             runOnUiThread(() -> time_banned.setText("You have been banned permanently"));
                         }
                     }
@@ -76,7 +76,7 @@ public class UserBannedActivity extends AppCompatActivity {
 
     }
 
-    private void getType(){
+    private void getType() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Banned").child(firebaseUser.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -84,25 +84,25 @@ public class UserBannedActivity extends AppCompatActivity {
                 Banned banned = dataSnapshot.getValue(Banned.class);
                 String type = banned.getType();
 
-                if (type.equals("community")){
+                if (type.equals("community")) {
                     runOnUiThread(() -> description.setText("You have been banned for breaking our community rules."));
-                } else if(type.equals("fake_account")){
+                } else if (type.equals("fake_account")) {
                     runOnUiThread(() -> description.setText("Your account was banned due to a suspicion of being a fake account."));
-                } else if(type.equals("automation")){
+                } else if (type.equals("automation")) {
                     runOnUiThread(() -> description.setText("Your account got banned due to the use of automation tools which are not allowed on Plexus. This ban will result in termination of your account effectively."));
-                } else if(type.equals("proxy")){
+                } else if (type.equals("proxy")) {
                     runOnUiThread(() -> description.setText("Your account is banned and up for termination due to using proxies."));
-                } else if(type.equals("buying_followers")){
+                } else if (type.equals("buying_followers")) {
                     runOnUiThread(() -> description.setText("Buying followers is against Plexus rules and therefor your account is temporarely banned"));
-                } else if(type.equals("buying_account")){
+                } else if (type.equals("buying_account")) {
                     runOnUiThread(() -> description.setText("We do not tolerate people buying Plexus accounts. This account is up for termination."));
-                } else if(type.equals("spamming")){
+                } else if (type.equals("spamming")) {
                     runOnUiThread(() -> description.setText("Spamming in Plexus is against our community standards and therefor resulted in a ban."));
-                } else if(type.equals("copyright_content")){
+                } else if (type.equals("copyright_content")) {
                     runOnUiThread(() -> description.setText("You were reported for multiple counts of using copyrighted content on Plexus."));
-                } else if(type.equals("illegal")){
+                } else if (type.equals("illegal")) {
                     runOnUiThread(() -> description.setText("The selling of illegal products on Plexus will not be tolerated and your account is up for termination."));
-                } else if(type.equals("abusive")){
+                } else if (type.equals("abusive")) {
                     runOnUiThread(() -> description.setText("Vulgar and abusive languages or content will not be tolerated on Plexus."));
                 } else {
                     runOnUiThread(() -> description.setText("Bullying a user on Plexus is against community standards. This ban will result in termination of all commenting post or messaging users."));
@@ -117,15 +117,15 @@ public class UserBannedActivity extends AppCompatActivity {
         });
     }
 
-    private void terminateAccount(){
+    private void terminateAccount() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Banned").child(firebaseUser.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Banned banned = dataSnapshot.getValue(Banned.class);
-                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    if (dataSnapshot1.exists()){
-                        if(banned.isTermination()){
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    if (dataSnapshot1.exists()) {
+                        if (banned.isTermination()) {
 
                             DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference();
                             String id = databaseReference1.push().getKey();

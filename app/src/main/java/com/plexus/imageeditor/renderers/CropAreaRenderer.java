@@ -19,111 +19,110 @@ import com.plexus.imageeditor.RendererContext;
 
 public final class CropAreaRenderer implements Renderer {
 
-  @ColorRes
-  private final int     color;
-  private final boolean renderCenterThumbs;
+    public static final Creator<CropAreaRenderer> CREATOR = new Creator<CropAreaRenderer>() {
+        @Override
+        public @NonNull
+        CropAreaRenderer createFromParcel(@NonNull Parcel in) {
+            return new CropAreaRenderer(in.readInt(),
+                    in.readByte() == 1);
+        }
 
-  private final Path cropClipPath   = new Path();
-  private final Path screenClipPath = new Path();
+        @Override
+        public @NonNull
+        CropAreaRenderer[] newArray(int size) {
+            return new CropAreaRenderer[size];
+        }
+    };
+    @ColorRes
+    private final int color;
+    private final boolean renderCenterThumbs;
+    private final Path cropClipPath = new Path();
+    private final Path screenClipPath = new Path();
+    private final RectF dst = new RectF();
+    private final Paint paint = new Paint();
 
-  private final RectF dst   = new RectF();
-  private final Paint paint = new Paint();
+    public CropAreaRenderer(@ColorRes int color, boolean renderCenterThumbs) {
+        this.color = color;
+        this.renderCenterThumbs = renderCenterThumbs;
 
-  @Override
-  public void render(@NonNull RendererContext rendererContext) {
-    rendererContext.save();
-
-    Canvas    canvas    = rendererContext.canvas;
-    Resources resources = rendererContext.context.getResources();
-
-    canvas.clipPath(cropClipPath);
-    canvas.drawColor(ResourcesCompat.getColor(resources, color, null));
-
-    rendererContext.mapRect(dst, Bounds.FULL_BOUNDS);
-
-    final int thickness = resources.getDimensionPixelSize(R.dimen.crop_area_renderer_edge_thickness);
-    final int size      = (int) Math.min(resources.getDimensionPixelSize(R.dimen.crop_area_renderer_edge_size), Math.min(dst.width(), dst.height()) / 3f - 10);
-
-    paint.setColor(ResourcesCompat.getColor(resources, R.color.crop_area_renderer_edge_color, null));
-
-    rendererContext.canvasMatrix.setToIdentity();
-    screenClipPath.reset();
-    screenClipPath.moveTo(dst.left, dst.top);
-    screenClipPath.lineTo(dst.right, dst.top);
-    screenClipPath.lineTo(dst.right, dst.bottom);
-    screenClipPath.lineTo(dst.left, dst.bottom);
-    screenClipPath.close();
-    canvas.clipPath(screenClipPath);
-    canvas.translate(dst.left, dst.top);
-
-    float halfDx = (dst.right - dst.left - size + thickness) / 2;
-    float halfDy = (dst.bottom - dst.top - size + thickness) / 2;
-
-    canvas.drawRect(-thickness, -thickness, size, size, paint);
-
-    canvas.translate(0, halfDy);
-    if (renderCenterThumbs) canvas.drawRect(-thickness, -thickness, size, size, paint);
-
-    canvas.translate(0, halfDy);
-    canvas.drawRect(-thickness, -thickness, size, size, paint);
-
-    canvas.translate(halfDx, 0);
-    if (renderCenterThumbs) canvas.drawRect(-thickness, -thickness, size, size, paint);
-
-    canvas.translate(halfDx, 0);
-    canvas.drawRect(-thickness, -thickness, size, size, paint);
-
-    canvas.translate(0, -halfDy);
-    if (renderCenterThumbs) canvas.drawRect(-thickness, -thickness, size, size, paint);
-
-    canvas.translate(0, -halfDy);
-    canvas.drawRect(-thickness, -thickness, size, size, paint);
-
-    canvas.translate(-halfDx, 0);
-    if (renderCenterThumbs) canvas.drawRect(-thickness, -thickness, size, size, paint);
-
-    rendererContext.restore();
-  }
-
-  public CropAreaRenderer(@ColorRes int color, boolean renderCenterThumbs) {
-    this.color              = color;
-    this.renderCenterThumbs = renderCenterThumbs;
-
-    cropClipPath.toggleInverseFillType();
-    cropClipPath.moveTo(Bounds.LEFT, Bounds.TOP);
-    cropClipPath.lineTo(Bounds.RIGHT, Bounds.TOP);
-    cropClipPath.lineTo(Bounds.RIGHT, Bounds.BOTTOM);
-    cropClipPath.lineTo(Bounds.LEFT, Bounds.BOTTOM);
-    cropClipPath.close();
-    screenClipPath.toggleInverseFillType();
-  }
-
-  @Override
-  public boolean hitTest(float x, float y) {
-    return !Bounds.contains(x, y);
-  }
-
-  public static final Creator<CropAreaRenderer> CREATOR = new Creator<CropAreaRenderer>() {
-    @Override
-    public @NonNull CropAreaRenderer createFromParcel(@NonNull Parcel in) {
-      return new CropAreaRenderer(in.readInt(),
-                                  in.readByte() == 1);
+        cropClipPath.toggleInverseFillType();
+        cropClipPath.moveTo(Bounds.LEFT, Bounds.TOP);
+        cropClipPath.lineTo(Bounds.RIGHT, Bounds.TOP);
+        cropClipPath.lineTo(Bounds.RIGHT, Bounds.BOTTOM);
+        cropClipPath.lineTo(Bounds.LEFT, Bounds.BOTTOM);
+        cropClipPath.close();
+        screenClipPath.toggleInverseFillType();
     }
 
     @Override
-    public @NonNull CropAreaRenderer[] newArray(int size) {
-      return new CropAreaRenderer[size];
+    public void render(@NonNull RendererContext rendererContext) {
+        rendererContext.save();
+
+        Canvas canvas = rendererContext.canvas;
+        Resources resources = rendererContext.context.getResources();
+
+        canvas.clipPath(cropClipPath);
+        canvas.drawColor(ResourcesCompat.getColor(resources, color, null));
+
+        rendererContext.mapRect(dst, Bounds.FULL_BOUNDS);
+
+        final int thickness = resources.getDimensionPixelSize(R.dimen.crop_area_renderer_edge_thickness);
+        final int size = (int) Math.min(resources.getDimensionPixelSize(R.dimen.crop_area_renderer_edge_size), Math.min(dst.width(), dst.height()) / 3f - 10);
+
+        paint.setColor(ResourcesCompat.getColor(resources, R.color.crop_area_renderer_edge_color, null));
+
+        rendererContext.canvasMatrix.setToIdentity();
+        screenClipPath.reset();
+        screenClipPath.moveTo(dst.left, dst.top);
+        screenClipPath.lineTo(dst.right, dst.top);
+        screenClipPath.lineTo(dst.right, dst.bottom);
+        screenClipPath.lineTo(dst.left, dst.bottom);
+        screenClipPath.close();
+        canvas.clipPath(screenClipPath);
+        canvas.translate(dst.left, dst.top);
+
+        float halfDx = (dst.right - dst.left - size + thickness) / 2;
+        float halfDy = (dst.bottom - dst.top - size + thickness) / 2;
+
+        canvas.drawRect(-thickness, -thickness, size, size, paint);
+
+        canvas.translate(0, halfDy);
+        if (renderCenterThumbs) canvas.drawRect(-thickness, -thickness, size, size, paint);
+
+        canvas.translate(0, halfDy);
+        canvas.drawRect(-thickness, -thickness, size, size, paint);
+
+        canvas.translate(halfDx, 0);
+        if (renderCenterThumbs) canvas.drawRect(-thickness, -thickness, size, size, paint);
+
+        canvas.translate(halfDx, 0);
+        canvas.drawRect(-thickness, -thickness, size, size, paint);
+
+        canvas.translate(0, -halfDy);
+        if (renderCenterThumbs) canvas.drawRect(-thickness, -thickness, size, size, paint);
+
+        canvas.translate(0, -halfDy);
+        canvas.drawRect(-thickness, -thickness, size, size, paint);
+
+        canvas.translate(-halfDx, 0);
+        if (renderCenterThumbs) canvas.drawRect(-thickness, -thickness, size, size, paint);
+
+        rendererContext.restore();
     }
-  };
 
-  @Override
-  public void writeToParcel(Parcel dest, int flags) {
-    dest.writeInt(color);
-    dest.writeByte((byte) (renderCenterThumbs ? 1 : 0));
-  }
+    @Override
+    public boolean hitTest(float x, float y) {
+        return !Bounds.contains(x, y);
+    }
 
-  @Override
-  public int describeContents() {
-    return 0;
-  }
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(color);
+        dest.writeByte((byte) (renderCenterThumbs ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 }

@@ -28,9 +28,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
 import com.plexus.messaging.adapter.MessageAdapter;
-import com.plexus.model.messaging.Message;
 import com.plexus.model.account.Privacy;
 import com.plexus.model.account.User;
+import com.plexus.model.messaging.Message;
 import com.plexus.utils.MasterCipher;
 import com.plexus.utils.SoundHelper;
 import com.plexus.utils.TimeUtils;
@@ -63,24 +63,22 @@ import static com.plexus.Plexus.TAG;
 public class MessageUserActivity extends AppCompatActivity {
 
     public static boolean running = false;
-    private TextView fullname, online;
-    private FirebaseUser fuser;
-    private DatabaseReference reference;
+    public static String userid;
     ImageView send_message, back, emoji;
-    private EmojiEditText message;
-    private SimpleDraweeView profile_image;
     LinearLayout linearLayout;
-
     MessageAdapter messageAdapter;
     List<Message> mMessage;
-
     RecyclerView recyclerView;
     ValueEventListener seenListener;
     EmojiPopup emojiPopup;
     View main_activity_root_view;
-    public static String userid;
-    private SoundHelper mSound;
     Intent intent;
+    private TextView fullname, online;
+    private FirebaseUser fuser;
+    private DatabaseReference reference;
+    private EmojiEditText message;
+    private SimpleDraweeView profile_image;
+    private SoundHelper mSound;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -115,7 +113,7 @@ public class MessageUserActivity extends AppCompatActivity {
 
         send_message.setOnClickListener(v -> {
             String msg = Objects.requireNonNull(message.getText()).toString();
-            if (!msg.equals("")){
+            if (!msg.equals("")) {
                 sendMessage(fuser.getUid(), userid, msg);
                 sendFunctionNotification("message", msg);
             } else {
@@ -129,7 +127,7 @@ public class MessageUserActivity extends AppCompatActivity {
         back.setOnClickListener(v -> finish());
 
         message.setOnFocusChangeListener((v, hasFocus) -> {
-            if(hasFocus){
+            if (hasFocus) {
                 send_message.setVisibility(View.VISIBLE);
             } else {
                 send_message.setVisibility(View.GONE);
@@ -188,8 +186,8 @@ public class MessageUserActivity extends AppCompatActivity {
     }
 
     private void hideKeybaord(View v) {
-        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
     }
 
     /*
@@ -198,7 +196,7 @@ public class MessageUserActivity extends AppCompatActivity {
       keep the code clean and well placed for future
       updates.
      */
-    private void seenMessage(final String userid){
+    private void seenMessage(final String userid) {
         reference = FirebaseDatabase.getInstance("https://plexus-network-chat.firebaseio.com").getReference("Chats").child(userid).child("Messages");
         seenListener = reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -265,7 +263,7 @@ public class MessageUserActivity extends AppCompatActivity {
         });
     }
 
-    private void sendMessage(String sender, final String receiver, String message){
+    private void sendMessage(String sender, final String receiver, String message) {
         DatabaseReference reference = FirebaseDatabase.getInstance("https://plexus-network-chat.firebaseio.com").getReference();
         String id = reference.push().getKey();
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -284,7 +282,7 @@ public class MessageUserActivity extends AppCompatActivity {
 
     }
 
-    private void readMessages(final String myid, final String userid){
+    private void readMessages(final String myid, final String userid) {
         mMessage = new ArrayList<>();
 
         reference = FirebaseDatabase.getInstance("https://plexus-network-chat.firebaseio.com").getReference("Chats").child(myid).child("Messages");
@@ -312,7 +310,7 @@ public class MessageUserActivity extends AppCompatActivity {
         });
     }
 
-    private void addToChatlist(){
+    private void addToChatlist() {
         final DatabaseReference chatRef = FirebaseDatabase.getInstance("https://plexus-network-chat.firebaseio.com").getReference("Chatlist")
                 .child(fuser.getUid())
                 .child(userid);
@@ -320,7 +318,7 @@ public class MessageUserActivity extends AppCompatActivity {
         chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()){
+                if (!dataSnapshot.exists()) {
                     chatRef.child("id").setValue(userid);
                 }
             }
@@ -343,7 +341,7 @@ public class MessageUserActivity extends AppCompatActivity {
       tasks fetched from the Plexus backend and should be kept on
       private at all times
      */
-    private void getPrivacySettings(){
+    private void getPrivacySettings() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userid).child("Privacy").child("Chat");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -352,13 +350,13 @@ public class MessageUserActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     if (dataSnapshot1.exists()) {
                         Handler handler = new Handler();
-                        if (privacy.getLast_seen_enabled().equals("Disabled")){
+                        if (privacy.getLast_seen_enabled().equals("Disabled")) {
                             handler.post(() -> online.setVisibility(View.GONE));
                         } else {
                             handler.post(() -> online.setVisibility(View.VISIBLE));
                         }
 
-                        if (privacy.getScreenshot_enabled().equals("Disabled")){
+                        if (privacy.getScreenshot_enabled().equals("Disabled")) {
                             getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
                         }
                     }

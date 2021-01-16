@@ -9,8 +9,8 @@ import androidx.annotation.ColorInt;
  */
 public interface ColorableRenderer extends Renderer {
 
-  @ColorInt
-  int getColor();
+    @ColorInt
+    int getColor();
 
-  void setColor(@ColorInt int color);
+    void setColor(@ColorInt int color);
 }

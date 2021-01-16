@@ -113,8 +113,8 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                title.setText("Block " + user.getName() + " " + user.getSurname()+ "?");
-                your_summary.setText("You'll no longer be able to see" + user.getName() + " " + user.getSurname()+ "'s" + " profile or send them messages");
+                title.setText("Block " + user.getName() + " " + user.getSurname() + "?");
+                your_summary.setText("You'll no longer be able to see" + user.getName() + " " + user.getSurname() + "'s" + " profile or send them messages");
                 their_title.setText("What happens for " + user.getName() + " " + user.getSurname());
                 their_summary.setText(user.getName() + " " + user.getSurname() + " won't get notified that you've blocked them, but they won't be able to see your profile, posts or message you.");
                 Glide.with(getApplicationContext()).asBitmap().load(user.getImageurl()).into(image_profile_mine);

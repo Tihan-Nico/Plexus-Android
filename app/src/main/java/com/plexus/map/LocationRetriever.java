@@ -28,7 +28,7 @@ public class LocationRetriever implements DefaultLifecycleObserver, LocationList
     private final FailureListener failureListener;
 
     LocationRetriever(@NonNull Context context, @NonNull LifecycleOwner lifecycleOwner, @NonNull SuccessListener successListener, @NonNull FailureListener failureListener) {
-        this.context         = context;
+        this.context = context;
         this.locationManager = ServiceUtil.getLocationManager(context);
         this.successListener = successListener;
         this.failureListener = failureListener;
@@ -39,8 +39,7 @@ public class LocationRetriever implements DefaultLifecycleObserver, LocationList
     @Override
     public void onStart(@NonNull LifecycleOwner owner) {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {
+                ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.w(TAG, "No location permission!");
             failureListener.onFailure();
         }

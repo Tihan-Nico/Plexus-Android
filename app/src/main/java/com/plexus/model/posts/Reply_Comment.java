@@ -32,7 +32,8 @@ public class Reply_Comment {
         this.type = type;
     }
 
-    public Reply_Comment() {}
+    public Reply_Comment() {
+    }
 
     public String getComment() {
         return comment;

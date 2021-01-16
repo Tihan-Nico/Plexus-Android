@@ -38,7 +38,7 @@ import static android.content.Context.MODE_PRIVATE;
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
-    private Context context;
+    private final Context context;
     private SharedPreferences sharedPreferences;
     private String password;
 

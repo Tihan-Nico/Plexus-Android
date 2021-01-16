@@ -21,9 +21,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
 import com.plexus.messaging.activity.MessageUserActivity;
+import com.plexus.model.account.User;
 import com.plexus.model.messaging.Chatlist;
 import com.plexus.model.messaging.Message;
-import com.plexus.model.account.User;
 import com.plexus.utils.MasterCipher;
 import com.vanniktech.emoji.EmojiTextView;
 
@@ -55,7 +55,7 @@ public class ChatlistAdapter extends RecyclerView.Adapter<ChatlistAdapter.ViewHo
     FirebaseUser firebaseUser;
     String theLastMessage;
 
-    public ChatlistAdapter(Context mContext, List<User> mUsers, boolean ischat){
+    public ChatlistAdapter(Context mContext, List<User> mUsers, boolean ischat) {
         this.mUsers = mUsers;
         this.mContext = mContext;
         this.ischat = ischat;
@@ -78,7 +78,7 @@ public class ChatlistAdapter extends RecyclerView.Adapter<ChatlistAdapter.ViewHo
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (ischat){
+        if (ischat) {
             lastMessage(user.getId(), holder.last_msg);
             getTimestamps(user.getId(), holder.timestamp);
         } else {
@@ -101,23 +101,7 @@ public class ChatlistAdapter extends RecyclerView.Adapter<ChatlistAdapter.ViewHo
         return mUsers.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
-
-        public TextView username, timestamp;
-        public SimpleDraweeView profile_image;
-        private EmojiTextView last_msg;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-
-            username = itemView.findViewById(R.id.fullname);
-            timestamp = itemView.findViewById(R.id.timestamp);
-            profile_image = itemView.findViewById(R.id.profile_image);
-            last_msg = itemView.findViewById(R.id.last_msg);
-        }
-    }
-
-    private void getTimestamps(final String userid, final TextView timestamp){
+    private void getTimestamps(final String userid, final TextView timestamp) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://plexus-network-chat.firebaseio.com/").getReference("Chatlist").child(firebaseUser.getUid()).child(userid);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -139,7 +123,7 @@ public class ChatlistAdapter extends RecyclerView.Adapter<ChatlistAdapter.ViewHo
     }
 
     //check for last message
-    private void lastMessage(final String userid, final TextView last_msg){
+    private void lastMessage(final String userid, final TextView last_msg) {
         theLastMessage = "default";
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance("https://plexus-network-chat.firebaseio.com/").getReference("Chats").child(firebaseUser.getUid()).child("Messages");
@@ -147,7 +131,7 @@ public class ChatlistAdapter extends RecyclerView.Adapter<ChatlistAdapter.ViewHo
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Message message = snapshot.getValue(Message.class);
                     if (firebaseUser != null && message != null) {
                         if (message.getReceiver().equals(firebaseUser.getUid()) && message.getSender().equals(userid) ||
@@ -190,5 +174,21 @@ public class ChatlistAdapter extends RecyclerView.Adapter<ChatlistAdapter.ViewHo
 
             }
         });
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView username, timestamp;
+        public SimpleDraweeView profile_image;
+        private final EmojiTextView last_msg;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+
+            username = itemView.findViewById(R.id.fullname);
+            timestamp = itemView.findViewById(R.id.timestamp);
+            profile_image = itemView.findViewById(R.id.profile_image);
+            last_msg = itemView.findViewById(R.id.last_msg);
+        }
     }
 }

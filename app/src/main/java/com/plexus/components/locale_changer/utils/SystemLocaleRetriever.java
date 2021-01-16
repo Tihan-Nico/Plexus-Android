@@ -2,6 +2,7 @@ package com.plexus.components.locale_changer.utils;
 
 import android.os.Build;
 import android.os.LocaleList;
+
 import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;

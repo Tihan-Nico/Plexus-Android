@@ -29,14 +29,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
+import com.plexus.account.activity.ProfileActivity;
+import com.plexus.model.account.User;
 import com.plexus.model.notifications.PlexusNotification;
 import com.plexus.model.posts.Post;
 import com.plexus.model.posts.SavedPostsCollection;
-import com.plexus.model.account.User;
 import com.plexus.posts.activity.CreatePostActivity;
 import com.plexus.posts.activity.saved_posts.CreateCollectionsSavesActivity;
 import com.plexus.posts.adapter.saves.CollectionSheetAdapter;
-import com.plexus.account.activity.ProfileActivity;
 import com.plexus.utils.MasterCipher;
 
 import org.jetbrains.annotations.NotNull;
@@ -49,16 +49,15 @@ import java.util.List;
 
 public class DialogInformation {
 
+    public static final String[] titles = new String[]{"Report User", "Block"};
     public static FirebaseUser firebaseUser;
-    public static final String[] titles = new String[] { "Report User", "Block"};
-
     //Save Sheet
     private static CollectionSheetAdapter collectionSheetAdapter;
     private static List<SavedPostsCollection> savedPostsCollectionList;
 
     //Notifications
 
-    public static void getProfileImage(String id, ImageView profile_image, Context context){
+    public static void getProfileImage(String id, ImageView profile_image, Context context) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(id);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -74,7 +73,7 @@ public class DialogInformation {
         });
     }
 
-    public static void getNotificationDescription(PlexusNotification plexusNotification, TextView notification_description, String publisherid){
+    public static void getNotificationDescription(PlexusNotification plexusNotification, TextView notification_description, String publisherid) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(publisherid);
         reference.addListenerForSingleValueEvent(
                 new ValueEventListener() {
@@ -91,18 +90,19 @@ public class DialogInformation {
                         } else if (plexusNotification.isReaction()) {
                             String sourceString = "<b>" + MasterCipher.decrypt(user.getName()) + " " + MasterCipher.decrypt(user.getSurname()) + "</b> " + "liked your post.";
                             notification_description.setText(Html.fromHtml(sourceString));
-                        } else if (plexusNotification.isShared()){
+                        } else if (plexusNotification.isShared()) {
                             String sourceString = "<b>" + MasterCipher.decrypt(user.getName()) + " " + MasterCipher.decrypt(user.getSurname()) + "</b> " + "shared your post.";
                             notification_description.setText(Html.fromHtml(sourceString));
                         }
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {}
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
                 });
     }
 
-    public static void showNotificationBottomSheet(Context context, PlexusNotification plexusNotification, String profileid){
+    public static void showNotificationBottomSheet(Context context, PlexusNotification plexusNotification, String profileid) {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.BottomSheetDialogTheme);
         bottomSheetDialog.setContentView(R.layout.sheet_notification);
 
@@ -134,7 +134,7 @@ public class DialogInformation {
 
     //This only shows when user has been verified for the first time on Plexus
 
-    public static void showVerified(Context context){
+    public static void showVerified(Context context) {
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_verified);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -147,7 +147,7 @@ public class DialogInformation {
 
     //Edit Profile
 
-    public static void editName(Context context, String profileid){
+    public static void editName(Context context, String profileid) {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.BottomSheetDialogTheme);
         bottomSheetDialog.setContentView(R.layout.sheet_edit_name);
 
@@ -166,7 +166,7 @@ public class DialogInformation {
 
     }
 
-    public static void editSurname(Context context, String profileid){
+    public static void editSurname(Context context, String profileid) {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.BottomSheetDialogTheme);
         bottomSheetDialog.setContentView(R.layout.sheet_edit_name);
 
@@ -185,7 +185,7 @@ public class DialogInformation {
 
     }
 
-    public static void editWebsite(Context context, String profileid){
+    public static void editWebsite(Context context, String profileid) {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.BottomSheetDialogTheme);
         bottomSheetDialog.setContentView(R.layout.sheet_edit_name);
 
@@ -204,7 +204,7 @@ public class DialogInformation {
 
     }
 
-    public static void editBio(Context context, String profileid){
+    public static void editBio(Context context, String profileid) {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.BottomSheetDialogTheme);
         bottomSheetDialog.setContentView(R.layout.sheet_edit_name);
 
@@ -224,21 +224,22 @@ public class DialogInformation {
 
     }
 
-    public static void getName(EditText name, String profileid){
+    public static void getName(EditText name, String profileid) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(profileid);
         databaseReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        User user = dataSnapshot.getValue(User.class);
-                        name.setHint(MasterCipher.decrypt(user.getName()));
-                    }
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                name.setHint(MasterCipher.decrypt(user.getName()));
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {}
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
-    public static void getSurname(EditText surname,  String profileid){
+    public static void getSurname(EditText surname, String profileid) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(profileid);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -248,11 +249,12 @@ public class DialogInformation {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
         });
     }
 
-    public static void getBio(EditText bio, String profileid){
+    public static void getBio(EditText bio, String profileid) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(profileid);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -262,11 +264,12 @@ public class DialogInformation {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
         });
     }
 
-    public static void getWebsite(EditText website, String profileid){
+    public static void getWebsite(EditText website, String profileid) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(profileid);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -276,7 +279,8 @@ public class DialogInformation {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
         });
     }
 
@@ -292,7 +296,7 @@ public class DialogInformation {
 
     //Groups
 
-    public static void selectPrivacy(Context context, TextView privacy){
+    public static void selectPrivacy(Context context, TextView privacy) {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.BottomSheetDialogTheme);
         bottomSheetDialog.setContentView(R.layout.sheet_group_privacy);
 
@@ -302,7 +306,7 @@ public class DialogInformation {
         RadioButton privacy_private = bottomSheetDialog.findViewById(R.id.privacy_private);
 
         group_public.setOnClickListener(view -> privacy_public.setOnCheckedChangeListener((compoundButton, b) -> {
-            if (b){
+            if (b) {
                 privacy_private.setChecked(false);
                 privacy_public.setChecked(true);
 
@@ -312,7 +316,7 @@ public class DialogInformation {
         }));
 
         group_private.setOnClickListener(view -> privacy_private.setOnCheckedChangeListener((compoundButton, b) -> {
-            if (b){
+            if (b) {
                 privacy_private.setChecked(true);
                 privacy_public.setChecked(false);
 
@@ -328,7 +332,7 @@ public class DialogInformation {
 
     //Posts for groups and users
 
-    public static void moreSheet(Context mContext, Post post, String postid, String userID, String email, String input, String postDescription){
+    public static void moreSheet(Context mContext, Post post, String postid, String userID, String email, String input, String postDescription) {
         BottomSheetDialog sheetPost = new BottomSheetDialog(mContext, R.style.BottomSheetDialogTheme);
         sheetPost.setContentView(R.layout.sheet_post);
         LinearLayout edit_post = sheetPost.findViewById(R.id.edit_post);
@@ -363,7 +367,7 @@ public class DialogInformation {
             checkCollections(mContext, sheetPost, save, post);
         });
 
-        if (!post.getPublisher().equals(firebaseUser.getUid())){
+        if (!post.getPublisher().equals(firebaseUser.getUid())) {
             edit_post.setVisibility(View.GONE);
             line2.setVisibility(View.GONE);
             delete_posts.setVisibility(View.GONE);
@@ -373,15 +377,15 @@ public class DialogInformation {
         sheetPost.show();
     }
 
-    private static void isSaved(final String postid, final ImageView imageView){
+    private static void isSaved(final String postid, final ImageView imageView) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Saves").child(firebaseUser.getUid()).child("Recent");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(postid).exists()){
+                if (dataSnapshot.child(postid).exists()) {
                     imageView.setImageResource(R.drawable.bookmark_multiple);
                     imageView.setTag("saved");
-                } else{
+                } else {
                     imageView.setImageResource(R.drawable.bookmark_multiple_outline);
                     imageView.setTag("save");
                 }
@@ -394,7 +398,7 @@ public class DialogInformation {
         });
     }
 
-    public static void reportPost(Context context, String profileid, String myID, String myEmail, String postID, String inputText){
+    public static void reportPost(Context context, String profileid, String myID, String myEmail, String postID, String inputText) {
         BottomSheetDialog report_post = new BottomSheetDialog(context, R.style.BottomSheetDialogTheme);
         report_post.setContentView(R.layout.report_sheet);
         ImageView back = report_post.findViewById(R.id.back);
@@ -429,7 +433,8 @@ public class DialogInformation {
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {}
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
                 });
 
         unfollow.setOnClickListener(v -> {
@@ -439,7 +444,7 @@ public class DialogInformation {
         report_post.show();
     }
 
-    public static void saveCollectionSheet(Context mContext, Post post){
+    public static void saveCollectionSheet(Context mContext, Post post) {
         BottomSheetDialog save_collection_sheet = new BottomSheetDialog(mContext, R.style.BottomSheetDialogTheme);
         save_collection_sheet.setContentView(R.layout.sheet_save_post);
 
@@ -523,8 +528,8 @@ public class DialogInformation {
         });
     }
 
-    private static void savePost(ImageView imageView, Post post){
-        if (imageView.getTag().equals("save")){
+    private static void savePost(ImageView imageView, Post post) {
+        if (imageView.getTag().equals("save")) {
             FirebaseDatabase.getInstance().getReference("Saves").child(firebaseUser.getUid()).child("Recent")
                     .child(post.getPostid()).setValue(true);
         } else {
@@ -545,7 +550,7 @@ public class DialogInformation {
                 });
     }
 
-    private static void unfollowUser(String profileid){
+    private static void unfollowUser(String profileid) {
         FirebaseDatabase.getInstance()
                 .getReference()
                 .child("Follow")

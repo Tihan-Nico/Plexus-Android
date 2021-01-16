@@ -12,11 +12,9 @@ public class RecordingManager {
 
     SeekBar seekBar;
     ImageView playPreviousBtn, playRecordBtn, playNextBtn;
-
-    private boolean playing = false;
-
-    private MediaPlayer mediaPlayer;
     Runnable runnable;
+    private boolean playing = false;
+    private MediaPlayer mediaPlayer;
     private Handler handler;
 
 

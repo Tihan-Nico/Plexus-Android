@@ -17,19 +17,19 @@ package com.plexus.model.posts;
  ******************************************************************************/
 
 public class Reactions {
-  private boolean Haha;
-  private boolean Love;
-  private boolean Shocked;
-  private boolean Sad;
-  private boolean Angry;
-  private boolean InLove;
-  private boolean Yummy;
-  private boolean Crush;
-  private boolean Kinky;
-  private boolean Eyeing;
-  private boolean Upset;
-  private boolean Swearing;
-  private boolean Irritated;
-  private boolean Sleep;
-  private boolean Whatever;
+    private boolean Haha;
+    private boolean Love;
+    private boolean Shocked;
+    private boolean Sad;
+    private boolean Angry;
+    private boolean InLove;
+    private boolean Yummy;
+    private boolean Crush;
+    private boolean Kinky;
+    private boolean Eyeing;
+    private boolean Upset;
+    private boolean Swearing;
+    private boolean Irritated;
+    private boolean Sleep;
+    private boolean Whatever;
 }

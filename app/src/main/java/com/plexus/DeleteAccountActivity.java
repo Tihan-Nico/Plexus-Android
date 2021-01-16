@@ -36,7 +36,7 @@ public class DeleteAccountActivity extends AppCompatActivity {
 
     }
 
-    private void init(){
+    private void init() {
 
         TextView toolbar_title = toolbar.findViewById(R.id.toolbar_name);
         ImageView back = toolbar.findViewById(R.id.back);
@@ -49,7 +49,7 @@ public class DeleteAccountActivity extends AppCompatActivity {
         setInformationText();
     }
 
-    private void setInformationText(){
+    private void setInformationText() {
         String text = "Deleting your account is permanent. When you delete your Plexus account, you won't be able to retrieve any information you have shared on Plexus.\\n\\nThe following information will be deleted:\\n\\n· LookOut Data\\n· LookOut Messages\\n· LookOut Images\\n· Plexus Data\\n· Plexus Messages\\n· Plexus Images\\n\\nBefore you delete your account you will be asked to provide some feedback, as we be may be able to help you with common issues. You can also continue to delete your account.";
 
         SpannableStringBuilder ssb = new SpannableStringBuilder(text);

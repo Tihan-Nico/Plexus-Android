@@ -18,7 +18,7 @@ import com.plexus.R;
 
 public class PlexusDelete {
 
-    public static void deletePost(BottomSheetDialog sheetPost, String postid, String userID, Context context){
+    public static void deletePost(BottomSheetDialog sheetPost, String postid, String userID, Context context) {
         sheetPost.dismiss();
 
         final Dialog dialog = new Dialog(context);
@@ -34,7 +34,7 @@ public class PlexusDelete {
             FirebaseDatabase.getInstance().getReference("Posts")
                     .child(postid).removeValue()
                     .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             deletePostNotification(id, userID, context);
                             deleteCommentsAndLikes(id);
                             dialog.dismiss();
@@ -45,13 +45,13 @@ public class PlexusDelete {
         dialog.show();
     }
 
-    public static void deletePostNotification(final String postid, String userid, Context context){
+    public static void deletePostNotification(final String postid, String userid, Context context) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userid).child("Notification");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    if (snapshot.child("postid").getValue().equals(postid)){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("postid").getValue().equals(postid)) {
                         snapshot.getRef().removeValue().addOnCompleteListener(task -> Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show());
                     }
                 }
@@ -64,19 +64,19 @@ public class PlexusDelete {
         });
     }
 
-    public static void deleteNotification(String id){
+    public static void deleteNotification(String id) {
         FirebaseUser firebaseUser;
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Notification").child(id).removeValue();
     }
 
-    private static void deleteCommentsAndLikes(String postID){
+    private static void deleteCommentsAndLikes(String postID) {
         FirebaseDatabase.getInstance().getReference().child("Comments").child(postID).removeValue();
         FirebaseDatabase.getInstance().getReference().child("Likes").child(postID).removeValue();
     }
 
-    public static void deleteAllUserData(){
+    public static void deleteAllUserData() {
 
     }
 

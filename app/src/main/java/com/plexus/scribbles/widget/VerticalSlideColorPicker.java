@@ -1,5 +1,6 @@
 package com.plexus.scribbles.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -10,6 +11,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,28 +23,28 @@ public class VerticalSlideColorPicker extends View {
     private static final float INDICATOR_TO_BAR_WIDTH_RATIO = 0.5f;
 
     private Paint paint;
-    private Paint  strokePaint;
-    private Paint  indicatorStrokePaint;
-    private Paint  indicatorFillPaint;
+    private Paint strokePaint;
+    private Paint indicatorStrokePaint;
+    private Paint indicatorFillPaint;
     private Path path;
     private Bitmap bitmap;
     private Canvas bitmapCanvas;
 
-    private int     viewWidth;
-    private int     viewHeight;
-    private int     centerX;
-    private float   colorPickerRadius;
+    private int viewWidth;
+    private int viewHeight;
+    private int centerX;
+    private float colorPickerRadius;
     private RectF colorPickerBody;
 
     private OnColorChangeListener onColorChangeListener;
 
-    private int     borderColor;
-    private float   borderWidth;
-    private float   indicatorRadius;
-    private int[]   colors;
+    private int borderColor;
+    private float borderWidth;
+    private float indicatorRadius;
+    private int[] colors;
 
-    private int     touchY;
-    private int     activeColor;
+    private int touchY;
+    private int activeColor;
 
     public VerticalSlideColorPicker(Context context) {
         super(context);
@@ -57,9 +59,9 @@ public class VerticalSlideColorPicker extends View {
         try {
             int colorsResourceId = a.getResourceId(R.styleable.VerticalSlideColorPicker_pickerColors, R.array.scribble_colors);
 
-            colors          = a.getResources().getIntArray(colorsResourceId);
-            borderColor     = a.getColor(R.styleable.VerticalSlideColorPicker_pickerBorderColor, Color.WHITE);
-            borderWidth     = a.getDimension(R.styleable.VerticalSlideColorPicker_pickerBorderWidth, 10f);
+            colors = a.getResources().getIntArray(colorsResourceId);
+            borderColor = a.getColor(R.styleable.VerticalSlideColorPicker_pickerBorderColor, Color.WHITE);
+            borderWidth = a.getDimension(R.styleable.VerticalSlideColorPicker_pickerBorderWidth, 10f);
 
         } finally {
             a.recycle();
@@ -129,7 +131,7 @@ public class VerticalSlideColorPicker extends View {
         touchY = (int) Math.min(event.getY(), colorPickerBody.bottom);
         touchY = (int) Math.max(colorPickerBody.top, touchY);
 
-        activeColor = bitmap.getPixel(viewWidth/2, touchY);
+        activeColor = bitmap.getPixel(viewWidth / 2, touchY);
 
         if (onColorChangeListener != null) {
             onColorChangeListener.onColorChange(activeColor);
@@ -144,18 +146,18 @@ public class VerticalSlideColorPicker extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
-        viewWidth  = w;
+        viewWidth = w;
         viewHeight = h;
 
         if (viewWidth <= 0 || viewHeight <= 0) return;
 
         int barWidth = (int) (viewWidth * INDICATOR_TO_BAR_WIDTH_RATIO);
 
-        centerX           = viewWidth / 2;
-        indicatorRadius   = (viewWidth / 2) - borderWidth;
+        centerX = viewWidth / 2;
+        indicatorRadius = (viewWidth / 2) - borderWidth;
         colorPickerRadius = (barWidth / 2) - borderWidth;
 
-        colorPickerBody   = new RectF(centerX - colorPickerRadius,
+        colorPickerBody = new RectF(centerX - colorPickerRadius,
                 borderWidth + colorPickerRadius + indicatorRadius,
                 centerX + colorPickerRadius,
                 viewHeight - (borderWidth + colorPickerRadius + indicatorRadius));
@@ -167,7 +169,7 @@ public class VerticalSlideColorPicker extends View {
             bitmap.recycle();
         }
 
-        bitmap       = Bitmap.createBitmap(viewWidth, viewHeight, Bitmap.Config.ARGB_8888);
+        bitmap = Bitmap.createBitmap(viewWidth, viewHeight, Bitmap.Config.ARGB_8888);
         bitmapCanvas = new Canvas(bitmap);
     }
 
@@ -186,6 +188,10 @@ public class VerticalSlideColorPicker extends View {
         invalidate();
     }
 
+    public int getActiveColor() {
+        return activeColor;
+    }
+
     public void setActiveColor(int color) {
         activeColor = color;
 
@@ -198,10 +204,6 @@ public class VerticalSlideColorPicker extends View {
         }
 
         invalidate();
-    }
-
-    public int getActiveColor() {
-        return activeColor;
     }
 
     public void setOnColorChangeListener(OnColorChangeListener onColorChangeListener) {

@@ -34,7 +34,8 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="15dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/close" />
+            android:src="@drawable/close"
+            app:tint="@color/drawableTintColor" />
 
         <TextView
             android:id="@+id/group_name"
@@ -72,7 +73,7 @@
         android:layout_height="1dp"
         android:layout_below="@id/top_bar"
         android:layout_marginTop="5dp"
-        android:background="@color/guideline" />
+        android:background="@color/guidelineColor" />
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/profile_image"
@@ -92,7 +93,7 @@
         android:layout_alignTop="@id/profile_image"
         android:layout_toEndOf="@id/profile_image"
         android:fontFamily="@font/roboto_bold"
-        android:textColor="@color/white" />
+        android:textColor="@color/textColor"/>
 
     <TextView
         android:id="@+id/post_date"
@@ -101,7 +102,7 @@
         android:layout_below="@id/fullname"
         android:layout_toEndOf="@id/profile_image"
         android:text="Sunday, June 7, 2020"
-        android:textColor="@color/gray_scale"
+        android:textColor="@color/textDescriptionColor"
         android:textSize="12sp" />
 
     <com.plexus.components.components.socials.commons.SocialAutoCompleteTextView
@@ -111,8 +112,9 @@
         android:layout_below="@id/profile_image"
         android:layout_margin="15dp"
         android:hint="What's happening today?"
-        android:textColor="@color/white"
-        android:textColorHint="@color/gray_scale"
+        android:textColor="@color/textColor"
+        android:textColorHint="@color/textDescriptionColor"
+        android:backgroundTint="@color/textDescriptionColor"
         android:textSize="14sp" />
 
     <include
@@ -171,17 +173,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/settings_outline"
-        android:tint="@color/gray_scale"
         android:layout_alignParentEnd="true"
         android:id="@+id/post_settings"
         android:layout_above="@id/post_add_on"
-        android:layout_margin="15dp"/>
+        android:layout_margin="15dp"
+        app:tint="@color/drawableTintColor" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_above="@id/post_add_on"
-        android:background="@color/guideline" />
+        android:background="@color/guidelineColor" />
 
     <LinearLayout
         android:id="@+id/post_add_on"
@@ -196,8 +198,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:src="@drawable/waveform"
-            android:tint="@color/white"
-            android:tooltipText="Voice" />
+            android:tooltipText="Voice"
+            app:tint="@color/drawableTintColor" />
 
         <ImageView
             android:id="@+id/upload_image"
@@ -207,8 +209,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
             android:src="@drawable/image_outline"
-            android:tint="@color/white"
-            android:tooltipText="Image" />
+            android:tooltipText="Image"
+            app:tint="@color/drawableTintColor" />
 
         <ImageView
             android:id="@+id/upload_video"
@@ -218,8 +220,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
             android:src="@drawable/video_outline"
-            android:tint="@color/white"
-            android:tooltipText="Video" />
+            android:tooltipText="Video"
+            app:tint="@color/drawableTintColor" />
 
         <ImageView
             android:id="@+id/upload_camera"
@@ -229,8 +231,19 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
             android:src="@drawable/camera_outline"
-            android:tint="@color/white"
-            android:tooltipText="Camera" />
+            android:tooltipText="Camera"
+            app:tint="@color/drawableTintColor" />
+
+        <ImageView
+            android:id="@+id/upload_missing_person"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/account_child_outline"
+            android:tooltipText="Missing Person"
+            app:tint="@color/drawableTintColor" />
 
         <!--<ImageView
             android:id="@+id/upload_text_background"
@@ -272,7 +285,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
                     android:text="Characters"
-                    android:textColor="@color/gray_scale"
+                    android:textColor="@color/textColor"
                     android:textSize="12sp" />
 
                 <TextView

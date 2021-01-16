@@ -23,7 +23,8 @@ public class ColorPaletteAdapter extends RecyclerView.Adapter<ColorPaletteAdapte
     private EventListener eventListener;
 
     @Override
-    public @NonNull ColorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public @NonNull
+    ColorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ColorViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_color, parent, false));
     }
 

@@ -28,9 +28,9 @@ import com.plexus.R;
 
 public class ExperimentalActivity extends AppCompatActivity {
 
+    ImageView back;
     private SwitchMaterial notices, version;
     private SharedPreferences sharedPreferences;
-    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,33 +46,17 @@ public class ExperimentalActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("experimental", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        if (sharedPreferences.getBoolean("notices_enabled", false)) {
-            notices.setChecked(true);
-        } else {
-            notices.setChecked(false);
-        }
+        notices.setChecked(sharedPreferences.getBoolean("notices_enabled", false));
 
         notices.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                editor.putBoolean("notices_enabled", true);
-            } else {
-                editor.putBoolean("notices_enabled", false);
-            }
+            editor.putBoolean("notices_enabled", isChecked);
             editor.apply();
         });
 
-        if (sharedPreferences.getBoolean("version_enabled", false)) {
-            version.setChecked(true);
-        } else {
-            version.setChecked(false);
-        }
+        version.setChecked(sharedPreferences.getBoolean("version_enabled", false));
 
         version.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                editor.putBoolean("version_enabled", true);
-            } else {
-                editor.putBoolean("version_enabled", false);
-            }
+            editor.putBoolean("version_enabled", isChecked);
             editor.apply();
         });
 

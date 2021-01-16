@@ -49,12 +49,12 @@ import io.reactivex.rxjava3.disposables.Disposable;
 
 public class NewMessageFragment extends AppCompatActivity {
 
+    ImageView back;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private ChatlistAdapter userAdapter;
     private List<User> mUsers;
     private FirebaseUser firebaseUser;
-    ImageView back;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -13,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.plexus.R;
-import com.plexus.startup.LoginActivity;
 import com.plexus.settings.authentication.ReAuthenticationDialog;
+import com.plexus.startup.LoginActivity;
 
 /******************************************************************************
  * Copyright (c) 2020. Plexus, Inc.                                           *
@@ -34,12 +34,12 @@ import com.plexus.settings.authentication.ReAuthenticationDialog;
 
 public class ChangePasswordActivity extends AppCompatActivity {
 
+    FirebaseUser firebaseUser;
+    FirebaseAuth firebaseAuth;
     private ImageView back;
     private TextView email;
     private EditText password;
     private Button change_password;
-    FirebaseUser firebaseUser;
-    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

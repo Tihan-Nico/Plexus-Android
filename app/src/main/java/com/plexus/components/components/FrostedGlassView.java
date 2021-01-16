@@ -62,6 +62,10 @@ public class FrostedGlassView extends RelativeLayout {
         initAttributes(attrs);
     }
 
+    private static boolean isPostHoneycomb() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+    }
+
     private void init() {
         setWillNotDraw(false);
     }
@@ -82,15 +86,15 @@ public class FrostedGlassView extends RelativeLayout {
         mBlurCanvas = new Canvas(mOrigBitmap);
     }
 
+    public float getBlurRadius() {
+        return mBlurRadius;
+    }
+
     public void setBlurRadius(float blurRadius) {
         if (0f < blurRadius && blurRadius <= MAX_BLUR_RADIUS) {
             mBlurRadius = blurRadius;
             invalidate();
         }
-    }
-
-    public float getBlurRadius() {
-        return mBlurRadius;
     }
 
     private void applyBlur() {
@@ -159,10 +163,6 @@ public class FrostedGlassView extends RelativeLayout {
         return mScrollChangedListener;
     }
 
-    private static boolean isPostHoneycomb() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
-    }
-
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onAttachedToWindow() {
@@ -208,7 +208,7 @@ public class FrostedGlassView extends RelativeLayout {
     }
 
     @Override
-    public void draw(Canvas canvas)  {
+    public void draw(Canvas canvas) {
         View parent = (View) getParent();
 
         // prevent draw() from being recursively called

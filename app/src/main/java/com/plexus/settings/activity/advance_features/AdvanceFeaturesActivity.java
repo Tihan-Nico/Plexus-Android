@@ -28,8 +28,8 @@ import com.plexus.R;
 
 public class AdvanceFeaturesActivity extends AppCompatActivity {
 
-    private LinearLayout storage;
     ImageView back;
+    private LinearLayout storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

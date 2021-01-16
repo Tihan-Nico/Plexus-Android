@@ -33,13 +33,13 @@ import com.jakewharton.rxbinding4.view.RxView;
 import com.plexus.R;
 import com.plexus.groups.activity.AllGroupActivity;
 import com.plexus.information_centre.Covid_Information;
-import com.plexus.startup.LoginActivity;
 import com.plexus.model.posts.Post;
 import com.plexus.model.posts.Story;
 import com.plexus.posts.activity.CreatePostActivity;
 import com.plexus.posts.adapter.PostAdapter;
 import com.plexus.settings.activity.SettingsActivity;
 import com.plexus.settings.activity.privacy.PrivacyActivity;
+import com.plexus.startup.LoginActivity;
 import com.plexus.story.adapter.StoryAdapter;
 import com.plexus.utils.MasterCipher;
 
@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment {
     private StoryAdapter storyAdapter;
     private List<Story> storyList;
     private List<String> followingList;
-    private Handler mHandler = new Handler(Looper.getMainLooper());
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -191,7 +191,7 @@ public class HomeFragment extends Fragment {
         });
         compositeDisposable.add(camera);
 
-        Disposable text = RxView.clicks(text_upload).subscribe(unit ->{
+        Disposable text = RxView.clicks(text_upload).subscribe(unit -> {
             Intent intent = new Intent(getContext(), CreatePostActivity.class);
             intent.putExtra("isText", true);
             startActivity(intent);
@@ -203,7 +203,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void getUserData(TextView fullname, SimpleDraweeView profile_image_sheet, TextView email){
+    private void getUserData(TextView fullname, SimpleDraweeView profile_image_sheet, TextView email) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -214,7 +214,7 @@ public class HomeFragment extends Fragment {
                     String name = dataSnapshot.child("name").getValue(String.class);
                     String surname = dataSnapshot.child("surname").getValue(String.class);
 
-                    fullname.setText(MasterCipher.decrypt(name)  + " " + MasterCipher.decrypt(surname));
+                    fullname.setText(MasterCipher.decrypt(name) + " " + MasterCipher.decrypt(surname));
                     profile_image_sheet.setImageURI(MasterCipher.decrypt(image));
                     profile_image.setImageURI(MasterCipher.decrypt(image));
                     email.setText(firebaseUser.getEmail());
@@ -264,7 +264,7 @@ public class HomeFragment extends Fragment {
                                 postList.add(post);
                             }
                         }
-                        if (post.getPublisher().equals(firebaseUser.getUid())){
+                        if (post.getPublisher().equals(firebaseUser.getUid())) {
                             postList.add(post);
                         }
                     }

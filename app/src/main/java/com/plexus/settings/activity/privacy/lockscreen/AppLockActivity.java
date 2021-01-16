@@ -40,12 +40,12 @@ import com.plexus.settings.activity.SettingsActivity;
 public class AppLockActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
+    ImageView back;
     private RadioButton passcode, off;
     private RadioGroup radio_group;
     private LinearLayout passcode_active;
     private TextView change_passcode;
     private Switch use_fingerprint;
-    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,11 +89,7 @@ public class AppLockActivity extends AppCompatActivity {
             passcode.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), CreatePasswordActivity.class)));
         }
 
-        if (sharedPreferences.getBoolean("lockscreen_fingerprint", false)) {
-            use_fingerprint.setChecked(true);
-        } else {
-            use_fingerprint.setChecked(false);
-        }
+        use_fingerprint.setChecked(sharedPreferences.getBoolean("lockscreen_fingerprint", false));
 
         off.setOnClickListener(v -> {
             editor.putBoolean("lockscreen_passcode", false);
@@ -102,11 +98,7 @@ public class AppLockActivity extends AppCompatActivity {
         });
 
         use_fingerprint.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                editor.putBoolean("lockscreen_fingerprint", true);
-            } else {
-                editor.putBoolean("lockscreen_fingerprint", false);
-            }
+            editor.putBoolean("lockscreen_fingerprint", isChecked);
             editor.apply();
         });
 

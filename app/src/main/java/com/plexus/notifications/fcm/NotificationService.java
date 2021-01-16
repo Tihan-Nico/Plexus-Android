@@ -20,23 +20,16 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.plexus.R;
-import com.plexus.main.activity.MainActivity;
-import com.plexus.messaging.activity.MessageUserActivity;
 import com.plexus.model.Token;
-import com.plexus.utils.MasterCipher;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -65,7 +58,7 @@ public class NotificationService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        if (remoteMessage.getData().get("type").equals("follower")){
+        if (remoteMessage.getData().get("type").equals("follower")) {
             if (remoteMessage.getData().size() > 0) {
                 sendFollowerNotification(remoteMessage.getData().get("body"), remoteMessage.getData().get("click_action"), remoteMessage.getData().get("from_user_id"), getBitmapFromURL(remoteMessage.getData().get("imageurl")));
             }
@@ -305,15 +298,15 @@ public class NotificationService extends FirebaseMessagingService {
     }
 
     @Override
-    public void onNewToken(String s){
+    public void onNewToken(String s) {
         super.onNewToken(s);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user != null){
+        if (user != null) {
             updateToken(s);
         }
     }
 
-    private void updateToken(String s){
+    private void updateToken(String s) {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Tokens");
         Token token = new Token(s);

@@ -38,10 +38,10 @@ import java.util.List;
 public class NoticesActivity extends AppCompatActivity {
 
     private static final String URL = "https://raw.githubusercontent.com/PlexusInc/notices/master/Notices.json";
+    ImageView back;
     private RecyclerView recyclerView;
     private NoticesAdapter noticesAdapter;
     private List<Notices> noticesList;
-    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -15,7 +15,7 @@ import com.plexus.model.account.Violations;
 
 import java.util.List;
 
-public class ViolationsAdapter extends RecyclerView.Adapter<ViolationsAdapter.ViewHolder>  {
+public class ViolationsAdapter extends RecyclerView.Adapter<ViolationsAdapter.ViewHolder> {
 
     Context mContext;
     List<Violations> mViolations;

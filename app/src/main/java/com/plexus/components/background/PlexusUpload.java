@@ -13,7 +13,8 @@ import androidx.annotation.Nullable;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.material.checkbox.MaterialCheckBox;
-import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -38,8 +39,7 @@ public class PlexusUpload {
 
     @SuppressLint("StaticFieldLeak")
     public static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    public static CollectionReference collectionReference;
-    public static DocumentReference documentReference;
+    public static DatabaseReference databaseReference;
     public static StorageReference storageReference;
     public static String url = "";
     public static ProgressDialog pd;
@@ -48,8 +48,8 @@ public class PlexusUpload {
 
     public static void uploadText(SocialAutoCompleteTextView description, String publisher, Context context) {
 
-        collectionReference = db.collection("Posts");
-        String ID = collectionReference.getId();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
+        String ID = databaseReference.getKey();
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("postid", ID);
@@ -58,14 +58,14 @@ public class PlexusUpload {
         hashMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
         hashMap.put("type", "text");
 
-        collectionReference.document(ID).set(hashMap);
+        databaseReference.child(ID).setValue(hashMap);
 
         List<String> hashtags = description.getHashtags();
         if (!hashtags.isEmpty()) {
             for (String tag : hashtags) {
                 DocumentReference documentReference = db.collection("Hashtages").document(tag.toLowerCase());
                 documentReference.addSnapshotListener((value, error) -> {
-                    if (value.exists()){
+                    if (value.exists()) {
                         db.collection("Hashtags").document(tag.toLowerCase()).collection("Posts").document(ID).set(true);
                     } else {
                         HashMap<String, Object> hashMap1 = new HashMap<>();
@@ -124,8 +124,8 @@ public class PlexusUpload {
                                         Uri downloadUri = task.getResult();
                                         url = downloadUri.toString();
 
-                                        collectionReference = db.collection("Posts");
-                                        String ID = collectionReference.getId();
+                                        databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
+                                        String ID = databaseReference.getKey();
 
                                         HashMap<String, Object> hashMap = new HashMap<>();
                                         hashMap.put("postid", ID);
@@ -137,7 +137,7 @@ public class PlexusUpload {
                                         hashMap.put("type", Files.getFileType(image_uri.toString()));
                                         hashMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
 
-                                        collectionReference.document(ID).set(hashMap);
+                                        databaseReference.child(ID).setValue(hashMap);
                                         pd.dismiss();
 
                                         Intent intent = new Intent(context, MainActivity.class);
@@ -181,8 +181,8 @@ public class PlexusUpload {
                                     Uri downloadUri = task.getResult();
                                     url = downloadUri.toString();
 
-                                    collectionReference = db.collection("Posts");
-                                    String ID = collectionReference.getId();
+                                    databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
+                                    String ID = databaseReference.getKey();
 
                                     HashMap<String, Object> hashMap = new HashMap<>();
                                     hashMap.put("postid", ID);
@@ -194,7 +194,7 @@ public class PlexusUpload {
                                     hashMap.put("type", "video");
                                     hashMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
 
-                                    collectionReference.document(ID).set(hashMap);
+                                    databaseReference.child(ID).setValue(hashMap);
 
                                     pd.dismiss();
 
@@ -210,7 +210,7 @@ public class PlexusUpload {
         }
     }
 
-    public static void uploadVoice(SocialAutoCompleteTextView description, String publisher, Context context, String fileName){
+    public static void uploadVoice(SocialAutoCompleteTextView description, String publisher, Context context, String fileName) {
 
         pd = new ProgressDialog(context);
         pd.setMessage("Please wait...");
@@ -223,8 +223,8 @@ public class PlexusUpload {
 
         storageReference.putFile(uri).addOnSuccessListener(taskSnapshot -> storageReference.getDownloadUrl().addOnSuccessListener(uri1 -> {
             String downloadLinkAudio = uri1.toString();
-            collectionReference = db.collection("Posts");
-            String ID = collectionReference.getId();
+            databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
+            String ID = databaseReference.getKey();
 
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("postid", ID);
@@ -236,7 +236,7 @@ public class PlexusUpload {
             hashMap.put("type", "audio");
             hashMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
 
-            collectionReference.document(ID).set(hashMap);
+            databaseReference.child(ID).setValue(hashMap);
 
             pd.dismiss();
 
@@ -247,12 +247,12 @@ public class PlexusUpload {
 
     //Group Upload
 
-    public static void uploadGroupCover(Context context, Uri coverURI, String groupID){
+    public static void uploadGroupCover(Context context, Uri coverURI, String groupID) {
         final ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Please wait...");
         progressDialog.show();
 
-        storageReference = FirebaseStorage.getInstance().getReference("groups/"+groupID+"/Images");
+        storageReference = FirebaseStorage.getInstance().getReference("groups/" + groupID + "/Images");
         if (coverURI != null) {
             final StorageReference fileReference = storageReference.child(String.valueOf(System.currentTimeMillis()));
 
@@ -278,21 +278,21 @@ public class PlexusUpload {
                 }).addOnCompleteListener(
                         (OnCompleteListener<Uri>)
                                 task -> {
-                            if (task.isSuccessful()) {
-                                Uri downloadUri = task.getResult();
-                                String myUrl = downloadUri.toString();
-                                documentReference = db.collection("Groups").document(groupID);
+                                    if (task.isSuccessful()) {
+                                        Uri downloadUri = task.getResult();
+                                        String myUrl = downloadUri.toString();
+                                        databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(groupID);
 
-                                HashMap<String, Object> hashMap = new HashMap<>();
-                                hashMap.put("coverImageUrl", myUrl);
-                                documentReference.update(hashMap);
+                                        HashMap<String, Object> hashMap = new HashMap<>();
+                                        hashMap.put("coverImageUrl", myUrl);
+                                        databaseReference.updateChildren(hashMap);
 
-                                progressDialog.dismiss();
-                            } else {
-                                Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT)
-                                        .show();
-                            }
-                        }).addOnFailureListener(e -> Toast.makeText(context, "", Toast.LENGTH_SHORT).show());
+                                        progressDialog.dismiss();
+                                    } else {
+                                        Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT)
+                                                .show();
+                                    }
+                                }).addOnFailureListener(e -> Toast.makeText(context, "", Toast.LENGTH_SHORT).show());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -301,8 +301,8 @@ public class PlexusUpload {
 
     public static void uploadGroupText(SocialAutoCompleteTextView description, String publisher, Context context, String groupID) {
 
-        collectionReference = db.collection("Posts Groups");
-        String ID = collectionReference.getId();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Posts Groups");
+        String ID = databaseReference.getKey();
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("postid", ID);
@@ -312,7 +312,7 @@ public class PlexusUpload {
         hashMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
         hashMap.put("type", "text");
 
-        collectionReference.document(ID).set(hashMap);
+        databaseReference.child(ID).setValue(hashMap);
 
         List<String> hashtags = description.getHashtags();
         if (!hashtags.isEmpty()) {
@@ -321,7 +321,7 @@ public class PlexusUpload {
                 documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (value.exists()){
+                        if (value.exists()) {
                             db.collection("Hashtags").document(tag.toLowerCase()).collection("Posts").document(ID).set(true);
                         } else {
                             HashMap<String, Object> hashMap = new HashMap<>();
@@ -349,7 +349,7 @@ public class PlexusUpload {
         pd.setMessage("Please wait...");
         pd.show();
 
-        storageReference = FirebaseStorage.getInstance().getReference("Groups/"+"Posts/" + "Images");
+        storageReference = FirebaseStorage.getInstance().getReference("Groups/" + "Posts/" + "Images");
         if (image_uri != null) {
 
             String fileName = String.valueOf(System.currentTimeMillis());
@@ -383,8 +383,8 @@ public class PlexusUpload {
                                         Uri downloadUri = task.getResult();
                                         url = downloadUri.toString();
 
-                                        collectionReference = db.collection("Posts Groups");
-                                        String ID = collectionReference.getId();
+                                        databaseReference = FirebaseDatabase.getInstance().getReference("Posts Groups");
+                                        String ID = databaseReference.getKey();
 
                                         HashMap<String, Object> hashMap = new HashMap<>();
                                         hashMap.put("postid", ID);
@@ -395,7 +395,7 @@ public class PlexusUpload {
                                         hashMap.put("groupID", groupID);
                                         hashMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
 
-                                        collectionReference.document(ID).set(hashMap);
+                                        databaseReference.child(ID).setValue(hashMap);
                                         pd.dismiss();
 
                                         Intent intent = new Intent(context, GroupActivity.class);
@@ -421,7 +421,7 @@ public class PlexusUpload {
         pd.setMessage("Please wait...");
         pd.show();
 
-        storageReference = FirebaseStorage.getInstance().getReference( "Groups/" + "Posts/"+ "Videos");
+        storageReference = FirebaseStorage.getInstance().getReference("Groups/" + "Posts/" + "Videos");
 
         if (image_uri != null) {
             final StorageReference fileReference = storageReference.child(String.valueOf(System.currentTimeMillis()));
@@ -441,8 +441,8 @@ public class PlexusUpload {
                                     Uri downloadUri = task.getResult();
                                     url = downloadUri.toString();
 
-                                    collectionReference = db.collection("Posts Groups");
-                                    String ID = collectionReference.getId();
+                                    databaseReference = FirebaseDatabase.getInstance().getReference("Posts Groups");
+                                    String ID = databaseReference.getKey();
 
                                     HashMap<String, Object> hashMap = new HashMap<>();
                                     hashMap.put("postid", ID);
@@ -453,7 +453,7 @@ public class PlexusUpload {
                                     hashMap.put("groupID", groupID);
                                     hashMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
 
-                                    collectionReference.document(ID).set(hashMap);
+                                    databaseReference.child(ID).setValue(hashMap);
 
                                     pd.dismiss();
 
@@ -471,7 +471,7 @@ public class PlexusUpload {
         }
     }
 
-    public static void uploadGroupVoice(SocialAutoCompleteTextView description, String publisher, Context context, String fileName, String groupID){
+    public static void uploadGroupVoice(SocialAutoCompleteTextView description, String publisher, Context context, String fileName, String groupID) {
 
         pd = new ProgressDialog(context);
         pd.setMessage("Please wait...");
@@ -484,8 +484,8 @@ public class PlexusUpload {
 
         storageReference.putFile(uri).addOnSuccessListener(taskSnapshot -> storageReference.getDownloadUrl().addOnSuccessListener(uri1 -> {
             String downloadLinkAudio = uri1.toString();
-            collectionReference = db.collection("Posts Groups");
-            String ID = collectionReference.getId();
+            databaseReference = FirebaseDatabase.getInstance().getReference("Posts Groups");
+            String ID = databaseReference.getKey();
 
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("postid", ID);
@@ -496,7 +496,7 @@ public class PlexusUpload {
             hashMap.put("groupID", groupID);
             hashMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
 
-            collectionReference.document(ID).set(hashMap);
+            databaseReference.child(ID).setValue(hashMap);
 
             pd.dismiss();
 

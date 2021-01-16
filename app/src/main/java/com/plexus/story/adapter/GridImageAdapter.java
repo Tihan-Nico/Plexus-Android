@@ -2,8 +2,6 @@ package com.plexus.story.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,11 +38,11 @@ import java.util.ArrayList;
 
 public class GridImageAdapter extends ArrayAdapter<String> {
 
-    private Context mContext;
-    private LayoutInflater mInflater;
-    private int layoutResource;
-    private String mAppend;
-    private ArrayList<String> imgURLs;
+    private final Context mContext;
+    private final LayoutInflater mInflater;
+    private final int layoutResource;
+    private final String mAppend;
+    private final ArrayList<String> imgURLs;
 
     public GridImageAdapter(Context context, int layoutResource, String append, ArrayList<String> imgURLs) {
         super(context, layoutResource, imgURLs);

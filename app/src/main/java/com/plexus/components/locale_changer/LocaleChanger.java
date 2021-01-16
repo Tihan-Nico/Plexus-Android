@@ -81,16 +81,6 @@ public class LocaleChanger {
     }
 
     /**
-     * Sets a new default app Locale that will be resolved from the one provided.
-     *
-     * @param supportedLocale a supported Locale that will be used to resolve the Locale to set.
-     */
-    public static void setLocale(Locale supportedLocale) {
-        checkInitialization();
-        delegate.setLocale(supportedLocale);
-    }
-
-    /**
      * Gets the supported Locale that has been used to set the app Locale.
      *
      * @return
@@ -98,6 +88,16 @@ public class LocaleChanger {
     public static Locale getLocale() {
         checkInitialization();
         return delegate.getLocale();
+    }
+
+    /**
+     * Sets a new default app Locale that will be resolved from the one provided.
+     *
+     * @param supportedLocale a supported Locale that will be used to resolve the Locale to set.
+     */
+    public static void setLocale(Locale supportedLocale) {
+        checkInitialization();
+        delegate.setLocale(supportedLocale);
     }
 
     /**

@@ -55,7 +55,7 @@ public class TimeUtils {
         boolean isYesterday = yesterday.get(Calendar.YEAR) == toCheck.get(Calendar.YEAR)
                 && yesterday.get(Calendar.DAY_OF_YEAR) == toCheck.get(Calendar.DAY_OF_YEAR);
 
-        return isYesterday ? true : false;
+        return isYesterday;
     }
 
     public static boolean isDateInCurrentWeek(long milliSeconds) {
@@ -96,7 +96,7 @@ public class TimeUtils {
     }
 
     public static String msToString(long ms) {
-        long totalSecs = ms/1000;
+        long totalSecs = ms / 1000;
         long hours = (totalSecs / 3600);
         long mins = (totalSecs / 60) % 60;
         long secs = totalSecs % 60;

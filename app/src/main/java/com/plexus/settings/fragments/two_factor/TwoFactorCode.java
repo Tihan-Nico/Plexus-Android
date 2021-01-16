@@ -48,7 +48,7 @@ public class TwoFactorCode extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     private MultiFactorAssertion multiFactorAssertion;
     private PhoneAuthCredential credential;
-    private PhoneAuthProvider.OnVerificationStateChangedCallbacks callbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+    private final PhoneAuthProvider.OnVerificationStateChangedCallbacks callbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         private PhoneAuthCredential credential;
         private String verificationId;
         private PhoneAuthProvider.ForceResendingToken forceResendingToken;

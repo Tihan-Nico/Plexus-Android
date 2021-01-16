@@ -26,7 +26,8 @@ public abstract class MediaInput implements Closeable {
         }
 
         @Override
-        public @NonNull MediaExtractor createExtractor() throws IOException {
+        public @NonNull
+        MediaExtractor createExtractor() throws IOException {
             final MediaExtractor extractor = new MediaExtractor();
             extractor.setDataSource(file.getAbsolutePath());
             return extractor;
@@ -43,12 +44,13 @@ public abstract class MediaInput implements Closeable {
         private final Context context;
 
         public UriMediaInput(@NonNull Context context, @NonNull Uri uri) {
-            this.uri     = uri;
+            this.uri = uri;
             this.context = context;
         }
 
         @Override
-        public @NonNull MediaExtractor createExtractor() throws IOException {
+        public @NonNull
+        MediaExtractor createExtractor() throws IOException {
             final MediaExtractor extractor = new MediaExtractor();
             extractor.setDataSource(context, uri, null);
             return extractor;
@@ -69,7 +71,8 @@ public abstract class MediaInput implements Closeable {
         }
 
         @Override
-        public @NonNull MediaExtractor createExtractor() throws IOException {
+        public @NonNull
+        MediaExtractor createExtractor() throws IOException {
             final MediaExtractor extractor = new MediaExtractor();
             extractor.setDataSource(mediaDataSource);
             return extractor;

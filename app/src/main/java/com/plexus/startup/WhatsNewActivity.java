@@ -5,5 +5,4 @@ import androidx.appcompat.app.AppCompatActivity;
 public class WhatsNewActivity extends AppCompatActivity {
 
 
-
 }

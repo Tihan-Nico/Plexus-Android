@@ -38,11 +38,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.plexus.R;
+import com.plexus.account.activity.FollowersActivity;
 import com.plexus.components.components.ImageView.Constants;
 import com.plexus.components.components.ImageView.PhotoView;
 import com.plexus.model.posts.Post;
 import com.plexus.posts.activity.comment.CommentActivity;
-import com.plexus.account.activity.FollowersActivity;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -74,160 +74,161 @@ public class PostImageViewActivity extends AppCompatActivity {
     String profileid;
     String postid;
     String publisherid;
-  String filename;
-  boolean showPostDetails = true;
-  private ImageView back, like;
-  private TextView like_count, comment_count;
-  private Toolbar toolbar;
-  private LinearLayout weight, likes, comments, message;
-  private String DOWNLOAD_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
+    String filename;
+    boolean showPostDetails = true;
+    private ImageView back, like;
+    private TextView like_count, comment_count;
+    private Toolbar toolbar;
+    private LinearLayout weight, likes, comments, message;
+    private final String DOWNLOAD_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
 
     @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.post_image_view_fullscreen);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.post_image_view_fullscreen);
 
-    firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-    firebaseStorage = FirebaseStorage.getInstance();
-    storageReference = firebaseStorage.getReference("posts/");
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference("posts/");
 
-    SharedPreferences prefs = PostImageViewActivity.this.getSharedPreferences("plexus", MODE_PRIVATE);
-    profileid = prefs.getString("profileid", "none");
-    Intent intent = getIntent();
-    postid = intent.getStringExtra("postid");
-    publisherid = intent.getStringExtra("publisherid");
+        SharedPreferences prefs = PostImageViewActivity.this.getSharedPreferences("plexus", MODE_PRIVATE);
+        profileid = prefs.getString("profileid", "none");
+        Intent intent = getIntent();
+        postid = intent.getStringExtra("postid");
+        publisherid = intent.getStringExtra("publisherid");
 
-    photoView = findViewById(R.id.image_view);
-    parent = findViewById(R.id.background);
-    back = findViewById(R.id.back);
-    toolbar = findViewById(R.id.toolbar);
-    weight = findViewById(R.id.weight);
-    like = findViewById(R.id.like);
-    like_count = findViewById(R.id.like_count);
-    comment_count = findViewById(R.id.comment_count);
-    likes = findViewById(R.id.likes);
-    comments = findViewById(R.id.comments);
-    message = findViewById(R.id.message);
+        photoView = findViewById(R.id.image_view);
+        parent = findViewById(R.id.background);
+        back = findViewById(R.id.back);
+        toolbar = findViewById(R.id.toolbar);
+        weight = findViewById(R.id.weight);
+        like = findViewById(R.id.like);
+        like_count = findViewById(R.id.like_count);
+        comment_count = findViewById(R.id.comment_count);
+        likes = findViewById(R.id.likes);
+        comments = findViewById(R.id.comments);
+        message = findViewById(R.id.message);
 
-    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Posts").child(postid);
-    reference.addValueEventListener(
-        new ValueEventListener() {
-          @Override
-          public void onDataChange(DataSnapshot dataSnapshot) {
-            Post post = dataSnapshot.getValue(Post.class);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Posts").child(postid);
+        reference.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Post post = dataSnapshot.getValue(Post.class);
 
-            if (bitmap != null) {
-              parent.setBackground(
-                  new BitmapDrawable(
-                          PostImageViewActivity.this.getResources(),
-                          Constants.fastblur(Bitmap.createScaledBitmap(bitmap, 50, 50, true)))); // ));
-              photoView.setImageBitmap(bitmap);
-            } else {
-                Glide.with(PostImageViewActivity.this)
-                  .asBitmap()
-                  .load(post.getPostimage())
-                  .error(R.mipmap.ic_launcher)
-                  .listener(
-                      new RequestListener<Bitmap>() {
-                        @Override
-                        public boolean onLoadFailed(
-                            @Nullable GlideException e,
-                            Object model,
-                            Target<Bitmap> target,
-                            boolean isFirstResource) {
-                          return false;
-                        }
-
-                        @Override
-                        public boolean onResourceReady(
-                            Bitmap resource,
-                            Object model,
-                            Target<Bitmap> target,
-                            DataSource dataSource,
-                            boolean isFirstResource) {
-                          if (Build.VERSION.SDK_INT >= 16) {
+                        if (bitmap != null) {
                             parent.setBackground(
-                                new BitmapDrawable(
-                                        PostImageViewActivity.this.getResources(),
-                                        Constants.fastblur(
-                                                Bitmap.createScaledBitmap(resource, 50, 50, true)))); // ));
-                          } else {
-                            onPalette(Palette.from(resource).generate());
-                          }
-                          photoView.setImageBitmap(resource);
-                          return false;
+                                    new BitmapDrawable(
+                                            PostImageViewActivity.this.getResources(),
+                                            Constants.fastblur(Bitmap.createScaledBitmap(bitmap, 50, 50, true)))); // ));
+                            photoView.setImageBitmap(bitmap);
+                        } else {
+                            Glide.with(PostImageViewActivity.this)
+                                    .asBitmap()
+                                    .load(post.getPostimage())
+                                    .error(R.mipmap.ic_launcher)
+                                    .listener(
+                                            new RequestListener<Bitmap>() {
+                                                @Override
+                                                public boolean onLoadFailed(
+                                                        @Nullable GlideException e,
+                                                        Object model,
+                                                        Target<Bitmap> target,
+                                                        boolean isFirstResource) {
+                                                    return false;
+                                                }
+
+                                                @Override
+                                                public boolean onResourceReady(
+                                                        Bitmap resource,
+                                                        Object model,
+                                                        Target<Bitmap> target,
+                                                        DataSource dataSource,
+                                                        boolean isFirstResource) {
+                                                    if (Build.VERSION.SDK_INT >= 16) {
+                                                        parent.setBackground(
+                                                                new BitmapDrawable(
+                                                                        PostImageViewActivity.this.getResources(),
+                                                                        Constants.fastblur(
+                                                                                Bitmap.createScaledBitmap(resource, 50, 50, true)))); // ));
+                                                    } else {
+                                                        onPalette(Palette.from(resource).generate());
+                                                    }
+                                                    photoView.setImageBitmap(resource);
+                                                    return false;
+                                                }
+                                            })
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .into(photoView);
                         }
-                      })
-                  .diskCacheStrategy(DiskCacheStrategy.ALL)
-                  .into(photoView);
-            }
 
-            isLiked(post.getPostid(), like);
-            nrLikes(like_count, post.getPostid());
-            getComments(post.getPostid(), comment_count);
+                        isLiked(post.getPostid(), like);
+                        nrLikes(like_count, post.getPostid());
+                        getComments(post.getPostid(), comment_count);
 
-            like.setOnClickListener(
-                view -> {
-                  if (like.getTag().equals("like")) {
-                    FirebaseDatabase.getInstance()
-                        .getReference()
-                        .child("Likes")
-                        .child(post.getPostid())
-                        .child(firebaseUser.getUid())
-                        .setValue(true);
-                    addNotification(post.getPostid());
-                  } else {
-                    FirebaseDatabase.getInstance()
-                        .getReference()
-                        .child("Likes")
-                        .child(post.getPostid())
-                        .child(firebaseUser.getUid())
-                        .removeValue();
-                    FirebaseDatabase.getInstance()
-                            .getReference("Users")
-                            .child(publisherid)
-                            .child("Notifications")
-                        .child(postid)
-                        .removeValue();
-                  }
+                        like.setOnClickListener(
+                                view -> {
+                                    if (like.getTag().equals("like")) {
+                                        FirebaseDatabase.getInstance()
+                                                .getReference()
+                                                .child("Likes")
+                                                .child(post.getPostid())
+                                                .child(firebaseUser.getUid())
+                                                .setValue(true);
+                                        addNotification(post.getPostid());
+                                    } else {
+                                        FirebaseDatabase.getInstance()
+                                                .getReference()
+                                                .child("Likes")
+                                                .child(post.getPostid())
+                                                .child(firebaseUser.getUid())
+                                                .removeValue();
+                                        FirebaseDatabase.getInstance()
+                                                .getReference("Users")
+                                                .child(publisherid)
+                                                .child("Notifications")
+                                                .child(postid)
+                                                .removeValue();
+                                    }
+                                });
+
+                        comments.setOnClickListener(
+                                view -> {
+                                    Intent intent = new Intent(PostImageViewActivity.this, CommentActivity.class);
+                                    intent.putExtra("postid", post.getPostid());
+                                    intent.putExtra("publisherid", post.getPublisher());
+                                    PostImageViewActivity.this.startActivity(intent);
+                                });
+
+                        likes.setOnClickListener(
+                                view -> {
+                                    Intent intent = new Intent(getApplicationContext(), FollowersActivity.class);
+                                    intent.putExtra("id", post.getPostid());
+                                    intent.putExtra("title", "likes");
+                                    getApplicationContext().startActivity(intent);
+                                });
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
                 });
 
-            comments.setOnClickListener(
-                view -> {
-                    Intent intent = new Intent(PostImageViewActivity.this, CommentActivity.class);
-                  intent.putExtra("postid", post.getPostid());
-                    intent.putExtra("publisherid", post.getPublisher());
-                    PostImageViewActivity.this.startActivity(intent);
+        back.setOnClickListener(view1 -> finish());
+
+        photoView.setOnClickListener(
+                view13 -> {
+                    if (showPostDetails == true) {
+                        weight.setVisibility(View.GONE);
+                        toolbar.setVisibility(View.GONE);
+                        showPostDetails = false;
+                    } else {
+                        weight.setVisibility(View.VISIBLE);
+                        toolbar.setVisibility(View.VISIBLE);
+                        showPostDetails = true;
+                    }
                 });
-
-            likes.setOnClickListener(
-                view -> {
-                  Intent intent = new Intent(getApplicationContext(), FollowersActivity.class);
-                  intent.putExtra("id", post.getPostid());
-                  intent.putExtra("title", "likes");
-                  getApplicationContext().startActivity(intent);
-                });
-          }
-
-          @Override
-          public void onCancelled(DatabaseError databaseError) {}
-        });
-
-    back.setOnClickListener(view1 -> finish());
-
-    photoView.setOnClickListener(
-        view13 -> {
-          if (showPostDetails == true) {
-            weight.setVisibility(View.GONE);
-            toolbar.setVisibility(View.GONE);
-            showPostDetails = false;
-          } else {
-            weight.setVisibility(View.VISIBLE);
-            toolbar.setVisibility(View.VISIBLE);
-            showPostDetails = true;
-          }
-        });
-  }
+    }
 
     private void addNotification(String postid) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(publisherid).child("Notifications");
@@ -242,87 +243,91 @@ public class PostImageViewActivity extends AppCompatActivity {
         hashMap.put("reaction", true);
 
         reference.child(id).setValue(hashMap);
-  }
-
-  private void deleteNotifications(final String postid, String userid) {
-    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userid).child("Notification");
-    reference.addListenerForSingleValueEvent(
-        new ValueEventListener() {
-          @Override
-          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-              if (Objects.equals(snapshot.child("postid").getValue(), postid)) {
-                snapshot.getRef().removeValue();
-              }
-            }
-          }
-
-          @Override
-          public void onCancelled(@NonNull DatabaseError databaseError) {}
-        });
-  }
-
-  private void nrLikes(final TextView like_count, String postId) {
-    DatabaseReference reference =
-        FirebaseDatabase.getInstance().getReference().child("Likes").child(postId);
-    reference.addValueEventListener(
-        new ValueEventListener() {
-          @SuppressLint("SetTextI18n")
-          @Override
-          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            like_count.setText(dataSnapshot.getChildrenCount() + " Likes");
-          }
-
-          @Override
-          public void onCancelled(@NonNull DatabaseError databaseError) {}
-        });
-  }
-
-  private void getComments(String postId, final TextView comment_count) {
-    DatabaseReference reference =
-        FirebaseDatabase.getInstance().getReference().child("Comments").child(postId);
-    reference.addValueEventListener(
-        new ValueEventListener() {
-          @SuppressLint("SetTextI18n")
-          @Override
-          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            comment_count.setText(dataSnapshot.getChildrenCount() + " Comments");
-          }
-
-          @Override
-          public void onCancelled(@NonNull DatabaseError databaseError) {}
-        });
-  }
-
-  private void isLiked(final String postid, final ImageView imageView) {
-
-    final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-    DatabaseReference reference =
-        FirebaseDatabase.getInstance().getReference().child("Likes").child(postid);
-    reference.addValueEventListener(
-        new ValueEventListener() {
-          @Override
-          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            assert firebaseUser != null;
-            if (dataSnapshot.child(firebaseUser.getUid()).exists()) {
-              imageView.setImageResource(R.drawable.liked);
-              imageView.setTag("liked");
-            } else {
-              imageView.setImageResource(R.drawable.like);
-              imageView.setTag("like");
-            }
-          }
-
-          @Override
-          public void onCancelled(@NonNull DatabaseError databaseError) {}
-        });
-  }
-
-  public void onPalette(Palette palette) {
-    if (null != palette) {
-      ViewGroup parent = (ViewGroup) photoView.getParent().getParent();
-      parent.setBackgroundColor(palette.getDarkVibrantColor(Color.GRAY));
     }
-  }
+
+    private void deleteNotifications(final String postid, String userid) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userid).child("Notification");
+        reference.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            if (Objects.equals(snapshot.child("postid").getValue(), postid)) {
+                                snapshot.getRef().removeValue();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+    }
+
+    private void nrLikes(final TextView like_count, String postId) {
+        DatabaseReference reference =
+                FirebaseDatabase.getInstance().getReference().child("Likes").child(postId);
+        reference.addValueEventListener(
+                new ValueEventListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        like_count.setText(dataSnapshot.getChildrenCount() + " Likes");
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+    }
+
+    private void getComments(String postId, final TextView comment_count) {
+        DatabaseReference reference =
+                FirebaseDatabase.getInstance().getReference().child("Comments").child(postId);
+        reference.addValueEventListener(
+                new ValueEventListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        comment_count.setText(dataSnapshot.getChildrenCount() + " Comments");
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+    }
+
+    private void isLiked(final String postid, final ImageView imageView) {
+
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        DatabaseReference reference =
+                FirebaseDatabase.getInstance().getReference().child("Likes").child(postid);
+        reference.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        assert firebaseUser != null;
+                        if (dataSnapshot.child(firebaseUser.getUid()).exists()) {
+                            imageView.setImageResource(R.drawable.liked);
+                            imageView.setTag("liked");
+                        } else {
+                            imageView.setImageResource(R.drawable.like);
+                            imageView.setTag("like");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+    }
+
+    public void onPalette(Palette palette) {
+        if (null != palette) {
+            ViewGroup parent = (ViewGroup) photoView.getParent().getParent();
+            parent.setBackgroundColor(palette.getDarkVibrantColor(Color.GRAY));
+        }
+    }
 }

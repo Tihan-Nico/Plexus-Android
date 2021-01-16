@@ -21,58 +21,57 @@ import com.plexus.settings.helper.license.Library;
  ******************************************************************************/
 
 public final class ExpandableLibrary {
-  public interface ExpandListener {
-    void onExpand(@NonNull ExpandableLibrary library, boolean expanded);
-  }
+    private final Library library;
+    private final ExpandListener listener;
+    private boolean expanded;
 
-  private final Library library;
-  private final ExpandListener listener;
+    public ExpandableLibrary(@NonNull Library library, @NonNull ExpandListener listener) {
+        this.library = library;
+        this.listener = listener;
+    }
 
-  private boolean expanded;
+    @NonNull
+    public Library getLibrary() {
+        return library;
+    }
 
-  public ExpandableLibrary(@NonNull Library library, @NonNull ExpandListener listener) {
-    this.library = library;
-    this.listener = listener;
-  }
+    public boolean isExpanded() {
+        return expanded;
+    }
 
-  @NonNull
-  public Library getLibrary() {
-    return library;
-  }
+    public void setExpanded(boolean expanded) {
+        if (this.expanded == expanded) return;
 
-  public boolean isExpanded() {
-    return expanded;
-  }
+        this.expanded = expanded;
+        listener.onExpand(this, expanded);
+    }
 
-  public void setExpanded(boolean expanded) {
-    if (this.expanded == expanded) return;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-    this.expanded = expanded;
-    listener.onExpand(this, expanded);
-  }
+        ExpandableLibrary that = (ExpandableLibrary) o;
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+        return expanded == that.expanded && library.equals(that.library);
+    }
 
-    ExpandableLibrary that = (ExpandableLibrary) o;
+    @Override
+    public int hashCode() {
+        int result = library.hashCode();
+        result = 31 * result + (expanded ? 1 : 0);
+        return result;
+    }
 
-    return expanded == that.expanded && library.equals(that.library);
-  }
+    @Override
+    public String toString() {
+        return "ExpandableLibrary{" +
+                "library=" + library +
+                ", expanded=" + expanded +
+                '}';
+    }
 
-  @Override
-  public int hashCode() {
-    int result = library.hashCode();
-    result = 31 * result + (expanded ? 1 : 0);
-    return result;
-  }
-
-  @Override
-  public String toString() {
-    return "ExpandableLibrary{" +
-        "library=" + library +
-        ", expanded=" + expanded +
-        '}';
-  }
+    public interface ExpandListener {
+        void onExpand(@NonNull ExpandableLibrary library, boolean expanded);
+    }
 }

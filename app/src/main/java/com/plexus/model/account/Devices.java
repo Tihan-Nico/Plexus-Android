@@ -8,7 +8,7 @@ public class Devices {
     double device_longitude;
     String device_token;
 
-    public Devices(String device_name, String device_login_time, double device_latitude, double device_longitude, String device_token){
+    public Devices(String device_name, String device_login_time, double device_latitude, double device_longitude, String device_token) {
         this.device_name = device_name;
         this.device_login_time = device_login_time;
         this.device_latitude = device_latitude;
@@ -16,7 +16,7 @@ public class Devices {
         this.device_token = device_token;
     }
 
-    public Devices(){
+    public Devices() {
 
     }
 

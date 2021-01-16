@@ -60,55 +60,56 @@ public class Post {
         this.downloadEnabled = downloadEnabled;
     }
 
-  public Post() {}
+    public Post() {
+    }
 
-  public String getPostid() {
-    return postid;
-  }
+    public String getPostid() {
+        return postid;
+    }
 
-  public void setPostid(String postid) {
-    this.postid = postid;
-  }
+    public void setPostid(String postid) {
+        this.postid = postid;
+    }
 
-  public String getPostimage() {
-    return postimage;
-  }
+    public String getPostimage() {
+        return postimage;
+    }
 
-  public void setPostimage(String postimage) {
-    this.postimage = postimage;
-  }
+    public void setPostimage(String postimage) {
+        this.postimage = postimage;
+    }
 
-  public String getPublisher() {
-    return publisher;
-  }
+    public String getPublisher() {
+        return publisher;
+    }
 
-  public void setPublisher(String publisher) {
-    this.publisher = publisher;
-  }
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
 
-  public String getTimestamp() {
-    return timestamp;
-  }
+    public String getTimestamp() {
+        return timestamp;
+    }
 
-  public void setTimestamp(String timestamp) {
-    this.timestamp = timestamp;
-  }
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public String getType() {
-    return type;
-  }
+    public String getType() {
+        return type;
+    }
 
-  public void setType(String type) {
-      this.type = type;
-  }
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public boolean isShared() {
         return shared;

@@ -10,6 +10,19 @@ import java.util.Locale;
  */
 public final class LanguageMatchingAlgorithm implements MatchingAlgorithm {
 
+    private static Locale findMatchingLocale(Locale localeToMatch, List<Locale> candidates) {
+        Locale matchingLocale = null;
+        for (Locale candidate : candidates) {
+            LocaleMatcher.MatchLevel matchLevel = LocaleMatcher.match(localeToMatch, candidate);
+
+            if (matchLevel != LocaleMatcher.MatchLevel.NoMatch) {
+                matchingLocale = candidate;
+                break;
+            }
+        }
+        return matchingLocale;
+    }
+
     @Override
     public MatchingLocales findDefaultMatch(List<Locale> supportedLocales, List<Locale> systemLocales) {
         MatchingLocales matchingPair = null;
@@ -29,18 +42,5 @@ public final class LanguageMatchingAlgorithm implements MatchingAlgorithm {
         return matchingSystemLocale != null ?
                 new MatchingLocales(supportedLocale, matchingSystemLocale) :
                 null;
-    }
-
-    private static Locale findMatchingLocale(Locale localeToMatch, List<Locale> candidates) {
-        Locale matchingLocale = null;
-        for (Locale candidate : candidates) {
-            LocaleMatcher.MatchLevel matchLevel = LocaleMatcher.match(localeToMatch, candidate);
-
-            if (matchLevel != LocaleMatcher.MatchLevel.NoMatch) {
-                matchingLocale = candidate;
-                break;
-            }
-        }
-        return matchingLocale;
     }
 }

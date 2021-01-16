@@ -20,7 +20,7 @@ import android.view.View;
 
 public class ViewHelper {
 
-    public static void setViewVisibility(View v, boolean isVisible){
+    public static void setViewVisibility(View v, boolean isVisible) {
         v.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 }

@@ -42,8 +42,8 @@ import java.util.List;
 
 public class ProfileActivityAdapter extends RecyclerView.Adapter<ProfileActivityAdapter.ImageViewHolder> {
 
-    private Context mContext;
-    private List<ProfileLogger> profileLoggerList;
+    private final Context mContext;
+    private final List<ProfileLogger> profileLoggerList;
     private FirebaseUser firebaseUser;
 
     public ProfileActivityAdapter(Context context, List<ProfileLogger> profileActivities) {

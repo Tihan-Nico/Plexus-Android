@@ -43,7 +43,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
 
     FirebaseUser firebaseUser;
 
-    public GroupAdapter(Context context, List<Group> groups){
+    public GroupAdapter(Context context, List<Group> groups) {
         this.context = context;
         this.groups = groups;
     }
@@ -81,22 +81,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
         return groups.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        TextView group_name;
-        ImageView group_cover, group_background;
-
-        public ViewHolder(@NonNull @NotNull View itemView) {
-            super(itemView);
-
-            group_name = itemView.findViewById(R.id.group_name);
-            group_cover = itemView.findViewById(R.id.group_cover);
-            group_background = itemView.findViewById(R.id.group_background);
-
-        }
-    }
-
-    private void groupCoverBlur(ImageView group_background, ImageView group_cover, Group group){
+    private void groupCoverBlur(ImageView group_background, ImageView group_cover, Group group) {
         if (bitmap != null) {
             group_background.setBackground(
                     new BitmapDrawable(
@@ -148,6 +133,21 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
         if (null != palette) {
             ViewGroup parent = (ViewGroup) group_background.getParent().getParent();
             parent.setBackgroundColor(palette.getDarkVibrantColor(Color.GRAY));
+        }
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        TextView group_name;
+        ImageView group_cover, group_background;
+
+        public ViewHolder(@NonNull @NotNull View itemView) {
+            super(itemView);
+
+            group_name = itemView.findViewById(R.id.group_name);
+            group_cover = itemView.findViewById(R.id.group_cover);
+            group_background = itemView.findViewById(R.id.group_background);
+
         }
     }
 

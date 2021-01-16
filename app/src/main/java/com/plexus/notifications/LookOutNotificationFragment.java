@@ -25,7 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
 import com.plexus.components.components.PlexusRecyclerView;
 import com.plexus.model.notifications.LookoutNotifications;
-import com.plexus.model.notifications.PlexusNotification;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -58,7 +57,7 @@ public class LookOutNotificationFragment extends Fragment {
         return view;
     }
 
-    private void init(){
+    private void init() {
 
         lookoutNotificationsList = new ArrayList<>();
 

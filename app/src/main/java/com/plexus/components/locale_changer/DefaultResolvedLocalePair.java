@@ -6,8 +6,8 @@ import java.util.Locale;
  * A class representing a pair of Locales resolved by the {@link LocaleResolver#resolveDefault()}
  */
 class DefaultResolvedLocalePair {
-    private Locale supportedLocale;
-    private Locale resolvedLocale;
+    private final Locale supportedLocale;
+    private final Locale resolvedLocale;
 
     DefaultResolvedLocalePair(Locale supportedLocale, Locale resolvedLocale) {
         this.supportedLocale = supportedLocale;

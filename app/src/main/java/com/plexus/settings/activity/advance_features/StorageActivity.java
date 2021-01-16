@@ -39,8 +39,8 @@ public class StorageActivity extends AppCompatActivity {
 
     TextView available_storage, cached_data, available_storage_ext;
     LinearLayout delete_cached_data;
-    private Dialog delete_cache;
     ImageView back;
+    private Dialog delete_cache;
 
     public static void deleteCache(Context context) {
         try {
@@ -48,6 +48,23 @@ public class StorageActivity extends AppCompatActivity {
             deleteDir(dir);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if (dir != null && dir.isFile())
+            return dir.delete();
+        else {
+            return false;
         }
     }
 
@@ -94,7 +111,7 @@ public class StorageActivity extends AppCompatActivity {
         runOnUiThread(() -> cached_data.setText(bytesToHuman(finalSize)));
     }
 
-    public long getDirSize(File dir){
+    public long getDirSize(File dir) {
         long size = 0;
         for (File file : dir.listFiles()) {
             if (file != null && file.isDirectory()) {
@@ -104,24 +121,6 @@ public class StorageActivity extends AppCompatActivity {
             }
         }
         return size;
-    }
-
-    public static boolean deleteDir(File dir) {
-        if (dir != null && dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
-                }
-            }
-            return dir.delete();
-        }
-        else if(dir!= null && dir.isFile())
-            return dir.delete();
-        else {
-            return false;
-        }
     }
 
     public long getFreeInternalMemory() {
@@ -142,15 +141,16 @@ public class StorageActivity extends AppCompatActivity {
 
     /**
      * Convert bytes to human format.
+     *
      * @param totalBytes {@code long} - Total of bytes.
      * @return {@link String} - Converted size.
      */
     public String bytesToHuman(long totalBytes) {
-        String[] simbols = new String[] {"B", "KB", "MB", "GB", "TB", "PB", "EB"};
+        String[] simbols = new String[]{"B", "KB", "MB", "GB", "TB", "PB", "EB"};
         long scale = 1L;
         for (String simbol : simbols) {
             if (totalBytes < (scale * 1024L)) {
-                return String.format("%s %s", new DecimalFormat("#.##").format((double)totalBytes / scale), simbol);
+                return String.format("%s %s", new DecimalFormat("#.##").format((double) totalBytes / scale), simbol);
             }
             scale *= 1024L;
         }

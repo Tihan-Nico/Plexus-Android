@@ -1,7 +1,6 @@
 package com.plexus.groups.activity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;

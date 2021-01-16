@@ -18,67 +18,68 @@ package com.plexus.model.account;
 
 public class Banned {
 
-  private boolean banned;
-  private String times;
-  private String type;
-  private long timestart;
-  private long timeend;
-  private boolean termination;
+    private boolean banned;
+    private String times;
+    private String type;
+    private long timestart;
+    private long timeend;
+    private boolean termination;
 
-  public Banned(boolean banned, String times, long timestart, long timeend) {
-    this.banned = banned;
-    this.times = times;
-    this.timestart = timestart;
-    this.timeend = timeend;
-  }
+    public Banned(boolean banned, String times, long timestart, long timeend) {
+        this.banned = banned;
+        this.times = times;
+        this.timestart = timestart;
+        this.timeend = timeend;
+    }
 
-  public Banned() {}
+    public Banned() {
+    }
 
-  public String getTimes() {
-    return times;
-  }
+    public String getTimes() {
+        return times;
+    }
 
-  public void setTimes(String times) {
-    this.times = times;
-  }
+    public void setTimes(String times) {
+        this.times = times;
+    }
 
-  public long getTimestart() {
-    return timestart;
-  }
+    public long getTimestart() {
+        return timestart;
+    }
 
-  public void setTimestart(long timestart) {
-    this.timestart = timestart;
-  }
+    public void setTimestart(long timestart) {
+        this.timestart = timestart;
+    }
 
-  public long getTimeend() {
-    return timeend;
-  }
+    public long getTimeend() {
+        return timeend;
+    }
 
-  public void setTimeend(long timeend) {
-    this.timeend = timeend;
-  }
+    public void setTimeend(long timeend) {
+        this.timeend = timeend;
+    }
 
-  public boolean isBanned() {
-    return banned;
-  }
+    public boolean isBanned() {
+        return banned;
+    }
 
-  public void setBanned(boolean banned) {
-    this.banned = banned;
-  }
+    public void setBanned(boolean banned) {
+        this.banned = banned;
+    }
 
-  public String getType() {
-    return type;
-  }
+    public String getType() {
+        return type;
+    }
 
-  public void setType(String type) {
-    this.type = type;
-  }
+    public void setType(String type) {
+        this.type = type;
+    }
 
-  public boolean isTermination() {
-    return termination;
-  }
+    public boolean isTermination() {
+        return termination;
+    }
 
-  public void setTermination(boolean termination) {
-    this.termination = termination;
-  }
+    public void setTermination(boolean termination) {
+        this.termination = termination;
+    }
 }

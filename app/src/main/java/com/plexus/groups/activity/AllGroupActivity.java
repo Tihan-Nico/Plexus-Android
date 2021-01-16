@@ -72,7 +72,7 @@ public class AllGroupActivity extends AppCompatActivity {
         init();
     }
 
-    private void init(){
+    private void init() {
         myGroups();
     }
 
@@ -99,25 +99,25 @@ public class AllGroupActivity extends AppCompatActivity {
     private void readGroups() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Groups");
         reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        groupList.clear();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            Group group = snapshot.getValue(Group.class);
-                            for (String id : myGroupLists) {
-                                groupList.add(group);
-                            }
-                        }
-                        groupAdapter.notifyDataSetChanged();
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                groupList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Group group = snapshot.getValue(Group.class);
+                    for (String id : myGroupLists) {
+                        groupList.add(group);
                     }
+                }
+                groupAdapter.notifyDataSetChanged();
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
-    private void getGroupPosts(){
+    private void getGroupPosts() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts Groups");
         reference.addValueEventListener(new ValueEventListener() {
             @Override

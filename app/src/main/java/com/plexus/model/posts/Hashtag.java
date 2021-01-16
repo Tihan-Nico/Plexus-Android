@@ -5,12 +5,12 @@ public class Hashtag {
     private String createdBy;
     private String createdAt;
 
-    public Hashtag(String createdBy, String createdAt){
+    public Hashtag(String createdBy, String createdAt) {
         this.createdBy = createdBy;
         this.createdAt = createdAt;
     }
 
-    public Hashtag(){
+    public Hashtag() {
 
     }
 

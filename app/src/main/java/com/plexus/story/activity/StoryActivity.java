@@ -39,9 +39,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
-import com.plexus.model.posts.Story;
-import com.plexus.model.account.User;
 import com.plexus.account.activity.FollowersActivity;
+import com.plexus.model.account.User;
+import com.plexus.model.posts.Story;
 import com.plexus.utils.MasterCipher;
 
 import org.jetbrains.annotations.NotNull;
@@ -80,22 +80,20 @@ public class StoryActivity extends AppCompatActivity implements StoriesProgressV
     StoriesProgressView storiesProgressView;
     SimpleDraweeView story_photo, image;
     TextView story_username;
-    private RelativeTimeTextView timestamp;
-    private LinearLayout add_storie, delete_storie;
-
     LinearLayout r_seen, my_storie;
     TextView seen_number;
     View rootview;
     ImageView story_delete, menu;
     BottomSheetDialog bottomSheetDialog, report_bug, report_storie;
-
     List<String> images;
     List<String> storyids;
     String userid;
     VideoView video;
+    private RelativeTimeTextView timestamp;
+    private LinearLayout add_storie, delete_storie;
     private FirebaseUser firebaseUser;
 
-    private View.OnTouchListener onTouchListener =
+    private final View.OnTouchListener onTouchListener =
             new View.OnTouchListener() {
                 @SuppressLint("ClickableViewAccessibility")
                 @Override
@@ -342,7 +340,7 @@ public class StoryActivity extends AppCompatActivity implements StoriesProgressV
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot child: dataSnapshot.getChildren()) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Story story = dataSnapshot.getValue(Story.class);
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
                     databaseReference.addValueEventListener(new ValueEventListener() {
@@ -425,43 +423,44 @@ public class StoryActivity extends AppCompatActivity implements StoriesProgressV
 
             }
         });
-  }
-
-  //
-  private void addView(String storyid) {
-    if (userid.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-
-    } else {
-      FirebaseDatabase.getInstance()
-          .getReference()
-          .child("Story")
-          .child(userid)
-          .child(storyid)
-          .child("views")
-          .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-          .setValue(true);
     }
-  }
 
-  private void seenNumber(String storyid) {
-    DatabaseReference reference =
-        FirebaseDatabase.getInstance()
-            .getReference("Story")
-            .child(userid)
-            .child(storyid)
-            .child("views");
-    reference.addListenerForSingleValueEvent(
-        new ValueEventListener() {
-          @SuppressLint("SetTextI18n")
-          @Override
-          public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
-            seen_number.setText(dataSnapshot.getChildrenCount() + " Viewers");
-          }
+    //
+    private void addView(String storyid) {
+        if (userid.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
 
-          @Override
-          public void onCancelled(@NotNull DatabaseError databaseError) {}
-        });
-  }
+        } else {
+            FirebaseDatabase.getInstance()
+                    .getReference()
+                    .child("Story")
+                    .child(userid)
+                    .child(storyid)
+                    .child("views")
+                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .setValue(true);
+        }
+    }
+
+    private void seenNumber(String storyid) {
+        DatabaseReference reference =
+                FirebaseDatabase.getInstance()
+                        .getReference("Story")
+                        .child(userid)
+                        .child(storyid)
+                        .child("views");
+        reference.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
+                        seen_number.setText(dataSnapshot.getChildrenCount() + " Viewers");
+                    }
+
+                    @Override
+                    public void onCancelled(@NotNull DatabaseError databaseError) {
+                    }
+                });
+    }
 
     public Bitmap takeScreenshot() {
         View rootView = findViewById(android.R.id.content).getRootView();

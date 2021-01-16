@@ -58,13 +58,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
+import com.plexus.account.activity.FollowersActivity;
+import com.plexus.account.activity.ProfileActivity;
 import com.plexus.components.background.PlexusDelete;
 import com.plexus.components.components.ImageView.Constants;
 import com.plexus.components.components.socials.PlexusSocialTextView;
 import com.plexus.model.Token;
+import com.plexus.model.account.User;
 import com.plexus.model.posts.Post;
 import com.plexus.model.posts.SavedPostsCollection;
-import com.plexus.model.account.User;
 import com.plexus.notifications.fcm.FirebaseNotificationHelper;
 import com.plexus.posts.activity.PostDetailActivity;
 import com.plexus.posts.activity.PostImageViewActivity;
@@ -72,8 +74,6 @@ import com.plexus.posts.activity.PostVideoViewActivity;
 import com.plexus.posts.activity.comment.CommentActivity;
 import com.plexus.posts.activity.saved_posts.CreateCollectionsSavesActivity;
 import com.plexus.posts.adapter.saves.CollectionSheetAdapter;
-import com.plexus.account.activity.FollowersActivity;
-import com.plexus.account.activity.ProfileActivity;
 import com.plexus.utils.MasterCipher;
 import com.plexus.utils.TimeUtils;
 
@@ -114,15 +114,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     Context mContext;
     List<Post> mPosts;
-    private String profileid;
-    private String postid;
     String appCode = "plexusinc";
-    private FirebaseUser firebaseUser;
     BottomSheetDialog sheetPost, editPost, shareSheet, save_collection_sheet;
     Bitmap bitmap;
     boolean isDetailView;
     MediaPlayer mediaPlayer = new MediaPlayer();
-
+    private String profileid;
+    private String postid;
+    private FirebaseUser firebaseUser;
     //Save Sheet
     private CollectionSheetAdapter collectionSheetAdapter;
     private List<SavedPostsCollection> savedPostsCollectionList;
@@ -345,7 +344,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     mContext.startActivity(intent);
                 });
 
-        if (isDetailView){
+        if (isDetailView) {
             // Disables the abilty to click on the post layout
         } else {
             holder.post_layout.setOnClickListener(v -> {
@@ -364,7 +363,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     mContext.startActivity(intent);
                 });
 
-        if (post.isShared()){
+        if (post.isShared()) {
             holder.post_image.setOnClickListener(
                     view -> {
                         Intent intent = new Intent(mContext, PostImageViewActivity.class);
@@ -439,7 +438,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
      * and the data from the view and the server.
      */
 
-    private void attachmentVoiceNote(View post_voice_note, String profileid, Post post){
+    private void attachmentVoiceNote(View post_voice_note, String profileid, Post post) {
         ImageView play_voice_note = post_voice_note.findViewById(R.id.voice_note_play);
         TextView voice_time = post_voice_note.findViewById(R.id.voice_time);
         TextView voice_hashtag = post_voice_note.findViewById(R.id.voice_hashtag);
@@ -449,15 +448,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         coverBackground(voice_background, voice_profile_image, profileid);
 
         play_voice_note.setOnClickListener(v -> {
-            if(mediaPlayer.isPlaying()){
-                if(mediaPlayer!=null){
+            if (mediaPlayer.isPlaying()) {
+                if (mediaPlayer != null) {
                     stopVoiceNote();
                     // Changing button image to play button
                     play_voice_note.setImageResource(R.drawable.play);
                 }
-            }else{
+            } else {
                 // Resume audio
-                if(mediaPlayer!=null){
+                if (mediaPlayer != null) {
                     try {
                         playVoiceNote(post, voice_time);
                     } catch (IOException e) {
@@ -475,9 +474,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     private void playVoiceNote(Post posts, TextView textView) throws IOException {
         mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .setUsage(AudioAttributes.USAGE_MEDIA)
-                        .build()
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .build()
         );
 
         mediaPlayer.setDataSource(mContext, Uri.parse(MasterCipher.decrypt(posts.getAudioURL())));
@@ -588,13 +587,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
      * to the users device.
      */
 
-    private void sendNotification(String message, String click_action, String postid, String type){
+    private void sendNotification(String message, String click_action, String postid, String type) {
         DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
         Query query = tokens.orderByKey().equalTo(profileid);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Token token = snapshot.getValue(Token.class);
 
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
@@ -698,13 +697,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         reference.child(id).setValue(hashMap);
     }
 
-    private void deleteNotifications(final String postid, String userid){
+    private void deleteNotifications(final String postid, String userid) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userid).child("Notification");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    if (snapshot.child("postid").getValue().equals(postid)){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("postid").getValue().equals(postid)) {
                         snapshot.getRef().removeValue().addOnCompleteListener(task -> Toast.makeText(mContext, "Deleted!", Toast.LENGTH_SHORT).show());
                     }
                 }
@@ -733,7 +732,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {}
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
                 });
     }
 
@@ -748,7 +748,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {}
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
                 });
     }
 
@@ -801,11 +802,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {}
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
                 });
     }
 
-    private void profileActivity(){
+    private void profileActivity() {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Activity Log");
         String id = reference.push().getKey();
@@ -819,15 +821,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         reference.child(id).setValue(hashMap);
     }
 
-    private void isSaved(final String postid, final ImageView imageView){
+    private void isSaved(final String postid, final ImageView imageView) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Saves").child(firebaseUser.getUid()).child("Recent");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(postid).exists()){
+                if (dataSnapshot.child(postid).exists()) {
                     imageView.setImageResource(R.drawable.bookmark_multiple);
                     imageView.setTag("saved");
-                } else{
+                } else {
                     imageView.setImageResource(R.drawable.bookmark_multiple_outline);
                     imageView.setTag("save");
                 }
@@ -882,7 +884,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         editPost.show();
     }
 
-    private void moreSheet(Post post){
+    private void moreSheet(Post post) {
         sheetPost = new BottomSheetDialog(mContext, R.style.BottomSheetDialogTheme);
         sheetPost.setContentView(R.layout.sheet_post);
         LinearLayout edit_post = sheetPost.findViewById(R.id.edit_post);
@@ -912,7 +914,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             checkCollections(save, post);
         });
 
-        if (!post.getPublisher().equals(firebaseUser.getUid())){
+        if (!post.getPublisher().equals(firebaseUser.getUid())) {
             edit_post.setVisibility(View.GONE);
             line2.setVisibility(View.GONE);
             delete_posts.setVisibility(View.GONE);
@@ -923,8 +925,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot child: dataSnapshot.getChildren()) {
-                    Uri postLink= Uri.parse(child.getKey());
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    Uri postLink = Uri.parse(child.getKey());
                     Uri.Builder builder = new Uri.Builder()
                             .scheme("https")
                             .authority(appCode + ".page.link")
@@ -956,8 +958,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         sheetPost.show();
     }
 
-    private void savePost(ImageView imageView, Post post){
-        if (imageView.getTag().equals("save")){
+    private void savePost(ImageView imageView, Post post) {
+        if (imageView.getTag().equals("save")) {
             FirebaseDatabase.getInstance().getReference("Saves").child(firebaseUser.getUid()).child("Recent")
                     .child(post.getPostid()).setValue(true);
         } else {
@@ -966,7 +968,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         }
     }
 
-    private void saveCollectionSheet(Post post){
+    private void saveCollectionSheet(Post post) {
         save_collection_sheet = new BottomSheetDialog(mContext, R.style.BottomSheetDialogTheme);
         save_collection_sheet.setContentView(R.layout.sheet_save_post);
 
@@ -1035,7 +1037,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         });
     }
 
-    private void deletePost(String postid){
+    private void deletePost(String postid) {
         sheetPost.dismiss();
 
         final Dialog dialog = new Dialog(mContext);
@@ -1051,7 +1053,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             FirebaseDatabase.getInstance().getReference("Posts")
                     .child(postid).removeValue()
                     .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             deleteNotifications(id, firebaseUser.getUid());
                             dialog.dismiss();
                         }
@@ -1061,7 +1063,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         dialog.show();
     }
 
-    private void reportPost(){
+    private void reportPost() {
         BottomSheetDialog report_post = new BottomSheetDialog(mContext, R.style.BottomSheetDialogTheme);
         report_post.setContentView(R.layout.report_sheet);
         ImageView back = report_post.findViewById(R.id.back);
@@ -1096,7 +1098,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {}
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
                 });
 
         unfollow.setOnClickListener(v -> {
@@ -1119,7 +1122,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 });
     }
 
-    private void unfollowUser(){
+    private void unfollowUser() {
         FirebaseDatabase.getInstance()
                 .getReference()
                 .child("Follow")
@@ -1144,7 +1147,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot child: dataSnapshot.getChildren()) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Post post = dataSnapshot.getValue(Post.class);
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
                     databaseReference.addValueEventListener(new ValueEventListener() {

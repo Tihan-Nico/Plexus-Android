@@ -26,25 +26,25 @@ import com.plexus.settings.helper.license.License;
  ******************************************************************************/
 
 public final class NoLinkLibrary extends BaseLibrary {
-  public NoLinkLibrary(@NonNull String name, @NonNull String author,
-                       @NonNull License license) {
-    super(name, author, license);
-  }
+    public NoLinkLibrary(@NonNull String name, @NonNull String author,
+                         @NonNull License license) {
+        super(name, author, license);
+    }
 
-  @Override
-  public boolean isLoaded() {
-    return true;
-  }
+    @Override
+    public boolean isLoaded() {
+        return true;
+    }
 
-  @NonNull
-  @Override
-  public License doLoad() {
-    // There's no link to load
-    return getLicense();
-  }
+    @NonNull
+    @Override
+    public License doLoad() {
+        // There's no link to load
+        return getLicense();
+    }
 
-  @Override
-  public boolean hasContent() {
-    return true;
-  }
+    @Override
+    public boolean hasContent() {
+        return true;
+    }
 }

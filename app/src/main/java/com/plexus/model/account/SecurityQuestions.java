@@ -5,7 +5,7 @@ public class SecurityQuestions {
     String question;
     String answer;
 
-    public SecurityQuestions(String question, String answer){
+    public SecurityQuestions(String question, String answer) {
         this.question = question;
         this.answer = answer;
     }

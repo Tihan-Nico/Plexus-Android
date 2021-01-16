@@ -57,7 +57,7 @@ public class GroupCreateActivity extends AppCompatActivity {
         choose_privacy.setOnClickListener(view -> DialogInformation.selectPrivacy(GroupCreateActivity.this, group_privacy));
     }
 
-    private void createGroup(){
+    private void createGroup() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Groups");
         ID = databaseReference.push().getKey();
 
@@ -77,7 +77,7 @@ public class GroupCreateActivity extends AppCompatActivity {
         }).addOnFailureListener(e -> Toast.makeText(GroupCreateActivity.this, "Couldn't create group at this moment!", Toast.LENGTH_SHORT).show());
     }
 
-    private void addAdmin(String ID){
+    private void addAdmin(String ID) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(ID).child("Admins");
 
         HashMap<String, Object> groupData = new HashMap<>();
@@ -86,7 +86,7 @@ public class GroupCreateActivity extends AppCompatActivity {
         databaseReference.setValue(groupData);
     }
 
-    private void addGroupToProfile(String ID){
+    private void addGroupToProfile(String ID) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Groups");
 
         HashMap<String, Object> groupData = new HashMap<>();
@@ -95,7 +95,7 @@ public class GroupCreateActivity extends AppCompatActivity {
         databaseReference.setValue(groupData);
     }
 
-    private void addMemberToGroup(String ID){
+    private void addMemberToGroup(String ID) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(ID).child("Members");
 
         HashMap<String, Object> groupData = new HashMap<>();

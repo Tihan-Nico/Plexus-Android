@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void init(){
+    private void init() {
         forgot_password.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ForgotPasswordActivity.class)));
 
         link_signup.setOnClickListener(

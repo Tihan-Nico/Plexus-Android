@@ -41,12 +41,12 @@ import java.util.List;
 
 public class CollectionSheetAdapter extends RecyclerView.Adapter<CollectionSheetAdapter.ViewHolder> {
 
-    private Context mContext;
-    private List<SavedPostsCollection> savedPostsCollectionList;
-    private String postID;
     FirebaseUser firebaseUser;
+    private final Context mContext;
+    private final List<SavedPostsCollection> savedPostsCollectionList;
+    private final String postID;
 
-    public CollectionSheetAdapter(Context context, List<SavedPostsCollection> savedPostsCollections, String postid){
+    public CollectionSheetAdapter(Context context, List<SavedPostsCollection> savedPostsCollections, String postid) {
         mContext = context;
         savedPostsCollectionList = savedPostsCollections;
         postID = postid;
@@ -73,10 +73,10 @@ public class CollectionSheetAdapter extends RecyclerView.Adapter<CollectionSheet
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    if (!dataSnapshot1.exists()){
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    if (!dataSnapshot1.exists()) {
                         holder.collection_total.setText("No saved post in this collections");
-                    } else if (dataSnapshot.getChildrenCount() == 1){
+                    } else if (dataSnapshot.getChildrenCount() == 1) {
                         holder.collection_total.setText("" + dataSnapshot.getChildrenCount() + " Saved Post");
                     } else {
                         holder.collection_total.setText("" + dataSnapshot.getChildrenCount() + " Saved Posts");

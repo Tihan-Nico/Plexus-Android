@@ -71,7 +71,7 @@ public class SetupProfileImageActivity extends AppCompatActivity {
         getUserName();
     }
 
-    private void getUserName(){
+    private void getUserName() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -151,9 +151,9 @@ public class SetupProfileImageActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK){
+            if (resultCode == RESULT_OK) {
                 imageUri = result.getUri();
 
                 profile_image.setImageURI(imageUri);

@@ -26,13 +26,12 @@ import com.plexus.R;
 
 public class SlidingUpPanelLayout extends ViewGroup {
 
+    public static final int CLIP_SAVE_FLAG = 0x02;
     private static final String TAG = SlidingUpPanelLayout.class.getSimpleName();
-
     /**
      * Default peeking out panel height
      */
     private static final int DEFAULT_PANEL_HEIGHT = 68; // dp;
-
     /**
      * Default anchor point height
      */
@@ -78,7 +77,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
     /**
      * Default initial state for the component
      */
-    private static SlideState DEFAULT_SLIDE_STATE = SlideState.COLLAPSED;
+    private static final SlideState DEFAULT_SLIDE_STATE = SlideState.COLLAPSED;
     /**
      * The paint used to dim the main layout when sliding
      */
@@ -181,8 +180,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
     private float mInitialMotionY;
     private float mAnchorPoint = 1.f;
     private PanelSlideListener mPanelSlideListener;
-
-    public  static  final  int CLIP_SAVE_FLAG =  0x02;
     /**
      * Stores whether or not the pane was expanded the last time it was slideable.
      * If expand/collapse operations are invoked this state is modified. Used by

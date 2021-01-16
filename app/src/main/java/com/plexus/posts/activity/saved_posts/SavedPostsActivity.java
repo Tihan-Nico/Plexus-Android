@@ -49,13 +49,13 @@ public class SavedPostsActivity extends AppCompatActivity {
 
     RecyclerView recyclerView, collections;
     ImageView back;
-    private SavedPostAdapter savedPostAdapter;
     SavedPostCollectionAdapter savedPostsCollectionAdapter;
+    TextView create_collection;
+    private SavedPostAdapter savedPostAdapter;
     private List<Post> postList_saves;
     private List<String> mySaves;
     private List<SavedPostsCollection> savedPostsCollectionList;
     private FirebaseUser firebaseUser;
-    TextView create_collection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,13 +91,13 @@ public class SavedPostsActivity extends AppCompatActivity {
 
     }
 
-    private void mySaves(){
+    private void mySaves() {
         mySaves = new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Saves").child(firebaseUser.getUid()).child("Recent");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     mySaves.add(snapshot.getKey());
                 }
                 readSaves();
@@ -110,13 +110,13 @@ public class SavedPostsActivity extends AppCompatActivity {
         });
     }
 
-    private void readSaves(){
+    private void readSaves() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                 postList_saves.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Post post = snapshot.getValue(Post.class);
 
                     for (String id : mySaves) {
@@ -135,7 +135,7 @@ public class SavedPostsActivity extends AppCompatActivity {
         });
     }
 
-    private void getCollections(){
+    private void getCollections() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Saves").child(firebaseUser.getUid()).child("Collections");
         reference.addValueEventListener(new ValueEventListener() {
             @Override

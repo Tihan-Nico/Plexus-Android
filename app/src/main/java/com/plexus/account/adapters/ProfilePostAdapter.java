@@ -31,8 +31,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
 import com.plexus.components.components.ImageView.Constants;
 import com.plexus.components.components.socials.PlexusSocialTextView;
-import com.plexus.model.posts.Post;
 import com.plexus.model.account.User;
+import com.plexus.model.posts.Post;
 import com.plexus.posts.activity.PostDetailActivity;
 import com.plexus.utils.MasterCipher;
 
@@ -60,7 +60,7 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
     List<Post> mPosts;
     Bitmap bitmap;
 
-    public ProfilePostAdapter(Context context, List<Post> posts){
+    public ProfilePostAdapter(Context context, List<Post> posts) {
         mContext = context;
         mPosts = posts;
     }
@@ -137,29 +137,29 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
                                     .listener(new RequestListener<Bitmap>() {
                                         @Override
                                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                                                    return false;
-                                                }
+                                            return false;
+                                        }
 
-                                                @Override
-                                                public boolean onResourceReady(
-                                                        Bitmap resource,
-                                                        Object model,
-                                                        Target<Bitmap> target,
-                                                        DataSource dataSource,
-                                                        boolean isFirstResource) {
-                                                    if (Build.VERSION.SDK_INT >= 16) {
-                                                        holder.post_image.setBackground(
-                                                                new BitmapDrawable(
-                                                                        mContext.getResources(),
-                                                                        Constants.fastblur(
-                                                                                Bitmap.createScaledBitmap(resource, 50, 50, true)))); // ));
-                                                    } else {
-                                                        onPalette(Palette.from(resource).generate(), holder.profile_image);
-                                                    }
-                                                    holder.profile_image.setImageBitmap(resource);
-                                                    return false;
-                                                }
-                                            })
+                                        @Override
+                                        public boolean onResourceReady(
+                                                Bitmap resource,
+                                                Object model,
+                                                Target<Bitmap> target,
+                                                DataSource dataSource,
+                                                boolean isFirstResource) {
+                                            if (Build.VERSION.SDK_INT >= 16) {
+                                                holder.post_image.setBackground(
+                                                        new BitmapDrawable(
+                                                                mContext.getResources(),
+                                                                Constants.fastblur(
+                                                                        Bitmap.createScaledBitmap(resource, 50, 50, true)))); // ));
+                                            } else {
+                                                onPalette(Palette.from(resource).generate(), holder.profile_image);
+                                            }
+                                            holder.profile_image.setImageBitmap(resource);
+                                            return false;
+                                        }
+                                    })
                                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                                     .into(holder.profile_image);
                         }
@@ -171,6 +171,13 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
                     }
                 });
 
+    }
+
+    public void onPalette(Palette palette, ImageView photoView) {
+        if (null != palette) {
+            ViewGroup parent = (ViewGroup) photoView.getParent().getParent();
+            parent.setBackgroundColor(palette.getDarkVibrantColor(Color.GRAY));
+        }
     }
 
     public static class ImageViewHolder extends RecyclerView.ViewHolder {
@@ -186,13 +193,6 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
             play = itemView.findViewById(R.id.play);
             profile_image = itemView.findViewById(R.id.profile_image);
 
-        }
-    }
-
-    public void onPalette(Palette palette, ImageView photoView) {
-        if (null != palette) {
-            ViewGroup parent = (ViewGroup) photoView.getParent().getParent();
-            parent.setBackgroundColor(palette.getDarkVibrantColor(Color.GRAY));
         }
     }
 

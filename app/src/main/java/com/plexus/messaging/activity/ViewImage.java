@@ -45,8 +45,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
 import com.plexus.components.components.ImageView.Constants;
 import com.plexus.components.components.ImageView.PhotoView;
-import com.plexus.model.messaging.Message;
 import com.plexus.model.account.User;
+import com.plexus.model.messaging.Message;
 import com.plexus.utils.MasterCipher;
 import com.plexus.utils.MediaUtil;
 
@@ -85,8 +85,8 @@ public class ViewImage extends AppCompatActivity {
     boolean showPostDetails = true;
     ImageView back;
     TextView fullname;
+    String imagePath = MediaUtil.getRootPath() + "/Plexus/Images/";
     private Toolbar toolbar;
-    String imagePath = MediaUtil.getRootPath()+"/Plexus/Images/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +118,7 @@ public class ViewImage extends AppCompatActivity {
                     parent.setBackground(new BitmapDrawable(ViewImage.this.getResources(), Constants.fastblur(Bitmap.createScaledBitmap(bitmap, 50, 50, true)))); // ));
                     photoView.setImageBitmap(bitmap);
                 } else {
-                    if(image.exists()){
+                    if (image.exists()) {
                         Glide.with(ViewImage.this)
                                 .asBitmap()
                                 .load(Uri.fromFile(image))
@@ -165,7 +165,8 @@ public class ViewImage extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NotNull DatabaseError databaseError) {}
+            public void onCancelled(@NotNull DatabaseError databaseError) {
+            }
         });
 
         back.setOnClickListener(view1 -> finish());
@@ -185,7 +186,7 @@ public class ViewImage extends AppCompatActivity {
 
     }
 
-    private void getUserDetails(TextView fullname){
+    private void getUserDetails(TextView fullname) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -193,7 +194,7 @@ public class ViewImage extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
 
-                if (user.equals(firebaseUser.getUid())){
+                if (user.equals(firebaseUser.getUid())) {
                     fullname.setText("You");
                 } else {
                     fullname.setText(MasterCipher.decrypt(String.format("%s %s", user.getName(), user.getSurname())));
@@ -207,11 +208,11 @@ public class ViewImage extends AppCompatActivity {
         });
     }
 
-    private void deleteMessage(){
+    private void deleteMessage() {
 
     }
 
-    private void forwardMessage(){
+    private void forwardMessage() {
 
     }
 
@@ -219,22 +220,22 @@ public class ViewImage extends AppCompatActivity {
 
         try {
 
-            OutputStream outputStream=null;
-            File dir=new File(Environment.DIRECTORY_PICTURES + "/Plexus");
+            OutputStream outputStream = null;
+            File dir = new File(Environment.DIRECTORY_PICTURES + "/Plexus");
 
-            if(!dir.exists()){
+            if (!dir.exists()) {
                 dir.mkdirs();
             }
 
-            File file=new File(dir,"Plexus"+System.currentTimeMillis()+".jpeg");
-            if(file.exists()){
+            File file = new File(dir, "Plexus" + System.currentTimeMillis() + ".jpeg");
+            if (file.exists()) {
                 file.delete();
-            }else{
+            } else {
                 file.createNewFile();
             }
 
             outputStream = new FileOutputStream(file);
-            BufferedOutputStream outputStream1=new BufferedOutputStream(outputStream);
+            BufferedOutputStream outputStream1 = new BufferedOutputStream(outputStream);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream1);
             outputStream1.flush();
             outputStream1.close();
@@ -246,7 +247,7 @@ public class ViewImage extends AppCompatActivity {
         }
     }
 
-    private void shareImage(){
+    private void shareImage() {
         Uri imageInternalUri = getBitmapUri(getBitmap(photoView));
         Intent intent = new Intent(Intent.ACTION_SEND).setType("image/*");
         intent.putExtra(Intent.EXTRA_STREAM, imageInternalUri);
@@ -267,7 +268,7 @@ public class ViewImage extends AppCompatActivity {
         return bitmap;
     }
 
-    private void getImageUrl(){
+    private void getImageUrl() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://plexus-network-chat.firebaseio.com/").getReference("Chats").child(messageid);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -305,7 +306,7 @@ public class ViewImage extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.save:
                 return true;
             case R.id.forward:

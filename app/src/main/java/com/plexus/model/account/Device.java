@@ -44,15 +44,16 @@ public class Device {
         this.active = active;
     }
 
-  public Device() {}
+    public Device() {
+    }
 
-  public String getDevice_name() {
-    return device_name;
-  }
+    public String getDevice_name() {
+        return device_name;
+    }
 
-  public void setDevice_name(String device_name) {
-    this.device_name = device_name;
-  }
+    public void setDevice_name(String device_name) {
+        this.device_name = device_name;
+    }
 
     public String getDevice_brand() {
         return device_brand;

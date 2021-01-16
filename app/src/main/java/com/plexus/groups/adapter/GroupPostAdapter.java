@@ -23,16 +23,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
+import com.plexus.account.activity.FollowersActivity;
+import com.plexus.account.activity.ProfileActivity;
 import com.plexus.components.background.DialogInformation;
 import com.plexus.components.components.socials.PlexusSocialTextView;
 import com.plexus.model.Token;
-import com.plexus.model.group.GroupPosts;
 import com.plexus.model.account.User;
+import com.plexus.model.group.GroupPosts;
 import com.plexus.notifications.fcm.FirebaseNotificationHelper;
 import com.plexus.posts.activity.HashTagViewActivity;
 import com.plexus.posts.activity.comment.CommentActivity;
-import com.plexus.account.activity.FollowersActivity;
-import com.plexus.account.activity.ProfileActivity;
 import com.plexus.utils.MasterCipher;
 
 import org.jetbrains.annotations.NotNull;
@@ -43,117 +43,53 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 
-public class GroupPostAdapter extends RecyclerView.Adapter{
+public class GroupPostAdapter extends RecyclerView.Adapter {
 
+    private static final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+    //Layouts
+    private static final int VIEW_TYPE_TEXT = 0;
+    private static final int VIEW_TYPE_IMAGE = 1;
+    private static final int VIEW_TYPE_VIDEO = 2;
+    private static final int VIEW_TYPE_AUDIO = 3;
     public static Context context;
     List<GroupPosts> groupPosts;
 
-    private static final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-    //Layouts
-    private static final int VIEW_TYPE_TEXT = 0;
-    private static final int VIEW_TYPE_IMAGE= 1;
-    private static final int VIEW_TYPE_VIDEO = 2;
-    private static final int VIEW_TYPE_AUDIO = 3;
-
-    public GroupPostAdapter(Context context, List<GroupPosts> groupPosts){
-        this.context = context;
+    public GroupPostAdapter(Context context, List<GroupPosts> groupPosts) {
+        GroupPostAdapter.context = context;
         this.groupPosts = groupPosts;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        GroupPosts posts = groupPosts.get(position);
-        switch (posts.getType()) {
-            case "text":
-                return VIEW_TYPE_TEXT;
-            case "image":
-                return VIEW_TYPE_IMAGE;
-            case "video":
-                return VIEW_TYPE_VIDEO;
-            case "audio":
-                return VIEW_TYPE_AUDIO;
-            default:
-                return -1;
-        }
-    }
-
-    @NonNull
-    @NotNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
-        View view;
-        if(viewType == VIEW_TYPE_TEXT) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_layout_text, parent, false);
-            return new TextHolder(view);
-        } else if (viewType == VIEW_TYPE_IMAGE){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_layout_image, parent, false);
-            return new ImageHolder(view);
-        } else if (viewType == VIEW_TYPE_VIDEO){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_layout_video, parent, false);
-            return new VideoHolder(view);
-        } else if (viewType == VIEW_TYPE_AUDIO){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_layout_audio, parent, false);
-            return new AudioHolder(view);
-        }
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        GroupPosts posts = groupPosts.get(position);
-
-        switch (holder.getItemViewType()) {
-            case VIEW_TYPE_TEXT:
-                ((TextHolder) holder).bind(posts);
-                break;
-            case VIEW_TYPE_IMAGE:
-                ((ImageHolder) holder).bind(posts);
-                break;
-            case VIEW_TYPE_VIDEO:
-                ((VideoHolder) holder).bind(posts);
-                break;
-            case VIEW_TYPE_AUDIO:
-                ((AudioHolder) holder).bind(posts);
-                break;
-        }
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return groupPosts.size();
     }
 
     private static void likeCount(String postId, final TextView like_count) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Likes").child(postId);
         reference.addValueEventListener(new ValueEventListener() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        like_count.setText(dataSnapshot.getChildrenCount() + " Likes");
-                    }
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                like_count.setText(dataSnapshot.getChildrenCount() + " Likes");
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {}
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     private static void commentCount(String postId, final TextView comment_count) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Comments").child(postId);
         reference.addValueEventListener(new ValueEventListener() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        comment_count.setText(dataSnapshot.getChildrenCount() + " Comments");
-                    }
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                comment_count.setText(dataSnapshot.getChildrenCount() + " Comments");
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {}
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
-    private static void getProfileData(String profileID, TextView fullname, SimpleDraweeView profile_image){
+    private static void getProfileData(String profileID, TextView fullname, SimpleDraweeView profile_image) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(profileID);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -171,13 +107,13 @@ public class GroupPostAdapter extends RecyclerView.Adapter{
         });
     }
 
-    private static void sendNotification(String postid, String profileid){
+    private static void sendNotification(String postid, String profileid) {
         DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
         Query query = tokens.orderByKey().equalTo(profileid);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Token token = snapshot.getValue(Token.class);
 
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
@@ -239,7 +175,7 @@ public class GroupPostAdapter extends RecyclerView.Adapter{
         return jsonObjectData.toString();
     }
 
-    private static void profileActivity(String postID, String groupID){
+    private static void profileActivity(String postID, String groupID) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Activity Log");
         String id = reference.push().getKey();
 
@@ -252,6 +188,70 @@ public class GroupPostAdapter extends RecyclerView.Adapter{
         hashMap.put("isLike", true);
 
         reference.child(id).setValue(hashMap);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        GroupPosts posts = groupPosts.get(position);
+        switch (posts.getType()) {
+            case "text":
+                return VIEW_TYPE_TEXT;
+            case "image":
+                return VIEW_TYPE_IMAGE;
+            case "video":
+                return VIEW_TYPE_VIDEO;
+            case "audio":
+                return VIEW_TYPE_AUDIO;
+            default:
+                return -1;
+        }
+    }
+
+    @NonNull
+    @NotNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
+        View view;
+        if (viewType == VIEW_TYPE_TEXT) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_layout_text, parent, false);
+            return new TextHolder(view);
+        } else if (viewType == VIEW_TYPE_IMAGE) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_layout_image, parent, false);
+            return new ImageHolder(view);
+        } else if (viewType == VIEW_TYPE_VIDEO) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_layout_video, parent, false);
+            return new VideoHolder(view);
+        } else if (viewType == VIEW_TYPE_AUDIO) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_layout_audio, parent, false);
+            return new AudioHolder(view);
+        }
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        GroupPosts posts = groupPosts.get(position);
+
+        switch (holder.getItemViewType()) {
+            case VIEW_TYPE_TEXT:
+                ((TextHolder) holder).bind(posts);
+                break;
+            case VIEW_TYPE_IMAGE:
+                ((ImageHolder) holder).bind(posts);
+                break;
+            case VIEW_TYPE_VIDEO:
+                ((VideoHolder) holder).bind(posts);
+                break;
+            case VIEW_TYPE_AUDIO:
+                ((AudioHolder) holder).bind(posts);
+                break;
+        }
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return groupPosts.size();
     }
 
     public static class TextHolder extends RecyclerView.ViewHolder {
@@ -278,7 +278,7 @@ public class GroupPostAdapter extends RecyclerView.Adapter{
 
         }
 
-        void bind(GroupPosts posts){
+        void bind(GroupPosts posts) {
             description.setText(MasterCipher.decrypt(posts.getDescription()));
 
             description.setOnHashtagClickListener((view, text) -> {
@@ -373,7 +373,7 @@ public class GroupPostAdapter extends RecyclerView.Adapter{
 
         }
 
-        void bind(GroupPosts posts){
+        void bind(GroupPosts posts) {
             description.setText(MasterCipher.decrypt(posts.getDescription()));
 
             description.setOnHashtagClickListener((view, text) -> {
@@ -469,7 +469,7 @@ public class GroupPostAdapter extends RecyclerView.Adapter{
 
         }
 
-        void bind(GroupPosts posts){
+        void bind(GroupPosts posts) {
             description.setText(MasterCipher.decrypt(posts.getDescription()));
 
             description.setOnHashtagClickListener((view, text) -> {
@@ -565,7 +565,7 @@ public class GroupPostAdapter extends RecyclerView.Adapter{
 
         }
 
-        void bind(GroupPosts posts){
+        void bind(GroupPosts posts) {
             description.setText(MasterCipher.decrypt(posts.getDescription()));
 
             description.setOnHashtagClickListener((view, text) -> {

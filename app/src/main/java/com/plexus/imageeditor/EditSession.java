@@ -21,13 +21,13 @@ import com.plexus.imageeditor.model.EditorElement;
  */
 interface EditSession {
 
-  void movePoint(int p, @NonNull PointF point);
+    void movePoint(int p, @NonNull PointF point);
 
-  EditorElement getSelected();
+    EditorElement getSelected();
 
-  EditSession newPoint(@NonNull Matrix newInverse, @NonNull PointF point, int p);
+    EditSession newPoint(@NonNull Matrix newInverse, @NonNull PointF point, int p);
 
-  EditSession removePoint(@NonNull Matrix newInverse, int p);
+    EditSession removePoint(@NonNull Matrix newInverse, int p);
 
-  void commit();
+    void commit();
 }

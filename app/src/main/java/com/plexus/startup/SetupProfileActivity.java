@@ -89,7 +89,7 @@ public class SetupProfileActivity extends AppCompatActivity {
 
     }
 
-    private void saveProfileData(){
+    private void saveProfileData() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
         HashMap<String, Object> profileMap = new HashMap<>();
@@ -101,7 +101,7 @@ public class SetupProfileActivity extends AppCompatActivity {
         uploadCover();
     }
 
-    private void uploadCover(){
+    private void uploadCover() {
         final ProgressDialog progressDialog = new ProgressDialog(SetupProfileActivity.this);
         progressDialog.setMessage("Please wait...");
         progressDialog.show();

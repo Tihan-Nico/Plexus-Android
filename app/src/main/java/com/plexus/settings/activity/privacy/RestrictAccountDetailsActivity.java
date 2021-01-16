@@ -56,7 +56,7 @@ public class RestrictAccountDetailsActivity extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         boolean previouslyStarted = prefs.getBoolean("started_previously_restricted", false);
-        if(previouslyStarted) {
+        if (previouslyStarted) {
             startActivity(new Intent(getApplicationContext(), RestrictAccountsActivity.class));
         }
 

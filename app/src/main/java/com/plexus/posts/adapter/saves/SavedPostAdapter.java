@@ -20,8 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
-import com.plexus.model.posts.Post;
 import com.plexus.model.account.User;
+import com.plexus.model.posts.Post;
 import com.plexus.posts.activity.PostDetailActivity;
 import com.plexus.utils.MasterCipher;
 
@@ -46,8 +46,8 @@ import java.util.List;
 public class SavedPostAdapter extends RecyclerView.Adapter<SavedPostAdapter.ViewHolder> {
 
     FirebaseUser firebaseUser;
-    private Context mContext;
-    private List<Post> mPost;
+    private final Context mContext;
+    private final List<Post> mPost;
 
     public SavedPostAdapter(Context context, List<Post> posts) {
         mContext = context;

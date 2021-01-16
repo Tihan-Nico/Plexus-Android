@@ -32,8 +32,8 @@ import com.google.firebase.storage.StorageReference;
 import com.plexus.R;
 import com.plexus.messaging.activity.ViewImage;
 import com.plexus.messaging.activity.ViewVideo;
-import com.plexus.model.messaging.Message;
 import com.plexus.model.account.User;
+import com.plexus.model.messaging.Message;
 import com.plexus.utils.MediaPlayerUtils;
 import com.vanniktech.emoji.EmojiTextView;
 
@@ -56,23 +56,43 @@ import java.util.List;
  *  limitations under the License.                                            *
  ******************************************************************************/
 
-public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> implements SeekBar.OnSeekBarChangeListener{
+public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> implements SeekBar.OnSeekBarChangeListener {
 
-    public static  final int MSG_TYPE_LEFT = 0;
-    public static  final int MSG_TYPE_RIGHT = 1;
-
-    private Context mContext;
-    private List<Message> mMessage;
+    public static final int MSG_TYPE_LEFT = 0;
+    public static final int MSG_TYPE_RIGHT = 1;
     Handler mHandler;
     StorageReference storageReference;
     FirebaseUser fuser;
     MediaPlayer mediaPlayer = new MediaPlayer();
+    Message messageModel;
+    private final Context mContext;
+    private final List<Message> mMessage;
     private MediaPlayerUtils mediaPlayerUtils;
     private SeekBar seekBar;
+    /**
+     * Background Runnable thread
+     */
+    private final Runnable mUpdateTimeTask = new Runnable() {
+        public void run() {
+            long totalDuration = mediaPlayer.getDuration();
+            long currentDuration = mediaPlayer.getCurrentPosition();
 
-    Message messageModel;
+            // Displaying Total Duration time
+            /*songTotalDurationLabel.setText(""+utils.milliSecondsToTimer(totalDuration));
+            // Displaying time completed playing
+            songCurrentDurationLabel.setText(""+utils.milliSecondsToTimer(currentDuration));*/
 
-    public MessageAdapter(Context mContext, List<Message> mMessage){
+            // Updating progress bar
+            int progress = mediaPlayerUtils.getProgressPercentage(currentDuration, totalDuration);
+            //Log.d("Progress", ""+progress);
+            seekBar.setProgress(progress);
+
+            // Running this thread after 100 milliseconds
+            mHandler.postDelayed(this, 100);
+        }
+    };
+
+    public MessageAdapter(Context mContext, List<Message> mMessage) {
         this.mMessage = mMessage;
         this.mContext = mContext;
     }
@@ -105,8 +125,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.seekbar.setOnSeekBarChangeListener(this);
         seekBar = holder.seekbar;
 
-        if (position == mMessage.size()-1){
-            if (message.isIsseen()){
+        if (position == mMessage.size() - 1) {
+            if (message.isIsseen()) {
                 holder.txt_seen.setText("Seen");
             } else {
                 holder.txt_seen.setText("Delivered");
@@ -120,15 +140,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         ImageView audio_play = holder.audio.findViewById(R.id.play_audio);
 
         holder.play_voice_note.setOnClickListener(v -> {
-            if(mediaPlayer.isPlaying()){
-                if(mediaPlayer!=null){
+            if (mediaPlayer.isPlaying()) {
+                if (mediaPlayer != null) {
                     mediaPlayer.pause();
                     // Changing button image to play button
                     holder.play_voice_note.setImageResource(R.drawable.play);
                 }
-            }else{
+            } else {
                 // Resume audio
-                if(mediaPlayer!=null){
+                if (mediaPlayer != null) {
                     mediaPlayer.start();
                     // Changing button image to pause button
                     holder.play_voice_note.setImageResource(R.drawable.pause);
@@ -142,15 +162,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         });
 
         audio_play.setOnClickListener(v -> {
-            if(mediaPlayer.isPlaying()){
-                if(mediaPlayer!=null){
+            if (mediaPlayer.isPlaying()) {
+                if (mediaPlayer != null) {
                     mediaPlayer.pause();
                     // Changing button image to play button
                     audio_play.setImageResource(R.drawable.play);
                 }
-            }else{
+            } else {
                 // Resume audio
-                if(mediaPlayer!=null){
+                if (mediaPlayer != null) {
                     mediaPlayer.start();
                     // Changing button image to pause button
                     audio_play.setImageResource(R.drawable.pause);
@@ -237,7 +257,92 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         return mMessage.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public void playAudio(Message message, SeekBar seekBar, ImageView imageView) throws IOException {
+        mediaPlayer.reset();
+        mediaPlayer.setDataSource(message.getMessage());
+        mediaPlayer.prepare();
+        mediaPlayer.start();
+
+        // Changing Button Image to pause image
+        imageView.setImageResource(R.drawable.pause);
+
+        // set Progress bar values
+        seekBar.setProgress(0);
+        seekBar.setMax(100);
+
+        // Updating progress bar
+        updateProgressBar();
+    }
+
+    /**
+     * Update timer on seekbar
+     */
+    public void updateProgressBar() {
+        mHandler.postDelayed(mUpdateTimeTask, 100);
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
+
+    }
+
+    /**
+     * When user starts moving the progress handler
+     */
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+        // remove message Handler from updating progress bar
+        mHandler.removeCallbacks(mUpdateTimeTask);
+    }
+
+    /**
+     * When user stops moving the progress hanlder
+     */
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        mHandler.removeCallbacks(mUpdateTimeTask);
+        int totalDuration = mediaPlayer.getDuration();
+        int currentPosition = mediaPlayerUtils.progressToTimer(seekBar.getProgress(), totalDuration);
+
+        // forward or backward to certain seconds
+        mediaPlayer.seekTo(currentPosition);
+
+        // update timer progress again
+        updateProgressBar();
+    }
+
+    private void getProfileInfo(SimpleDraweeView simpleDraweeView, String profileid) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(profileid);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+
+                simpleDraweeView.setImageURI(user.getImageurl());
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
+        if (mMessage.get(position).getSender().equals(fuser.getUid())) {
+            return MSG_TYPE_RIGHT;
+        } else {
+            return MSG_TYPE_LEFT;
+        }
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public SimpleDraweeView show_image, profile_image;
         public TextView txt_seen, file_name, show_message_reply, replied_message;
@@ -266,114 +371,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             replied_message = itemView.findViewById(R.id.replied_message);
             video = itemView.findViewById(R.id.video);
             audio = itemView.findViewById(R.id.audio);
-        }
-    }
-
-    public void playAudio(Message message, SeekBar seekBar, ImageView imageView) throws IOException {
-        mediaPlayer.reset();
-        mediaPlayer.setDataSource(message.getMessage());
-        mediaPlayer.prepare();
-        mediaPlayer.start();
-
-        // Changing Button Image to pause image
-        imageView.setImageResource(R.drawable.pause);
-
-        // set Progress bar values
-        seekBar.setProgress(0);
-        seekBar.setMax(100);
-
-        // Updating progress bar
-        updateProgressBar();
-    }
-
-    /**
-     * Update timer on seekbar
-     * */
-    public void updateProgressBar() {
-        mHandler.postDelayed(mUpdateTimeTask, 100);
-    }
-
-    /**
-     * Background Runnable thread
-     * */
-    private Runnable mUpdateTimeTask = new Runnable() {
-        public void run() {
-            long totalDuration = mediaPlayer.getDuration();
-            long currentDuration = mediaPlayer.getCurrentPosition();
-
-            // Displaying Total Duration time
-            /*songTotalDurationLabel.setText(""+utils.milliSecondsToTimer(totalDuration));
-            // Displaying time completed playing
-            songCurrentDurationLabel.setText(""+utils.milliSecondsToTimer(currentDuration));*/
-
-            // Updating progress bar
-            int progress = (int)(mediaPlayerUtils.getProgressPercentage(currentDuration, totalDuration));
-            //Log.d("Progress", ""+progress);
-            seekBar.setProgress(progress);
-
-            // Running this thread after 100 milliseconds
-            mHandler.postDelayed(this, 100);
-        }
-    };
-
-    /**
-     *
-     * */
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
-
-    }
-
-    /**
-     * When user starts moving the progress handler
-     * */
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-        // remove message Handler from updating progress bar
-        mHandler.removeCallbacks(mUpdateTimeTask);
-    }
-
-    /**
-     * When user stops moving the progress hanlder
-     * */
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-        mHandler.removeCallbacks(mUpdateTimeTask);
-        int totalDuration = mediaPlayer.getDuration();
-        int currentPosition = mediaPlayerUtils.progressToTimer(seekBar.getProgress(), totalDuration);
-
-        // forward or backward to certain seconds
-        mediaPlayer.seekTo(currentPosition);
-
-        // update timer progress again
-        updateProgressBar();
-    }
-
-    private void getProfileInfo(SimpleDraweeView simpleDraweeView, String profileid){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(profileid);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-
-                simpleDraweeView.setImageURI(user.getImageurl());
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        fuser = FirebaseAuth.getInstance().getCurrentUser();
-        if (mMessage.get(position).getSender().equals(fuser.getUid())){
-            return MSG_TYPE_RIGHT;
-        } else {
-            return MSG_TYPE_LEFT;
         }
     }
 }

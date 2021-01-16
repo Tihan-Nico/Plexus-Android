@@ -51,7 +51,7 @@ public class RequestVerificationActivity extends AppCompatActivity {
 
     }
 
-    private void init(){
+    private void init() {
 
         ImageView back = toolbar.findViewById(R.id.back);
         TextView toolbar_name = toolbar.findViewById(R.id.toolbar_name);
@@ -65,7 +65,7 @@ public class RequestVerificationActivity extends AppCompatActivity {
 
     }
 
-    private void fetchData(){
+    private void fetchData() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -85,7 +85,7 @@ public class RequestVerificationActivity extends AppCompatActivity {
         });
     }
 
-    private void setVerificationDescriptionStyle(){
+    private void setVerificationDescriptionStyle() {
         String text = "A verified badge is a check mark that appears next to your name on Plexus to indicate that your account is the authentic presence of you.\n\nSubmitting a request for verification does not guarantee that you will get verified. Check our requirements for receiving a verification. Learn More";
 
         SpannableStringBuilder ssb = new SpannableStringBuilder(text);

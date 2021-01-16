@@ -43,7 +43,7 @@ public class HashtagAdapter extends RecyclerView.Adapter<HashtagAdapter.ViewHold
 
     List<String> mTags;
     List<String> post_counts;
-    private Context mContext;
+    private final Context mContext;
 
     public HashtagAdapter(Context context, List<String> mTags, List<String> post_counts) {
         mContext = context;
@@ -86,19 +86,6 @@ public class HashtagAdapter extends RecyclerView.Adapter<HashtagAdapter.ViewHold
         notifyDataSetChanged();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView hashtag, posts_count, trending_count;
-        RelativeLayout hashtag_layout;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            hashtag = itemView.findViewById(R.id.hashtag);
-            posts_count = itemView.findViewById(R.id.posts_count);
-
-        }
-    }
-
     private void getPostsCount(int position, TextView textView) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Hashtags").child(mTags.get(position)).child("Posts");
         reference.addValueEventListener(
@@ -110,8 +97,22 @@ public class HashtagAdapter extends RecyclerView.Adapter<HashtagAdapter.ViewHold
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {}
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
                 });
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView hashtag, posts_count, trending_count;
+        RelativeLayout hashtag_layout;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            hashtag = itemView.findViewById(R.id.hashtag);
+            posts_count = itemView.findViewById(R.id.posts_count);
+
+        }
     }
 
 }

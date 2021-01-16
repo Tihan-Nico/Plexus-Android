@@ -14,8 +14,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
-import com.plexus.model.account.User;
 import com.plexus.account.adapters.UserAdapter;
+import com.plexus.model.account.User;
 
 import java.util.ArrayList;
 import java.util.List;

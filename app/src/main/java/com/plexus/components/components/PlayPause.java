@@ -69,7 +69,7 @@ public class PlayPause extends View {
     /**
      * AnimatorのUpdateListener
      */
-    private ValueAnimator.AnimatorUpdateListener mAnimatorUpdateListener =
+    private final ValueAnimator.AnimatorUpdateListener mAnimatorUpdateListener =
             new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator valueAnimator) {

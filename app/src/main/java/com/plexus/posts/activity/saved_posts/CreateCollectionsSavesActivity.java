@@ -52,9 +52,9 @@ public class CreateCollectionsSavesActivity extends AppCompatActivity {
     SimpleDraweeView collection_image;
     EditText collection_name;
     ImageView back;
+    StorageReference storageRef;
     private Uri mImageUri;
     private String miUrlOk = "";
-    StorageReference storageRef;
     private FirebaseUser firebaseUser;
 
     @Override

@@ -54,7 +54,7 @@ public class SearchHistoryActivity extends AppCompatActivity {
 
     }
 
-    private void init(){
+    private void init() {
 
         ImageView back = toolbar.findViewById(R.id.back);
         TextView toolbar_name = toolbar.findViewById(R.id.toolbar_name);
@@ -71,7 +71,7 @@ public class SearchHistoryActivity extends AppCompatActivity {
         searchAdapter = new SearchAdapter(getApplicationContext(), mSearches);
         recycler_view.setAdapter(searchAdapter);
 
-        if (searchAdapter.getItemCount() == 0){
+        if (searchAdapter.getItemCount() == 0) {
             relativeLayout.setVisibility(View.GONE);
         }
 
@@ -79,13 +79,13 @@ public class SearchHistoryActivity extends AppCompatActivity {
 
     }
 
-    private void readSearches(){
+    private void readSearches() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Searches").child(firebaseUser.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mSearches.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     mSearches.add(dataSnapshot.getKey());
                 }
                 searchAdapter.notifyDataSetChanged();
@@ -98,7 +98,7 @@ public class SearchHistoryActivity extends AppCompatActivity {
         });
     }
 
-    private void clearHistory(){
+    private void clearHistory() {
         FirebaseDatabase.getInstance().getReference("Searches").child(firebaseUser.getUid()).removeValue();
     }
 

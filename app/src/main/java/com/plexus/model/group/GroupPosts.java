@@ -47,7 +47,8 @@ public class GroupPosts {
         this.downloadEnabled = downloadEnabled;
     }
 
-    public GroupPosts() {}
+    public GroupPosts() {
+    }
 
     public String getPostid() {
         return postid;

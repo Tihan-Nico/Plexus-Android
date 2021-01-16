@@ -35,11 +35,11 @@ public class MediaUtil {
 
     public static String size2String(Long filesize) {
         Integer unit = 1024;
-        if (filesize < unit){
+        if (filesize < unit) {
             return String.format("%d bytes", filesize);
         }
         int exp = (int) (Math.log(filesize) / Math.log(unit));
 
-        return String.format("%.0f %sbytes", filesize / Math.pow(unit, exp), "KMGTPE".charAt(exp-1));
+        return String.format("%.0f %sbytes", filesize / Math.pow(unit, exp), "KMGTPE".charAt(exp - 1));
     }
 }

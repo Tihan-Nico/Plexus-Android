@@ -21,12 +21,12 @@ public class SheetOptions {
     private String text;
     private int icon;
 
-    public SheetOptions(String text, int icon){
+    public SheetOptions(String text, int icon) {
         this.text = text;
         this.icon = icon;
     }
 
-    public SheetOptions(){
+    public SheetOptions() {
 
     }
 

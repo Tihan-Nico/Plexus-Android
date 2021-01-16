@@ -26,9 +26,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
 import com.plexus.main.activity.MainActivity;
+import com.plexus.model.account.User;
 import com.plexus.model.posts.Comment;
 import com.plexus.model.posts.Post;
-import com.plexus.model.account.User;
 import com.plexus.utils.MasterCipher;
 
 import org.jetbrains.annotations.NotNull;
@@ -54,152 +54,153 @@ import java.util.List;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ImageViewHolder> {
 
-  private Context mContext;
-  private List<Comment> mComment;
-  private String postid;
-  private Post post;
+    private final Context mContext;
+    private final List<Comment> mComment;
+    private final String postid;
+    private final Post post;
 
-  private Dialog deleteDialog;
+    private Dialog deleteDialog;
 
-  private FirebaseUser firebaseUser;
+    private FirebaseUser firebaseUser;
 
-  public CommentAdapter(Context context, List<Comment> comments, String postid, Post post) {
-    mContext = context;
-    mComment = comments;
-    this.postid = postid;
-    this.post = post;
-  }
+    public CommentAdapter(Context context, List<Comment> comments, String postid, Post post) {
+        mContext = context;
+        mComment = comments;
+        this.postid = postid;
+        this.post = post;
+    }
 
-  @NonNull
-  @Override
-  public CommentAdapter.ImageViewHolder onCreateViewHolder(
-      @NonNull ViewGroup parent, int viewType) {
-    View view = LayoutInflater.from(mContext).inflate(R.layout.comment_item, parent, false);
-    return new ImageViewHolder(view);
-  }
+    @NonNull
+    @Override
+    public CommentAdapter.ImageViewHolder onCreateViewHolder(
+            @NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.comment_item, parent, false);
+        return new ImageViewHolder(view);
+    }
 
-  @Override
-  public void onBindViewHolder(@NonNull final CommentAdapter.ImageViewHolder holder, final int position) {
+    @Override
+    public void onBindViewHolder(@NonNull final CommentAdapter.ImageViewHolder holder, final int position) {
 
-    firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-    final Comment comment = mComment.get(position);
-    String type = mComment.get(position).getType();
-      holder.comment.setText(MasterCipher.decrypt(comment.getComment()));
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        final Comment comment = mComment.get(position);
+        String type = mComment.get(position).getType();
+        holder.comment.setText(MasterCipher.decrypt(comment.getComment()));
 
-    deleteDialog = new Dialog(mContext);
-    deleteDialog.setContentView(R.layout.dialog_post_delete);
-    deleteDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        deleteDialog = new Dialog(mContext);
+        deleteDialog.setContentView(R.layout.dialog_post_delete);
+        deleteDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-    getUserInfo(holder.image_profile, holder.username, comment.getPublisher(), holder.presence);
+        getUserInfo(holder.image_profile, holder.username, comment.getPublisher(), holder.presence);
 
-    holder.timestamp.setReferenceTime(Long.parseLong(comment.getTimestamp()));
+        holder.timestamp.setReferenceTime(Long.parseLong(comment.getTimestamp()));
 
-      if(type.equals("text")){
-          holder.comment.setVisibility(View.VISIBLE);
-          holder.image.setVisibility(View.GONE);
-      } else if (type.equals("image")) {
-          holder.comment.setVisibility(View.GONE);
-          holder.image.setVisibility(View.VISIBLE);
-          holder.image.setImageURI(MasterCipher.decrypt(comment.getComment()));
-      }
+        if (type.equals("text")) {
+            holder.comment.setVisibility(View.VISIBLE);
+            holder.image.setVisibility(View.GONE);
+        } else if (type.equals("image")) {
+            holder.comment.setVisibility(View.GONE);
+            holder.image.setVisibility(View.VISIBLE);
+            holder.image.setImageURI(MasterCipher.decrypt(comment.getComment()));
+        }
 
-    holder.username.setOnClickListener(
-        view -> {
-          Intent intent = new Intent(mContext, MainActivity.class);
-          intent.putExtra("publisherid", comment.getPublisher());
-          mContext.startActivity(intent);
-        });
-
-    holder.image_profile.setOnClickListener(
-        view -> {
-          Intent intent = new Intent(mContext, MainActivity.class);
-          intent.putExtra("publisherid", comment.getPublisher());
-          mContext.startActivity(intent);
-        });
-
-    holder.itemView.setOnLongClickListener(
-        view -> {
-          if (comment.getPublisher().equals(firebaseUser.getUid())) {
-
-            TextView title = deleteDialog.findViewById(R.id.title);
-            title.setText("Are you sure you want to delete this comment?");
-
-            TextView warning = deleteDialog.findViewById(R.id.warning);
-            warning.setText("Once deleted this action can't be undone. So be sure that you want to delete this comment.");
-
-            Button delete = deleteDialog.findViewById(R.id.delete);
-            delete.setOnClickListener(
-                view12 -> {
-                    FirebaseDatabase.getInstance().getReference("Comments").child(postid).child(comment.getCommentid()).removeValue();
-                  deleteDialog.dismiss();
+        holder.username.setOnClickListener(
+                view -> {
+                    Intent intent = new Intent(mContext, MainActivity.class);
+                    intent.putExtra("publisherid", comment.getPublisher());
+                    mContext.startActivity(intent);
                 });
 
-            Button cancel = deleteDialog.findViewById(R.id.cancel);
-            cancel.setOnClickListener(view1 -> deleteDialog.dismiss());
-            deleteDialog.show();
-          } else if (post.getPublisher().equals(firebaseUser.getUid())){
-              TextView title = deleteDialog.findViewById(R.id.title);
-              title.setText("Are you sure you want to delete this comment?");
+        holder.image_profile.setOnClickListener(
+                view -> {
+                    Intent intent = new Intent(mContext, MainActivity.class);
+                    intent.putExtra("publisherid", comment.getPublisher());
+                    mContext.startActivity(intent);
+                });
 
-              TextView warning = deleteDialog.findViewById(R.id.warning);
-              warning.setText("Once deleted this action can't be undone. So be sure that you want to delete this comment.");
+        holder.itemView.setOnLongClickListener(
+                view -> {
+                    if (comment.getPublisher().equals(firebaseUser.getUid())) {
 
-              Button delete = deleteDialog.findViewById(R.id.delete);
-              delete.setOnClickListener(
-                      view12 -> {
-                          FirebaseDatabase.getInstance().getReference("Comments").child(post.getPostid()).child(comment.getCommentid()).removeValue();
-                          deleteDialog.dismiss();
-                      });
+                        TextView title = deleteDialog.findViewById(R.id.title);
+                        title.setText("Are you sure you want to delete this comment?");
 
-              Button cancel = deleteDialog.findViewById(R.id.cancel);
-              cancel.setOnClickListener(view1 -> deleteDialog.dismiss());
-              deleteDialog.show();
-          }
-          return true;
-        });
-  }
+                        TextView warning = deleteDialog.findViewById(R.id.warning);
+                        warning.setText("Once deleted this action can't be undone. So be sure that you want to delete this comment.");
 
-  @Override
-  public int getItemCount() {
-    return mComment.size();
-  }
+                        Button delete = deleteDialog.findViewById(R.id.delete);
+                        delete.setOnClickListener(
+                                view12 -> {
+                                    FirebaseDatabase.getInstance().getReference("Comments").child(postid).child(comment.getCommentid()).removeValue();
+                                    deleteDialog.dismiss();
+                                });
 
-  private void getUserInfo(final SimpleDraweeView imageView, final TextView username, String publisherid, final ImageView presence) {
-    DatabaseReference reference =
-        FirebaseDatabase.getInstance().getReference().child("Users").child(publisherid);
+                        Button cancel = deleteDialog.findViewById(R.id.cancel);
+                        cancel.setOnClickListener(view1 -> deleteDialog.dismiss());
+                        deleteDialog.show();
+                    } else if (post.getPublisher().equals(firebaseUser.getUid())) {
+                        TextView title = deleteDialog.findViewById(R.id.title);
+                        title.setText("Are you sure you want to delete this comment?");
 
-    reference.addValueEventListener(
-        new ValueEventListener() {
-          @Override
-          public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
-            User user = dataSnapshot.getValue(User.class);
-            imageView.setImageURI(MasterCipher.decrypt(user.getImageurl()));
-            username.setText(MessageFormat.format("{0} {1}", MasterCipher.decrypt(user.getName()), MasterCipher.decrypt(user.getSurname())));
-          }
+                        TextView warning = deleteDialog.findViewById(R.id.warning);
+                        warning.setText("Once deleted this action can't be undone. So be sure that you want to delete this comment.");
 
-          @Override
-          public void onCancelled(@NotNull DatabaseError databaseError) {
+                        Button delete = deleteDialog.findViewById(R.id.delete);
+                        delete.setOnClickListener(
+                                view12 -> {
+                                    FirebaseDatabase.getInstance().getReference("Comments").child(post.getPostid()).child(comment.getCommentid()).removeValue();
+                                    deleteDialog.dismiss();
+                                });
 
-          }
-        });
-  }
-
-  public static class ImageViewHolder extends RecyclerView.ViewHolder {
-
-    public ImageView presence;
-    public TextView username, comment;
-    private RelativeTimeTextView timestamp;
-    private SimpleDraweeView image, image_profile;
-
-    public ImageViewHolder(View itemView) {
-      super(itemView);
-
-      image_profile = itemView.findViewById(R.id.image_profile);
-      username = itemView.findViewById(R.id.fullname);
-      comment = itemView.findViewById(R.id.comment);
-      timestamp = itemView.findViewById(R.id.timestamp);
-      image = itemView.findViewById(R.id.image);
-      presence = itemView.findViewById(R.id.presence_online);
+                        Button cancel = deleteDialog.findViewById(R.id.cancel);
+                        cancel.setOnClickListener(view1 -> deleteDialog.dismiss());
+                        deleteDialog.show();
+                    }
+                    return true;
+                });
     }
-  }
+
+    @Override
+    public int getItemCount() {
+        return mComment.size();
+    }
+
+    private void getUserInfo(final SimpleDraweeView imageView, final TextView username, String publisherid, final ImageView presence) {
+        DatabaseReference reference =
+                FirebaseDatabase.getInstance().getReference().child("Users").child(publisherid);
+
+        reference.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
+                        User user = dataSnapshot.getValue(User.class);
+                        imageView.setImageURI(MasterCipher.decrypt(user.getImageurl()));
+                        username.setText(MessageFormat.format("{0} {1}", MasterCipher.decrypt(user.getName()), MasterCipher.decrypt(user.getSurname())));
+                    }
+
+                    @Override
+                    public void onCancelled(@NotNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    public static class ImageViewHolder extends RecyclerView.ViewHolder {
+
+        public ImageView presence;
+        public TextView username, comment;
+        private final RelativeTimeTextView timestamp;
+        private final SimpleDraweeView image;
+        private final SimpleDraweeView image_profile;
+
+        public ImageViewHolder(View itemView) {
+            super(itemView);
+
+            image_profile = itemView.findViewById(R.id.image_profile);
+            username = itemView.findViewById(R.id.fullname);
+            comment = itemView.findViewById(R.id.comment);
+            timestamp = itemView.findViewById(R.id.timestamp);
+            image = itemView.findViewById(R.id.image);
+            presence = itemView.findViewById(R.id.presence_online);
+        }
+    }
 }

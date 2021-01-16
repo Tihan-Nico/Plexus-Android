@@ -65,7 +65,7 @@ public class AccountSettingsActivity extends AppCompatActivity {
 
     }
 
-    private void init(){
+    private void init() {
 
         ImageView back = toolbar.findViewById(R.id.back);
         TextView toolbar_name = toolbar.findViewById(R.id.toolbar_name);

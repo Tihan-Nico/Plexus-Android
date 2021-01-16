@@ -26,9 +26,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.plexus.R;
+import com.plexus.model.account.User;
 import com.plexus.model.posts.Comment;
 import com.plexus.model.posts.Post;
-import com.plexus.model.account.User;
 import com.plexus.posts.adapter.CommentAdapter;
 import com.plexus.posts.adapter.PostAdapter;
 import com.plexus.utils.MasterCipher;
@@ -61,15 +61,15 @@ public class PostDetailActivity extends AppCompatActivity {
     String postid;
     String publisherid;
     RecyclerView recyclerView, recyclerViewComments;
-    private PostAdapter postAdapter;
-    private CommentAdapter commentAdapter;
-    private List<Post> postList;
-    private List<Comment> commentList;
     Post post_;
     EditText addcomment;
     ImageView image, back, post;
     FirebaseUser firebaseUser;
     Uri mImageUri = null;
+    private PostAdapter postAdapter;
+    private CommentAdapter commentAdapter;
+    private List<Post> postList;
+    private List<Comment> commentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,7 +230,7 @@ public class PostDetailActivity extends AppCompatActivity {
         reference.child(id).setValue(hashMap);
     }
 
-    private void sendFunctionNotification(String type){
+    private void sendFunctionNotification(String type) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -314,7 +314,7 @@ public class PostDetailActivity extends AppCompatActivity {
                 });
     }
 
-    private void readPost(){
+    private void readPost() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts").child(postid);
 
         reference.addListenerForSingleValueEvent(new ValueEventListener() {

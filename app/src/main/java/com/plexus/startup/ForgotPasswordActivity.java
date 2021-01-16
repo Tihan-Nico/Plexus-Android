@@ -53,7 +53,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     }
 
-    private void init(){
+    private void init() {
 
         ImageView back = toolbar.findViewById(R.id.back);
         TextView toolbar_name = findViewById(R.id.toolbar_name);

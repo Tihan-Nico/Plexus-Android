@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -86,48 +85,24 @@ public class MessageSettingsActivity extends AppCompatActivity {
 
         voice_note_filter_selection.setText(voice_filter_selected);
 
-        if (enabled_swipe_to_reply){
-            swipe_to_reply.setChecked(true);
-        } else {
-            swipe_to_reply.setChecked(false);
-        }
+        swipe_to_reply.setChecked(enabled_swipe_to_reply);
 
         swipe_to_reply.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                editor.putBoolean("swipe_to_reply", true);
-            } else {
-                editor.putBoolean("swipe_to_reply", false);
-            }
+            editor.putBoolean("swipe_to_reply", isChecked);
             editor.apply();
         });
 
-        if(enabled_sounds){
-            sounds.setChecked(true);
-        } else {
-            sounds.setChecked(false);
-        }
+        sounds.setChecked(enabled_sounds);
 
         sounds.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                editor.putBoolean("sounds", true);
-            } else {
-                editor.putBoolean("sounds", false);
-            }
+            editor.putBoolean("sounds", isChecked);
             editor.apply();
         });
 
-        if(enabled_enter_to_send){
-            enter_to_send.setChecked(true);
-        } else {
-            enter_to_send.setChecked(false);
-        }
+        enter_to_send.setChecked(enabled_enter_to_send);
 
         enter_to_send.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                editor.putBoolean("enabled_enter_to_send", true);
-            } else {
-                editor.putBoolean("enabled_enter_to_send", false);
-            }
+            editor.putBoolean("enabled_enter_to_send", isChecked);
             editor.apply();
         });
     }

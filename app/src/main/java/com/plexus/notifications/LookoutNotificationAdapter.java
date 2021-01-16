@@ -33,7 +33,7 @@ import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class LookoutNotificationAdapter extends RecyclerView.Adapter<LookoutNotificationAdapter.ViewHolder>{
+public class LookoutNotificationAdapter extends RecyclerView.Adapter<LookoutNotificationAdapter.ViewHolder> {
 
     String postid;
     Context mContext;
@@ -65,11 +65,11 @@ public class LookoutNotificationAdapter extends RecyclerView.Adapter<LookoutNoti
         SharedPreferences prefs = mContext.getSharedPreferences("plexus", MODE_PRIVATE);
         postid = prefs.getString("postid", lookoutNotification.getPostID());
 
-        if (!lookoutNotification.isNotificationViewed()){
+        if (!lookoutNotification.isNotificationViewed()) {
             holder.notification_background.setBackgroundColor(Color.parseColor("#D9CC775E"));
         }
 
-        if (!lookoutNotification.isNotificationRead()){
+        if (!lookoutNotification.isNotificationRead()) {
             readNotifications();
         }
 
@@ -104,7 +104,7 @@ public class LookoutNotificationAdapter extends RecyclerView.Adapter<LookoutNoti
                 });*/
 
         /*holder.notification_menu.setOnClickListener(v -> DialogInformation.showNotificationBottomSheet(mContext, lookoutNotifications, lookoutNotification.getProfileID()));
-*/
+         */
     }
 
     @Override
@@ -112,19 +112,19 @@ public class LookoutNotificationAdapter extends RecyclerView.Adapter<LookoutNoti
         return lookoutNotifications == null ? 0 : lookoutNotifications.size();
     }
 
-    private void viewedNotification(String id){
+    private void viewedNotification(String id) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Notification").child(id);
         databaseReference.child("notificationViewed").setValue(true);
     }
 
-    private void readNotifications(){
+    private void readNotifications() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Notification");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     PlexusNotification plexusNotification = snapshot.getValue(PlexusNotification.class);
-                    if (plexusNotification != null ) {
+                    if (plexusNotification != null) {
                         HashMap<String, Object> hashMap = new HashMap<>();
                         hashMap.put("notificationRead", true);
                         snapshot.getRef().updateChildren(hashMap);
@@ -150,11 +150,12 @@ public class LookoutNotificationAdapter extends RecyclerView.Adapter<LookoutNoti
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {}
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
                 });
     }
 
-    private void getNotificationDescription(LookoutNotifications lookoutNotifications, TextView notification_description, String publisherid){
+    private void getNotificationDescription(LookoutNotifications lookoutNotifications, TextView notification_description, String publisherid) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(publisherid);
         reference.addListenerForSingleValueEvent(
                 new ValueEventListener() {
@@ -178,7 +179,8 @@ public class LookoutNotificationAdapter extends RecyclerView.Adapter<LookoutNoti
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {}
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
                 });
     }
 

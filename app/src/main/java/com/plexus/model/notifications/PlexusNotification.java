@@ -17,138 +17,139 @@ package com.plexus.model.notifications;
  ******************************************************************************/
 
 public class PlexusNotification {
-  private String id;
-  private String userid;
-  private String text;
-  private String postid;
-  private boolean ispost;
-  private boolean follower;
-  private boolean comment;
-  private boolean reaction;
-  private boolean video;
-  private boolean shared;
-  private boolean notificationViewed;
-  private boolean notificationRead;
-  private String timestamp;
+    private String id;
+    private String userid;
+    private String text;
+    private String postid;
+    private boolean ispost;
+    private boolean follower;
+    private boolean comment;
+    private boolean reaction;
+    private boolean video;
+    private boolean shared;
+    private boolean notificationViewed;
+    private boolean notificationRead;
+    private String timestamp;
 
-  public PlexusNotification(String id,
-                            String userid,
-                            String text,
-                            String postid,
-                            boolean ispost,
-                            boolean follower,
-                            boolean comment,
-                            boolean reaction,
-                            boolean video,
-                            boolean notificationViewed,
-                            boolean notificationRead,
-                            String timestamp, boolean shared) {
-    this.id = id;
-    this.userid = userid;
-    this.text = text;
-    this.postid = postid;
-    this.ispost = ispost;
-    this.follower = follower;
-    this.comment = comment;
-    this.reaction = reaction;
-    this.video = video;
-    this.notificationViewed = notificationViewed;
-    this.notificationRead = notificationRead;
-    this.timestamp = timestamp;
-    this.shared = shared;
-  }
+    public PlexusNotification(String id,
+                              String userid,
+                              String text,
+                              String postid,
+                              boolean ispost,
+                              boolean follower,
+                              boolean comment,
+                              boolean reaction,
+                              boolean video,
+                              boolean notificationViewed,
+                              boolean notificationRead,
+                              String timestamp, boolean shared) {
+        this.id = id;
+        this.userid = userid;
+        this.text = text;
+        this.postid = postid;
+        this.ispost = ispost;
+        this.follower = follower;
+        this.comment = comment;
+        this.reaction = reaction;
+        this.video = video;
+        this.notificationViewed = notificationViewed;
+        this.notificationRead = notificationRead;
+        this.timestamp = timestamp;
+        this.shared = shared;
+    }
 
-  public PlexusNotification() {}
+    public PlexusNotification() {
+    }
 
-  public String getUserid() {
-    return userid;
-  }
+    public String getUserid() {
+        return userid;
+    }
 
-  public void setUserid(String userid) {
-    this.userid = userid;
-  }
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
 
-  public String getText() {
-    return text;
-  }
+    public String getText() {
+        return text;
+    }
 
-  public void setText(String text) {
-    this.text = text;
-  }
+    public void setText(String text) {
+        this.text = text;
+    }
 
-  public String getPostid() {
-    return postid;
-  }
+    public String getPostid() {
+        return postid;
+    }
 
-  public void setPostid(String postid) {
-    this.postid = postid;
-  }
+    public void setPostid(String postid) {
+        this.postid = postid;
+    }
 
-  public boolean isIspost() {
-    return ispost;
-  }
+    public boolean isIspost() {
+        return ispost;
+    }
 
-  public void setIspost(boolean ispost) {
-    this.ispost = ispost;
-  }
+    public void setIspost(boolean ispost) {
+        this.ispost = ispost;
+    }
 
-  public boolean isFollower() {
-    return follower;
-  }
+    public boolean isFollower() {
+        return follower;
+    }
 
-  public boolean isComment() {
-    return comment;
-  }
+    public boolean isComment() {
+        return comment;
+    }
 
-  public void setComment(boolean comment) {
-    this.comment = comment;
-  }
+    public void setComment(boolean comment) {
+        this.comment = comment;
+    }
 
-  public boolean isReaction() {
-    return reaction;
-  }
+    public boolean isReaction() {
+        return reaction;
+    }
 
-  public boolean isVideo() {
-    return video;
-  }
+    public boolean isVideo() {
+        return video;
+    }
 
-  public void setVideo(boolean video) {
-    this.video = video;
-  }
+    public void setVideo(boolean video) {
+        this.video = video;
+    }
 
-  public String getTimestamp() {
-    return timestamp;
-  }
+    public String getTimestamp() {
+        return timestamp;
+    }
 
-  public void setTimestamp(String timestamp) {
-    this.timestamp = timestamp;
-  }
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
 
-  public String getId() {
-    return id;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public boolean isShared() {
-    return shared;
-  }
+    public boolean isShared() {
+        return shared;
+    }
 
-  public boolean isNotificationViewed() {
-    return notificationViewed;
-  }
+    public boolean isNotificationViewed() {
+        return notificationViewed;
+    }
 
-  public void setNotificationViewed(boolean notificationViewed) {
-    this.notificationViewed = notificationViewed;
-  }
+    public void setNotificationViewed(boolean notificationViewed) {
+        this.notificationViewed = notificationViewed;
+    }
 
-  public boolean isNotificationRead() {
-    return notificationRead;
-  }
+    public boolean isNotificationRead() {
+        return notificationRead;
+    }
 
-  public void setNotificationRead(boolean notificationRead) {
-    this.notificationRead = notificationRead;
-  }
+    public void setNotificationRead(boolean notificationRead) {
+        this.notificationRead = notificationRead;
+    }
 }

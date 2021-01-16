@@ -33,8 +33,8 @@ import java.util.List;
 
 public class NoticesAdapter extends RecyclerView.Adapter<NoticesAdapter.ViewHolder> {
 
-    private Context context;
-    private List<Notices> noticesList;
+    private final Context context;
+    private final List<Notices> noticesList;
 
     public NoticesAdapter(Context context, List<Notices> movieList) {
         this.context = context;

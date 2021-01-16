@@ -5,12 +5,12 @@ public class Moments {
     private String name;
     private String image_url;
 
-    private Moments(String name, String image_url){
+    private Moments(String name, String image_url) {
         this.name = name;
         this.image_url = image_url;
     }
 
-    private Moments(){
+    private Moments() {
 
     }
 

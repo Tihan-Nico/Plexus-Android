@@ -13,7 +13,6 @@ import com.plexus.utils.TimeConverter;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.concurrent.TimeUnit;
 
 /******************************************************************************
  * Copyright (c) 2020. Plexus, Inc.                                           *
@@ -33,12 +32,11 @@ import java.util.concurrent.TimeUnit;
 
 public class TimeSpentActivity extends AppCompatActivity {
 
-    private TextView home_total_time;
-
     //These are being used for determining how long the user has been on this Fragments
     SharedPreferences sharedPreferences = null;
     String masterKeyAlias = null;
     long total_time;
+    private TextView home_total_time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +63,7 @@ public class TimeSpentActivity extends AppCompatActivity {
         long start_time = sharedPreferences.getLong("home_start_time", 0);
         long end_time = sharedPreferences.getLong("home_end_time", 0);
         long previous_time = sharedPreferences.getLong("home_previous_time", 0);
-        if(previous_time > 0){
+        if (previous_time > 0) {
             total_time = previous_time + start_time - end_time;
         } else {
             total_time = start_time - end_time;

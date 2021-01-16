@@ -90,6 +90,11 @@ import io.reactivex.rxjava3.disposables.Disposable;
 
 public class CreatePostActivity extends AppCompatActivity {
 
+    private static final int CAMERA_REQUEST_CODE = 1;
+    private static final int VIDEO_REQUEST_CODE = 2;
+    private static final String TEMP_FILTER_AUDIO_NAME = "tempAudio.pcm";
+    private static final String TEMP_FILE_AUDIO_NAME = "/plexus_vn_audio.3gp";
+    private static String mFileName = null;
     /**
      * Voice recording
      */
@@ -98,23 +103,16 @@ public class CreatePostActivity extends AppCompatActivity {
     SocialAutoCompleteTextView post_description;
     TextView character_count, fullname, post_date, group_name;
     MaterialCheckBox add_to_moments;
-
     String current_date = new SimpleDateFormat("EEEE, MMMM d, yyyy", Locale.getDefault()).format(new Date());
-    private static final int CAMERA_REQUEST_CODE = 1;
-    private static final int VIDEO_REQUEST_CODE = 2;
-
     SimpleDraweeView profile_image;
-
     FirebaseUser firebaseUser;
     StorageReference storageRef;
     Intent intent;
-
     Uri image_uri, video_uri, camera_uri;
     ImageView close, upload_image, upload_camera, upload_voice, upload_video;
     boolean isRecordingUpload, isUploadImage, isUploadCamera, isText, group;
     String groupName;
     String groupID;
-
     /**
      * Recording Variables
      */
@@ -124,21 +122,17 @@ public class CreatePostActivity extends AppCompatActivity {
     CountDownTimer countDownTimer;
     int timerEnd = 300;
     int timeInterval = 300;
-    private boolean recording = false;
-    private boolean isPlaying = false;
-    private boolean isPaused = false;
-    private File file;
-    private MediaRecorder recorder;
-    private MediaPlayer mediaPlayer = new MediaPlayer();
-    private static String TEMP_FILTER_AUDIO_NAME = "tempAudio.pcm";
-    private static String TEMP_FILE_AUDIO_NAME = "/plexus_vn_audio.3gp";
-    private static String mFileName = null;
-
     /**
      * View add Ons located below
      */
     View add_on_image, add_on_feeling, add_on_voice, add_on_video;
     Bitmap bitmap;
+    private boolean recording = false;
+    private final boolean isPlaying = false;
+    private final boolean isPaused = false;
+    private File file;
+    private MediaRecorder recorder;
+    private MediaPlayer mediaPlayer = new MediaPlayer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,22 +187,22 @@ public class CreatePostActivity extends AppCompatActivity {
         });
         post_date.setText(current_date);
 
-        if (isRecordingUpload){
+        if (isRecordingUpload) {
             voiceRecording();
-        } else if (isUploadImage){
+        } else if (isUploadImage) {
             CropImage.activity().start(CreatePostActivity.this);
-        } else if (isUploadCamera){
+        } else if (isUploadCamera) {
             //Open Camera to take a picture
-        } else if (isText){
+        } else if (isText) {
             //Do Nothing
         }
 
-        if (group){
+        if (group) {
             group_name.setText(groupName);
             group_name.setVisibility(View.VISIBLE);
         }
 
-        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();;
+        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
         mFileName += TEMP_FILE_AUDIO_NAME;
 
         init();
@@ -248,18 +242,18 @@ public class CreatePostActivity extends AppCompatActivity {
             Intent intent = new Intent();
             intent.setType("video/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent,"Select Video"),VIDEO_REQUEST_CODE);
+            startActivityForResult(Intent.createChooser(intent, "Select Video"), VIDEO_REQUEST_CODE);
         });
         compositeDisposable.add(video);
 
-        if (group){
+        if (group) {
             upload.setOnClickListener(v -> {
                 if (add_on_image.getVisibility() == View.VISIBLE) {
                     PlexusUpload.uploadGroupImage(post_description, firebaseUser.getUid(), image_uri, CreatePostActivity.this, groupID);
-                } else if (add_on_video.getVisibility() == View.VISIBLE){
+                } else if (add_on_video.getVisibility() == View.VISIBLE) {
                     PlexusUpload.uploadGroupVideo(post_description, firebaseUser.getUid(), video_uri, CreatePostActivity.this, groupID);
-                } else if (add_on_voice.getVisibility() == View.VISIBLE){
-                    PlexusUpload.uploadGroupVoice(post_description, firebaseUser.getUid(),CreatePostActivity.this, mFileName, groupID);
+                } else if (add_on_voice.getVisibility() == View.VISIBLE) {
+                    PlexusUpload.uploadGroupVoice(post_description, firebaseUser.getUid(), CreatePostActivity.this, mFileName, groupID);
                 } else {
                     PlexusUpload.uploadGroupText(post_description, firebaseUser.getUid(), CreatePostActivity.this, groupID);
                 }
@@ -268,10 +262,10 @@ public class CreatePostActivity extends AppCompatActivity {
             upload.setOnClickListener(v -> {
                 if (add_on_image.getVisibility() == View.VISIBLE) {
                     PlexusUpload.uploadImage(post_description, firebaseUser.getUid(), add_to_moments, image_uri, CreatePostActivity.this);
-                } else if (add_on_video.getVisibility() == View.VISIBLE){
+                } else if (add_on_video.getVisibility() == View.VISIBLE) {
                     PlexusUpload.uploadVideo(post_description, firebaseUser.getUid(), add_to_moments, video_uri, CreatePostActivity.this);
-                } else if (add_on_voice.getVisibility() == View.VISIBLE){
-                    PlexusUpload.uploadVoice(post_description, firebaseUser.getUid(),CreatePostActivity.this, mFileName);
+                } else if (add_on_voice.getVisibility() == View.VISIBLE) {
+                    PlexusUpload.uploadVoice(post_description, firebaseUser.getUid(), CreatePostActivity.this, mFileName);
                 } else {
                     PlexusUpload.uploadText(post_description, firebaseUser.getUid(), CreatePostActivity.this);
                 }
@@ -405,7 +399,7 @@ public class CreatePostActivity extends AppCompatActivity {
         recorder.start();
     }
 
-    private void countdownTimer(ProgressBar progressBar, TextView timer){
+    private void countdownTimer(ProgressBar progressBar, TextView timer) {
         myProgress = 0;
 
         try {
@@ -474,15 +468,15 @@ public class CreatePostActivity extends AppCompatActivity {
         voiceBackground(voice_background, voice_profile_image);
 
         voice_note_play.setOnClickListener(v -> {
-            if(mediaPlayer.isPlaying()){
-                if(mediaPlayer!=null){
-                   stopVoiceNote();
+            if (mediaPlayer.isPlaying()) {
+                if (mediaPlayer != null) {
+                    stopVoiceNote();
                     // Changing button image to play button
                     voice_note_play.setImageResource(R.drawable.play);
                 }
-            }else{
+            } else {
                 // Resume audio
-                if(mediaPlayer!=null){
+                if (mediaPlayer != null) {
                     try {
                         playVoiceNote();
                     } catch (IOException e) {
@@ -494,7 +488,7 @@ public class CreatePostActivity extends AppCompatActivity {
             }
         });
 
-        if (fileExist()){
+        if (fileExist()) {
             String mediaPath = Uri.parse(mFileName).getPath();
             MediaMetadataRetriever mmr = new MediaMetadataRetriever();
             mmr.setDataSource(mediaPath);
@@ -507,7 +501,7 @@ public class CreatePostActivity extends AppCompatActivity {
         }
     }
 
-    public boolean fileExist(){
+    public boolean fileExist() {
         File file = new File(mFileName);
         return file.exists();
     }

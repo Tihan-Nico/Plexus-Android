@@ -1,7 +1,6 @@
 package com.plexus.settings.activity.privacy;
 
 import android.os.Bundle;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -17,14 +16,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jakewharton.rxbinding4.view.RxView;
-import com.jakewharton.rxbinding4.widget.RxCompoundButton;
 import com.plexus.R;
 import com.plexus.model.settings.PostPrivacy;
 
 import java.util.HashMap;
-
-import io.reactivex.rxjava3.functions.Consumer;
-import kotlin.Unit;
 
 public class PostPrivacyActivity extends AppCompatActivity {
 
@@ -57,7 +52,7 @@ public class PostPrivacyActivity extends AppCompatActivity {
 
     }
 
-    private void fetchData(){
+    private void fetchData() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Privacy").child("Posts");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

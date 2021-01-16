@@ -29,11 +29,12 @@ import androidx.core.content.ContextCompat;
 
 public class ServiceUtil {
     public static InputMethodManager getInputMethodManager(Context context) {
-        return (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        return (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     @RequiresApi(25)
-    public static @Nullable ShortcutManager getShortcutManager(@NonNull Context context) {
+    public static @Nullable
+    ShortcutManager getShortcutManager(@NonNull Context context) {
         return ContextCompat.getSystemService(context, ShortcutManager.class);
     }
 
@@ -54,11 +55,11 @@ public class ServiceUtil {
     }
 
     public static TelephonyManager getTelephonyManager(Context context) {
-        return (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+        return (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
     }
 
     public static AudioManager getAudioManager(Context context) {
-        return (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+        return (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
     }
 
     public static SensorManager getSensorManager(Context context) {
@@ -66,15 +67,15 @@ public class ServiceUtil {
     }
 
     public static PowerManager getPowerManager(Context context) {
-        return (PowerManager)context.getSystemService(Context.POWER_SERVICE);
+        return (PowerManager) context.getSystemService(Context.POWER_SERVICE);
     }
 
     public static AlarmManager getAlarmManager(Context context) {
-        return (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        return (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     }
 
     public static Vibrator getVibrator(Context context) {
-        return  (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+        return (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     public static DisplayManager getDisplayManager(@NonNull Context context) {
@@ -90,10 +91,11 @@ public class ServiceUtil {
     }
 
     public static JobScheduler getJobScheduler(Context context) {
-        return (JobScheduler) context.getSystemService(JobScheduler.class);
+        return context.getSystemService(JobScheduler.class);
     }
 
-    public static @Nullable SubscriptionManager getSubscriptionManager(@NonNull Context context) {
+    public static @Nullable
+    SubscriptionManager getSubscriptionManager(@NonNull Context context) {
         return (SubscriptionManager) context.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
     }
 

@@ -13,7 +13,7 @@ public class Group {
     private String createdAt;
     private String colour;
 
-    public Group(String id, String createdBy, String name, String about, String coverImageUrl, String type, String location, boolean visible, String createdAt, String colour){
+    public Group(String id, String createdBy, String name, String about, String coverImageUrl, String type, String location, boolean visible, String createdAt, String colour) {
         this.id = id;
         this.createdBy = createdBy;
         this.name = name;
@@ -26,7 +26,7 @@ public class Group {
         this.colour = colour;
     }
 
-    public Group(){
+    public Group() {
 
     }
 

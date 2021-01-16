@@ -24,11 +24,11 @@ public class SavedPostsCollection {
     private String collection_owner;
     private String timestamp;
 
-    public SavedPostsCollection(){
+    public SavedPostsCollection() {
 
     }
 
-    public SavedPostsCollection(String id, String collection_name, String collection_image_url, String collection_owner, String timestamp){
+    public SavedPostsCollection(String id, String collection_name, String collection_image_url, String collection_owner, String timestamp) {
         this.id = id;
         this.collection_name = collection_name;
         this.collection_image_url = collection_image_url;

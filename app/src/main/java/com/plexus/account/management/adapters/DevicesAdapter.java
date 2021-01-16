@@ -75,7 +75,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
             Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
-        if (devices.getDevice_token().equals(FirebaseInstanceId.getInstance().getToken())){
+        if (devices.getDevice_token().equals(FirebaseInstanceId.getInstance().getToken())) {
             holder.login_date.setText("Active Now");
             holder.login_date.setTextColor(Color.parseColor("#09FF00"));
             holder.login_device.setText("Current Device");

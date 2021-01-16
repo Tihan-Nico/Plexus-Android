@@ -25,7 +25,7 @@ import static com.plexus.components.Constants.FCM_URL;
 import static com.plexus.components.Constants.SUCCESS_CODE;
 
 public class NetworkCall extends AsyncTask<String, Void, String> {
-    private FirebaseNotiCallBack firebaseNotiCallBack;
+    private final FirebaseNotiCallBack firebaseNotiCallBack;
 
     public NetworkCall(FirebaseNotiCallBack firebaseNotiCallBack) {
         this.firebaseNotiCallBack = firebaseNotiCallBack;

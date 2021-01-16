@@ -5,12 +5,12 @@ public class PostPrivacy {
     private boolean allow_download;
     private boolean allow_screenshot;
 
-    public PostPrivacy(boolean allow_download, boolean allow_screenshot){
+    public PostPrivacy(boolean allow_download, boolean allow_screenshot) {
         this.allow_download = allow_download;
         this.allow_screenshot = allow_screenshot;
     }
 
-    public PostPrivacy(){
+    public PostPrivacy() {
 
     }
 

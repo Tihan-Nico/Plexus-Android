@@ -50,7 +50,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
     }
 
-    private void init(){
+    private void init() {
 
         ImageView back = toolbar.findViewById(R.id.back);
         TextView toolbar_name = toolbar.findViewById(R.id.toolbar_name);
@@ -59,13 +59,13 @@ public class ChangePasswordActivity extends AppCompatActivity {
         toolbar_name.setText("Change Password");
 
         update_password.setOnClickListener(v -> {
-            if (new_password.getText().toString().equals(re_type_new_password.getText().toString())){
+            if (new_password.getText().toString().equals(re_type_new_password.getText().toString())) {
                 authenticateUser(current_password.getText().toString());
-            } else if (TextUtils.isEmpty(current_password.getText().toString())){
+            } else if (TextUtils.isEmpty(current_password.getText().toString())) {
                 current_password_notice.setVisibility(View.VISIBLE);
                 re_type_new_password_notice.setVisibility(View.GONE);
                 current_password_notice.setText("Enter your password to continue");
-            } else if (TextUtils.isEmpty(new_password.getText().toString())){
+            } else if (TextUtils.isEmpty(new_password.getText().toString())) {
                 current_password_notice.setVisibility(View.GONE);
                 re_type_new_password_notice.setVisibility(View.VISIBLE);
             } else {

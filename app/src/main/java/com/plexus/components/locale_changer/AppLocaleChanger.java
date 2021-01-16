@@ -3,13 +3,14 @@ package com.plexus.components.locale_changer;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
+
 import androidx.annotation.RequiresApi;
 
 import java.util.Locale;
 
 class AppLocaleChanger {
 
-    private Context context;
+    private final Context context;
 
     AppLocaleChanger(Context context) {
         this.context = context;
@@ -57,8 +58,8 @@ class AppLocaleChanger {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N;
         }
 
-        static boolean hasJellyBeanMr1(){
-          return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
+        static boolean hasJellyBeanMr1() {
+            return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
 
         }
     }

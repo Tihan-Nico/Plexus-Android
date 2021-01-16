@@ -11,10 +11,10 @@ import java.util.Locale;
  */
 class LocaleResolver {
 
-    private List<Locale> supportedLocales;
-    private List<Locale> systemLocales;
-    private MatchingAlgorithm matchingAlgorithm;
-    private LocalePreference preference;
+    private final List<Locale> supportedLocales;
+    private final List<Locale> systemLocales;
+    private final MatchingAlgorithm matchingAlgorithm;
+    private final LocalePreference preference;
 
     LocaleResolver(List<Locale> supportedLocales,
                    List<Locale> systemLocales,

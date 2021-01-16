@@ -44,11 +44,11 @@ import java.util.List;
 
 public class SavedPostCollectionAdapter extends RecyclerView.Adapter<SavedPostCollectionAdapter.ViewHolder> {
 
-    private Context mContext;
-    private List<SavedPostsCollection> savedPostsCollectionList;
     FirebaseUser firebaseUser;
+    private final Context mContext;
+    private final List<SavedPostsCollection> savedPostsCollectionList;
 
-    public SavedPostCollectionAdapter(Context context, List<SavedPostsCollection> savedPostsCollections){
+    public SavedPostCollectionAdapter(Context context, List<SavedPostsCollection> savedPostsCollections) {
         mContext = context;
         savedPostsCollectionList = savedPostsCollections;
     }
@@ -75,8 +75,8 @@ public class SavedPostCollectionAdapter extends RecyclerView.Adapter<SavedPostCo
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    if (dataSnapshot1.exists()){
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    if (dataSnapshot1.exists()) {
                         holder.collection_total.setText(MessageFormat.format("{0}", dataSnapshot.getChildrenCount()));
                     }
                 }

@@ -53,135 +53,136 @@ import java.util.HashMap;
 
 public class AddStoryActivity extends AppCompatActivity {
 
-  String miUrlOk = "";
-  StorageReference storageRef;
-  private Uri mImageUri;
-  private StorageTask uploadTask;
-  private FirebaseUser fuser;
+    String miUrlOk = "";
+    StorageReference storageRef;
+    private Uri mImageUri;
+    private StorageTask uploadTask;
+    private FirebaseUser fuser;
 
-  private ImageView profile_image, story_photo;
+    private ImageView profile_image, story_photo;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_add_story);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_story);
 
-    storageRef = FirebaseStorage.getInstance().getReference("story");
-    fuser = FirebaseAuth.getInstance().getCurrentUser();
+        storageRef = FirebaseStorage.getInstance().getReference("story");
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
 
-    profile_image = findViewById(R.id.profile_image);
-    story_photo = findViewById(R.id.story_photo);
+        profile_image = findViewById(R.id.profile_image);
+        story_photo = findViewById(R.id.story_photo);
 
-    CropImage.activity().setAspectRatio(9, 16).start(AddStoryActivity.this);
+        CropImage.activity().setAspectRatio(9, 16).start(AddStoryActivity.this);
 
-    DatabaseReference databaseReference =
-        FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
-    databaseReference.addValueEventListener(
-        new ValueEventListener() {
-          @Override
-          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        DatabaseReference databaseReference =
+                FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
+        databaseReference.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-            User user = dataSnapshot.getValue(User.class);
-            Glide.with(getApplicationContext()).load(user.getImageurl()).into(profile_image);
-          }
+                        User user = dataSnapshot.getValue(User.class);
+                        Glide.with(getApplicationContext()).load(user.getImageurl()).into(profile_image);
+                    }
 
-          @Override
-          public void onCancelled(@NonNull DatabaseError databaseError) {}
-        });
-  }
-
-  private void uploadImage_10() {
-    if (mImageUri != null) {
-      final StorageReference fileReference =
-          storageRef.child(String.valueOf(System.currentTimeMillis()));
-
-      File postImage = new File(mImageUri.getPath());
-      try {
-        Bitmap compressImage = new Compressor(this).setQuality(100).compressToBitmap(postImage);
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        compressImage.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] compressedImage = byteArrayOutputStream.toByteArray();
-
-        final UploadTask uploadTask = fileReference.putBytes(compressedImage);
-        uploadTask
-            .continueWithTask(
-                task -> {
-                  if (!task.isSuccessful()) {
-                    throw task.getException();
-                  }
-                  return fileReference.getDownloadUrl();
-                })
-            .addOnCompleteListener(
-                task -> {
-                  if (task.isSuccessful()) {
-                    Uri downloadUri = task.getResult();
-                    miUrlOk = downloadUri.toString();
-
-                    String myid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-                    DatabaseReference reference =
-                        FirebaseDatabase.getInstance().getReference("Story").child(myid);
-
-                    String storyid = reference.push().getKey();
-                    long timeend = System.currentTimeMillis() + 86400000; // 1 day later
-
-                    HashMap<String, Object> hashMap = new HashMap<>();
-                    hashMap.put("imageurl", MasterCipher.encrypt(miUrlOk));
-                    hashMap.put("timestart", ServerValue.TIMESTAMP);
-                    hashMap.put("timeend", timeend);
-                    hashMap.put("storyid", storyid);
-                    hashMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
-                    hashMap.put("userid", myid);
-
-                    reference.child(storyid).setValue(hashMap);
-
-                    finish();
-
-                  } else {
-                    Toast.makeText(AddStoryActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-                  }
-                })
-            .addOnFailureListener(
-                e ->
-                    Toast.makeText(AddStoryActivity.this, e.getMessage(), Toast.LENGTH_SHORT)
-                        .show());
-
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
     }
-  }
 
-  @Override
-  public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
+    private void uploadImage_10() {
+        if (mImageUri != null) {
+            final StorageReference fileReference =
+                    storageRef.child(String.valueOf(System.currentTimeMillis()));
 
-    if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            File postImage = new File(mImageUri.getPath());
+            try {
+                Bitmap compressImage = new Compressor(this).setQuality(100).compressToBitmap(postImage);
 
-      CropImage.ActivityResult result = CropImage.getActivityResult(data);
-      mImageUri = result.getUri();
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                compressImage.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                byte[] compressedImage = byteArrayOutputStream.toByteArray();
 
-      story_photo.setImageURI(mImageUri);
-      uploadImage_10();
-      profileActivity();
-    } else {
-      Toast.makeText(this, "Something gone wrong!", Toast.LENGTH_SHORT).show();
-      startActivity(new Intent(AddStoryActivity.this, MainActivity.class));
-      finish();
+                final UploadTask uploadTask = fileReference.putBytes(compressedImage);
+                uploadTask
+                        .continueWithTask(
+                                task -> {
+                                    if (!task.isSuccessful()) {
+                                        throw task.getException();
+                                    }
+                                    return fileReference.getDownloadUrl();
+                                })
+                        .addOnCompleteListener(
+                                task -> {
+                                    if (task.isSuccessful()) {
+                                        Uri downloadUri = task.getResult();
+                                        miUrlOk = downloadUri.toString();
+
+                                        String myid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                                        DatabaseReference reference =
+                                                FirebaseDatabase.getInstance().getReference("Story").child(myid);
+
+                                        String storyid = reference.push().getKey();
+                                        long timeend = System.currentTimeMillis() + 86400000; // 1 day later
+
+                                        HashMap<String, Object> hashMap = new HashMap<>();
+                                        hashMap.put("imageurl", MasterCipher.encrypt(miUrlOk));
+                                        hashMap.put("timestart", ServerValue.TIMESTAMP);
+                                        hashMap.put("timeend", timeend);
+                                        hashMap.put("storyid", storyid);
+                                        hashMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
+                                        hashMap.put("userid", myid);
+
+                                        reference.child(storyid).setValue(hashMap);
+
+                                        finish();
+
+                                    } else {
+                                        Toast.makeText(AddStoryActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                        .addOnFailureListener(
+                                e ->
+                                        Toast.makeText(AddStoryActivity.this, e.getMessage(), Toast.LENGTH_SHORT)
+                                                .show());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
-  }
 
-  private void profileActivity(){
-    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid()).child("Activity Log");
-    String id = reference.push().getKey();
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-    HashMap<String, Object> hashMap = new HashMap<>();
-    hashMap.put("id", id);
-    hashMap.put("title", "You added a new story");
-    hashMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
-    hashMap.put("isStory", true);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
 
-    reference.child(id).setValue(hashMap);
-  }
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            mImageUri = result.getUri();
+
+            story_photo.setImageURI(mImageUri);
+            uploadImage_10();
+            profileActivity();
+        } else {
+            Toast.makeText(this, "Something gone wrong!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(AddStoryActivity.this, MainActivity.class));
+            finish();
+        }
+    }
+
+    private void profileActivity() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid()).child("Activity Log");
+        String id = reference.push().getKey();
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("id", id);
+        hashMap.put("title", "You added a new story");
+        hashMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
+        hashMap.put("isStory", true);
+
+        reference.child(id).setValue(hashMap);
+    }
 }

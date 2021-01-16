@@ -44,11 +44,11 @@ import java.util.List;
 
 public class BlockedUsersAdapter extends RecyclerView.Adapter<BlockedUsersAdapter.ViewHolder> {
 
-    private Context mContext;
-    private List<User> mUsers;
+    private final Context mContext;
+    private final List<User> mUsers;
     private FirebaseUser firebaseUser;
 
-    public BlockedUsersAdapter(Context mContext, List<User> mUsers){
+    public BlockedUsersAdapter(Context mContext, List<User> mUsers) {
         this.mUsers = mUsers;
         this.mContext = mContext;
     }
@@ -92,22 +92,6 @@ public class BlockedUsersAdapter extends RecyclerView.Adapter<BlockedUsersAdapte
         return mUsers.size();
     }
 
-    public  class ViewHolder extends RecyclerView.ViewHolder{
-
-        public TextView fullname, unblock, platform, timestamp;
-        public SimpleDraweeView image_profile;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-
-            fullname = itemView.findViewById(R.id.fullname);
-            image_profile = itemView.findViewById(R.id.image_profile);
-            unblock = itemView.findViewById(R.id.unblock);
-            timestamp = itemView.findViewById(R.id.timestamp);
-            platform = itemView.findViewById(R.id.platform);
-        }
-    }
-
     private void unblockUser(String profileid) {
 
         HashMap<String, String> hashMap = new HashMap<>();
@@ -118,7 +102,7 @@ public class BlockedUsersAdapter extends RecyclerView.Adapter<BlockedUsersAdapte
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.exists()){
+                        if (dataSnapshot.exists()) {
                             dataSnapshot.getRef().removeValue()
                                     .addOnSuccessListener(aVoid -> {
                                         Toast.makeText(mContext, "User is unblocked successfully", Toast.LENGTH_SHORT).show();
@@ -135,6 +119,22 @@ public class BlockedUsersAdapter extends RecyclerView.Adapter<BlockedUsersAdapte
                     }
                 });
 
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView fullname, unblock, platform, timestamp;
+        public SimpleDraweeView image_profile;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+
+            fullname = itemView.findViewById(R.id.fullname);
+            image_profile = itemView.findViewById(R.id.image_profile);
+            unblock = itemView.findViewById(R.id.unblock);
+            timestamp = itemView.findViewById(R.id.timestamp);
+            platform = itemView.findViewById(R.id.platform);
+        }
     }
 
 }

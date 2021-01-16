@@ -17,56 +17,54 @@ import com.plexus.imageeditor.RendererContext;
  */
 public final class InverseFillRenderer implements Renderer {
 
-  private final int color;
+    public static final Creator<InverseFillRenderer> CREATOR = new Creator<InverseFillRenderer>() {
+        @Override
+        public InverseFillRenderer createFromParcel(Parcel in) {
+            return new InverseFillRenderer(in);
+        }
 
-  private final Path path = new Path();
+        @Override
+        public InverseFillRenderer[] newArray(int size) {
+            return new InverseFillRenderer[size];
+        }
+    };
+    private final int color;
+    private final Path path = new Path();
 
-  @Override
-  public void render(@NonNull RendererContext rendererContext) {
-    rendererContext.canvas.save();
-    rendererContext.canvas.clipPath(path);
-    rendererContext.canvas.drawColor(color);
-    rendererContext.canvas.restore();
-  }
+    public InverseFillRenderer(@ColorInt int color) {
+        this.color = color;
+        path.toggleInverseFillType();
+        path.moveTo(Bounds.LEFT, Bounds.TOP);
+        path.lineTo(Bounds.RIGHT, Bounds.TOP);
+        path.lineTo(Bounds.RIGHT, Bounds.BOTTOM);
+        path.lineTo(Bounds.LEFT, Bounds.BOTTOM);
+        path.close();
+    }
 
-  public InverseFillRenderer(@ColorInt int color) {
-    this.color = color;
-    path.toggleInverseFillType();
-    path.moveTo(Bounds.LEFT, Bounds.TOP);
-    path.lineTo(Bounds.RIGHT, Bounds.TOP);
-    path.lineTo(Bounds.RIGHT, Bounds.BOTTOM);
-    path.lineTo(Bounds.LEFT, Bounds.BOTTOM);
-    path.close();
-  }
-
-  private InverseFillRenderer(Parcel in) {
-    this(in.readInt());
-  }
-
-  @Override
-  public boolean hitTest(float x, float y) {
-    return !Bounds.contains(x, y);
-  }
-
-  public static final Creator<InverseFillRenderer> CREATOR = new Creator<InverseFillRenderer>() {
-    @Override
-    public InverseFillRenderer createFromParcel(Parcel in) {
-      return new InverseFillRenderer(in);
+    private InverseFillRenderer(Parcel in) {
+        this(in.readInt());
     }
 
     @Override
-    public InverseFillRenderer[] newArray(int size) {
-      return new InverseFillRenderer[size];
+    public void render(@NonNull RendererContext rendererContext) {
+        rendererContext.canvas.save();
+        rendererContext.canvas.clipPath(path);
+        rendererContext.canvas.drawColor(color);
+        rendererContext.canvas.restore();
     }
-  };
 
-  @Override
-  public int describeContents() {
-    return 0;
-  }
+    @Override
+    public boolean hitTest(float x, float y) {
+        return !Bounds.contains(x, y);
+    }
 
-  @Override
-  public void writeToParcel(Parcel dest, int flags) {
-    dest.writeInt(color);
-  }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(color);
+    }
 }

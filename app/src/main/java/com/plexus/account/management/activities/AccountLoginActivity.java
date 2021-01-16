@@ -51,7 +51,7 @@ public class AccountLoginActivity extends AppCompatActivity {
         init();
     }
 
-    private void init(){
+    private void init() {
 
         ImageView back = toolbar.findViewById(R.id.back);
         TextView toolbar_name = toolbar.findViewById(R.id.toolbar_name);
@@ -69,7 +69,7 @@ public class AccountLoginActivity extends AppCompatActivity {
 
     }
 
-    private void readDevices(){
+    private void readDevices() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Security").child("Login Activity");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

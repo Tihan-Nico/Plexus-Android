@@ -23,11 +23,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
+import com.plexus.account.adapters.UserAdapter;
 import com.plexus.components.components.socials.commons.SocialAutoCompleteTextView;
 import com.plexus.components.providers.SearchDatabase;
 import com.plexus.model.account.User;
 import com.plexus.search.adapter.HashtagAdapter;
-import com.plexus.account.adapters.UserAdapter;
 import com.plexus.search.adapter.RecentSearchAdapter;
 import com.plexus.utils.MasterCipher;
 
@@ -57,9 +57,10 @@ public class SearchFragment extends Fragment {
 
     SocialAutoCompleteTextView search_bar;
     RecyclerView recyclerViewPlexus, trending, recyclerView;
-    private UserAdapter userAdapter;
     ImageView search;
     SimpleDraweeView profile_image;
+    LinearLayout search_views;
+    private UserAdapter userAdapter;
     private HashtagAdapter hashtagAdapter;
     private RecentSearchAdapter recentSearchAdapter;
     private List<User> userList;
@@ -67,7 +68,6 @@ public class SearchFragment extends Fragment {
     private List<String> mHashTags;
     private List<String> mSearches;
     private List<String> mTagCounts;
-    LinearLayout search_views;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -147,12 +147,12 @@ public class SearchFragment extends Fragment {
             query.addValueEventListener(
                     new ValueEventListener() {
                         @Override
-                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                          for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                              User user = snapshot.getValue(User.class);
-                              userList.add(user);
-                          }
-                          userAdapter.notifyDataSetChanged();
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                User user = snapshot.getValue(User.class);
+                                userList.add(user);
+                            }
+                            userAdapter.notifyDataSetChanged();
                         }
 
                         @Override
@@ -224,7 +224,7 @@ public class SearchFragment extends Fragment {
 
     }
 
-    private void saveToAppDatabase(String search_string){
+    private void saveToAppDatabase(String search_string) {
         SearchDatabase.getInstance(getActivity()).addSearchString(search_string);
     }
 
@@ -240,13 +240,13 @@ public class SearchFragment extends Fragment {
         reference.child(search_bar.getText().toString().toLowerCase()).child(searchID).setValue(hashMap);
     }
 
-    private void readSearches(){
+    private void readSearches() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Searches").child(firebaseUser.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mSearches.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     mSearches.add(dataSnapshot.getKey());
                 }
                 recentSearchAdapter.notifyDataSetChanged();

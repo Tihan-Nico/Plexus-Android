@@ -8,19 +8,10 @@ import android.hardware.SensorManager;
 public class ShakeDetector implements SensorEventListener {
 
     private static final int SHAKE_THRESHOLD = 13;
-
-    /** Listens for shakes. */
-    public interface Listener {
-        /** Called on the main thread when the device is shaken. */
-        void onShakeDetected();
-    }
-
     private final SampleQueue queue = new SampleQueue();
-    private final Listener    listener;
-
+    private final Listener listener;
     private SensorManager sensorManager;
     private Sensor accelerometer;
-
     public ShakeDetector(Listener listener) {
         this.listener = listener;
     }
@@ -61,7 +52,7 @@ public class ShakeDetector implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         boolean accelerating = isAccelerating(event);
-        long    timestamp    = event.timestamp;
+        long timestamp = event.timestamp;
 
         queue.add(timestamp, accelerating);
 
@@ -71,7 +62,9 @@ public class ShakeDetector implements SensorEventListener {
         }
     }
 
-    /** Returns true if the device is currently accelerating. */
+    /**
+     * Returns true if the device is currently accelerating.
+     */
     private boolean isAccelerating(SensorEvent event) {
         float ax = event.values[0];
         float ay = event.values[1];
@@ -85,10 +78,28 @@ public class ShakeDetector implements SensorEventListener {
         return magnitudeSquared > SHAKE_THRESHOLD * SHAKE_THRESHOLD;
     }
 
-    /** Queue of samples. Keeps a running average. */
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+
+    /**
+     * Listens for shakes.
+     */
+    public interface Listener {
+        /**
+         * Called on the main thread when the device is shaken.
+         */
+        void onShakeDetected();
+    }
+
+    /**
+     * Queue of samples. Keeps a running average.
+     */
     static class SampleQueue {
 
-        /** Window size in ns. Used to compute the average. */
+        /**
+         * Window size in ns. Used to compute the average.
+         */
         private static final long MAX_WINDOW_SIZE = 500000000; // 0.5s
         private static final long MIN_WINDOW_SIZE = MAX_WINDOW_SIZE >> 1; // 0.25s
 
@@ -103,8 +114,8 @@ public class ShakeDetector implements SensorEventListener {
 
         private Sample oldest;
         private Sample newest;
-        private int    sampleCount;
-        private int    acceleratingCount;
+        private int sampleCount;
+        private int acceleratingCount;
 
         /**
          * Adds a sample.
@@ -117,9 +128,9 @@ public class ShakeDetector implements SensorEventListener {
 
             Sample added = pool.acquire();
 
-            added.timestamp    = timestamp;
+            added.timestamp = timestamp;
             added.accelerating = accelerating;
-            added.next         = null;
+            added.next = null;
 
             if (newest != null) {
                 newest.next = added;
@@ -138,7 +149,9 @@ public class ShakeDetector implements SensorEventListener {
             }
         }
 
-        /** Removes all samples from this queue. */
+        /**
+         * Removes all samples from this queue.
+         */
         void clear() {
             while (oldest != null) {
                 Sample removed = oldest;
@@ -146,12 +159,14 @@ public class ShakeDetector implements SensorEventListener {
                 pool.release(removed);
             }
 
-            newest            = null;
-            sampleCount       = 0;
+            newest = null;
+            sampleCount = 0;
             acceleratingCount = 0;
         }
 
-        /** Purges samples with timestamps older than cutoff. */
+        /**
+         * Purges samples with timestamps older than cutoff.
+         */
         void purge(long cutoff) {
             while (sampleCount >= MIN_QUEUE_SIZE && oldest != null && cutoff - oldest.timestamp > 0) {
                 Sample removed = oldest;
@@ -177,30 +192,42 @@ public class ShakeDetector implements SensorEventListener {
          * are accelerating.
          */
         boolean isShaking() {
-            return newest != null                                         &&
-                    oldest != null                                         &&
+            return newest != null &&
+                    oldest != null &&
                     newest.timestamp - oldest.timestamp >= MIN_WINDOW_SIZE &&
                     acceleratingCount >= (sampleCount >> 1) + (sampleCount >> 2);
         }
     }
 
-    /** An accelerometer sample. */
+    /**
+     * An accelerometer sample.
+     */
     static class Sample {
-        /** Time sample was taken. */
+        /**
+         * Time sample was taken.
+         */
         long timestamp;
 
-        /** If acceleration > {@link #SHAKE_THRESHOLD}. */
+        /**
+         * If acceleration > {@link #SHAKE_THRESHOLD}.
+         */
         boolean accelerating;
 
-        /** Next sample in the queue or pool. */
+        /**
+         * Next sample in the queue or pool.
+         */
         Sample next;
     }
 
-    /** Pools samples. Avoids garbage collection. */
+    /**
+     * Pools samples. Avoids garbage collection.
+     */
     static class SamplePool {
         private Sample head;
 
-        /** Acquires a sample from the pool. */
+        /**
+         * Acquires a sample from the pool.
+         */
         Sample acquire() {
             Sample acquired = head;
 
@@ -213,15 +240,13 @@ public class ShakeDetector implements SensorEventListener {
             return acquired;
         }
 
-        /** Returns a sample to the pool. */
+        /**
+         * Returns a sample to the pool.
+         */
         void release(Sample sample) {
             sample.next = head;
             head = sample;
         }
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
 }

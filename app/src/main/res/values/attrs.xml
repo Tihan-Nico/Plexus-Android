@@ -207,4 +207,10 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="VerticalSlideColorPicker">
+        <attr name="pickerBorderColor" format="color" />
+        <attr name="pickerBorderWidth" format="dimension" />
+        <attr name="pickerColors" format="reference" />
+    </declare-styleable>
+
 </resources>

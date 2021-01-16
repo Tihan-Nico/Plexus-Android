@@ -94,8 +94,8 @@ public class LoginUserActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    if (dataSnapshot.exists()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.exists()) {
                         //Do nothing
                     } else {
                         addChat(userID);
@@ -110,7 +110,7 @@ public class LoginUserActivity extends AppCompatActivity {
         });
     }
 
-    private void addChat(String userID){
+    private void addChat(String userID) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userID).child("Privacy").child("Chat");
         HashMap<String, Object> deviceInfoMap = new HashMap<>();
         deviceInfoMap.put("screenshots_enabled", "Enabled");
@@ -125,8 +125,8 @@ public class LoginUserActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    if (dataSnapshot.exists()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.exists()) {
                         //Do nothing
                     } else {
                         addPost(userID);
@@ -141,7 +141,7 @@ public class LoginUserActivity extends AppCompatActivity {
         });
     }
 
-    private void addPost(String userID){
+    private void addPost(String userID) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userID).child("Privacy").child("Posts");
 
         HashMap<String, Object> deviceInfoMap = new HashMap<>();
@@ -151,7 +151,7 @@ public class LoginUserActivity extends AppCompatActivity {
         reference.updateChildren(deviceInfoMap);
     }
 
-    private void sendLoginEmail(){
+    private void sendLoginEmail() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
             @Override

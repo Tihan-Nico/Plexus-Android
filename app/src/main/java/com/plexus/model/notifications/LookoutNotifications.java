@@ -12,7 +12,7 @@ public class LookoutNotifications {
     boolean notificationViewed;
     boolean notificationRead;
 
-    public LookoutNotifications(String id, String profileImage, String profileName, String profileID, String postID, String timestamp, String type, boolean notificationRead, boolean notificationViewed){
+    public LookoutNotifications(String id, String profileImage, String profileName, String profileID, String postID, String timestamp, String type, boolean notificationRead, boolean notificationViewed) {
         this.id = id;
         this.profileImage = profileImage;
         this.profileName = profileName;

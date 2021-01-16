@@ -28,13 +28,13 @@ import com.plexus.R;
 
 public class DisplayActivity extends AppCompatActivity {
 
-    private LinearLayout screen_orientation_change;
-    private TextView screen_orientation;
-    private AlertDialog alertDialog;
     AlertDialog.Builder builder;
     String result = "";
     String[] items = {"Portrait", "Landscape"};
     ImageView back;
+    private LinearLayout screen_orientation_change;
+    private TextView screen_orientation;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

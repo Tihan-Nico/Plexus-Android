@@ -13,34 +13,34 @@ import com.plexus.imageeditor.RendererContext;
  */
 public final class FaceBlurRenderer implements Renderer {
 
-  @Override
-  public void render(@NonNull RendererContext rendererContext) {
-    rendererContext.canvas.drawRect(Bounds.FULL_BOUNDS, rendererContext.getMaskPaint());
-  }
+    public static final Creator<FaceBlurRenderer> CREATOR = new Creator<FaceBlurRenderer>() {
+        @Override
+        public FaceBlurRenderer createFromParcel(Parcel in) {
+            return new FaceBlurRenderer();
+        }
 
-  @Override
-  public boolean hitTest(float x, float y) {
-    return Bounds.FULL_BOUNDS.contains(x, y);
-  }
+        @Override
+        public FaceBlurRenderer[] newArray(int size) {
+            return new FaceBlurRenderer[size];
+        }
+    };
 
-  @Override
-  public int describeContents() {
-    return 0;
-  }
-
-  @Override
-  public void writeToParcel(Parcel dest, int flags) {
-  }
-
-  public static final Creator<FaceBlurRenderer> CREATOR = new Creator<FaceBlurRenderer>() {
     @Override
-    public FaceBlurRenderer createFromParcel(Parcel in) {
-      return new FaceBlurRenderer();
+    public void render(@NonNull RendererContext rendererContext) {
+        rendererContext.canvas.drawRect(Bounds.FULL_BOUNDS, rendererContext.getMaskPaint());
     }
 
     @Override
-    public FaceBlurRenderer[] newArray(int size) {
-      return new FaceBlurRenderer[size];
+    public boolean hitTest(float x, float y) {
+        return Bounds.FULL_BOUNDS.contains(x, y);
     }
-  };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+    }
 }

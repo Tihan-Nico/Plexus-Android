@@ -52,7 +52,7 @@ public class PostVideoViewActivity extends AppCompatActivity {
         getUserData();
     }
 
-    private void getUserData (){
+    private void getUserData() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(id);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -69,7 +69,7 @@ public class PostVideoViewActivity extends AppCompatActivity {
         });
     }
 
-    private void setVideoData(String videoUrl){
+    private void setVideoData(String videoUrl) {
 
         videoView.setVideoPath(videoUrl);
         videoView.setOnPreparedListener(mp -> {

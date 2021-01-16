@@ -22,11 +22,11 @@ public class Request {
     private long timestamp;
     private String message;
 
-    private Request (){
+    private Request() {
 
     }
 
-    private Request(String type, long timestamp, String message){
+    private Request(String type, long timestamp, String message) {
         this.type = type;
         this.timestamp = timestamp;
         this.message = message;

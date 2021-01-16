@@ -14,17 +14,13 @@ public enum MemoryUnitFormat {
     GIGA_BYTES(" GB"),
     TERA_BYTES(" TB");
 
-    private static final DecimalFormat ONE_DP          = new DecimalFormat("#,##0.0");
+    private static final DecimalFormat ONE_DP = new DecimalFormat("#,##0.0");
     private static final DecimalFormat OPTIONAL_ONE_DP = new DecimalFormat("#,##0.#");
 
     private final String unitString;
 
     MemoryUnitFormat(String unitString) {
         this.unitString = unitString;
-    }
-
-    public double fromBytes(long bytes) {
-        return bytes / Math.pow(1000, ordinal());
     }
 
     /**
@@ -54,5 +50,9 @@ public enum MemoryUnitFormat {
 
     public static String formatBytes(long bytes) {
         return formatBytes(bytes, BYTES, false);
+    }
+
+    public double fromBytes(long bytes) {
+        return bytes / Math.pow(1000, ordinal());
     }
 }

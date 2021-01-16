@@ -28,16 +28,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.plexus.R;
+import com.plexus.account.FollowersActivity;
+import com.plexus.account.adapters.ProfilePostAdapter;
 import com.plexus.components.Constants;
 import com.plexus.components.components.PlexusRecyclerView;
 import com.plexus.components.components.bottomsheet.adapter.SheetOptionsAdapter;
 import com.plexus.components.components.bottomsheet.model.SheetOptions;
 import com.plexus.model.Token;
-import com.plexus.model.posts.Post;
 import com.plexus.model.account.User;
+import com.plexus.model.posts.Post;
 import com.plexus.notifications.fcm.FirebaseNotificationHelper;
-import com.plexus.account.FollowersActivity;
-import com.plexus.account.adapters.ProfilePostAdapter;
 import com.plexus.utils.MasterCipher;
 
 import org.jetbrains.annotations.NotNull;
@@ -68,33 +68,29 @@ import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    public static final String[] titles = new String[]{"Report User",
+            "Block", "Copy Link"};
+    public static final Integer[] images = {R.drawable.email_outline,
+            R.drawable.block_helper, R.drawable.link_variant};
     public ImageView verified, menu;
     StorageReference storageReference;
+    TextView followers, following;
+    String profileid;
+    PlexusRecyclerView recycler_view;
+    View profile_empty_state;
+    DatabaseReference databaseReference;
+    Intent intent;
     private SimpleDraweeView profile_cover;
     private TextView posts, fullname, bio, username;
-    TextView followers, following;
     private Button follow;
     private FirebaseUser firebaseUser;
-    String profileid;
     private boolean blocked = false;
-    PlexusRecyclerView recycler_view;
     private List<Post> postList;
     private View disabled;
     private View show_account_private;
-    View profile_empty_state;
-    DatabaseReference databaseReference;
     private SimpleDraweeView image_profile;
     private BottomSheetDialog profile_sheet;
     private ProfilePostAdapter profilePostAdapter;
-
-    Intent intent;
-
-    public static final String[] titles = new String[]{"Report User",
-            "Block", "Copy Link"};
-
-    public static final Integer[] images = {R.drawable.email_outline,
-            R.drawable.block_helper, R.drawable.link_variant};
-
     private ArrayList<SheetOptions> rowItems;
 
     @Override
@@ -127,7 +123,7 @@ public class ProfileActivity extends AppCompatActivity {
         profileid = intent.getStringExtra("userid");
 
         Uri data = getIntent().getData();
-        if (data != null){
+        if (data != null) {
             profileid = data.getQueryParameter("id");
         }
 
@@ -166,7 +162,7 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
 
-            if (position == 2){
+            if (position == 2) {
                 generateDeepLinkUrl();
                 Toast.makeText(ProfileActivity.this, "Link Copied!", Toast.LENGTH_SHORT).show();
             }
@@ -412,13 +408,13 @@ public class ProfileActivity extends AppCompatActivity {
                 });
     }
 
-    private void sendNotification(){
+    private void sendNotification() {
         DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
         Query query = tokens.orderByKey().equalTo(profileid);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Token token = snapshot.getValue(Token.class);
 
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());

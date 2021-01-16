@@ -33,16 +33,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.plexus.R;
 import com.plexus.components.background.DialogInformation;
-import com.plexus.services.LocationService;
-import com.plexus.startup.PermissionActivity;
 import com.plexus.main.fragments.HomeFragment;
 import com.plexus.main.fragments.NotificationsFragment;
 import com.plexus.main.fragments.ProfileFragment;
 import com.plexus.main.fragments.SearchFragment;
 import com.plexus.messaging.fragment.ChatlistFragment;
-import com.plexus.model.notifications.PlexusNotification;
 import com.plexus.model.Token;
 import com.plexus.model.account.User;
+import com.plexus.model.notifications.PlexusNotification;
+import com.plexus.services.LocationService;
+import com.plexus.startup.PermissionActivity;
 import com.plexus.utils.MasterCipher;
 
 import java.text.SimpleDateFormat;
@@ -70,18 +70,16 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     String profileid;
-    private FirebaseUser firebaseUser;
     SharedPreferences prefs;
     Fragment selectedfragment = null;
-
     BottomSheetDialog update_sheet;
-
     //Permission Requests
     String[] PERMISSIONS = {
             Manifest.permission.CAMERA,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.RECORD_AUDIO
     };
+    private FirebaseUser firebaseUser;
 
     public static boolean appWasUpdated(Context context) throws PackageManager.NameNotFoundException {
         //this code gets current version-code (after upgrade it will show new versionCode)
@@ -103,6 +101,17 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     @SuppressLint("NonConstantResourceId")
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -116,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         profileid = prefs.getString("profileid", "none");
 
         Bundle intent = getIntent().getExtras();
-        if (intent != null){
+        if (intent != null) {
             String publisher = intent.getString("publisherid");
 
             SharedPreferences.Editor editor = getSharedPreferences("plexus", MODE_PRIVATE).edit();
@@ -132,31 +141,31 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-        switch (item.getItemId()) {
-              case R.id.feed_nav:
-                  selectedfragment = new HomeFragment();
-                break;
+            switch (item.getItemId()) {
+                case R.id.feed_nav:
+                    selectedfragment = new HomeFragment();
+                    break;
 
-            case R.id.message_nav:
-                  selectedfragment = new ChatlistFragment();
-                break;
+                case R.id.message_nav:
+                    selectedfragment = new ChatlistFragment();
+                    break;
 
-            case R.id.notifications_nav:
-                  selectedfragment = new NotificationsFragment();
-                break;
+                case R.id.notifications_nav:
+                    selectedfragment = new NotificationsFragment();
+                    break;
 
-            case R.id.profile_nav:
-                  selectedfragment = new ProfileFragment();
-                break;
+                case R.id.profile_nav:
+                    selectedfragment = new ProfileFragment();
+                    break;
 
-            case R.id.watch_nav:
-                  selectedfragment = new SearchFragment();
-                break;
-        }
-        if (selectedfragment != null) {
-              getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                      selectedfragment).commit();
-        }
+                case R.id.watch_nav:
+                    selectedfragment = new SearchFragment();
+                    break;
+            }
+            if (selectedfragment != null) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        selectedfragment).commit();
+            }
 
             return true;
         });
@@ -218,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
         update_sheet.show();
     }
 
-    private void updateAccount(String userID){
+    private void updateAccount(String userID) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userID);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -248,14 +257,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void checkIfVerifiedBefore(){
+    private void checkIfVerifiedBefore() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
-                if (!user.isVerifiedBefore()){
-                    if (user.isVerified()){
+                if (!user.isVerifiedBefore()) {
+                    if (user.isVerified()) {
                         DialogInformation.showVerified(MainActivity.this);
                     }
                 }
@@ -268,21 +277,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void getUnreadNotifications(){
+    private void getUnreadNotifications() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Notification");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int unread = 0;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     PlexusNotification plexusNotification = snapshot.getValue(PlexusNotification.class);
-                    if (!plexusNotification.isNotificationRead()){
+                    if (!plexusNotification.isNotificationRead()) {
                         unread++;
                     }
                 }
 
                 BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.notifications_nav);
-                if ((unread == 0)){
+                if ((unread == 0)) {
                     badge.setVisible(false);
                 } else {
                     badge.setBadgeTextColor(Color.WHITE);
@@ -301,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void addLoginDetails(double latitude, double longitude){
+    private void addLoginDetails(double latitude, double longitude) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Security").child("Login Activity");
         String ID = databaseReference.push().getKey();
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -315,17 +324,6 @@ public class MainActivity extends AppCompatActivity {
         databaseReference.child(ID).setValue(hashMap);
     }
 
-    public static boolean hasPermissions(Context context, String... permissions) {
-        if (context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     @Override
     public void onBackPressed() {
         if (!selectedfragment.equals(new HomeFragment())) {
@@ -333,6 +331,6 @@ public class MainActivity extends AppCompatActivity {
             selectedfragment = new HomeFragment();
         } else {
             super.onBackPressed();
+        }
     }
-  }
 }

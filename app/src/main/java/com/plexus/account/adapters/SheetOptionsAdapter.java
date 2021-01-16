@@ -43,12 +43,6 @@ public class SheetOptionsAdapter extends BaseAdapter {
         this.mContext = context;
     }
 
-    /*private view holder class*/
-    private static class ViewHolder {
-        ImageView imageView;
-        TextView txtTitle;
-    }
-
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
 
@@ -61,8 +55,7 @@ public class SheetOptionsAdapter extends BaseAdapter {
             holder.txtTitle = convertView.findViewById(R.id.text);
             holder.imageView = convertView.findViewById(R.id.icon);
             convertView.setTag(holder);
-        }
-        else {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
@@ -87,5 +80,11 @@ public class SheetOptionsAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return options.indexOf(getItem(position));
+    }
+
+    /*private view holder class*/
+    private static class ViewHolder {
+        ImageView imageView;
+        TextView txtTitle;
     }
 }

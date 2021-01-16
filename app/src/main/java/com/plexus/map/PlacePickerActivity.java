@@ -54,6 +54,25 @@ public final class PlacePickerActivity extends AppCompatActivity {
         return data.getParcelableExtra(ADDRESS_INTENT);
     }
 
+    private static @NonNull
+    String addressToString(@Nullable Address address) {
+        return address != null ? address.getAddressLine(0) : "";
+    }
+
+    private static @NonNull
+    String addressToShortString(@Nullable Address address) {
+        if (address == null) return "";
+
+        String addressLine = address.getAddressLine(0);
+        String[] split = addressLine.split(",");
+
+        if (split.length >= 3) {
+            return split[1].trim() + ", " + split[2].trim();
+        } else if (split.length == 2) {
+            return split[1].trim();
+        } else return split[0].trim();
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,9 +84,8 @@ public final class PlacePickerActivity extends AppCompatActivity {
 
         fab.setOnClickListener(v -> finishWithAddress());
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)   == PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-        {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             new LocationRetriever(this, this, location -> setInitialLocation(new LatLng(location.getLatitude(), location.getLongitude())), () -> {
                 Log.w(Plexus.TAG, "Failed to get location.");
                 setInitialLocation(PRIME_MERIDIAN);
@@ -135,9 +153,9 @@ public final class PlacePickerActivity extends AppCompatActivity {
     }
 
     private void finishWithAddress() {
-        Intent      returnIntent = new Intent();
-        String      address      = currentAddress != null && currentAddress.getAddressLine(0) != null ? currentAddress.getAddressLine(0) : "";
-        AddressData addressData  = new AddressData(currentLocation.latitude, currentLocation.longitude, address);
+        Intent returnIntent = new Intent();
+        String address = currentAddress != null && currentAddress.getAddressLine(0) != null ? currentAddress.getAddressLine(0) : "";
+        AddressData addressData = new AddressData(currentLocation.latitude, currentLocation.longitude, address);
 
         returnIntent.putExtra(ADDRESS_INTENT, addressData);
         setResult(RESULT_OK, returnIntent);
@@ -145,8 +163,7 @@ public final class PlacePickerActivity extends AppCompatActivity {
     }
 
     private void enableMyLocationButtonIfHaveThePermission(GoogleMap googleMap) {
-        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-        {
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             googleMap.setMyLocationEnabled(true);
         }
     }
@@ -199,22 +216,5 @@ public final class PlacePickerActivity extends AppCompatActivity {
                 bottomSheet.hide();
             }
         }
-    }
-
-    private static @NonNull String addressToString(@Nullable Address address) {
-        return address != null ? address.getAddressLine(0) : "";
-    }
-
-    private static @NonNull String addressToShortString(@Nullable Address address) {
-        if (address == null) return "";
-
-        String   addressLine = address.getAddressLine(0);
-        String[] split       = addressLine.split(",");
-
-        if (split.length >= 3) {
-            return split[1].trim() + ", " + split[2].trim();
-        } else if (split.length == 2) {
-            return split[1].trim();
-        } else return split[0].trim();
     }
 }

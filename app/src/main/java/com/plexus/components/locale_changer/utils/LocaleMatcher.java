@@ -9,21 +9,12 @@ import static com.plexus.components.locale_changer.utils.LocaleMatcher.MatchLeve
  */
 public class LocaleMatcher {
 
-    /**
-     * Enum representing the level of matching of two Locales.
-     */
-    public enum MatchLevel {
-        NoMatch,
-        LanguageMatch,
-        LanguageAndCountryMatch,
-        CompleteMatch
-    }
-
     private LocaleMatcher() {
     }
 
     /**
      * Method to determine the level of matching of two Locales.
+     *
      * @param l1
      * @param l2
      * @return
@@ -38,5 +29,15 @@ public class LocaleMatcher {
             return MatchLevel.LanguageMatch;
         }
         return matchLevel;
+    }
+
+    /**
+     * Enum representing the level of matching of two Locales.
+     */
+    public enum MatchLevel {
+        NoMatch,
+        LanguageMatch,
+        LanguageAndCountryMatch,
+        CompleteMatch
     }
 }
