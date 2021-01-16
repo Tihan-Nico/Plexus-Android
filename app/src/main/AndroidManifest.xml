@@ -226,6 +226,7 @@
         <activity android:name=".settings.activity.notifications.PostsNotificationActivity" />
         <activity android:name=".settings.activity.notifications.LookoutNotificationActivity" />
         <activity android:name=".settings.activity.notifications.MessagesNotificationActivity" />
+        <activity android:name=".qr.activity.ScanQrCodeActivity" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"

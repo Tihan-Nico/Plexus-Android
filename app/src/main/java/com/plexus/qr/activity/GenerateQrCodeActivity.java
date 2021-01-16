@@ -1,4 +1,4 @@
-package com.plexus.account.activity;
+package com.plexus.qr.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -27,15 +27,15 @@ import com.plexus.utils.logging.Log;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class AccountQrCodeActivity extends AppCompatActivity {
+public class GenerateQrCodeActivity extends AppCompatActivity {
 
-    private static final String TAG = Log.tag(AccountQrCodeActivity.class);
+    private static final String TAG = Log.tag(GenerateQrCodeActivity.class);
 
     View toolbar;
     MaterialButton share_qr;
     QrView qrImageView;
 
-    FirebaseUser firebaseUser;
+    String id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,7 +46,8 @@ public class AccountQrCodeActivity extends AppCompatActivity {
         share_qr = findViewById(R.id.share_qr);
         qrImageView = findViewById(R.id.qr_image);
 
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        Intent intent = getIntent();
+        id = intent.getStringExtra("id");
 
         init();
     }
@@ -69,7 +70,7 @@ public class AccountQrCodeActivity extends AppCompatActivity {
         builder.scheme("https")
                 .authority("plexus.dev")
                 .appendPath("profile")
-                .appendQueryParameter("id", firebaseUser.getUid());
+                .appendQueryParameter("id", id);
         return builder.build().toString();
     }
 
@@ -88,7 +89,7 @@ public class AccountQrCodeActivity extends AppCompatActivity {
                     return;
                 }
 
-                Intent intent = ShareCompat.IntentBuilder.from(AccountQrCodeActivity.this)
+                Intent intent = ShareCompat.IntentBuilder.from(GenerateQrCodeActivity.this)
                         .setType("image/png")
                         .setStream(shareUri)
                         .createChooserIntent()
