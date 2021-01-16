@@ -204,12 +204,12 @@
                 <data
                     android:scheme="http"
                     android:host="plexus.dev"
-                    android:pathPrefix="/groups" />
+                    android:pathPrefix="/group" />
 
                 <data
                     android:scheme="https"
                     android:host="plexus.dev"
-                    android:pathPrefix="/groups" />
+                    android:pathPrefix="/group" />
             </intent-filter>
         </activity>
         <activity android:name=".groups.activity.GroupEditActivity">

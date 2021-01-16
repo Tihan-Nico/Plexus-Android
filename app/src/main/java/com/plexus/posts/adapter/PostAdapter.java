@@ -716,11 +716,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         });
     }
 
-    /**
-     * @param like_count
-     * @param postId
-     */
-
     private void nrLikes(final TextView like_count, String postId) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Likes").child(postId);
         reference.addValueEventListener(
@@ -921,38 +916,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             line3.setVisibility(View.GONE);
         }
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts").child(post.getPostid());
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    Uri postLink = Uri.parse(child.getKey());
-                    Uri.Builder builder = new Uri.Builder()
-                            .scheme("https")
-                            .authority(appCode + ".page.link")
-                            .appendPath("post")
-                            .appendQueryParameter("post", postLink.toString());
-                    Uri dynamicLink = builder.build();
-
-                    copy_link.setOnClickListener(v -> {
-                        try {
-                            URL url = new URL(URLDecoder.decode(dynamicLink.toString(), "UTF-8"));
-                            ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-                            ClipData clip = ClipData.newPlainText("post", url.toString());
-                            clipboard.setPrimaryClip(clip);
-                            Toast.makeText(mContext, "Post Link Copied", Toast.LENGTH_SHORT).show();
-                        } catch (MalformedURLException | UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
-                        sheetPost.dismiss();
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+        copy_link.setOnClickListener(v -> {
+            ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("post", generateDeepLinkUrl(post.getPostid()));
+            clipboard.setPrimaryClip(clip);
+            Toast.makeText(mContext, "Post Link Copied", Toast.LENGTH_SHORT).show();
+            sheetPost.dismiss();
         });
 
         sheetPost.show();
@@ -1335,6 +1304,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
             }
         });
+    }
+
+    private String generateDeepLinkUrl(String id) {
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("https")
+                .authority("plexus.dev")
+                .appendPath("post")
+                .appendQueryParameter("id", id);
+        return builder.build().toString();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

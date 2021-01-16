@@ -164,11 +164,6 @@ public class PostDetailActivity extends AppCompatActivity {
         readComments();
 
         readPost();
-
-        // ATTENTION: This was auto-generated to handle app links.
-        Intent appLinkIntent = getIntent();
-        String appLinkAction = appLinkIntent.getAction();
-        Uri appLinkData = appLinkIntent.getData();
     }
 
     private void addComment(String comment) {

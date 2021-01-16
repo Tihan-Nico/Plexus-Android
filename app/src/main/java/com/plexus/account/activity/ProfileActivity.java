@@ -163,7 +163,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
 
             if (position == 2) {
-                generateDeepLinkUrl();
+                shareDeepLink(generateDeepLinkUrl());
                 Toast.makeText(ProfileActivity.this, "Link Copied!", Toast.LENGTH_SHORT).show();
             }
 
@@ -614,6 +614,13 @@ public class ProfileActivity extends AppCompatActivity {
                 .appendPath("profile")
                 .appendQueryParameter("id", firebaseUser.getUid());
         return builder.build().toString();
+    }
+
+    private void shareDeepLink(String url) {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, url);
+        startActivity(Intent.createChooser(shareIntent, "Share Group via"));
     }
 
 }

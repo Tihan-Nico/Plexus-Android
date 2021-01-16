@@ -325,7 +325,12 @@ public class GroupActivity extends AppCompatActivity {
     }
 
     private String generateDeepLinkUrl() {
-        return "https://plexus.dev/groups?id=" + groupID;
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("https")
+                .authority("plexus.dev")
+                .appendPath("group")
+                .appendQueryParameter("id", groupID);
+        return builder.build().toString();
     }
 
     private void shareDeepLink(String url) {
