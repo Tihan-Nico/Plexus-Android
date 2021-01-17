@@ -15,8 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ShareCompat;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.plexus.R;
 import com.plexus.providers.BlobProvider;
 import com.plexus.qr.QrView;
@@ -40,7 +38,7 @@ public class GenerateQrCodeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile_qr_code);
+        setContentView(R.layout.qr_code);
 
         toolbar = findViewById(R.id.toolbar);
         share_qr = findViewById(R.id.share_qr);
