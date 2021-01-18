@@ -1,10 +1,16 @@
 package com.plexus.utils;
 
+import android.app.ActivityManager;
+import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 public class Util {
@@ -19,8 +25,18 @@ public class Util {
         }
     }
 
+    public static <K, V> V getOrDefault(@NonNull Map<K, V> map, K key, V defaultValue) {
+        return map.containsKey(key) ? map.get(key) : defaultValue;
+    }
+
     public static boolean isMainThread() {
         return Looper.myLooper() == Looper.getMainLooper();
+    }
+
+    public static void assertMainThread() {
+        if (!isMainThread()) {
+            throw new AssertionError("Must run on main thread.");
+        }
     }
 
     public static void runOnMainSync(final @NonNull Runnable runnable) {
@@ -59,11 +75,25 @@ public class Util {
         return handler;
     }
 
+    public static <T> T getRandomElement(T[] elements) {
+        try {
+            return elements[SecureRandom.getInstance("SHA1PRNG").nextInt(elements.length)];
+        } catch (NoSuchAlgorithmException e) {
+            throw new AssertionError(e);
+        }
+    }
+
     public static int toIntExact(long value) {
         if ((int)value != value) {
             throw new ArithmeticException("integer overflow");
         }
         return (int)value;
+    }
+
+    public static boolean isLowMemory(Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+
+        return activityManager.isLowRamDevice() || activityManager.getMemoryClass() <= 64;
     }
 
 }

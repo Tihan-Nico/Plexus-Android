@@ -227,4 +227,6 @@
         <attr name="radius" format="float"/>
     </declare-styleable>
 
+    <attr name="theme_type" format="string"/>
+
 </resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Plexus.LightTheme" parent="Plexus.BaseLightTheme">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/white</item>
+    </style>
+
+    <style name="Plexus.DarkTheme" parent="Plexus.BaseDarkTheme">
+        <item name="android:navigationBarColor">@color/toolbarColor</item>
+        <item name="android:statusBarColor">@color/toolbarColor</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+</resources>

@@ -968,6 +968,16 @@
     <string name="group_color">Group Color</string>
     <string name="account_settings">Account Settings</string>
     <string name="timeline_management">Timeline Management</string>
-    <string name="notification_settings">Notification Settings</string>>
+    <string name="notification_settings">Notification Settings</string>
+
+    <!-- GiphyActivity -->
+    <string name="GiphyActivity_error_while_retrieving_full_resolution_gif">Error while retrieving full resolution GIF</string>
+
+    <!-- giphy_fragment -->
+    <string name="giphy_fragment__nothing_found">Nothing found</string>
+
+    <!-- GiphyFragmentPageAdapter -->
+    <string name="GiphyFragmentPagerAdapter_gifs">GIFs</string>
+    <string name="GiphyFragmentPagerAdapter_stickers">Stickers</string>
 
 </resources>

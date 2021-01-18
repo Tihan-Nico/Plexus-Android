@@ -63,4 +63,5 @@
     <color name="semi_black_transparent">#99000000</color>
     <color name="voiceNoteTrashcanTint">#ff7d8488</color>
     <color name="list_item_sub_title">@color/black_alpha_54</color>
+    <color name="core_ultramarine">#2c6bed</color>
 </resources>
