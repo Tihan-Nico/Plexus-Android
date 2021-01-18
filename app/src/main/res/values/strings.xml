@@ -980,4 +980,15 @@
     <string name="GiphyFragmentPagerAdapter_gifs">GIFs</string>
     <string name="GiphyFragmentPagerAdapter_stickers">Stickers</string>
 
+    <!-- Notification Channels -->
+    <string name="NotificationChannel_Plexus">Plexus</string>
+    <string name="NotificationChannel_PlexusMessageRequest">Plexus Message Requests</string>
+    <string name="NotificationChannel_PlexusMessages">Plexus Messages</string>
+    <string name="NotificationChannel_Uploads">Uploads</string>
+    <string name="NotificationChannel_UploadFailure">Upload Failure</string>
+    <string name="NotificationChannel_Likes">Likes</string>
+    <string name="NotificationChannel_Comments">Comments</string>
+    <string name="NotificationChannel_CommentsLikes">Comment Likes</string>
+    <string name="NotificationChannel_NewFollowers">New Followers</string>
+
 </resources>

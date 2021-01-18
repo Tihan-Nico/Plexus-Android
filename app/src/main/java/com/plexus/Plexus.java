@@ -1,6 +1,7 @@
 package com.plexus;
 
 import android.app.Application;
+import android.app.NotificationChannel;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -22,6 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.plexus.account.activity.UserBannedActivity;
 import com.plexus.components.locale_changer.LocaleChanger;
 import com.plexus.model.account.Banned;
+import com.plexus.notifications.NotificationChannels;
+import com.plexus.utils.AppStartup;
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.twitter.TwitterEmojiProvider;
 
@@ -66,11 +69,14 @@ public class Plexus extends Application {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onCreate() {
+        AppStartup.getInstance().onApplicationCreate();
         super.onCreate();
         EmojiManager.install(new TwitterEmojiProvider());
         Fresco.initialize(this);
         LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
         mInstance = this;
+
+        AppStartup.getInstance().addPostRender(() -> NotificationChannels.create(this)).execute();
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser != null) {

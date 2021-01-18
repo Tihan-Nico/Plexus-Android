@@ -78,11 +78,6 @@
         <attr name="emojiSize" />
     </declare-styleable>
 
-    <declare-styleable name="OuterBorder">
-        <attr name="shape" format="string" />
-        <attr name="radius" format="float" />
-    </declare-styleable>
-
     <declare-styleable name="ExpansionHeader">
         <attr name="expansion_layout" format="reference" />
         <attr name="expansion_toggleOnClick" format="boolean" />

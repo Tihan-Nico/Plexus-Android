@@ -2,6 +2,8 @@ package com.plexus.utils;
 
 import android.content.Context;
 import android.hardware.Camera;
+import android.net.Uri;
+import android.provider.Settings;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +18,12 @@ public class SecurePreferences {
 
     public static final String THEME_PREF = "pref_theme";
     public static final String LANGUAGE_PREF = "pref_language";
+
+    public  static final String RINGTONE_PREF                    = "pref_key_ringtone";
+    public  static final String VIBRATE_PREF                     = "pref_key_vibrate";
+    public  static final String LED_COLOR_PREF                   = "pref_led_color";
+
+    private static final String NOTIFICATION_CHANNEL_VERSION          = "pref_notification_channel_version";
 
     private static final String GIF_GRID_LAYOUT = "pref_gif_grid_layout";
 
@@ -38,6 +46,41 @@ public class SecurePreferences {
 
     public static boolean getLockScreenActive(Context context) {
         return getBooleanPreference(context, LOCK_SCREEN_ENABLED, false);
+    }
+
+    public static void setNotificationVibrateEnabled(Context context, boolean enabled) {
+        setBooleanPreference(context, VIBRATE_PREF, enabled);
+    }
+
+    public static boolean isNotificationVibrateEnabled(Context context) {
+        return getBooleanPreference(context, VIBRATE_PREF, true);
+    }
+
+    public static void setNotificationRingtone(Context context, String ringtone) {
+        setStringPreference(context, RINGTONE_PREF, ringtone);
+    }
+
+    public static String getNotificationLedColor(Context context) {
+        return getStringPreference(context, LED_COLOR_PREF, "blue");
+    }
+
+    public static int getNotificationChannelVersion(Context context) {
+        return getIntegerPreference(context, NOTIFICATION_CHANNEL_VERSION, 1);
+    }
+
+    public static void setNotificationChannelVersion(Context context, int version) {
+        setIntegerPrefrence(context, NOTIFICATION_CHANNEL_VERSION, version);
+    }
+
+    public static @NonNull
+    Uri getNotificationRingtone(Context context) {
+        String result = getStringPreference(context, RINGTONE_PREF, Settings.System.DEFAULT_NOTIFICATION_URI.toString());
+
+        if (result != null && result.startsWith("file:")) {
+            result = Settings.System.DEFAULT_NOTIFICATION_URI.toString();
+        }
+
+        return Uri.parse(result);
     }
 
     public static boolean isGifSearchInGridLayout(Context context) {
