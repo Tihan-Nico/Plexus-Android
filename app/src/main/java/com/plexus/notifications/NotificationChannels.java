@@ -36,6 +36,8 @@ public class NotificationChannels {
 
     public static final String PLEXUS_MESSAGE_REQUEST = "message_request";
     public static final String PLEXUS_MESSAGES = "messages";
+    public static final String LOOKOUT_MESSAGES = "lookout_messages";
+    public static final String LOOKOUT_LAST_LOCATION = "lookout_last_location";
     public static final String UPLOADS = "uploads";
     public static final String UPLOAD_FAILURE = "upload_failure";
     public static final String LIKES = "likes";
@@ -87,6 +89,8 @@ public class NotificationChannels {
         notificationManager.createNotificationChannelGroup(messagesGroup);
 
         NotificationChannel message_request = new NotificationChannel(PLEXUS_MESSAGE_REQUEST,context.getString(R.string.NotificationChannel_PlexusMessageRequest), NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationChannel lookout_messages = new NotificationChannel(LOOKOUT_MESSAGES,context.getString(R.string.NotificationChannel_LookoutMessages), NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationChannel lookout_last_location = new NotificationChannel(LOOKOUT_LAST_LOCATION,context.getString(R.string.NotificationChannel_LookoutLastLocation), NotificationManager.IMPORTANCE_DEFAULT);
         NotificationChannel messages = new NotificationChannel(PLEXUS_MESSAGES,context.getString(R.string.NotificationChannel_PlexusMessages), NotificationManager.IMPORTANCE_DEFAULT);
         NotificationChannel uploads = new NotificationChannel(UPLOADS,context.getString(R.string.NotificationChannel_Uploads), NotificationManager.IMPORTANCE_DEFAULT);
         NotificationChannel upload_failure = new NotificationChannel(UPLOAD_FAILURE,context.getString(R.string.NotificationChannel_UploadFailure), NotificationManager.IMPORTANCE_DEFAULT);
@@ -100,16 +104,33 @@ public class NotificationChannels {
         messages.setSound(SecurePreferences.getNotificationRingtone(context), getRingtoneAudioAttributes());
         setLedPreference(messages, SecurePreferences.getNotificationLedColor(context));
 
+        lookout_messages.setGroup(CATEGORY_PLEXUS);
+        lookout_messages.enableVibration(SecurePreferences.isNotificationVibrateEnabled(context));
+        lookout_messages.setSound(SecurePreferences.getNotificationRingtone(context), getRingtoneAudioAttributes());
+        setLedPreference(lookout_messages, SecurePreferences.getNotificationLedColor(context));
+
+        likes.setGroup(CATEGORY_PLEXUS);
+        likes.enableVibration(SecurePreferences.isNotificationVibrateEnabled(context));
+        likes.setSound(SecurePreferences.getNotificationRingtone(context), getRingtoneAudioAttributes());
+        setLedPreference(likes, SecurePreferences.getNotificationLedColor(context));
+
+        comments_likes.setGroup(CATEGORY_PLEXUS);
+        comments_likes.enableVibration(SecurePreferences.isNotificationVibrateEnabled(context));
+        comments_likes.setSound(SecurePreferences.getNotificationRingtone(context), getRingtoneAudioAttributes());
+        setLedPreference(comments_likes, SecurePreferences.getNotificationLedColor(context));
+
+        comments.setGroup(CATEGORY_PLEXUS);
+        comments.enableVibration(SecurePreferences.isNotificationVibrateEnabled(context));
+        comments.setSound(SecurePreferences.getNotificationRingtone(context), getRingtoneAudioAttributes());
+        setLedPreference(comments, SecurePreferences.getNotificationLedColor(context));
+
         message_request.setShowBadge(false);
         uploads.setShowBadge(false);
         upload_failure.setShowBadge(false);
-        likes.setShowBadge(false);
-        comments.setShowBadge(false);
-        comments.setShowBadge(false);
-        comments_likes.setShowBadge(false);
         new_followers.setShowBadge(false);
+        lookout_last_location.setShowBadge(false);
 
-        notificationManager.createNotificationChannels(Arrays.asList(message_request, messages, uploads, upload_failure, likes, comments, comments_likes, new_followers));
+        notificationManager.createNotificationChannels(Arrays.asList(message_request, messages, lookout_messages, lookout_last_location, uploads, upload_failure, likes, comments, comments_likes, new_followers));
 
     }
 

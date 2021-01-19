@@ -990,5 +990,7 @@
     <string name="NotificationChannel_Comments">Comments</string>
     <string name="NotificationChannel_CommentsLikes">Comment Likes</string>
     <string name="NotificationChannel_NewFollowers">New Followers</string>
+    <string name="NotificationChannel_LookoutLastLocation">Lookout Last Location</string>
+    <string name="NotificationChannel_LookoutMessages">Lookout Messages</string>
 
 </resources>
