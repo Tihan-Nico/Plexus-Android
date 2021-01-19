@@ -1,5 +1,6 @@
 package com.plexus.posts.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -9,15 +10,19 @@ import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -51,6 +56,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.jakewharton.rxbinding4.view.RxView;
 import com.plexus.R;
+import com.plexus.audio.AudioRecorder;
 import com.plexus.components.background.PlexusUpload;
 import com.plexus.components.components.ImageView.Constants;
 import com.plexus.components.components.socials.commons.Hashtag;
@@ -58,8 +64,12 @@ import com.plexus.components.components.socials.commons.HashtagArrayAdapter;
 import com.plexus.components.components.socials.commons.SocialAutoCompleteTextView;
 import com.plexus.main.activity.MainActivity;
 import com.plexus.model.account.User;
+import com.plexus.permissions.Permissions;
+import com.plexus.providers.BlobProvider;
 import com.plexus.utils.MasterCipher;
+import com.plexus.utils.ServiceUtil;
 import com.plexus.utils.TimeUtils;
+import com.plexus.utils.concurrent.ListenableFuture;
 import com.plexus.utils.dynamic.DynamicTheme;
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -69,6 +79,7 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -96,9 +107,14 @@ public class CreatePostActivity extends AppCompatActivity {
     private static final String TEMP_FILTER_AUDIO_NAME = "tempAudio.pcm";
     private static final String TEMP_FILE_AUDIO_NAME = "/plexus_vn_audio.3gp";
     private static String mFileName = null;
+
     /**
      * Voice recording
      */
+
+    private AudioRecorder audioRecorder;
+
+
 
     Button upload;
     SocialAutoCompleteTextView post_description;
@@ -671,5 +687,4 @@ public class CreatePostActivity extends AppCompatActivity {
             mediaPlayer = null;
         }
     }
-
 }

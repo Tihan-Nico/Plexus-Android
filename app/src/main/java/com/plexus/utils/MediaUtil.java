@@ -1,6 +1,13 @@
 package com.plexus.utils;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Environment;
+
+import com.plexus.providers.PartAuthority;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /******************************************************************************
  * Copyright (c) 2020. Plexus, Inc.                                           *
@@ -55,4 +62,21 @@ public class MediaUtil {
 
         return String.format("%.0f %sbytes", filesize / Math.pow(unit, exp), "KMGTPE".charAt(exp - 1));
     }
+
+    public static long getMediaSize(Context context, Uri uri) throws IOException {
+        InputStream in = PartAuthority.getAttachmentStream(context, uri);
+        if (in == null) throw new IOException("Couldn't obtain input stream.");
+
+        long   size   = 0;
+        byte[] buffer = new byte[4096];
+        int    read;
+
+        while ((read = in.read(buffer)) != -1) {
+            size += read;
+        }
+        in.close();
+
+        return size;
+    }
+
 }

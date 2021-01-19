@@ -103,4 +103,12 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="Theme.Plexus.AlertDialog.Light.Cornered" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/dialog</item>
+    </style>
+
+    <style name="Theme.Plexus.AlertDialog.Dark.Cornered" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/dialog</item>
+    </style>
+
 </resources>
