@@ -34,6 +34,7 @@ public class GenerateQrCodeActivity extends AppCompatActivity {
     QrView qrImageView;
 
     String id;
+    String type;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class GenerateQrCodeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
+        type = intent.getStringExtra("type");
 
         init();
     }
@@ -53,11 +55,20 @@ public class GenerateQrCodeActivity extends AppCompatActivity {
     private void init(){
 
         ImageView back = toolbar.findViewById(R.id.back);
+        ImageView image = toolbar.findViewById(R.id.image);
         TextView toolbar_name = toolbar.findViewById(R.id.toolbar_name);
 
         back.setOnClickListener(v -> finish());
 
         toolbar_name.setText("QR Code");
+
+        image.setVisibility(View.VISIBLE);
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ScanQrCodeActivity.class));
+            }
+        });
 
         presentUrl(generateDeepLinkUrl());
 
@@ -67,7 +78,7 @@ public class GenerateQrCodeActivity extends AppCompatActivity {
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("https")
                 .authority("plexus.dev")
-                .appendPath("profile")
+                .appendPath(type)
                 .appendQueryParameter("id", id);
         return builder.build().toString();
     }
@@ -112,7 +123,7 @@ public class GenerateQrCodeActivity extends AppCompatActivity {
             return BlobProvider.getInstance()
                     .forData(bytes)
                     .withMimeType("image/png")
-                    .withFileName("SignalGroupQr.png")
+                    .withFileName("PlexusQrCode.png")
                     .createForSingleSessionInMemory();
         } finally {
             qrBitmap.recycle();

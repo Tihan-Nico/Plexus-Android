@@ -40,6 +40,7 @@ import com.plexus.components.components.bottomsheet.model.SheetOptions;
 import com.plexus.model.account.User;
 import com.plexus.model.posts.Post;
 import com.plexus.posts.activity.saved_posts.SavedPostsActivity;
+import com.plexus.qr.activity.QrGetLinkActivity;
 import com.plexus.settings.activity.privacy.PrivacyActivity;
 import com.plexus.utils.MasterCipher;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -106,6 +107,12 @@ public class ProfileFragment extends Fragment {
         following = view.findViewById(R.id.following);
         recycler_view = view.findViewById(R.id.recycler_view);
 
+        init();
+
+        return view;
+    }
+
+    private void init(){
         recycler_view.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new GridLayoutManager(getContext(), 3);
         recycler_view.setLayoutManager(mLayoutManager);
@@ -142,13 +149,16 @@ public class ProfileFragment extends Fragment {
                 profile_sheet.dismiss();
             }
 
-            if (position == 3) {
+            if (position == 4) {
                 startActivity(new Intent(getContext(), SavedPostsActivity.class));
                 profile_sheet.dismiss();
             }
 
-            if (position == 4) {
-                shareDeepLink(generateDeepLinkUrl(firebaseUser.getUid()));
+            if (position == 5) {
+                Intent intent = new Intent(getContext(), QrGetLinkActivity.class);
+                intent.putExtra("type", "profile");
+                intent.putExtra("id", firebaseUser.getUid());
+                startActivity(intent);
             }
 
         });
@@ -173,8 +183,6 @@ public class ProfileFragment extends Fragment {
         getFollowers(following, followers);
         myFotos();
         getNrPosts();
-
-        return view;
     }
 
     private void myFotos() {

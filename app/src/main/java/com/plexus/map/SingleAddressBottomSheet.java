@@ -17,7 +17,7 @@ import com.plexus.R;
 
 import java.util.Locale;
 
-final class SingleAddressBottomSheet extends CoordinatorLayout {
+public final class SingleAddressBottomSheet extends CoordinatorLayout {
 
     private TextView placeNameTextView;
     private TextView placeAddressTextView;

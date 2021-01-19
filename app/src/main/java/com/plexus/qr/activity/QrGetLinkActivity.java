@@ -19,8 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.plexus.R;
-import com.plexus.account.activity.ProfileActivity;
-import com.plexus.account.adapters.ProfilePostAdapter;
 import com.plexus.components.components.bottomsheet.adapter.SheetOptionsAdapter;
 import com.plexus.components.components.bottomsheet.model.SheetOptions;
 import com.plexus.posts.activity.CreatePostActivity;
@@ -32,10 +30,10 @@ public class QrGetLinkActivity extends AppCompatActivity {
     View toolbar;
     LinearLayout share_link;
     SwitchMaterial shareable_link;
-    TextView link;
+    TextView link, title;
 
     String type;
-    String id;
+    String ID;
 
     public static final String[] titles = new String[]{"Share via Plexus", "Copy", "QR Code", "Share"};
     public static final Integer[] images = {R.drawable.plexus_logo, R.drawable.message_copy, R.drawable.qrcode, R.drawable.share_external};
@@ -52,10 +50,11 @@ public class QrGetLinkActivity extends AppCompatActivity {
         share_link = findViewById(R.id.share_link);
         shareable_link = findViewById(R.id.shareable_link);
         link = findViewById(R.id.link);
+        title = findViewById(R.id.title);
 
         Intent intent = getIntent();
         type = intent.getStringExtra("type");
-        id = intent.getStringExtra("id");
+        ID = intent.getStringExtra("id");
 
         init();
 
@@ -70,52 +69,62 @@ public class QrGetLinkActivity extends AppCompatActivity {
 
         toolbar_name.setText("Shareable Link");
 
+        if (type.equals("group")){
+            title.setText("Your Group Link");
+        } else {
+            title.setText("Your Profile Link");
+        }
+
         link.setText(generateDeepLinkUrl());
 
-        share_link.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        share_link.setOnClickListener(v -> {
 
-                qr_sheet = new BottomSheetDialog(QrGetLinkActivity.this, R.style.BottomSheetDialogTheme);
-                qr_sheet.setContentView(R.layout.sheet_layout);
-                ListView listView = qr_sheet.findViewById(R.id.listview);
+            qr_sheet = new BottomSheetDialog(QrGetLinkActivity.this, R.style.BottomSheetDialogTheme);
+            qr_sheet.setContentView(R.layout.sheet_layout);
+            ListView listView = qr_sheet.findViewById(R.id.listview);
 
-                rowItems = new ArrayList<>();
-                for (int i = 0; i < titles.length; i++) {
-                    SheetOptions item = new SheetOptions(titles[i], images[i]);
-                    rowItems.add(item);
+            rowItems = new ArrayList<>();
+            for (int i = 0; i < titles.length; i++) {
+                SheetOptions item = new SheetOptions(titles[i], images[i]);
+                rowItems.add(item);
+            }
+
+            SheetOptionsAdapter optionsAdapter = new SheetOptionsAdapter(QrGetLinkActivity.this, rowItems);
+            listView.setAdapter(optionsAdapter);
+
+            listView.setOnItemClickListener((parent, view1, position, id) -> {
+                if (position == 0) {
+                    Intent intent = new Intent(getApplicationContext(), CreatePostActivity.class);
+                    intent.putExtra("link", generateDeepLinkUrl());
+                    startActivity(intent);
+                    qr_sheet.dismiss();
                 }
 
-                SheetOptionsAdapter optionsAdapter = new SheetOptionsAdapter(QrGetLinkActivity.this, rowItems);
-                listView.setAdapter(optionsAdapter);
+                if (position == 1) {
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("link", generateDeepLinkUrl());
+                    clipboard.setPrimaryClip(clip);
+                    Toast.makeText(getApplicationContext(), "Link Copied", Toast.LENGTH_SHORT).show();
+                    qr_sheet.dismiss();
+                }
 
-                listView.setOnItemClickListener((parent, view1, position, id) -> {
-                    if (position == 0) {
-                        Intent intent = new Intent(getApplicationContext(), CreatePostActivity.class);
-                        intent.putExtra("link", generateDeepLinkUrl());
-                        startActivity(intent);
-                    }
+                if (position == 2) {
+                    Intent intent = new Intent(getApplicationContext(), GenerateQrCodeActivity.class);
+                    intent.putExtra("id", ID);
+                    intent.putExtra("type", type);
+                    startActivity(intent);
+                    qr_sheet.dismiss();
+                }
 
-                    if (position == 1) {
-                        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                        ClipData clip = ClipData.newPlainText("link", generateDeepLinkUrl());
-                        clipboard.setPrimaryClip(clip);
-                        Toast.makeText(getApplicationContext(), "Link Copied", Toast.LENGTH_SHORT).show();
-                    }
+                if (position == 3) {
+                    shareDeepLink(generateDeepLinkUrl());
+                    qr_sheet.dismiss();
+                }
 
-                    if (position == 2) {
-                        Intent intent = new Intent(getApplicationContext(), GenerateQrCodeActivity.class);
-                        intent.putExtra("id", id);
-                        startActivity(intent);
-                    }
+            });
 
-                    if (position == 3) {
-                        shareDeepLink(generateDeepLinkUrl());
-                    }
+            qr_sheet.show();
 
-                });
-
-            }
         });
 
     }
@@ -125,7 +134,7 @@ public class QrGetLinkActivity extends AppCompatActivity {
         builder.scheme("https")
                 .authority("plexus.dev")
                 .appendPath(type)
-                .appendQueryParameter("id", id);
+                .appendQueryParameter("id", ID);
         return builder.build().toString();
     }
 

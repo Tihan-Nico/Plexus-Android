@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         btn_login = findViewById(R.id.login);
         link_signup = findViewById(R.id.link_signup);
-        forgot_password = findViewById(R.id.forgot_password);
+        /*forgot_password = findViewById(R.id.forgot_password);*/
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void init() {
-        forgot_password.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ForgotPasswordActivity.class)));
+        /*forgot_password.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ForgotPasswordActivity.class)));*/
 
         link_signup.setOnClickListener(
                 v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));

@@ -16,7 +16,6 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
-apply from: 'translations.gradle'
 
 android {
     compileSdkVersion 30
@@ -40,9 +39,6 @@ android {
         targetSdkVersion 30
         versionCode 125
         versionName '1.1.10'
-
-        buildConfigField "String[]", "LANGUAGES", "new String[]{\"" + autoResConfig().collect { s -> s.replace('-r', '_') }.join('", "') + '"}'
-        resConfigs autoResConfig()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles getDefaultProguardFile('proguard-android.txt')

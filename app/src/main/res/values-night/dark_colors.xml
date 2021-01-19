@@ -23,4 +23,5 @@
     <color name="bottomNavigationTextIconColor">#3a3b3c</color>
     <color name="profileBackgroundColor">#242526</color>
     <color name="guidelineColor">#353232</color>
+    <color name="touch_highlight">#400099cc</color>
 </resources>

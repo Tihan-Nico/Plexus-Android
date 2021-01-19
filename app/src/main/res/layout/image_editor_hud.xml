@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:background="@color/core_grey_60"
     tools:parentTag="android.widget.LinearLayout">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,9 +29,9 @@
                 android:id="@+id/scribble_delete_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
-                android:src="@drawable/ic_trash_filled_32" />
+                android:src="@drawable/delete_forever_outline"
+                app:tint="@color/drawableTintColor" />
 
             <ImageView
                 android:id="@+id/scribble_undo_button"
@@ -40,23 +39,24 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
-                android:src="@drawable/ic_undo_32" />
+                android:src="@drawable/undo_variant"
+                app:tint="@color/drawableTintColor" />
 
             <ImageView
                 android:id="@+id/scribble_save_button"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:src="@drawable/ic_download_32" />
+                android:src="@drawable/download_outline"
+                app:tint="@color/drawableTintColor" />
 
             <ImageView
                 android:id="@+id/scribble_text_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
-                android:src="@drawable/ic_text_32" />
+                android:src="@drawable/text"
+                app:tint="@color/drawableTintColor" />
 
             <ImageView
                 android:id="@+id/scribble_draw_button"
@@ -64,7 +64,8 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
-                android:src="@drawable/ic_brush_marker_32" />
+                android:src="@drawable/brush"
+                app:tint="@color/drawableTintColor" />
 
             <ImageView
                 android:id="@+id/scribble_highlight_button"
@@ -72,16 +73,18 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
-                android:src="@drawable/ic_brush_highlight_32"
-                android:visibility="gone"/>
+                android:src="@drawable/marker"
+                android:visibility="gone"
+                app:tint="@color/drawableTintColor" />
 
             <ImageView
                 android:id="@+id/scribble_blur_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
-                android:src="@drawable/ic_image_editor_blur" />
+                android:src="@drawable/blur"
+                app:tint="@color/drawableTintColor" />
 
             <ImageView
                 android:id="@+id/scribble_sticker_button"
@@ -89,7 +92,8 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
-                android:src="@drawable/ic_sticker_32" />
+                android:src="@drawable/sticker_circle_outline"
+                app:tint="@color/drawableTintColor" />
 
             <ImageView
                 android:id="@+id/scribble_crop_button"
@@ -97,23 +101,23 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
-                android:src="@drawable/ic_crop_32" />
+                android:src="@drawable/crop"
+                app:tint="@color/drawableTintColor" />
 
             <ImageView
                 android:id="@+id/scribble_confirm_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
-                android:src="@drawable/ic_check_circle_32" />
+                android:background="@drawable/circle_bg_light"
+                android:src="@drawable/check"/>
 
             <ImageView
                 android:id="@+id/scribble_done_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="8dp"
-                app:srcCompat="@drawable/ic_check_circle_32" />
+                android:background="@drawable/circle_bg_light"
+                android:src="@drawable/check"/>
 
         </LinearLayout>
 
@@ -150,9 +154,10 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="8dp"
-            android:src="@drawable/ic_flip_32"
+            android:src="@drawable/ic_flip"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/scribble_crop_rotate" />
+            app:layout_constraintStart_toEndOf="@+id/scribble_crop_rotate"
+            app:tint="@color/drawableTintColor" />
 
         <ImageView
             android:id="@+id/scribble_crop_rotate"
@@ -160,9 +165,10 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="8dp"
-            android:src="@drawable/ic_rotate_32"
+            android:src="@drawable/ic_crop_rotate"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:tint="@color/drawableTintColor" />
 
         <ImageView
             android:id="@+id/scribble_crop_aspect_lock"
@@ -170,16 +176,17 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="8dp"
-            android:src="@drawable/ic_crop_lock_32"
+            android:src="@drawable/lock_outline"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="@color/drawableTintColor" />
 
         <TextView
             android:id="@+id/scribble_blur_toast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:text="@string/ImageEditorHud_draw_to_blur_additional_faces_or_areas"
+            android:text="Draw to blur additional faces or areas"
             app:layout_constraintBottom_toTopOf="@id/scribble_blur_toggle_container"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -198,7 +205,6 @@
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
             android:orientation="horizontal"
-            android:background="@drawable/transparent_black_pill"
             app:layout_constraintBottom_toTopOf="@id/scribble_blur_help_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -207,8 +213,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="6dp"
-                android:text="@string/ImageEditorHud_blur_faces"
-                android:textColor="@color/core_white"/>
+                android:text="Blur Faces"
+                android:textColor="@color/white"/>
 
             <Switch
                 android:id="@+id/scribble_blur_toggle"
@@ -222,10 +228,10 @@
             android:id="@+id/scribble_blur_help_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/ImageEditorHud_draw_anywhere_to_blur"
+            android:text="Draw anywhere to blur"
             android:padding="14dp"
             android:gravity="center"
-            android:textColor="@color/core_white"
+            android:textColor="@color/white"
             android:shadowColor="@color/black"
             android:shadowRadius="15"
             app:layout_constraintBottom_toBottomOf="parent"/>

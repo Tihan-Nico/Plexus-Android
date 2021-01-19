@@ -38,6 +38,7 @@ import com.plexus.model.Token;
 import com.plexus.model.account.User;
 import com.plexus.model.posts.Post;
 import com.plexus.notifications.fcm.FirebaseNotificationHelper;
+import com.plexus.qr.activity.QrGetLinkActivity;
 import com.plexus.utils.MasterCipher;
 
 import org.jetbrains.annotations.NotNull;
@@ -69,7 +70,7 @@ import java.util.List;
 public class ProfileActivity extends AppCompatActivity {
 
     public static final String[] titles = new String[]{"Report User",
-            "Block", "Copy Link"};
+            "Block", "Profile Link"};
     public static final Integer[] images = {R.drawable.email_outline,
             R.drawable.block_helper, R.drawable.link_variant};
     public ImageView verified, menu;
@@ -127,6 +128,12 @@ public class ProfileActivity extends AppCompatActivity {
             profileid = data.getQueryParameter("id");
         }
 
+        init();
+
+    }
+
+    private void init(){
+
         recycler_view.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new GridLayoutManager(ProfileActivity.this, 3);
         recycler_view.setLayoutManager(mLayoutManager);
@@ -164,7 +171,6 @@ public class ProfileActivity extends AppCompatActivity {
 
             if (position == 2) {
                 shareDeepLink(generateDeepLinkUrl());
-                Toast.makeText(ProfileActivity.this, "Link Copied!", Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -237,6 +243,7 @@ public class ProfileActivity extends AppCompatActivity {
         checkIfBlocked(profileid);
         blockedOrNot(profileid);
         isAccountPublic();
+
     }
 
     private void checkIfBlocked(String profileid) {
