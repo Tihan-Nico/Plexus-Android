@@ -992,6 +992,29 @@
     <string name="NotificationChannel_NewFollowers">New Followers</string>
     <string name="NotificationChannel_LookoutLastLocation">Lookout Last Location</string>
     <string name="NotificationChannel_LookoutMessages">Lookout Messages</string>
+
+    <!--Conversation Group-->
+    <string name="ManageGroupActivity_only_admins_can_enable_or_disable_the_sharable_group_link">Only admins can enable or disable the sharable group link.</string>
+    <string name="ManageGroupActivity_only_admins_can_enable_or_disable_the_option_to_approve_new_members">Only admins can enable or disable the option to approve new members.</string>
+    <string name="ManageGroupActivity_only_admins_can_reset_the_sharable_group_link">Only admins can reset the sharable group link.</string>
+
+    <string name="ManageGroupActivity_you_dont_have_the_rights_to_do_this">You don\'t have the rights to do this</string>
+    <string name="ManageGroupActivity_not_capable">Someone you added does not support new groups and needs to update Signal</string>
+    <string name="ManageGroupActivity_failed_to_update_the_group">Failed to update the group</string>
+    <string name="ManageGroupActivity_youre_not_a_member_of_the_group">You\'re not a member of the group</string>
+    <string name="ManageGroupActivity_failed_to_update_the_group_please_retry_later">Failed to update the group please retry later</string>
+    <string name="ManageGroupActivity_failed_to_update_the_group_due_to_a_network_error_please_retry_later">Failed to update the group due to a network error, please retry later</string>
+
+    <string name="ManageGroupActivity_edit_name_and_picture">Edit name and picture</string>
+    <string name="ManageGroupActivity_legacy_group">Legacy Group</string>
+    <string name="ManageGroupActivity_legacy_group_learn_more">This is a Legacy Group. Features like group admins are only available for New Groups.</string>
+    <string name="ManageGroupActivity_legacy_group_upgrade">This is a Legacy Group. To access new features like @mentions and admins,</string>
+    <string name="ManageGroupActivity_legacy_group_too_large">This Legacy Group can’t be upgraded to a New Group because it is too large. The maximum group size is %1$d.</string>
+    <string name="ManageGroupActivity_upgrade_this_group">upgrade this group.</string>
+    <string name="ManageGroupActivity_this_is_an_insecure_mms_group">This is an insecure MMS Group. To chat privately, invite your contacts to Signal.</string>
+    <string name="ManageGroupActivity_invite_now">Invite now</string>
+
+    <!--Permissions-->
     <string name="Permissions_continue">Continue</string>
     <string name="Permissions_not_now">Not Now</string>
     <string name="Permissions_permission_required">Permission required</string>
