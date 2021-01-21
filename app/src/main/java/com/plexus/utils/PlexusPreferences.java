@@ -11,7 +11,7 @@ import androidx.preference.PreferenceManager;
 
 import com.plexus.utils.dynamic.DynamicTheme;
 
-public class SecurePreferences {
+public class PlexusPreferences {
 
     private static final String ATTACHMENT_ENCRYPTED_SECRET = "pref_attachment_encrypted_secret";
     private static final String ATTACHMENT_UNENCRYPTED_SECRET = "pref_attachment_unencrypted_secret";
@@ -19,11 +19,12 @@ public class SecurePreferences {
     public static final String THEME_PREF = "pref_theme";
     public static final String LANGUAGE_PREF = "pref_language";
 
-    public  static final String RINGTONE_PREF                    = "pref_key_ringtone";
-    public  static final String VIBRATE_PREF                     = "pref_key_vibrate";
-    public  static final String LED_COLOR_PREF                   = "pref_led_color";
+    public static final String RINGTONE_PREF = "pref_key_ringtone";
+    public static final String VIBRATE_PREF = "pref_key_vibrate";
+    public static final String LED_COLOR_PREF = "pref_led_color";
 
-    private static final String NOTIFICATION_CHANNEL_VERSION          = "pref_notification_channel_version";
+    private static final String NOTIFICATION_CHANNEL_VERSION = "pref_notification_channel_version";
+    private static final String SHOW_LOOKOUT_NOTIFICATIONS = "pref_show_lookout_notifications";
 
     private static final String GIF_GRID_LAYOUT = "pref_gif_grid_layout";
 
@@ -54,6 +55,14 @@ public class SecurePreferences {
 
     public static boolean isNotificationVibrateEnabled(Context context) {
         return getBooleanPreference(context, VIBRATE_PREF, true);
+    }
+
+    public static void setLookoutNotificationEnabled(Context context, boolean enabled){
+        setBooleanPreference(context, SHOW_LOOKOUT_NOTIFICATIONS, enabled);
+    }
+
+    public static boolean getLookoutNotificationEnabled(Context context){
+        return getBooleanPreference(context, SHOW_LOOKOUT_NOTIFICATIONS, true);
     }
 
     public static void setNotificationRingtone(Context context, String ringtone) {

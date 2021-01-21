@@ -24,6 +24,9 @@ public class LookoutNotifications {
         this.notificationViewed = notificationViewed;
     }
 
+    public LookoutNotifications(){
+    }
+
     public String getId() {
         return id;
     }

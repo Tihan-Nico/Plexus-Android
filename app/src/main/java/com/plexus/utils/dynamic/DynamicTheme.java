@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.plexus.R;
 import com.plexus.utils.CachedInflater;
 import com.plexus.utils.ConfigurationUtil;
-import com.plexus.utils.SecurePreferences;
+import com.plexus.utils.PlexusPreferences;
 import com.plexus.utils.logging.Log;
 
 public class DynamicTheme {
@@ -58,7 +58,7 @@ public class DynamicTheme {
     }
 
     public static void setDefaultDayNightMode(@NonNull Context context) {
-        String theme = SecurePreferences.getTheme(context);
+        String theme = PlexusPreferences.getTheme(context);
 
         if (theme.equals(SYSTEM)) {
             Log.d(TAG, "Setting to follow system expecting: " + ConfigurationUtil.getNightModeConfiguration(context.getApplicationContext()));
@@ -78,7 +78,7 @@ public class DynamicTheme {
      * Takes the system theme into account.
      */
     public static boolean isDarkTheme(@NonNull Context context) {
-        String theme = SecurePreferences.getTheme(context);
+        String theme = PlexusPreferences.getTheme(context);
 
         if (theme.equals(SYSTEM) && systemThemeAvailable()) {
             return isSystemInDarkTheme(context);

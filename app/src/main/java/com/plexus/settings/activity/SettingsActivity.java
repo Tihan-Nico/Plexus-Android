@@ -16,6 +16,7 @@ import com.plexus.settings.activity.advance_features.AdvanceFeaturesActivity;
 import com.plexus.settings.activity.experimental.ExperimentalActivity;
 import com.plexus.settings.activity.message.MessageSettingsActivity;
 import com.plexus.settings.activity.notices.NoticesActivity;
+import com.plexus.settings.activity.notifications.NotificationsActivity;
 import com.plexus.settings.activity.privacy.PrivacyActivity;
 import com.plexus.settings.activity.version.VersionActivity;
 
@@ -37,7 +38,7 @@ import com.plexus.settings.activity.version.VersionActivity;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    LinearLayout advance_features, manage_account, experimental, privacy, version, notices, message, notifications;
+    LinearLayout advance_features, manage_account, notification_settings, experimental, privacy, version, notices, message;
     TextView about, update;
     ImageView update_available, back;
     private SharedPreferences sharedPreferences;
@@ -50,6 +51,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         advance_features = findViewById(R.id.advance_features);
         manage_account = findViewById(R.id.manage_account);
+        notification_settings = findViewById(R.id.notification_settings);
         experimental = findViewById(R.id.experimental);
         update_available = findViewById(R.id.update_available);
         back = findViewById(R.id.back);
@@ -62,6 +64,11 @@ public class SettingsActivity extends AppCompatActivity {
         guideline_1 = findViewById(R.id.guideline_1);
         guideline_2 = findViewById(R.id.guideline_2);
 
+        init();
+
+    }
+
+    private void init(){
         back.setOnClickListener(v -> finish());
 
         update.setText(R.string.latest_version);
@@ -84,6 +91,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         message.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), MessageSettingsActivity.class)));
 
+        notification_settings.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), NotificationsActivity.class)));
     }
 
     @Override

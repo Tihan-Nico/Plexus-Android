@@ -81,26 +81,6 @@ public class MainActivity extends AppCompatActivity {
     };
     private FirebaseUser firebaseUser;
 
-    public static boolean appWasUpdated(Context context) throws PackageManager.NameNotFoundException {
-        //this code gets current version-code (after upgrade it will show new versionCode)
-        PackageManager manager = context.getPackageManager();
-        PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
-        int versionCode = info.versionCode;
-        SharedPreferences prefs = context.getSharedPreferences("plexus", Context.MODE_PRIVATE);
-        if (prefs.getInt("version", -1) > 0) {
-            if (prefs.getInt("version", -1) != versionCode) {
-                //save current versionCode: 1st-run after upgrade
-                prefs.edit().putInt("version", versionCode).apply();
-
-                return true;
-            } //no need for else, because app version did not change...
-        } else {
-            //save current versionCode for 1st-run ever
-            prefs.edit().putInt("version", versionCode).apply();
-        }
-        return false;
-    }
-
     public static boolean hasPermissions(Context context, String... permissions) {
         if (context != null && permissions != null) {
             for (String permission : permissions) {
@@ -191,14 +171,6 @@ public class MainActivity extends AppCompatActivity {
         updateToken(FirebaseInstanceId.getInstance().getToken());
         getUnreadNotifications();
 
-        try {
-            if (appWasUpdated(getApplicationContext())) {
-                showUpdate();
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
         if (!hasPermissions(this, PERMISSIONS)) {
             startActivity(new Intent(getApplicationContext(), PermissionActivity.class));
         }
@@ -210,21 +182,6 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Tokens");
         Token token = new Token(s);
         databaseReference.child(firebaseUser.getUid()).setValue(token);
-    }
-
-    private void showUpdate() {
-        update_sheet = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetDialogTheme);
-        update_sheet.setContentView(R.layout.sheet_update_settings);
-        update_sheet.setCancelable(false);
-
-        Button continue_update = update_sheet.findViewById(R.id.continue_btn);
-
-        continue_update.setOnClickListener(v -> {
-            updateAccount(firebaseUser.getUid());
-            update_sheet.dismiss();
-        });
-
-        update_sheet.show();
     }
 
     private void updateAccount(String userID) {

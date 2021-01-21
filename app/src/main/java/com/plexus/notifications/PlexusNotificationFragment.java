@@ -35,7 +35,6 @@ public class PlexusNotificationFragment extends Fragment {
 
     PlexusRecyclerView recyclerView;
     FirebaseUser firebaseUser;
-    ImageView clear_notifications;
     View empty_state;
     private NotificationAdapter notificationAdapter;
     private ArrayList<PlexusNotification> plexusNotificationList;
@@ -45,7 +44,6 @@ public class PlexusNotificationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notification_plexus, container, false);
 
-        clear_notifications = view.findViewById(R.id.clear_notifications);
         empty_state = view.findViewById(R.id.empty_state);
         recyclerView = view.findViewById(R.id.recycler_view);
 
@@ -68,8 +66,6 @@ public class PlexusNotificationFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), mLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setEmptyView(empty_state);
-
-        clear_notifications.setOnClickListener(v -> deleteNotifications());
     }
 
     private void readNotifications() {
@@ -98,33 +94,6 @@ public class PlexusNotificationFragment extends Fragment {
                     public void onCancelled(@NotNull DatabaseError databaseError) {
                     }
                 });
-    }
-
-    private void deleteNotifications() {
-        final Dialog dialog = new Dialog(getContext());
-        dialog.setContentView(R.layout.dialog);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-
-        TextView description = dialog.findViewById(R.id.description);
-        TextView delete = dialog.findViewById(R.id.delete_all);
-        TextView cancel = dialog.findViewById(R.id.cancel);
-
-        description.setText("Are you sure you want to clear all notifications? \n \n You won't be able to recover it after clearing.");
-
-        cancel.setOnClickListener(v -> dialog.dismiss());
-
-        delete.setOnClickListener(v -> {
-            FirebaseDatabase.getInstance().getReference("Users")
-                    .child(firebaseUser.getUid()).child("Notification").removeValue()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getContext(), "All notifications cleared", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
-                        }
-                    });
-        });
-
-        dialog.show();
     }
 
     @Override

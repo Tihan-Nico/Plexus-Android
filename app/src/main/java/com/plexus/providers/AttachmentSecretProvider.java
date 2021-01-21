@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.plexus.crypto.AttachmentSecret;
 import com.plexus.crypto.KeyStoreHelper;
-import com.plexus.utils.SecurePreferences;
+import com.plexus.utils.PlexusPreferences;
 
 import java.security.SecureRandom;
 
@@ -31,8 +31,8 @@ public class AttachmentSecretProvider {
     public synchronized AttachmentSecret getOrCreateAttachmentSecret() {
         if (attachmentSecret != null) return attachmentSecret;
 
-        String unencryptedSecret = SecurePreferences.getAttachmentUnencryptedSecret(context);
-        String encryptedSecret   = SecurePreferences.getAttachmentEncryptedSecret(context);
+        String unencryptedSecret = PlexusPreferences.getAttachmentUnencryptedSecret(context);
+        String encryptedSecret   = PlexusPreferences.getAttachmentEncryptedSecret(context);
 
         if      (unencryptedSecret != null) attachmentSecret = getUnencryptedAttachmentSecret(context, unencryptedSecret);
         else if (encryptedSecret != null)   attachmentSecret = getEncryptedAttachmentSecret(encryptedSecret);
@@ -60,8 +60,8 @@ public class AttachmentSecretProvider {
         } else {
             KeyStoreHelper.SealedData encryptedSecret = KeyStoreHelper.seal(attachmentSecret.serialize().getBytes());
 
-            SecurePreferences.setAttachmentEncryptedSecret(context, encryptedSecret.serialize());
-            SecurePreferences.setAttachmentUnencryptedSecret(context, null);
+            PlexusPreferences.setAttachmentEncryptedSecret(context, encryptedSecret.serialize());
+            PlexusPreferences.setAttachmentUnencryptedSecret(context, null);
 
             return attachmentSecret;
         }
@@ -90,9 +90,9 @@ public class AttachmentSecretProvider {
     private void storeAttachmentSecret(@NonNull Context context, @NonNull AttachmentSecret attachmentSecret) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             KeyStoreHelper.SealedData encryptedSecret = KeyStoreHelper.seal(attachmentSecret.serialize().getBytes());
-            SecurePreferences.setAttachmentEncryptedSecret(context, encryptedSecret.serialize());
+            PlexusPreferences.setAttachmentEncryptedSecret(context, encryptedSecret.serialize());
         } else {
-            SecurePreferences.setAttachmentUnencryptedSecret(context, attachmentSecret.serialize());
+            PlexusPreferences.setAttachmentUnencryptedSecret(context, attachmentSecret.serialize());
         }
     }
 

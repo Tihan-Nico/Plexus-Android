@@ -59,8 +59,8 @@ public class LookoutNotificationAdapter extends RecyclerView.Adapter<LookoutNoti
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         holder.notification_timestamp.setReferenceTime(Long.parseLong(lookoutNotification.getTimestamp()));
-        getUserInfo(holder.profile_image, lookoutNotification.getProfileID());
-        getNotificationDescription(lookoutNotification, holder.notification_description, lookoutNotification.getProfileID());
+        /*getUserInfo(holder.profile_image, lookoutNotification.getProfileID());
+        getNotificationDescription(lookoutNotification, holder.notification_description, lookoutNotification.getProfileID());*/
 
         SharedPreferences prefs = mContext.getSharedPreferences("plexus", MODE_PRIVATE);
         postid = prefs.getString("postid", lookoutNotification.getPostID());

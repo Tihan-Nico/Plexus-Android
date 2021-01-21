@@ -24,7 +24,7 @@ import androidx.annotation.Nullable;
 
 import com.plexus.R;
 import com.plexus.utils.BitmapUtil;
-import com.plexus.utils.SecurePreferences;
+import com.plexus.utils.PlexusPreferences;
 import com.plexus.utils.Util;
 import com.plexus.utils.guava.Optional;
 
@@ -70,7 +70,7 @@ public class CameraView extends ViewGroup {
 
             if (camera != -1) cameraId = camera;
             else if (isMultiCamera())
-                cameraId = SecurePreferences.getDirectCaptureCameraId(context);
+                cameraId = PlexusPreferences.getDirectCaptureCameraId(context);
 
             typedArray.recycle();
         }
@@ -256,7 +256,7 @@ public class CameraView extends ViewGroup {
                     : android.hardware.Camera.CameraInfo.CAMERA_FACING_BACK;
             onPause();
             onResume();
-            SecurePreferences.setDirectCaptureCameraId(getContext(), cameraId);
+            PlexusPreferences.setDirectCaptureCameraId(getContext(), cameraId);
         }
     }
 

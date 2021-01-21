@@ -230,6 +230,7 @@
         <activity android:name=".qr.activity.QrGetLinkActivity" />
         <activity android:name=".qr.activity.GenerateQrCodeActivity" />
         <activity android:name=".giph.ui.GiphyActivity" />
+        <activity android:name=".browser.BrowserActivity" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"

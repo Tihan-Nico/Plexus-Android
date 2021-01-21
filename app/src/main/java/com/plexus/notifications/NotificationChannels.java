@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.plexus.R;
-import com.plexus.utils.SecurePreferences;
+import com.plexus.utils.PlexusPreferences;
 import com.plexus.utils.ServiceUtil;
 import com.plexus.utils.logging.Log;
 
@@ -60,10 +60,10 @@ public class NotificationChannels {
 
         NotificationManager notificationManager = ServiceUtil.getNotificationManager(context);
 
-        int oldVersion = SecurePreferences.getNotificationChannelVersion(context);
+        int oldVersion = PlexusPreferences.getNotificationChannelVersion(context);
         if (oldVersion != VERSION) {
             onUpgrade(notificationManager, oldVersion, VERSION);
-            SecurePreferences.setNotificationChannelVersion(context, VERSION);
+            PlexusPreferences.setNotificationChannelVersion(context, VERSION);
         }
 
         onCreate(context, notificationManager);
@@ -100,29 +100,29 @@ public class NotificationChannels {
         NotificationChannel new_followers = new NotificationChannel(NEW_FOLLOWERS,context.getString(R.string.NotificationChannel_NewFollowers), NotificationManager.IMPORTANCE_DEFAULT);
 
         messages.setGroup(CATEGORY_PLEXUS);
-        messages.enableVibration(SecurePreferences.isNotificationVibrateEnabled(context));
-        messages.setSound(SecurePreferences.getNotificationRingtone(context), getRingtoneAudioAttributes());
-        setLedPreference(messages, SecurePreferences.getNotificationLedColor(context));
+        messages.enableVibration(PlexusPreferences.isNotificationVibrateEnabled(context));
+        messages.setSound(PlexusPreferences.getNotificationRingtone(context), getRingtoneAudioAttributes());
+        setLedPreference(messages, PlexusPreferences.getNotificationLedColor(context));
 
         lookout_messages.setGroup(CATEGORY_PLEXUS);
-        lookout_messages.enableVibration(SecurePreferences.isNotificationVibrateEnabled(context));
-        lookout_messages.setSound(SecurePreferences.getNotificationRingtone(context), getRingtoneAudioAttributes());
-        setLedPreference(lookout_messages, SecurePreferences.getNotificationLedColor(context));
+        lookout_messages.enableVibration(PlexusPreferences.isNotificationVibrateEnabled(context));
+        lookout_messages.setSound(PlexusPreferences.getNotificationRingtone(context), getRingtoneAudioAttributes());
+        setLedPreference(lookout_messages, PlexusPreferences.getNotificationLedColor(context));
 
         likes.setGroup(CATEGORY_PLEXUS);
-        likes.enableVibration(SecurePreferences.isNotificationVibrateEnabled(context));
-        likes.setSound(SecurePreferences.getNotificationRingtone(context), getRingtoneAudioAttributes());
-        setLedPreference(likes, SecurePreferences.getNotificationLedColor(context));
+        likes.enableVibration(PlexusPreferences.isNotificationVibrateEnabled(context));
+        likes.setSound(PlexusPreferences.getNotificationRingtone(context), getRingtoneAudioAttributes());
+        setLedPreference(likes, PlexusPreferences.getNotificationLedColor(context));
 
         comments_likes.setGroup(CATEGORY_PLEXUS);
-        comments_likes.enableVibration(SecurePreferences.isNotificationVibrateEnabled(context));
-        comments_likes.setSound(SecurePreferences.getNotificationRingtone(context), getRingtoneAudioAttributes());
-        setLedPreference(comments_likes, SecurePreferences.getNotificationLedColor(context));
+        comments_likes.enableVibration(PlexusPreferences.isNotificationVibrateEnabled(context));
+        comments_likes.setSound(PlexusPreferences.getNotificationRingtone(context), getRingtoneAudioAttributes());
+        setLedPreference(comments_likes, PlexusPreferences.getNotificationLedColor(context));
 
         comments.setGroup(CATEGORY_PLEXUS);
-        comments.enableVibration(SecurePreferences.isNotificationVibrateEnabled(context));
-        comments.setSound(SecurePreferences.getNotificationRingtone(context), getRingtoneAudioAttributes());
-        setLedPreference(comments, SecurePreferences.getNotificationLedColor(context));
+        comments.enableVibration(PlexusPreferences.isNotificationVibrateEnabled(context));
+        comments.setSound(PlexusPreferences.getNotificationRingtone(context), getRingtoneAudioAttributes());
+        setLedPreference(comments, PlexusPreferences.getNotificationLedColor(context));
 
         message_request.setShowBadge(false);
         uploads.setShowBadge(false);

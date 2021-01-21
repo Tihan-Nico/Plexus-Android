@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.plexus.utils.SecurePreferences;
+import com.plexus.utils.PlexusPreferences;
 import com.plexus.utils.logging.Log;
 
 /**
@@ -20,7 +20,8 @@ public final class AppInitialization {
     public static void onFirstEverAppLaunch(@NonNull Context context) {
         Log.i(TAG, "onFirstEverAppLaunch()");
 
-        SecurePreferences.setLockScreenActive(context, false);
+        PlexusPreferences.setLockScreenActive(context, false);
+        PlexusPreferences.setLookoutNotificationEnabled(context, true);
 
     }
 

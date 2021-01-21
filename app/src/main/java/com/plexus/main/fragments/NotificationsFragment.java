@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.plexus.R;
 import com.plexus.notifications.LookOutNotificationFragment;
 import com.plexus.notifications.PlexusNotificationFragment;
+import com.plexus.utils.PlexusPreferences;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -68,12 +69,27 @@ public class NotificationsFragment extends Fragment {
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        init();
+        if (PlexusPreferences.getLookoutNotificationEnabled(getContext())){
+            initAll();
+        } else {
+            initPlexusOnly();
+        }
 
         return view;
     }
 
-    private void init() {
+    private void initPlexusOnly(){
+
+        tabLayout.setVisibility(View.GONE);
+        plexusNotificationFragment = new PlexusNotificationFragment();
+
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(), 0);
+        viewPagerAdapter.addFragment(plexusNotificationFragment, "Plexus");
+        viewPager.setAdapter(viewPagerAdapter);
+
+    }
+
+    private void initAll() {
 
         lookOutNotificationFragment = new LookOutNotificationFragment();
         plexusNotificationFragment = new PlexusNotificationFragment();
@@ -85,15 +101,41 @@ public class NotificationsFragment extends Fragment {
         viewPagerAdapter.addFragment(lookOutNotificationFragment, "LookOut");
         viewPager.setAdapter(viewPagerAdapter);
 
-        BadgeDrawable badgeDrawable = tabLayout.getTabAt(0).getOrCreateBadge();
-        badgeDrawable.setVisible(false);
-        badgeDrawable.setNumber(1);
+        BadgeDrawable plexusNotificationCount = tabLayout.getTabAt(0).getOrCreateBadge();
+        plexusNotificationCount.setVisible(false);
+        plexusNotificationCount.setNumber(1);
 
-        clear_notifications.setOnClickListener(v -> deleteNotifications());
+        BadgeDrawable lookoutNotificationCount = tabLayout.getTabAt(0).getOrCreateBadge();
+        lookoutNotificationCount.setVisible(false);
+        lookoutNotificationCount.setNumber(1);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0:
+                        clear_notifications.setOnClickListener(v -> deletePlexusNotifications());
+                        break;
+                    case 1:
+                        clear_notifications.setOnClickListener(v -> deleteLookoutNotifications());
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // Nothing here needs to be done
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // Nothing here needs to be done
+            }
+        });
     }
 
 
-    private void deleteNotifications() {
+    private void deletePlexusNotifications() {
         final Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -120,7 +162,36 @@ public class NotificationsFragment extends Fragment {
         dialog.show();
     }
 
-    private class ViewPagerAdapter extends FragmentPagerAdapter {
+    private void deleteLookoutNotifications() {
+        final Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        TextView description = dialog.findViewById(R.id.description);
+        TextView delete = dialog.findViewById(R.id.delete_all);
+        TextView cancel = dialog.findViewById(R.id.cancel);
+
+        description.setText("Are you sure you want to clear all notifications? \n \n You won't be able to recover it after clearing.");
+
+        cancel.setOnClickListener(v -> dialog.dismiss());
+
+        delete.setOnClickListener(v -> {
+            FirebaseDatabase.getInstance("https://saveourchildren.firebaseio.com/")
+                    .getReference("Users")
+                    .child(firebaseUser.getUid()).child("Notification")
+                    .removeValue()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getContext(), "All notifications cleared", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }
+                    });
+        });
+
+        dialog.show();
+    }
+
+    private static class ViewPagerAdapter extends FragmentPagerAdapter {
 
         private final List<Fragment> fragments = new ArrayList<>();
         private final List<String> fragmentTitles = new ArrayList<>();

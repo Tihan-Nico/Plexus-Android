@@ -2,7 +2,7 @@ package com.plexus.giph.ui;
 
 import android.content.Context;
 
-import com.plexus.utils.SecurePreferences;
+import com.plexus.utils.PlexusPreferences;
 
 public class GiphyActivityToolbarPreferencesPersistence implements GiphyActivityToolbar.Persistence{
 
@@ -18,12 +18,12 @@ public class GiphyActivityToolbarPreferencesPersistence implements GiphyActivity
 
     @Override
     public boolean getGridSelected() {
-        return SecurePreferences.isGifSearchInGridLayout(context);
+        return PlexusPreferences.isGifSearchInGridLayout(context);
     }
 
     @Override
     public void setGridSelected(boolean isGridSelected) {
-        SecurePreferences.setIsGifSearchInGridLayout(context, isGridSelected);
+        PlexusPreferences.setIsGifSearchInGridLayout(context, isGridSelected);
     }
 
 }
