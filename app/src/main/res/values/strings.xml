@@ -494,7 +494,7 @@
 
     <string name="search">Search</string>
     <string name="like">Like</string>
-    <string name="google_maps_key">AIzaSyCVB5qic3GVF923oiT7goM77Olzh4qu_nM</string>
+    <string name="google_maps_key"></string>
 
     <!--Video player accessibility strings-->
     <string name="play">play</string>
