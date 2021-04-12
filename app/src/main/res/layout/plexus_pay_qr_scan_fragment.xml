@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.plexus.camera.CameraView
+        android:id="@+id/scanner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:camera="0"/>
+
+    <LinearLayout
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+        <com.plexus.components.ShapeScrim
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:background="@color/backgroundColor"
+            android:gravity="center">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:src="@drawable/qrcode_scan"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:tint="@color/drawableTintColor"
+                android:transitionName="devices"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:id="@+id/scan_type"
+                android:text="Scan the product barcode to get more information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

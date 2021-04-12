@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/plexus_pay_payment_methods"
+                android:textColor="@color/textColor"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="18sp"
+                android:layout_margin="15dp"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/payment_methods"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/plexus_pay_add_payment_method"
+                android:textColor="@color/plexus"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/guidelineColor"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/plexus_pay_activity"
+                    android:textColor="@color/textColor"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="18sp"
+                    android:layout_margin="15dp"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/plexus_pay_activity_see_all"
+                    android:textColor="@color/plexus"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="12sp"
+                    android:layout_margin="15dp"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/pay_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+            <include
+                android:id="@+id/no_recent_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                layout="@layout/plexus_pay_activity_no_recent_activity_item"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/guidelineColor"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/plexus_pay_balances"
+                android:textColor="@color/textColor"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="18sp"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/plexus_pay_if_you_chose_to_use_mobilecoin_your_balance_will_show_here_if_you_want_to_check_your_other_payment_methods_balances_you_will_have_to_go_their_respective_apps"
+                android:textColor="@color/textDescriptionColor"
+                android:fontFamily="@font/roboto"
+                android:textSize="12sp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
+            <!--Add MoneyView here-->
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

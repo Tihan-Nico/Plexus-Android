@@ -1550,5 +1550,37 @@
     <string name="KeyCachingService_lookout_passphrase_cached">LookOut Passphrase Cached</string>
     <string name="KeyCachingService_lock">Lock</string>
 
+    <!--Plexus Pay-->
+    <string name="plexus_pay_expiry_date">Expiry (MM/YY)</string>
+    <string name="plexus_pay_security_code">Security Code</string>
+    <string name="plexus_pay_card_number">Card Number</string>
+    <string name="plexus_pay_country">Country</string>
+    <string name="plexus_pay_when_you_purchase_something_on_plexus_your_purchase_history_will_show_up_here">When you purchase something on Plexus, your purchase history will show up here.</string>
+    <string name="plexus_pay_no_activity">No Activity</string>
+    <string name="plexus_pay_activity">Activity</string>
+    <string name="plexus_pay_activity_see_all">See All</string>
+    <string name="plexus_pay_balances">Balances</string>
+    <string name="plexus_pay_if_you_chose_to_use_mobilecoin_your_balance_will_show_here_if_you_want_to_check_your_other_payment_methods_balances_you_will_have_to_go_their_respective_apps">If you chose to use MobileCoin your balance will show here. If you want to check your other payment methods, balances you will have to go their respective apps.</string>
+    <string name="plexus_pay_add_payment_method">Add Payment Method</string>
+    <string name="plexus_pay_payment_methods">Payment Methods</string>
+    <string name="plexus_pay_mobilecoin">MobileCoin</string>
+    <string name="plexus_pay_paypal">PayPal</string>
+    <string name="plexus_pay_credit_or_debit_card">Credit or Debit Card</string>
+    <string name="plexus_pay_zip_code">ZIP Code</string>
+    <string name="plexus_pay_state">State</string>
+    <string name="plexus_pay_shipping_city">City</string>
+    <string name="plexus_pay_shipping_street_2">Street Address 2</string>
+    <string name="plexus_pay_shipping_street_1">Street Address 1</string>
+    <string name="plexus_pay_shipping_name">Full Name</string>
+    <string name="plexus_pay_shipping_label">Address Label</string>
+    <string name="plexus_pay_biometric_authentication">Biometric authentication</string>
+    <string name="plexus_pay_for_purchases_on_the_plexus_app">For purchases on the Plexus app</string>
+    <string name="plexus_pay_require_authentication_for_purchases">Require authentication for purchases</string>
+    <string name="plexus_pay_for_all_purchases_through_plexus_on_this_device">For all purchases through Plexus on this device.</string>
+    <string name="plexus_pay_shipping_and_contact_details">Shipping and Contact Details</string>
+    <string name="plexus_pay_currency">Currency</string>
+    <string name="plexus_pay_contact_details">Contact Details</string>
+    <string name="plexus_pay_shipping_address">Shipping Address</string>
+
 
 </resources>
