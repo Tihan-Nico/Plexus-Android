@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package plexus;
+
+option java_package = "com.plexus.databaseprotos";
+option java_multiple_files = true;
+
+message AudioWaveFormData {
+  int64 durationUs = 1;
+  bytes waveForm = 2;
+}
+
+message CryptoValue {
+  oneof Value {
+    MobileCoinValue mobileCoinValue = 1;
+  }
+
+  message MobileCoinValue {
+    string picoMobileCoin = 1;
+  }
+}
+
+message Wallpaper {
+  message SingleColor {
+    int32 color = 1;
+  }
+
+  message LinearGradient {
+    float rotation = 1;
+    repeated int32 colors = 2;
+    repeated float positions = 3;
+  }
+
+  message File {
+    string uri = 1;
+  }
+
+  oneof wallpaper {
+    SingleColor    singleColor = 1;
+    LinearGradient linearGradient = 2;
+    File           file = 3;
+  }
+
+  float dimLevelInDarkTheme = 4;
+}

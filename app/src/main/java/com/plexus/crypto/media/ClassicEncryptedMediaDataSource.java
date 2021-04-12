@@ -16,23 +16,23 @@ import java.io.InputStream;
 final class ClassicEncryptedMediaDataSource extends MediaDataSource {
 
     private final AttachmentSecret attachmentSecret;
-    private final File             mediaFile;
-    private final long             length;
+    private final File mediaFile;
+    private final long length;
 
     ClassicEncryptedMediaDataSource(@NonNull AttachmentSecret attachmentSecret, @NonNull File mediaFile, long length) {
         this.attachmentSecret = attachmentSecret;
-        this.mediaFile        = mediaFile;
-        this.length           = length;
+        this.mediaFile = mediaFile;
+        this.length = length;
     }
 
     @Override
     public int readAt(long position, byte[] bytes, int offset, int length) throws IOException {
         try (InputStream inputStream = ClassicDecryptingPartInputStream.createFor(attachmentSecret, mediaFile)) {
-            byte[] buffer          = new byte[4096];
-            long   headerRemaining = position;
+            byte[] buffer = new byte[4096];
+            long headerRemaining = position;
 
             while (headerRemaining > 0) {
-                int read = inputStream.read(buffer, 0, Util.toIntExact(Math.min((long)buffer.length, headerRemaining)));
+                int read = inputStream.read(buffer, 0, Util.toIntExact(Math.min(buffer.length, headerRemaining)));
 
                 if (read == -1) return -1;
 
@@ -49,5 +49,6 @@ final class ClassicEncryptedMediaDataSource extends MediaDataSource {
     }
 
     @Override
-    public void close() {}
+    public void close() {
+    }
 }

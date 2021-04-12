@@ -69,11 +69,11 @@ public class NotificationsFragment extends Fragment {
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (PlexusPreferences.getLookoutNotificationEnabled(getContext())){
+        /*if (PlexusPreferences.getLookoutNotificationEnabled(getContext())){
             initAll();
         } else {
             initPlexusOnly();
-        }
+        }*/
 
         return view;
     }

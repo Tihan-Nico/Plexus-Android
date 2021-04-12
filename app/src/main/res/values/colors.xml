@@ -26,6 +26,80 @@
     <color name="guidelineColor">#e1e3e4</color>
     <color name="touch_highlight">#400099cc</color>
 
+    <color name="transparent_black_05">#0D000000</color>
+    <color name="transparent_black_10">#18000000</color>
+    <color name="transparent_black_15">#26000000</color>
+    <color name="transparent_black_20">#33000000</color>
+    <color name="transparent_black_40">#66000000</color>
+    <color name="transparent_black_60">#99000000</color>
+    <color name="transparent_black_80">#CC000000</color>
+    <color name="transparent_black_90">#e6000000</color>
+
+    <color name="transparent_white_15">#26ffffff</color>
+    <color name="transparent_white_20">#33ffffff</color>
+    <color name="transparent_white_30">#4Dffffff</color>
+    <color name="transparent_white_40">#66ffffff</color>
+    <color name="transparent_white_60">#99ffffff</color>
+    <color name="transparent_white_80">#ccffffff</color>
+    <color name="transparent_white_90">#e6ffffff</color>
+    <color name="transparent_white_95">#f3ffffff</color>
+
+    <color name="core_grey_02">#f6f6f6</color>
+    <color name="core_grey_05">#e9e9e9</color>
+    <color name="core_grey_10">#e2e2e2</color>
+    <color name="core_grey_15">#d4d4d4</color>
+    <color name="core_grey_20">#c6c6c6</color>
+    <color name="core_grey_25">#b9b9b9</color>
+    <color name="core_grey_30">#b3b3b3</color>
+    <color name="core_grey_35">#9e9e9e</color>
+    <color name="core_grey_40">#919191</color>
+    <color name="core_grey_45">#848484</color>
+    <color name="core_grey_50">#777777</color>
+    <color name="core_grey_55">#6a6a6a</color>
+    <color name="core_grey_60">#5e5e5e</color>
+    <color name="core_grey_65">#525252</color>
+    <color name="core_grey_70">#474747</color>
+    <color name="core_grey_75">#3b3b3b</color>
+    <color name="core_grey_80">#303030</color>
+    <color name="core_grey_85">#262626</color>
+    <color name="core_grey_90">#1b1b1b</color>
+    <color name="core_grey_95">#121212</color>
+
+    <color name="core_ultramarine">#2c6bed</color>
+    <color name="core_ultramarine_light">#6191f3</color>
+    <color name="core_ultramarine_dark">#1851b4</color>
+    <color name="core_ultramarine_icon">#3a76f0</color>
+    <color name="core_ultramarine_33">#552c6bed</color>
+    <color name="core_ultramarine_50">#802c6bed</color>
+
+    <color name="button_primary">@color/core_ultramarine</color>
+    <color name="button_primary_ripple">@color/transparent_black_15</color>
+    <color name="button_primary_text">@color/white</color>
+    <color name="button_primary_text_disabled">@color/transparent_white_20</color>
+
+    <color name="button_secondary">@color/core_grey_05</color>
+    <color name="button_secondary_ripple">@color/core_grey_02</color>
+    <color name="button_secondary_text">@color/core_ultramarine</color>
+    <color name="button_secondary_text_disabled">@color/core_grey_25</color>
+    <color name="button_secondary_stroke">@color/core_grey_15</color>
+
+    <!--Notification LED Colors -->
+    <color name="transparent">@android:color/transparent</color>
+
+    <!--Circular Progress Button-->
+    <color name="cpb_grey">#ffdedede</color>
+    <color name="cpb_blue">#ff0099cc</color>
+    <color name="cpb_blue_dark">#ff00719b</color>
+    <color name="cpb_red">#ffff4444</color>
+    <color name="cpb_red_dark">#ffcd3a3a</color>
+    <color name="cpb_green">#ff99cc00</color>
+    <color name="cpb_green_dark">#ff6d9b00</color>
+    <color name="cpb_white">@color/white</color>
+
+    <!--Payment-->
+    <color name="payment_info_card_overflow_tint">@color/core_grey_45</color>
+    <color name="payment_currency_code_foreground_color">@color/core_grey_45</color>
+
     <color name="grayScale">#B8ACAC</color>
     <color name="background_light">#212121</color>
     <color name="black">#000000</color>
@@ -64,5 +138,4 @@
     <color name="semi_black_transparent">#99000000</color>
     <color name="voiceNoteTrashcanTint">#ff7d8488</color>
     <color name="list_item_sub_title">@color/black_alpha_54</color>
-    <color name="core_ultramarine">#2c6bed</color>
 </resources>

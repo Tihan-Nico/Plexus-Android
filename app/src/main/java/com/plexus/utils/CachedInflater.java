@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 
-import com.plexus.utils.concurrent.PlexusExecutors;
+import com.plexus.core.utils.concurrent.PlexusExecutors;
 import com.plexus.utils.concurrent.SerialExecutor;
 import com.plexus.utils.logging.Log;
 

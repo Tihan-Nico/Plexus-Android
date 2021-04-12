@@ -41,7 +41,7 @@ import javax.crypto.spec.GCMParameterSpec;
 public final class KeyStoreHelper {
 
     private static final String ANDROID_KEY_STORE = "AndroidKeyStore";
-    private static final String KEY_ALIAS         = "SignalSecret";
+    private static final String KEY_ALIAS = "PlexusSecret";
 
     @RequiresApi(Build.VERSION_CODES.M)
     public static SealedData seal(@NonNull byte[] input) {
@@ -51,7 +51,7 @@ public final class KeyStoreHelper {
             Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 
-            byte[] iv   = cipher.getIV();
+            byte[] iv = cipher.getIV();
             byte[] data = cipher.doFinal(input);
 
             return new SealedData(iv, data);
@@ -77,7 +77,7 @@ public final class KeyStoreHelper {
     @RequiresApi(Build.VERSION_CODES.M)
     private static SecretKey getOrCreateKeyStoreEntry() {
         if (hasKeyStoreEntry()) return getKeyStoreEntry();
-        else                    return createKeyStoreEntry();
+        else return createKeyStoreEntry();
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -163,24 +163,25 @@ public final class KeyStoreHelper {
         private byte[] data;
 
         SealedData(@NonNull byte[] iv, @NonNull byte[] data) {
-            this.iv   = iv;
+            this.iv = iv;
             this.data = data;
         }
 
         @SuppressWarnings("unused")
-        public SealedData() {}
-
-        public String serialize() {
-            try {
-                return JsonUtils.toJson(this);
-            } catch (IOException e) {
-                throw new AssertionError(e);
-            }
+        public SealedData() {
         }
 
         public static SealedData fromString(@NonNull String value) {
             try {
                 return JsonUtils.fromJson(value, SealedData.class);
+            } catch (IOException e) {
+                throw new AssertionError(e);
+            }
+        }
+
+        public String serialize() {
+            try {
+                return JsonUtils.toJson(this);
             } catch (IOException e) {
                 throw new AssertionError(e);
             }

@@ -10,15 +10,16 @@ public class SettableFuture<T> implements ListenableFuture<T> {
 
     private final List<Listener<T>> listeners = new LinkedList<>();
 
-    private          boolean   completed;
-    private          boolean   canceled;
-    private volatile T         result;
+    private boolean completed;
+    private boolean canceled;
+    private volatile T result;
     private volatile Throwable exception;
 
-    public SettableFuture() { }
+    public SettableFuture() {
+    }
 
     public SettableFuture(T value) {
-        this.result    = value;
+        this.result = value;
         this.completed = true;
     }
 
@@ -46,7 +47,7 @@ public class SettableFuture<T> implements ListenableFuture<T> {
         synchronized (this) {
             if (completed || canceled) return false;
 
-            this.result    = result;
+            this.result = result;
             this.completed = true;
 
             notifyAll();
@@ -89,13 +90,12 @@ public class SettableFuture<T> implements ListenableFuture<T> {
         while (!completed) wait();
 
         if (exception != null) throw new ExecutionException(exception);
-        else                   return result;
+        else return result;
     }
 
     @Override
     public synchronized T get(long timeout, TimeUnit unit)
-            throws InterruptedException, ExecutionException, TimeoutException
-    {
+            throws InterruptedException, ExecutionException, TimeoutException {
         long startTime = System.currentTimeMillis();
 
         while (!completed && System.currentTimeMillis() - startTime > unit.toMillis(timeout)) {
@@ -103,7 +103,7 @@ public class SettableFuture<T> implements ListenableFuture<T> {
         }
 
         if (!completed) throw new TimeoutException();
-        else            return get();
+        else return get();
     }
 
     @Override
@@ -131,6 +131,6 @@ public class SettableFuture<T> implements ListenableFuture<T> {
 
     private void notifyListener(Listener<T> listener) {
         if (exception != null) listener.onFailure(new ExecutionException(exception));
-        else                   listener.onSuccess(result);
+        else listener.onSuccess(result);
     }
 }

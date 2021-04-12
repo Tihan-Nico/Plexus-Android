@@ -990,8 +990,9 @@
     <string name="NotificationChannel_Comments">Comments</string>
     <string name="NotificationChannel_CommentsLikes">Comment Likes</string>
     <string name="NotificationChannel_NewFollowers">New Followers</string>
-    <string name="NotificationChannel_LookoutLastLocation">Lookout Last Location</string>
-    <string name="NotificationChannel_LookoutMessages">Lookout Messages</string>
+    <string name="NotificationChannel_plexusLastLocation">Plexus Last Location</string>
+    <string name="NotificationChannel_plexusMessages">Plexus Messages</string>
+    <string name="NotificationChannel_locked_status">Locked Status</string>
 
     <!--Conversation Group-->
     <string name="ManageGroupActivity_only_admins_can_enable_or_disable_the_sharable_group_link">Only admins can enable or disable the sharable group link.</string>
@@ -1020,5 +1021,534 @@
     <string name="Permissions_permission_required">Permission required</string>
     <string name="Audio_Permission_Description">To upload audio , allow Plexus access to your microphone.</string>
     <string name="Audio_Permission_Denial_Description">Plexus requires the Microphone permission in order to upload audio, but it has been permanently denied. Please continue to app settings, select \"Permissions\", and enable \"Microphone\".</string>
+    <string name="NotificationChannel_other">Other</string>
+    <string name="NotificationChannel_app_updates">App Updates</string>
+
+    <!--Conversation-->
+    <string name="ConversationActivity_transport_plexus">Plexus</string>
+    <string name="conversation_activity_type_message_push">Plexus Message</string>
+    <string name="transport_selection_list_item_transport_icon">Transport Icon</string>
+    <string name="ConversationFragment_you_can_swipe_to_the_left_reply">You can swipe to the left to reply</string>
+    <string name="ConversationFragment_you_can_swipe_to_the_right_reply">You can swipe to the right to reply</string>
+    <string name="load_more_header_see_full_conversation">See full conversation</string>
+    <string name="load_more_header_loading">Loading</string>
+    <string name="ConversationFragment_quoted_message_not_found">Quoted message not found</string>
+    <string name="ConversationActivity_unable_to_record_audio">Unable to record audio</string>
+    <string name="ConversationActivity_to_send_audio_messages_allow_plexus_access_to_your_microphone">To send audio messages allow Plexus access to your microphone</string>
+    <string name="ConversationActivity_plexus_requires_the_microphone_permission_in_order_to_send_audio_messages">Plexus requires the microphone permission in order to send audio messages</string>
+
+
+    <!-- message_details_recipient_header -->
+    <string name="message_details_recipient_header__pending_send">Pending</string>
+    <string name="message_details_recipient_header__sent_to">Sent to</string>
+    <string name="message_details_recipient_header__sent_from">Sent from</string>
+    <string name="message_details_recipient_header__delivered_to">Delivered to</string>
+    <string name="message_details_recipient_header__read_by">Read by</string>
+    <string name="message_details_recipient_header__not_sent">Not sent</string>
+    <string name="ConversationItem_you_deleted_this_message">You deleted this message</string>
+    <string name="ConversationItem_this_message_was_deleted">THis message was deleted</string>
+    <string name="InputPanel_tap_and_hold_to_record_a_voice_message_release_to_send">Tap and hold to record a voice message, release to send</string>
+    <string name="ConversationActivity_there_is_no_app_available_to_handle_this_link_on_your_device">There is no app available to handle this link on your device</string>
+    <string name="NotificationChannel_voice_notes">Voice Note</string>
+    <string name="no_one_has_messaged_you_regarding_a_missing_person_or_kidnapper">No one has messaged you regarding a missing person or kidnapper</string>
+
+
+    <!-- Insights -->
+    <string name="Insights_percent">%</string>
+    <string name="InsightsDashboardFragment_not_enough_data">Not enough data</string>
+    <string name="InsightsDashboardFragment_your_insights_percentage">These stats represent who you helped on the Plexus application. By being on the Plexus and contributing to a missing person case your percentage increases.</string>
+    <string name="InsightsDashboardFragment_find_someone">Start finding someone</string>
+    <string name="InsightsDashboardFragment_this_stat_was_generated_locally">These statistics were generated locally on your device and can only be seen by you. You can share these stats if you want to. \n \n Share Statistics</string>
+    <string name="InsightsDashboardFragment_helping">Helped/Helping</string>
+
+    <!-- TransferControlView -->
+    <plurals name="TransferControlView_n_items">
+        <item quantity="one">%d Item</item>
+        <item quantity="other">%d Items</item>
+    </plurals>
+
+    <!-- ChooseBackupFragment -->
+    <string name="ChooseBackupFragment__restore_from_backup">Restore from backup?</string>
+    <string name="ChooseBackupFragment__restore_your_messages_and_media">Restore your messages and media from a local backup. If you don\'t restore now, you won\'t be able to restore later.</string>
+    <string name="ChooseBackupFragment__icon_content_description">Restore from backup icon</string>
+    <string name="ChooseBackupFragment__choose_backup">Choose backup</string>
+    <string name="ChooseBackupFragment__learn_more">Learn more</string>
+
+    <!-- RestoreBackupFragment -->
+    <string name="RestoreBackupFragment__restore_complete">Restore complete</string>
+    <string name="RestoreBackupFragment__to_continue_using_backups_please_choose_a_folder">To continue using backups, please choose a folder. New backups will be saved to this location.</string>
+    <string name="RestoreBackupFragment__choose_folder">Choose folder</string>
+    <string name="RestoreBackupFragment__not_now">Not now</string>
+
+    <!-- BackupsPreferenceFragment -->
+    <string name="BackupsPreferenceFragment__chat_backups">Chat backups</string>
+    <string name="BackupsPreferenceFragment__backups_are_encrypted_with_a_passphrase">Backups are encrypted with a passphrase and stored on your device.</string>
+    <string name="BackupsPreferenceFragment__create_backup">Create backup</string>
+    <string name="BackupsPreferenceFragment__last_backup">Last backup: %1$s</string>
+    <string name="BackupsPreferenceFragment__backup_folder">Backup folder</string>
+    <string name="BackupsPreferenceFragment__verify_backup_passphrase">Verify backup passphrase</string>
+    <string name="BackupsPreferenceFragment__test_your_backup_passphrase">Test your backup passphrase and verify that it matches</string>
+    <string name="BackupsPreferenceFragment__turn_on">Turn on</string>
+    <string name="BackupsPreferenceFragment__turn_off">Turn off</string>
+    <string name="BackupsPreferenceFragment__to_restore_a_backup">To restore a backup, install a new copy of Plexus. Open the app and tap "Restore backup", then locate a backup file. %1$s</string>
+    <string name="BackupsPreferenceFragment__learn_more">Learn more</string>
+    <string name="BackupsPreferenceFragment__in_progress">In progress…</string>
+    <string name="BackupsPreferenceFragment__d_so_far">%1$d so far…</string>
+    <string name="BackupsPreferenceFragment_plexus_requires_external_storage_permission_in_order_to_create_backups">Plexus requires external storage permission in order to create backups, but it has been permanently denied. Please continue to app settings, select \"Permissions\" and enable \"Storage\".</string>
+
+    <!-- TransferOrRestoreFragment -->
+    <string name="TransferOrRestoreFragment__transfer_or_restore_account">Transfer or restore account</string>
+    <string name="TransferOrRestoreFragment__if_you_have_previously_registered_a_plexus_account">If you have previously registered a Plexus account, you can transfer or restore your account and messages</string>
+    <string name="TransferOrRestoreFragment__transfer_from_android_device">Transfer from Android device</string>
+    <string name="TransferOrRestoreFragment__transfer_your_account_and_messages_from_your_old_android_device">Transfer your account and messages from your old Android device. You need access to your old device.</string>
+    <string name="TransferOrRestoreFragment__you_need_access_to_your_old_device">You need access to your old device.</string>
+    <string name="TransferOrRestoreFragment__restore_from_backup">Restore from backup</string>
+    <string name="TransferOrRestoreFragment__restore_your_messages_from_a_local_backup">Restore your messages from a local backup. If you don’t restore now, you won\'t be able to restore later.</string>
+
+    <!-- NewDeviceTransferInstructionsFragment -->
+    <string name="NewDeviceTransferInstructions__open_plexus_on_your_old_android_phone">Open Plexus on your old Android phone</string>
+    <string name="NewDeviceTransferInstructions__continue">Continue</string>
+    <string name="NewDeviceTransferInstructions__first_bullet">1.</string>
+    <string name="NewDeviceTransferInstructions__tap_on_your_profile_photo_in_the_top_left_to_open_settings">Tap on your profile photo in the top left to open Settings</string>
+    <string name="NewDeviceTransferInstructions__second_bullet">2.</string>
+    <string name="NewDeviceTransferInstructions__tap_on_chats">Tap on "Chats"</string>
+    <string name="NewDeviceTransferInstructions__third_bullet">3.</string>
+    <string name="NewDeviceTransferInstructions__tap_transfer_account_and_then_continue_on_both_devices">Tap "Transfer Account" and then "Continue" on both devices</string>
+
+    <!-- NewDeviceTransferSetupFragment -->
+    <string name="NewDeviceTransferSetup__preparing_to_connect_to_old_android_device">Preparing to connect to old Android device…</string>
+    <string name="NewDeviceTransferSetup__take_a_moment_should_be_ready_soon">Taking a moment, should be ready soon</string>
+    <string name="NewDeviceTransferSetup__waiting_for_old_device_to_connect">Waiting for old Android device to connect…</string>
+    <string name="NewDeviceTransferSetup__plexus_needs_the_location_permission_to_discover_and_connect_with_your_old_device">Plexus needs the location permission to discover and connect to your old Android device.</string>
+    <string name="NewDeviceTransferSetup__plexus_needs_location_services_enabled_to_discover_and_connect_with_your_old_device">Plexus needs location services enabled to discover and connect with your old Android device.</string>
+    <string name="NewDeviceTransferSetup__plexus_needs_wifi_on_to_discover_and_connect_with_your_old_device">Plexus needs Wi-Fi on to discover and connect with your old Android device. Wi-Fi needs to be on but it does not have to be connected to a Wi-Fi network.</string>
+    <string name="NewDeviceTransferSetup__sorry_it_appears_your_device_does_not_support_wifi_direct">Sorry, it appears this device does not support Wi-Fi Direct. Plexus uses Wi-Fi Direct to discover and connect with your old Android device. You can still restore a backup to restore your account from your old Android device.</string>
+    <string name="NewDeviceTransferSetup__restore_a_backup">Restore a backup</string>
+    <string name="NewDeviceTransferSetup__an_unexpected_error_occurred_while_attempting_to_connect_to_your_old_device">An unexpected error occurred while attempting to connect to your old Android device.</string>
+
+    <!-- OldDeviceTransferSetupFragment -->
+    <string name="OldDeviceTransferSetup__searching_for_new_android_device">Searching for new Android device…</string>
+    <string name="OldDeviceTransferSetup__plexus_needs_the_location_permission_to_discover_and_connect_with_your_new_device">Plexus needs the location permission to discover and connect to your new Android device.</string>
+    <string name="OldDeviceTransferSetup__plexus_needs_location_services_enabled_to_discover_and_connect_with_your_new_device">Plexus needs location services enabled to discover and connect with your new Android device.</string>
+    <string name="OldDeviceTransferSetup__plexus_needs_wifi_on_to_discover_and_connect_with_your_new_device">Plexus needs Wi-Fi on to discover and connect with your new Android device. Wi-Fi needs to be on but it does not have to be connected to a Wi-Fi network.</string>
+    <string name="OldDeviceTransferSetup__sorry_it_appears_your_device_does_not_support_wifi_direct">Sorry, it appears this device does not support Wi-Fi Direct. Plexus uses Wi-Fi Direct to discover and connect with your new Android device. You can still create a backup to restore your account on your new Android device.</string>
+    <string name="OldDeviceTransferSetup__create_a_backup">Create a backup</string>
+    <string name="OldDeviceTransferSetup__an_unexpected_error_occurred_while_attempting_to_connect_to_your_old_device">An unexpected error occurred while attempting to connect to your new Android device.</string>
+
+    <!-- DeviceTransferSetupFragment -->
+    <string name="DeviceTransferSetup__unable_to_open_wifi_settings">Unable to open Wi-Fi Settings. Please turn on Wi-Fi manually.</string>
+    <string name="DeviceTransferSetup__grant_location_permission">Grant location permission</string>
+    <string name="DeviceTransferSetup__turn_on_location_services">Turn on location services</string>
+    <string name="DeviceTransferSetup__unable_to_open_location_settings">Unable to open location settings.</string>
+    <string name="DeviceTransferSetup__turn_on_wifi">Turn on Wi-Fi</string>
+    <string name="DeviceTransferSetup__error_connecting">Error Connecting</string>
+    <string name="DeviceTransferSetup__retry">Retry</string>
+    <string name="DeviceTransferSetup__submit_debug_logs">Submit debug logs</string>
+    <string name="DeviceTransferSetup__verify_code">Verify code</string>
+    <string name="DeviceTransferSetup__verify_that_the_code_below_matches_on_both_of_your_devices">Verify that the code below matches on both of your devices. Then tap continue.</string>
+    <string name="DeviceTransferSetup__the_numbers_do_not_match">The numbers do not match</string>
+    <string name="DeviceTransferSetup__continue">Continue</string>
+    <string name="DeviceTransferSetup__number_is_not_the_same">Number is not the same</string>
+    <string name="DeviceTransferSetup__if_the_numbers_on_your_devices_do_not_match_its_possible_you_connected_to_the_wrong_device">If the numbers on your devices do not match, it\'s possible you connected to the wrong device. To fix this, stop the transfer and try again, and keep both of your devices close.</string>
+    <string name="DeviceTransferSetup__stop_transfer">Stop transfer</string>
+    <string name="DeviceTransferSetup__unable_to_discover_old_device">Unable to discover old device</string>
+    <string name="DeviceTransferSetup__unable_to_discover_new_device">Unable to discover new device</string>
+    <string name="DeviceTransferSetup__make_sure_the_following_permissions_are_enabled">Make sure the following permissions and services are enabled:</string>
+    <string name="DeviceTransferSetup__location_permission">Location permission</string>
+    <string name="DeviceTransferSetup__location_services">Location services</string>
+    <string name="DeviceTransferSetup__wifi">Wi-Fi</string>
+    <string name="DeviceTransferSetup__on_the_wifi_direct_screen_remove_all_remembered_groups_and_unlink_any_invited_or_connected_devices">On the WiFi Direct screen, remove all remembered groups and unlink any invited or connected devices.</string>
+    <string name="DeviceTransferSetup__wifi_direct_screen">WiFi Direct screen</string>
+    <string name="DeviceTransferSetup__try_turning_wifi_off_and_on_on_both_devices">Try turning Wi-Fi off and on, on both devices.</string>
+    <string name="DeviceTransferSetup__make_sure_both_devices_are_in_transfer_mode">Make sure both devices are in transfer mode.</string>
+    <string name="DeviceTransferSetup__go_to_support_page">Go to support page</string>
+    <string name="DeviceTransferSetup__try_again">Try again</string>
+    <string name="DeviceTransferSetup__waiting_for_other_device">Waiting for other device</string>
+    <string name="DeviceTransferSetup__tap_continue_on_your_other_device_to_start_the_transfer">Tap Continue on your other device to start the transfer.</string>
+    <string name="DeviceTransferSetup__tap_continue_on_your_other_device">Tap Continue on your other device…</string>
+
+    <!-- NewDeviceTransferFragment -->
+    <string name="NewDeviceTransfer__cannot_transfer_from_a_newer_version_of_plexus">Cannot transfer from a newer versions of Plexus</string>
+
+    <!-- DeviceTransferFragment -->
+    <string name="DeviceTransfer__transferring_data">Transferring data</string>
+    <string name="DeviceTransfer__keep_both_devices_near_each_other">Keep both devices near each other. Do not turn off the devices and keep Plexus open. Transfers are end-to-end encrypted.</string>
+    <string name="DeviceTransfer__d_messages_so_far">%1$d messages so far…</string>
+    <string name="DeviceTransfer__cancel">Cancel</string>
+    <string name="DeviceTransfer__try_again">Try again</string>
+    <string name="DeviceTransfer__stop_transfer_question">Stop transfer?</string>
+    <string name="DeviceTransfer__stop_transfer">Stop transfer</string>
+    <string name="DeviceTransfer__all_transfer_progress_will_be_lost">All transfer progress will be lost.</string>
+    <string name="DeviceTransfer__transfer_failed">Transfer failed</string>
+    <string name="DeviceTransfer__unable_to_transfer">Unable to transfer</string>
+
+    <!-- OldDeviceTransferInstructionsFragment -->
+    <string name="OldDeviceTransferInstructions__transfer_account">Transfer Account</string>
+    <string name="OldDeviceTransferInstructions__you_can_transfer_your_plexus_account_when_setting_up_plexus_on_a_new_android_device">You can transfer your Plexus account when setting up Plexus/plexus on a new Android device. Before continuing:</string>
+    <string name="OldDeviceTransferInstructions__first_bullet">1.</string>
+    <string name="OldDeviceTransferInstructions__download_plexus_on_your_new_android_device">Download Plexus on your new Android device</string>
+    <string name="OldDeviceTransferInstructions__second_bullet">2.</string>
+    <string name="OldDeviceTransferInstructions__tap_on_transfer_or_restore_account">Tap on "Transfer or restore account"</string>
+    <string name="OldDeviceTransferInstructions__third_bullet">3.</string>
+    <string name="OldDeviceTransferInstructions__select_transfer_from_android_device_when_prompted_and_then_continue">Select "Transfer from Android device" when prompted and then "Continue". Keep both devices nearby.</string>
+    <string name="OldDeviceTransferInstructions__continue">Continue</string>
+
+    <!-- OldDeviceTransferComplete -->
+    <string name="OldDeviceTransferComplete__transfer_complete">Transfer complete</string>
+    <string name="OldDeviceTransferComplete__go_to_your_new_device">Go to your new device</string>
+    <string name="OldDeviceTransferComplete__your_plexus_data_has_Been_transferred_to_your_new_device">Your Plexus data has been transferred to your new device. To complete the transfer process, you must continue registration on your new device.</string>
+    <string name="OldDeviceTransferComplete__close">Close</string>
+
+    <!-- NewDeviceTransferComplete -->
+    <string name="NewDeviceTransferComplete__transfer_successful">Transfer successful</string>
+    <string name="NewDeviceTransferComplete__transfer_complete">Transfer complete</string>
+    <string name="NewDeviceTransferComplete__to_complete_the_transfer_process_you_must_continue_registration">To complete the transfer process, you must continue registration.</string>
+    <string name="NewDeviceTransferComplete__continue_registration">Continue registration</string>
+
+    <!-- DeviceToDeviceTransferService -->
+    <string name="DeviceToDeviceTransferService_content_title">Account transfer</string>
+    <string name="DeviceToDeviceTransferService_status_ready">Preparing to connect to your other Android device…</string>
+    <string name="DeviceToDeviceTransferService_status_starting_up">Preparing to connect to your other Android device…</string>
+    <string name="DeviceToDeviceTransferService_status_discovery">Searching for your other Android device…</string>
+    <string name="DeviceToDeviceTransferService_status_network_connected">Connecting to your other Android device…</string>
+    <string name="DeviceToDeviceTransferService_status_verification_required">Verification required</string>
+    <string name="DeviceToDeviceTransferService_status_service_connected">Transferring account…</string>
+
+    <!-- OldDeviceTransferLockedDialog -->
+    <string name="OldDeviceTransferLockedDialog__complete_registration_on_your_new_device">Complete registration on your new device</string>
+    <string name="OldDeviceTransferLockedDialog__your_plexus_account_has_been_transferred_to_your_new_device">Your Plexus account has been transferred to your new device, but you must complete registration on it to continue. Your Plexus account will still be active on this device.</string>
+    <string name="OldDeviceTransferLockedDialog__done">Done</string>
+    <string name="OldDeviceTransferLockedDialog__cancel_and_activate_this_device">Cancel and activate this device</string>
+
+    <!--Backups-->
+    <string name="RegistrationActivity_enter_backup_passphrase">Enter backup passphrase</string>
+    <string name="RegistrationActivity_restore">Restore</string>
+    <string name="RegistrationActivity_backup_failure_downgrade">Cannot import backups from newer versions of Plexus</string>
+    <string name="RegistrationActivity_incorrect_backup_passphrase">Incorrect backup passphrase</string>
+    <string name="RegistrationActivity_checking">Checking…</string>
+    <string name="RegistrationActivity_d_messages_so_far">%d messages so far…</string>
+    <string name="RegistrationActivity_restore_from_backup">Restore from backup?</string>
+    <string name="RegistrationActivity_restore_your_messages_and_media_from_a_local_backup">Restore your messages and media from a local backup. If you don\'t restore now, you won\'t be able to restore later.</string>
+    <string name="RegistrationActivity_backup_size_s">Backup size: %s</string>
+    <string name="RegistrationActivity_backup_timestamp_s">Backup timestamp: %s</string>
+    <string name="RegistrationActivity_we_need_to_verify_that_youre_human">We need to verify that you\'re human</string>
+    <string name="enter_backup_passphrase_dialog__backup_passphrase">Backup passphrase</string>
+    <string name="backup_enable_dialog__backups_will_be_saved_to_external_storage_and_encrypted_with_the_passphrase_below_you_must_have_this_passphrase_in_order_to_restore_a_backup">Backups will be saved to external storage and encrypted with the passphrase below. You must have this passphrase in order to restore a backup.</string>
+    <string name="backup_enable_dialog__you_must_have_this_passphrase">You must have this passphrase in order to restore a backup.</string>
+    <string name="backup_enable_dialog__folder">Folder</string>
+    <string name="backup_enable_dialog__i_have_written_down_this_passphrase">I have written down this passphrase. Without it, I will be unable to restore a backup.</string>
+    <string name="BackupDialog_enable_local_backups">Enable local backups?</string>
+    <string name="BackupDialog_enable_backups">Enable backups</string>
+    <string name="BackupDialog_please_acknowledge_your_understanding_by_marking_the_confirmation_check_box">Please acknowledge your understanding by marking the confirmation check box.</string>
+    <string name="BackupDialog_delete_backups">Delete backups?</string>
+    <string name="BackupDialog_disable_and_delete_all_local_backups">Disable and delete all local backups?</string>
+    <string name="BackupDialog_delete_backups_statement">Delete backups</string>
+    <string name="BackupDialog_to_enable_backups_choose_a_folder">To enable backups, choose a folder. Backups will be saved to this location.</string>
+    <string name="BackupDialog_choose_folder">Choose folder</string>
+    <string name="BackupDialog_copied_to_clipboard">Copied to clipboard</string>
+    <string name="BackupDialog_no_file_picker_available">No file picker available.</string>
+    <string name="BackupDialog_enter_backup_passphrase_to_verify">Enter your backup passphrase to verify</string>
+    <string name="BackupDialog_verify">Verify</string>
+    <string name="BackupDialog_you_successfully_entered_your_backup_passphrase">You successfully entered your backup passphrase</string>
+    <string name="BackupDialog_passphrase_was_not_correct">Passphrase was not correct</string>
+    <string name="LocalBackupJob_creating_backup">Creating backup…</string>
+    <string name="LocalBackupJobApi29_backup_failed">Backup failed</string>
+    <string name="LocalBackupJobApi29_your_backup_directory_has_been_deleted_or_moved">Your backup directory has been deleted or moved.</string>
+    <string name="LocalBackupJobApi29_your_backup_file_is_too_large">Your backup file is too large to store on this volume.</string>
+    <string name="LocalBackupJobApi29_there_is_not_enough_space">There is not enough space to store your backup.</string>
+    <string name="LocalBackupJobApi29_tap_to_manage_backups">Tap to manage backups.</string>
+    <string name="BackupUtil_never">Never</string>
+    <string name="BackupUtil_unknown">Unknown</string>
+
+    <!-- StorageUtil -->
+    <string name="StorageUtil__s_s">%1$s/%2$s</string>
+    <string name="RegistrationActivity_continue">Continue</string>
+    <string name="registration_activity__transfer_or_restore_account">Transfer or Restore Account</string>
+    <string name="RegistrationActivity_terms_and_privacy">Terms and Privacy</string>
+    
+    <!--Account Locked Fragment-->
+    <string name="AccountLockedFragment__account_locked">Account locked</string>
+    <string name="AccountLockedFragment__your_account_has_been_locked_to_protect_your_privacy">Your account has been locked to protect your privacy and security. After %1$d days of inactivity in your account you\'ll be able to re-register this phone number without needing your PIN. All content will be deleted.</string>
+    <string name="AccountLockedFragment__next">Next</string>
+    <string name="AccountLockedFragment__learn_more">Learn More</string>
+    <string name="AccountLockedFragment__learn_more_url">https://plexus.dev/help/account-locked</string>
+
+    <!-- Payments -->
+    <string name="PaymentsActivityFragment__all_activity">All activity</string>
+    <string name="PaymentsAllActivityFragment__all">All</string>
+    <string name="PaymentsAllActivityFragment__sent">Sent</string>
+    <string name="PaymentsAllActivityFragment__received">Received</string>
+
+    <string name="PaymentsHomeFragment__introducing_payments">Introducing payments (Beta)</string>
+    <string name="PaymentsHomeFragment__use_plexus_to_send_and_receive">Use Plexus to send and receive MobileCoin, a new privacy focused digital currency. Activate to get started.</string>
+    <string name="PaymentsHomeFragment__activate_payments">Activate Payments</string>
+    <string name="PaymentsHomeFragment__activating_payments">Activating payments…</string>
+    <string name="PaymentsHomeFragment__restore_payments_account">Restore payments account</string>
+    <string name="PaymentsHomeFragment__no_recent_activity_yet">No recent activity yet</string>
+    <string name="PaymentsHomeFragment__pending_requests">Pending requests</string>
+    <string name="PaymentsHomeFragment__recent_activity">Recent activity</string>
+    <string name="PaymentsHomeFragment__see_all">See all</string>
+    <string name="PaymentsHomeFragment__add_funds">Add funds</string>
+    <string name="PaymentsHomeFragment__send">Send</string>
+    <string name="PaymentsHomeFragment__sent_s">Sent %1$s</string>
+    <string name="PaymentsHomeFragment__received_s">Received %1$s</string>
+    <string name="PaymentsHomeFragment__transfer_to_exchange">Transfer to exchange</string>
+    <string name="PaymentsHomeFragment__currency_conversion">Currency conversion</string>
+    <string name="PaymentsHomeFragment__deactivate_payments">Deactivate payments</string>
+    <string name="PaymentsHomeFragment__recovery_phrase">Recovery phrase</string>
+    <string name="PaymentsHomeFragment__help">Help</string>
+    <string name="PaymentsHomeFragment__coin_cleanup_fee">Coin cleanup fee</string>
+    <string name="PaymentsHomeFragment__sent_payment">Sent payment</string>
+    <string name="PaymentsHomeFragment__received_payment">Received payment</string>
+    <string name="PaymentsHomeFragment__processing_payment">Processing payment</string>
+    <string name="PaymentsHomeFragment__unknown_amount">---</string>
+    <string name="PaymentsHomeFragment__currency_conversion_not_available">Currency conversion not available</string>
+    <string name="PaymentsHomeFragment__cant_display_currency_conversion">Can\'t display currency conversion. Check your phone\'s connection and try again.</string>
+    <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">Payments is not available in your region.</string>
+    <string name="PaymentsHomeFragment__could_not_enable_payments">Could not enable payments. Try again later.</string>
+    <string name="PaymentsHomeFragment__deactivate_payments_question">Deactivate Payments?</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">You will not be able to send or receive MobileCoin in Plexus if you deactivate payments.</string>
+    <string name="PaymentsHomeFragment__deactivate">Deactivate</string>
+    <string name="PaymentsHomeFragment__continue">Continue</string>
+    <string name="PaymentsHomeFragment__balance_is_not_currently_available">Balance is not currently available.</string>
+    <string name="PaymentsHomeFragment__payments_deactivated">Payments deactivated.</string>
+    <string name="PaymentsHomeFragment__payment_failed">Payment failed</string>
+    <string name="PaymentsHomeFragment__details">Details</string>
+    <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.plexus.org/hc/articles/360057625692#payments_activate </string>
+    <string name="PaymentsHomeFragment__you_can_use_plexus_to_send">You can use plexus to send and receive MobileCoin. All payments are subject to the Terms of Use for MobileCoins and the MobileCoin Wallet. This is a beta feature so you may encounter some issues and payments or balances you may lose can\'t be recovered. </string>
+    <string name="PaymentsHomeFragment__activate">Activate</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">View MobileCoin terms</string>
+    <string name="PaymentsHomeFragment__payments_not_available">Payments in Plexus is no longer available. You can still transfer funds to an exchange but you can no longer send and receive payments or add funds.</string>
+
+    <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string>
+
+    <!-- PaymentsAddMoneyFragment -->
+    <string name="PaymentsAddMoneyFragment__add_funds">Add funds</string>
+    <string name="PaymentsAddMoneyFragment__your_wallet_address">Your Wallet Address</string>
+    <string name="PaymentsAddMoneyFragment__copy">Copy</string>
+    <string name="PaymentsAddMoneyFragment__copied_to_clipboard">Copied to clipboard</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">To add funds, send MobileCoin to your wallet address. Start a transaction from your account on an exchange that supports MobileCoin, then scan the QR code or copy your wallet address.</string>
+    <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.plexus.org/hc/articles/360057625692#payments_transfer_from_exchange</string>
+
+    <!-- PaymentsDetailsFragment -->
+    <string name="PaymentsDetailsFragment__details">Details</string>
+    <string name="PaymentsDetailsFragment__status">Status</string>
+    <string name="PaymentsDetailsFragment__submitting_payment">Submitting payment…</string>
+    <string name="PaymentsDetailsFragment__processing_payment">Processing payment…</string>
+    <string name="PaymentsDetailsFragment__payment_complete">Payment complete</string>
+    <string name="PaymentsDetailsFragment__payment_failed">Payment failed</string>
+    <string name="PaymentsDetailsFragment__network_fee">Network fee</string>
+    <string name="PaymentsDetailsFragment__sent_by">Sent by</string>
+    <string name="PaymentsDetailsFragment__sent_to_s">Sent to %1$s</string>
+    <string name="PaymentsDetailsFragment__you_on_s_at_s">You on %1$s at %2$s</string>
+    <string name="PaymentsDetailsFragment__s_on_s_at_s">%1$s on %2$s at %3$s</string>
+    <string name="PaymentsDetailsFragment__to">To</string>
+    <string name="PaymentsDetailsFragment__from">From</string>
+    <string name="PaymentsDetailsFragment__information">Transaction details including the payment amount and time of transaction are part of the MobileCoin Ledger.</string>
+    <string name="PaymentsDetailsFragment__coin_cleanup_fee">Coin cleanup fee</string>
+    <string name="PaymentsDetailsFragment__coin_cleanup_information">A “coin cleanup fee” is charged when the coins in your possession can not be combined to complete a transaction. Cleanup will allow you to continue sending payments.</string>
+    <string name="PaymentsDetailsFragment__no_details_available">No further details available for this transaction</string>
+    <string name="PaymentsDetailsFragment__learn_more__information" translatable="false">https://support.plexus.org/hc/articles/360057625692#payments_details</string>
+    <string name="PaymentsDetailsFragment__learn_more__cleanup_fee" translatable="false">https://support.plexus.org/hc/articles/360057625692#payments_details_fees</string>
+    <string name="PaymentsDetailsFragment__sent_payment">Sent payment</string>
+    <string name="PaymentsDetailsFragment__received_payment">Received payment</string>
+    <string name="PaymentsDeatilsFragment__payment_completed_s">Payment completed %1$s</string>
+    <string name="PaymentsDetailsFragment__block_number">Block number</string>
+
+    <!-- PaymentsTransferFragment -->
+    <string name="PaymentsTransferFragment__transfer">Transfer</string>
+    <string name="PaymentsTransferFragment__scan_qr_code">Scan QR Code</string>
+    <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">To: Scan or enter wallet address</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">You can transfer MobileCoin by completing a transfer to the wallet address provided by the exchange. The wallet address is the string of numbers and letters most commonly below the QR code.</string>
+    <string name="PaymentsTransferFragment__next">Next</string>
+    <string name="PaymentsTransferFragment__invalid_address">Invalid address</string>
+    <string name="PaymentsTransferFragment__check_the_wallet_address">Check the wallet address you\'re attempting to transfer to and try again.</string>
+    <string name="PaymentsTransferFragment__you_cant_transfer_to_your_own_plexus_wallet_address">You can\'t transfer to your own Plexus wallet address. Enter the wallet address from your account at a supported exchange.</string>
+    <string name="PaymentsTransferFragment__to_scan_a_qr_code_plexus_needs">To scan a QR code, Plexus needs access to the camera.</string>
+    <string name="PaymentsTransferFragment__plexus_needs_the_camera_permission_to_capture_qr_code_go_to_settings">Plexus needs the Camera permission to capture a QR code. Go to settings, select \"Permissions\", and enable \"Camera\".</string>
+    <string name="PaymentsTransferFragment__to_scan_a_qr_code_plexus_needs_access_to_the_camera">To scan a QR code, Plexus needs access to the camera.</string>
+    <string name="PaymentsTransferFragment__settings">Settings</string>
+
+    <!-- PaymentsTransferQrScanFragment -->
+    <string name="PaymentsTransferQrScanFragment__scan_address_qr_code">Scan Address QR Code</string>
+    <string name="PaymentsTransferQrScanFragment__scan_the_address_qr_code_of_the_payee">Scan the address QR code of the payee</string>
+
+    <!-- CreatePaymentFragment -->
+    <string name="CreatePaymentFragment__request">Request</string>
+    <string name="CreatePaymentFragment__pay">Pay</string>
+    <string name="CreatePaymentFragment__available_balance_s">Available balance: %1$s</string>
+    <string name="CreatePaymentFragment__toggle_content_description">Toggle</string>
+    <string name="CreatePaymentFragment__1">1</string>
+    <string name="CreatePaymentFragment__2">2</string>
+    <string name="CreatePaymentFragment__3">3</string>
+    <string name="CreatePaymentFragment__4">4</string>
+    <string name="CreatePaymentFragment__5">5</string>
+    <string name="CreatePaymentFragment__6">6</string>
+    <string name="CreatePaymentFragment__7">7</string>
+    <string name="CreatePaymentFragment__8">8</string>
+    <string name="CreatePaymentFragment__9">9</string>
+    <string name="CreatePaymentFragment__decimal">.</string>
+    <string name="CreatePaymentFragment__0">0</string>
+    <string name="CreatePaymentFragment__lt">&lt;</string>
+    <string name="CreatePaymentFragment__backspace">Backspace</string>
+    <string name="CreatePaymentFragment__add_note">Add note</string>
+    <string name="CreatePaymentFragment__conversions_are_just_estimates">Conversions are just estimates and may not be accurate.</string>
+    <string name="CreatePaymentFragment__learn_more__conversions" translatable="false">https://support.plexus.org/hc/articles/360057625692#payments_currency_conversion</string>
+
+    <!-- EditNoteFragment -->
+    <string name="EditNoteFragment_note">Note</string>
+
+    <!-- ConfirmPaymentFragment -->
+    <string name="ConfirmPayment__confirm_payment">Confirm payment</string>
+    <string name="ConfirmPayment__network_fee">Network fee</string>
+    <string name="ConfirmPayment__error_getting_fee">Error getting fee</string>
+    <string name="ConfirmPayment__estimated_s">Estimated %1$s</string>
+    <string name="ConfirmPayment__to">To</string>
+    <string name="ConfirmPayment__total_amount">Total amount</string>
+    <string name="ConfirmPayment__balance_s">Balance: %1$s</string>
+    <string name="ConfirmPayment__submitting_payment">Submitting payment…</string>
+    <string name="ConfirmPayment__processing_payment">Processing payment…</string>
+    <string name="ConfirmPayment__payment_complete">Payment complete</string>
+    <string name="ConfirmPayment__payment_failed">Payment failed</string>
+    <string name="ConfirmPayment__payment_will_continue_processing">Payment will continue processing</string>
+    <string name="ConfirmPaymentFragment__invalid_recipient">Invalid recipient</string>
+    <string name="ConfirmPaymentFragment__this_person_has_not_activated_payments">This person has not activated payments</string>
+    <string name="ConfirmPaymentFragment__unable_to_request_a_network_fee">Unable to request a network fee. To continue this payment tap okay to try again.</string>
+
+    <!-- CurrencyAmountFormatter_s_at_s -->
+    <string name="CurrencyAmountFormatter_s_at_s">%1$s at %2$s</string>
+
+    <!-- SetCurrencyFragment -->
+    <string name="SetCurrencyFragment__set_currency">Set Currency</string>
+    <string name="SetCurrencyFragment__all_currencies">All Currencies</string>
+
+    <!-- InfoCard -->
+    <string name="payment_info_card_about_mobilecoin">About MobileCoin</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin is a new privacy focused digital currency.</string>
+    <string name="payment_info_card_adding_funds">Adding funds</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">You can add funds for use in Plexus by sending MobileCoin to your wallet address.</string>
+    <string name="payment_info_card_cashing_out">Cashing out</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">You can cash out MobileCoin anytime on an exchange that supports MobileCoin. Just make a transfer to your account at that exchange.</string>
+    <string name="payment_info_card_hide_this_card">Hide this card?</string>
+    <string name="payment_info_card_hide">Hide</string>
+    <string name="payment_info_card_record_recovery_phrase">Record recovery phrase</string>
+    <string name="payment_info_card_your_recovery_phrase_gives_you">Your recovery phrase gives you another way to restore your payments account.</string>
+    <string name="payment_info_card_record_your_phrase">Record your phrase</string>
+    <string name="payment_info_card_update_your_pin">Update your PIN</string>
+    <string name="payment_info_card_with_a_high_balance">With a high balance, you may want to update to an alphanumeric PIN to add more protection to your account.</string>
+    <string name="payment_info_card_update_pin">Update PIN</string>
+
+    <string name="payment_info_card__learn_more__about_mobilecoin" translatable="false">https://support.plexus.org/hc/articles/360057625692#payments_which_ones</string>
+    <string name="payment_info_card__learn_more__adding_to_your_wallet" translatable="false">https://support.plexus.org/hc/articles/360057625692#payments_transfer_from_exchange</string>
+    <string name="payment_info_card__learn_more__cashing_out" translatable="false">https://support.plexus.org/hc/articles/360057625692#payments_transfer_to_exchange</string>
+
+    <!-- DeactivateWalletFragment -->
+    <string name="DeactivateWalletFragment__deactivate_wallet">Deactivate Wallet</string>
+    <string name="DeactivateWalletFragment__your_balance">Your balance</string>
+    <string name="DeactivateWalletFragment__its_recommended_that_you">It\'s recommended that you transfer your funds to another wallet address before deactivating payments. If you choose not to transfer your funds now, they will remain in your wallet linked to plexus if you reactivate payments.</string>
+    <string name="DeactivateWalletFragment__transfer_remaining_balance">Transfer remaining balance</string>
+    <string name="DeactivateWalletFragment__deactivate_without_transferring">Deactivate without transferring</string>
+    <string name="DeactivateWalletFragment__deactivate">Deactivate</string>
+    <string name="DeactivateWalletFragment__deactivate_without_transferring_question">Deactivate without transferring?</string>
+    <string name="DeactivateWalletFragment__your_balance_will_remain">Your balance will remain in your wallet linked to Plexus if you choose to reactivate payments.</string>
+    <string name="DeactivateWalletFragment__error_deactivating_wallet">Error deactivating wallet.</string>
+    <string name="DeactivateWalletFragment__learn_more__we_recommend_transferring_your_funds" translatable="false">https://support.plexus.org/hc/articles/360057625692#payments_deactivate</string>
+
+    <!-- PaymentsRecoveryStartFragment -->
+    <string name="PaymentsRecoveryStartFragment__recovery_phrase">Recovery phrase</string>
+    <string name="PaymentsRecoveryStartFragment__view_recovery_phrase">View recovery phrase</string>
+    <string name="PaymentsRecoveryStartFragment__enter_recovery_phrase">Enter recovery phrase</string>
+    <string name="PaymentsRecoveryStartFragment__your_balance_will_automatically_restore">Your balance will automatically restore when you reinstall Plexus if you confirm your plexus PIN. You can also restore your balance using a recovery phrase, which is a %1$d-word phrase unique to you. Write it down and store it in a safe place.</string>
+    <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Your recovery phrase is a %1$d-word phrase unique to you. Use this phrase to restore your balance.</string>
+    <string name="PaymentsRecoveryStartFragment__start">Start</string>
+    <string name="PaymentsRecoveryStartFragment__enter_manually">Enter manually</string>
+    <string name="PaymentsRecoveryStartFragment__paste_from_clipboard">Paste from clipboard</string>
+
+    <!-- PaymentsRecoveryPasteFragment -->
+    <string name="PaymentsRecoveryPasteFragment__paste_recovery_phrase">Paste recovery phrase</string>
+    <string name="PaymentsRecoveryPasteFragment__recovery_phrase">Recovery phrase</string>
+    <string name="PaymentsRecoveryPasteFragment__next">Next</string>
+    <string name="PaymentsRecoveryPasteFragment__invalid_recovery_phrase">Invalid recovery phrase</string>
+    <string name="PaymentsRecoveryPasteFragment__make_sure">Make sure you\'ve entered %1$d words and try again.</string>
+
+    <string name="PaymentsRecoveryStartFragment__learn_more__view" translatable="false">https://support.plexus.org/hc/articles/360057625692#payments_wallet_view_passphrase</string>
+    <string name="PaymentsRecoveryStartFragment__learn_more__restore" translatable="false">https://support.plexus.org/hc/articles/360057625692#payments_wallet_restore_passphrase</string>
+
+    <!-- PaymentsRecoveryPhraseFragment -->
+    <string name="PaymentsRecoveryPhraseFragment__next">Next</string>
+    <string name="PaymentsRecoveryPhraseFragment__edit">Edit</string>
+    <string name="PaymentsRecoveryPhraseFragment__previous">Previous</string>
+    <string name="PaymentsRecoveryPhraseFragment__your_recovery_phrase">Your recovery phrase</string>
+    <string name="PaymentsRecoveryPhraseFragment__write_down_the_following_d_words">Write down the following %1$d words in order. Store your list in a secure place.</string>
+    <string name="PaymentsRecoveryPhraseFragment__make_sure_youve_entered">Make sure you\'ve entered your phrase correctly.</string>
+    <string name="PaymentsRecoveryPhraseFragment__do_not_screenshot_or_send_by_email">Do not screenshot or send by email.</string>
+    <string name="PaymentsRecoveryPhraseFragment__payments_account_restored">Payments account restored.</string>
+    <string name="PaymentsRecoveryPhraseFragment__invalid_recovery_phrase">Invalid recovery phrase</string>
+    <string name="PaymentsRecoveryPhraseFragment__make_sure_youve_entered_your_phrase_correctly_and_try_again">Make sure you\'ve entered your phrase correctly and try again.</string>
+    <string name="PaymentsRecoveryPhraseFragment__copy_to_clipboard">Copy to clipboard?</string>
+    <string name="PaymentsRecoveryPhraseFragment__if_you_choose_to_store">If you choose to store your recovery phrase digitally, ensure it is securely stored somewhere you trust.</string>
+    <string name="PaymentsRecoveryPhraseFragment__copy">Copy</string>
+
+    <!-- PaymentsRecoveryPhraseConfirmFragment -->
+    <string name="PaymentRecoveryPhraseConfirmFragment__confirm_recovery_phrase">Confirm recovery phrase</string>
+    <string name="PaymentRecoveryPhraseConfirmFragment__enter_the_following_words">Enter the following words from your recovery phrase.</string>
+    <string name="PaymentRecoveryPhraseConfirmFragment__word_d">Word %1$d</string>
+    <string name="PaymentRecoveryPhraseConfirmFragment__see_phrase_again">See phrase again</string>
+    <string name="PaymentRecoveryPhraseConfirmFragment__done">Done</string>
+    <string name="PaymentRecoveryPhraseConfirmFragment__recovery_phrase_confirmed">Recovery phrase confirmed</string>
+
+    <!-- PaymentsRecoveryEntryFragment -->
+    <string name="PaymentsRecoveryEntryFragment__enter_recovery_phrase">Enter recovery phrase</string>
+    <string name="PaymentsRecoveryEntryFragment__enter_word_d">Enter word %1$d</string>
+    <string name="PaymentsRecoveryEntryFragment__word_d">Word %1$d</string>
+    <string name="PaymentsRecoveryEntryFragment__next">Next</string>
+    <string name="PaymentsRecoveryEntryFragment__invalid_word">Invalid word</string>
+
+    <!-- ClearClipboardAlarmReceiver -->
+    <string name="ClearClipboardAlarmReceiver__clipboard_cleared">Clipboard cleared.</string>
+
+    <!-- PaymentNotificationsView -->
+    <string name="PaymentNotificationsView__view">View</string>
+
+    <!-- UnreadPayments -->
+    <string name="UnreadPayments__s_sent_you_s">%1$s sent you %2$s</string>
+    <string name="UnreadPayments__d_new_payment_notifications">%1$d new payment notifications</string>
+
+    <!-- CanNotSendPaymentDialog -->
+    <string name="CanNotSendPaymentDialog__cant_send_payment">Can\'t send payment</string>
+    <string name="CanNotSendPaymentDialog__to_send_a_payment_to_this_user">To send a payment to this user they need to accept a message request from you. Send them a message to create a message request.</string>
+    <string name="CanNotSendPaymentDialog__send_a_message">Send a message</string>
+
+    <!--client Deprecation-->
+    <string name="ClientDeprecated_Update_Plexus">Update Plexus</string>
+    <string name="ClientDeprecatedActivity_this_version_of_the_app_is_no_longer_supported">This version of the application is no longer supported</string>
+    <string name="ClientDeprecatedActivity_dont_update">Don\'t Update</string>
+    <string name="ClientDeprecatedActivity_update">Update</string>
+    <string name="ApplicationMigrationActivity_Updating">LookOut Is Updating</string>
+    <string name="ClientDeprecatedActivity_warning">Warning</string>
+    <string name="ClientDeprecatedActivity_your_version_of_plexus_has_expired">Your version of Plexus has expired, you can\'t use the app until you update</string>
+
+    <!-- OutdatedBuildReminder -->
+    <string name="OutdatedBuildReminder_update_now">Update now</string>
+    <string name="OutdatedBuildReminder_your_version_of_lookout_will_expire_today">This version of Lookout will expire today. Update to the most recent version.</string>
+    <plurals name="OutdatedBuildReminder_your_version_of_lookout_will_expire_in_n_days">
+        <item quantity="one">This version of LookOut will expire tomorrow. Update to the most recent version.</item>
+        <item quantity="other">This version of Lookout will expire in %d days. Update to the most recent version.</item>
+    </plurals>
+
+    <!-- ExpiredBuildReminder -->
+    <string name="ExpiredBuildReminder_update_now">Update now</string>
+    <string name="ExpiredBuildReminder_this_version_of_lookout_has_expired">This version of Lookout has expired.</string>
+
+    <!--Update Apk-->
+    <string name="UpdateApkReadyListener_a_new_version_of_plexus_is_available_tap_to_update">A new version of Plexus is available, tap to update!</string>
+    <string name="UpdateApkReadyListener_plexus_Update">Plexus Update</string>
+
+    <!--KeyCaching and Migration-->
+    <string name="SQLCipherMigrationHelper_migrating_plexus_database">Migrating Plexus Database</string>
+    <string name="KeyCachingService_passphrase_cached">Passphrase Cached</string>
+    <string name="KeyCachingService_lookout_passphrase_cached">LookOut Passphrase Cached</string>
+    <string name="KeyCachingService_lock">Lock</string>
+
 
 </resources>

@@ -70,7 +70,6 @@ import com.plexus.utils.MasterCipher;
 import com.plexus.utils.ServiceUtil;
 import com.plexus.utils.TimeUtils;
 import com.plexus.utils.concurrent.ListenableFuture;
-import com.plexus.utils.dynamic.DynamicTheme;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
@@ -151,13 +150,10 @@ public class CreatePostActivity extends AppCompatActivity {
     private MediaRecorder recorder;
     private MediaPlayer mediaPlayer = new MediaPlayer();
 
-    private final DynamicTheme dynamicTheme    = new DynamicTheme();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.post_create);
-        dynamicTheme.onCreate(this);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         storageRef = FirebaseStorage.getInstance().getReference("posts");
@@ -671,7 +667,6 @@ public class CreatePostActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        dynamicTheme.onResume(this);
     }
 
     @Override

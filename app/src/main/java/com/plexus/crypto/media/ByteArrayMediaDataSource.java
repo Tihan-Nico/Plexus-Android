@@ -20,7 +20,7 @@ public class ByteArrayMediaDataSource extends MediaDataSource {
         if (data == null) throw new IOException("ByteArrayMediaDataSource is closed");
 
         long bytesAvailable = getSize() - position;
-        int  read           = Math.min(size, (int) bytesAvailable);
+        int read = Math.min(size, (int) bytesAvailable);
         if (read <= 0) return -1;
 
         if (buffer != null) {

@@ -8,11 +8,11 @@ import android.util.Pair;
 
 import androidx.annotation.NonNull;
 
+import com.plexus.core.utils.concurrent.PlexusExecutors;
 import com.plexus.providers.BlobProvider;
 import com.plexus.utils.MediaUtil;
 import com.plexus.utils.Util;
 import com.plexus.utils.concurrent.ListenableFuture;
-import com.plexus.utils.concurrent.PlexusExecutors;
 import com.plexus.utils.concurrent.SettableFuture;
 
 import java.io.IOException;

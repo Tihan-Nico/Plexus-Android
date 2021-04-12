@@ -22,16 +22,14 @@ import javax.crypto.spec.SecretKeySpec;
 public class ModernDecryptingPartInputStream {
 
     public static InputStream createFor(@NonNull AttachmentSecret attachmentSecret, @NonNull byte[] random, @NonNull File file, long offset)
-            throws IOException
-    {
+            throws IOException {
         return createFor(attachmentSecret, random, new FileInputStream(file), offset);
     }
 
     public static InputStream createFor(@NonNull AttachmentSecret attachmentSecret, @NonNull File file, long offset)
-            throws IOException
-    {
+            throws IOException {
         FileInputStream inputStream = new FileInputStream(file);
-        byte[]          random      = new byte[32];
+        byte[] random = new byte[32];
 
         readFully(inputStream, random);
 
@@ -40,14 +38,14 @@ public class ModernDecryptingPartInputStream {
 
     private static InputStream createFor(@NonNull AttachmentSecret attachmentSecret, @NonNull byte[] random, @NonNull InputStream inputStream, long offset) throws IOException {
         try {
-            Mac mac  = Mac.getInstance("HmacSHA256");
+            Mac mac = Mac.getInstance("HmacSHA256");
             mac.init(new SecretKeySpec(attachmentSecret.getModernKey(), "HmacSHA256"));
 
-            byte[] iv        = new byte[16];
-            int    remainder = (int) (offset % 16);
+            byte[] iv = new byte[16];
+            int remainder = (int) (offset % 16);
             Conversions.longTo4ByteArray(iv, 12, offset / 16);
 
-            byte[] key    = mac.doFinal(random);
+            byte[] key = mac.doFinal(random);
             Cipher cipher = Cipher.getInstance("AES/CTR/NoPadding");
             cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key, "AES"), new IvParameterSpec(iv));
 
@@ -58,7 +56,7 @@ public class ModernDecryptingPartInputStream {
             }
 
             CipherInputStream cipherInputStream = new CipherInputStream(inputStream, cipher);
-            byte[]            remainderBuffer   = new byte[remainder];
+            byte[] remainderBuffer = new byte[remainder];
 
             readFully(cipherInputStream, remainderBuffer);
 
@@ -71,12 +69,12 @@ public class ModernDecryptingPartInputStream {
     private static void readFully(InputStream in, byte[] buffer) throws IOException {
         int offset = 0;
 
-        for (;;) {
-            int read = in.read(buffer, offset, buffer.length-offset);
+        for (; ; ) {
+            int read = in.read(buffer, offset, buffer.length - offset);
 
-            if (read == -1)                         throw new IOException("Prematurely reached end of stream!");
+            if (read == -1) throw new IOException("Prematurely reached end of stream!");
             else if (read + offset < buffer.length) offset += read;
-            else                                    return;
+            else return;
         }
     }
 

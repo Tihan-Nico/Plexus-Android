@@ -184,6 +184,17 @@ public class MainActivity extends AppCompatActivity {
         databaseReference.child(firebaseUser.getUid()).setValue(token);
     }
 
+    public static @NonNull
+    Intent clearTop(@NonNull Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                Intent.FLAG_ACTIVITY_NEW_TASK |
+                Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        return intent;
+    }
+
     private void updateAccount(String userID) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userID);
         databaseReference.addValueEventListener(new ValueEventListener() {

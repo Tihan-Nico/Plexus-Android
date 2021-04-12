@@ -25,15 +25,15 @@ import java.io.InputStream;
 final class ModernEncryptedMediaDataSource extends MediaDataSource {
 
     private final AttachmentSecret attachmentSecret;
-    private final File             mediaFile;
-    private final byte[]           random;
-    private final long             length;
+    private final File mediaFile;
+    private final byte[] random;
+    private final long length;
 
     ModernEncryptedMediaDataSource(@NonNull AttachmentSecret attachmentSecret, @NonNull File mediaFile, @Nullable byte[] random, long length) {
         this.attachmentSecret = attachmentSecret;
-        this.mediaFile        = mediaFile;
-        this.random           = random;
-        this.length           = length;
+        this.mediaFile = mediaFile;
+        this.random = random;
+        this.length = length;
     }
 
     @Override
@@ -56,8 +56,8 @@ final class ModernEncryptedMediaDataSource extends MediaDataSource {
                     }
                 }
 
-                length    -= read;
-                offset    += read;
+                length -= read;
+                offset += read;
                 totalRead += read;
             }
 

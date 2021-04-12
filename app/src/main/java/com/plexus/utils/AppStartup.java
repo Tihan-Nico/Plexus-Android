@@ -7,7 +7,7 @@ import android.os.Looper;
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 
-import com.plexus.utils.concurrent.PlexusExecutors;
+import com.plexus.core.utils.concurrent.PlexusExecutors;
 import com.plexus.utils.logging.Log;
 
 import java.util.LinkedList;

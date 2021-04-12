@@ -35,16 +35,23 @@ public class AttachmentSecret {
     @JsonDeserialize(using = ByteArrayDeserializer.class)
     private byte[] modernKey;
 
-    public AttachmentSecret(byte[] classicCipherKey, byte[] classicMacKey, byte[] modernKey)
-    {
+    public AttachmentSecret(byte[] classicCipherKey, byte[] classicMacKey, byte[] modernKey) {
         this.classicCipherKey = classicCipherKey;
-        this.classicMacKey    = classicMacKey;
-        this.modernKey        = modernKey;
+        this.classicMacKey = classicMacKey;
+        this.modernKey = modernKey;
     }
 
     @SuppressWarnings("unused")
     public AttachmentSecret() {
 
+    }
+
+    public static AttachmentSecret fromString(@NonNull String value) {
+        try {
+            return JsonUtils.fromJson(value, AttachmentSecret.class);
+        } catch (IOException e) {
+            throw new AssertionError(e);
+        }
     }
 
     @JsonIgnore
@@ -53,18 +60,13 @@ public class AttachmentSecret {
     }
 
     @JsonIgnore
-    public byte[] getClassicMacKey() {
-        return classicMacKey;
-    }
-
-    @JsonIgnore
-    public byte[] getModernKey() {
-        return modernKey;
-    }
-
-    @JsonIgnore
     public void setClassicCipherKey(byte[] classicCipherKey) {
         this.classicCipherKey = classicCipherKey;
+    }
+
+    @JsonIgnore
+    public byte[] getClassicMacKey() {
+        return classicMacKey;
     }
 
     @JsonIgnore
@@ -72,17 +74,14 @@ public class AttachmentSecret {
         this.classicMacKey = classicMacKey;
     }
 
+    @JsonIgnore
+    public byte[] getModernKey() {
+        return modernKey;
+    }
+
     public String serialize() {
         try {
             return JsonUtils.toJson(this);
-        } catch (IOException e) {
-            throw new AssertionError(e);
-        }
-    }
-
-    public static AttachmentSecret fromString(@NonNull String value) {
-        try {
-            return JsonUtils.fromJson(value, AttachmentSecret.class);
         } catch (IOException e) {
             throw new AssertionError(e);
         }
@@ -102,7 +101,6 @@ public class AttachmentSecret {
             return Base64.decode(p.getValueAsString(), Base64.NO_WRAP | Base64.NO_PADDING);
         }
     }
-
 
 
 }

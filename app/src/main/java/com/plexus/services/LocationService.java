@@ -65,11 +65,11 @@ public class LocationService {
         //exceptions will be thrown if provider is not permitted.
         try {
             gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        } catch (Exception ignored) {
+        } catch (Exception ex) {
         }
         try {
             network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        } catch (Exception ignored) {
+        } catch (Exception ex) {
         }
 
         //don't start listeners if no provider is enabled
@@ -97,7 +97,7 @@ public class LocationService {
             lm.removeUpdates(locationListenerGps);
             lm.removeUpdates(locationListenerNetwork);
 
-            Location net_loc = null, gps_loc;
+            Location net_loc = null, gps_loc = null;
             if (gps_enabled)
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     return;

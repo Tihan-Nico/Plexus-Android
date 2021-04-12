@@ -22,14 +22,13 @@ import javax.crypto.spec.SecretKeySpec;
 
 /**
  * Constructs an OutputStream that encrypts data written to it with the AttachmentSecret provided.
- *
+ * <p>
  * The on-disk format is very simple, and intentionally no longer includes authentication.
  */
 public class ModernEncryptingPartOutputStream {
 
     public static Pair<byte[], OutputStream> createFor(@NonNull AttachmentSecret attachmentSecret, @NonNull File file, boolean inline)
-            throws IOException
-    {
+            throws IOException {
         byte[] random = new byte[32];
         new SecureRandom().nextBytes(random);
 
@@ -38,8 +37,8 @@ public class ModernEncryptingPartOutputStream {
             mac.init(new SecretKeySpec(attachmentSecret.getModernKey(), "HmacSHA256"));
 
             FileOutputStream fileOutputStream = new FileOutputStream(file);
-            byte[]           iv               = new byte[16];
-            byte[]           key              = mac.doFinal(random);
+            byte[] iv = new byte[16];
+            byte[] key = mac.doFinal(random);
 
             Cipher cipher = Cipher.getInstance("AES/CTR/NoPadding");
             cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key, "AES"), new IvParameterSpec(iv));

@@ -14,6 +14,7 @@ import android.provider.Settings;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.plexus.BuildConfig;
 import com.plexus.R;
 import com.plexus.utils.PlexusPreferences;
 import com.plexus.utils.ServiceUtil;
@@ -34,6 +35,7 @@ public class NotificationChannels {
 
     private static final String CATEGORY_PLEXUS = "plexus";
 
+    public static final String LOCKED_STATUS = "locked_status_v2";
     public static final String PLEXUS_MESSAGE_REQUEST = "message_request";
     public static final String PLEXUS_MESSAGES = "messages";
     public static final String LOOKOUT_MESSAGES = "lookout_messages";
@@ -44,6 +46,8 @@ public class NotificationChannels {
     public static final String COMMENTS = "comments";
     public static final String COMMENTS_LIKES = "comments_likes";
     public static final String NEW_FOLLOWERS = "new_followers";
+    public static final String OTHER = "other_v2";
+    public static final String APP_UPDATES = "app_updates";
 
     public static boolean supported() {
         return Build.VERSION.SDK_INT >= 26;
@@ -89,8 +93,7 @@ public class NotificationChannels {
         notificationManager.createNotificationChannelGroup(messagesGroup);
 
         NotificationChannel message_request = new NotificationChannel(PLEXUS_MESSAGE_REQUEST,context.getString(R.string.NotificationChannel_PlexusMessageRequest), NotificationManager.IMPORTANCE_DEFAULT);
-        NotificationChannel lookout_messages = new NotificationChannel(LOOKOUT_MESSAGES,context.getString(R.string.NotificationChannel_LookoutMessages), NotificationManager.IMPORTANCE_DEFAULT);
-        NotificationChannel lookout_last_location = new NotificationChannel(LOOKOUT_LAST_LOCATION,context.getString(R.string.NotificationChannel_LookoutLastLocation), NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationChannel lookout_messages = new NotificationChannel(LOOKOUT_MESSAGES,context.getString(R.string.NotificationChannel_PlexusMessages), NotificationManager.IMPORTANCE_DEFAULT);
         NotificationChannel messages = new NotificationChannel(PLEXUS_MESSAGES,context.getString(R.string.NotificationChannel_PlexusMessages), NotificationManager.IMPORTANCE_DEFAULT);
         NotificationChannel uploads = new NotificationChannel(UPLOADS,context.getString(R.string.NotificationChannel_Uploads), NotificationManager.IMPORTANCE_DEFAULT);
         NotificationChannel upload_failure = new NotificationChannel(UPLOAD_FAILURE,context.getString(R.string.NotificationChannel_UploadFailure), NotificationManager.IMPORTANCE_DEFAULT);
@@ -98,6 +101,8 @@ public class NotificationChannels {
         NotificationChannel comments = new NotificationChannel(COMMENTS,context.getString(R.string.NotificationChannel_Comments), NotificationManager.IMPORTANCE_DEFAULT);
         NotificationChannel comments_likes = new NotificationChannel(COMMENTS_LIKES,context.getString(R.string.NotificationChannel_CommentsLikes), NotificationManager.IMPORTANCE_DEFAULT);
         NotificationChannel new_followers = new NotificationChannel(NEW_FOLLOWERS,context.getString(R.string.NotificationChannel_NewFollowers), NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationChannel other = new NotificationChannel(OTHER, context.getString(R.string.NotificationChannel_other), NotificationManager.IMPORTANCE_LOW);
+        NotificationChannel lockedStatus = new NotificationChannel(LOCKED_STATUS, context.getString(R.string.NotificationChannel_locked_status), NotificationManager.IMPORTANCE_LOW);
 
         messages.setGroup(CATEGORY_PLEXUS);
         messages.enableVibration(PlexusPreferences.isNotificationVibrateEnabled(context));
@@ -128,9 +133,15 @@ public class NotificationChannels {
         uploads.setShowBadge(false);
         upload_failure.setShowBadge(false);
         new_followers.setShowBadge(false);
-        lookout_last_location.setShowBadge(false);
 
-        notificationManager.createNotificationChannels(Arrays.asList(message_request, messages, lookout_messages, lookout_last_location, uploads, upload_failure, likes, comments, comments_likes, new_followers));
+        notificationManager.createNotificationChannels(Arrays.asList(message_request, messages, lookout_messages, uploads, upload_failure, likes, comments, comments_likes, new_followers));
+
+        if (BuildConfig.PLAY_STORE_DISABLED) {
+            NotificationChannel appUpdates = new NotificationChannel(APP_UPDATES, context.getString(R.string.NotificationChannel_app_updates), NotificationManager.IMPORTANCE_HIGH);
+            notificationManager.createNotificationChannel(appUpdates);
+        } else {
+            notificationManager.deleteNotificationChannel(APP_UPDATES);
+        }
 
     }
 

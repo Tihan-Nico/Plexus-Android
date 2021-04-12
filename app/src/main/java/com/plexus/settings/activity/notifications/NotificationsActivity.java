@@ -39,10 +39,10 @@ public class NotificationsActivity extends AppCompatActivity {
 
         toolbar_name.setText("Notifications");
 
-        lookout_notifications.setChecked(PlexusPreferences.getLookoutNotificationEnabled(getApplicationContext()));
+        /*lookout_notifications.setChecked(PlexusPreferences.getLookoutNotificationEnabled(getApplicationContext()));
 
         lookout_notifications.setOnCheckedChangeListener((buttonView, isChecked) -> PlexusPreferences.setLookoutNotificationEnabled(getApplicationContext(), isChecked));
-
+*/
 
     }
 

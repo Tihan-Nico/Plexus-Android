@@ -21,7 +21,7 @@ public final class AppInitialization {
         Log.i(TAG, "onFirstEverAppLaunch()");
 
         PlexusPreferences.setLockScreenActive(context, false);
-        PlexusPreferences.setLookoutNotificationEnabled(context, true);
+        /*PlexusPreferences.setLookoutNotificationEnabled(context, true);*/
 
     }
 

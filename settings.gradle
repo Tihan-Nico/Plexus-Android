@@ -6,4 +6,4 @@
  */
 
 include ':app'
-include ':lintchecks'
+include ':core-utils'

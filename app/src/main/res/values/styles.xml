@@ -14,7 +14,7 @@
   ~  limitations under the License.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="DarkTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -30,6 +30,18 @@
         <item name="floatingActionButtonStyle">@style/FloatingActionButton</item>
         <item name="cardBackgroundColor">@color/cardBackgroundColor</item>
         <item name="drawableTint">@color/drawableTintColor</item>
+
+        <item name="emoji_category_recent">@drawable/history</item>
+        <item name="emoji_category_people">@drawable/account_group</item>
+        <item name="emoji_category_nature">@drawable/paw</item>
+        <item name="emoji_category_foods">@drawable/food_apple</item>
+        <item name="emoji_category_activity">@drawable/basketball</item>
+        <item name="emoji_category_places">@drawable/train_car</item>
+        <item name="emoji_category_objects">@drawable/lightbulb</item>
+        <item name="emoji_category_symbols">@drawable/symbol</item>
+        <item name="emoji_category_flags">@drawable/flag</item>
+        <item name="emoji_category_emoticons">@drawable/emoticon</item>
+
     </style>
 
     <style name="ExtendedFloatingActionButton" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
@@ -109,6 +121,436 @@
 
     <style name="Theme.Plexus.AlertDialog.Dark.Cornered" parent="Theme.AppCompat.Dialog.Alert">
         <item name="android:windowBackground">@drawable/dialog</item>
+    </style>
+
+    <style name="HowItWorksButtonStyle" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:minWidth">72dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="HowItWorksTextHeadingStyle">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="HowItWorksTextBodyStyle">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/textDescriptionColor</item>
+    </style>
+
+    <style name="Plexus.Text.Body" parent="Base.TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:letterSpacing" tools:ignore="NewApi">0.01</item>
+    </style>
+
+    <style name="ComposeEditText" parent="@style/Plexus.Text.Body">
+        <item name="android:padding">2dp</item>
+        <item name="android:background">@null</item>
+        <item name="android:maxLines">5</item>
+        <item name="android:maxLength">65536</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:capitalize">sentences</item>
+        <item name="android:autoText">true</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:imeOptions">flagNoEnterAction</item>
+        <item name="android:inputType">textAutoCorrect|textCapSentences|textMultiLine</item>
+    </style>
+
+    <style name="PlexusTheme.ArcProgressBar" parent="">
+        <item name="android:layout_width">187dp</item>
+        <item name="android:layout_height">187dp</item>
+        <item name="arcBackgroundColor">@color/drawableTintColor</item>
+        <item name="arcForegroundColor">@color/plexus</item>
+        <item name="arcProgress">0.0</item>
+        <item name="arcStartAngle">120</item>
+        <item name="arcSweepAngle">300</item>
+        <item name="arcWidth">8dp</item>
+        <item name="arcRoundedEnds">true</item>
+    </style>
+
+    <style name="PlexusTheme.Headline.Insights" parent="">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="PlexusTheme.SubHead.Insights" parent="">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="PlexusTheme.Headline.Insights.Modal.Percent" parent="PlexusTheme.Headline.Insights">
+        <item name="android:textSize">@dimen/insights_modal_percent_text_size</item>
+    </style>
+
+    <style name="PlexusTheme.SubHead.Insights.Modal.Percent" parent="PlexusTheme.SubHead.Insights">
+        <item name="android:textSize">@dimen/insights_modal_percent_sign_text_size</item>
+    </style>
+
+    <style name="PlexusTheme.Title.Insights" parent="">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="PlexusTheme.Body.Insights" parent="">
+        <item name="android:textColor">@color/textDescriptionColor</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="PlexusTheme.Body2.Insights" parent="">
+        <item name="android:textColor">@color/textDescriptionColor</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="PlexusTheme.Caption.Insights" parent="">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Headline" parent="Base.TextAppearance.AppCompat.Headline">
+        <item name="android:textSize">28sp</item>
+        <item name="android:lineSpacingExtra">3sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:letterSpacing" tools:ignore="NewApi">0</item>
+    </style>
+
+    <style name="Text.Body" parent="Base.TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:letterSpacing" tools:ignore="NewApi">0.01</item>
+    </style>
+
+    <style name="Text.Preview" parent="Base.TextAppearance.AppCompat.Body2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">3sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:letterSpacing" tools:ignore="NewApi">0.01</item>
+    </style>
+
+    <style name="Text.Preview.Medium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="Text.Preview.Medium.Primary">
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="Text.Preview.Medium.Secondary">
+        <item name="android:textColor">@color/textDescriptionColor</item>
+    </style>
+
+    <style name="Text.Caption.MessageSent">
+        <!--<item name="android:textColor">@color/_text_secondary</item>-->
+        <item name="android:shadowRadius">0</item>
+    </style>
+
+    <style name="Text.Caption.MessageReceived">
+        <!--<item name="android:textColor">@color/conversation_item_received_text_secondary_color</item>-->
+        <item name="android:shadowRadius">0</item>
+        <item name="android:alpha">0.7</item>
+    </style>
+
+    <style name="Text.Caption.MessageImageOverlay">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Text.Title1" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:color">@color/textColor</item>
+    </style>
+
+    <style name="Text.Title2.Bold" parent="">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Headline.Insights" parent="">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="Text.SubHead.Insights" parent="">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="Text.Headline.Insights.Modal.Percent" parent="Text.Headline.Insights">
+        <item name="android:textSize">@dimen/insights_modal_percent_text_size</item>
+    </style>
+
+    <style name="Text.SubHead.Insights.Modal.Percent" parent="Text.SubHead.Insights">
+        <item name="android:textSize">@dimen/insights_modal_percent_sign_text_size</item>
+    </style>
+
+    <style name="Text.Title.Insights" parent="">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="Text.Body.Insights" parent="">
+        <item name="android:textColor">@color/textDescriptionColor</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Text.Body2.Insights" parent="">
+        <item name="android:textColor">@color/textDescriptionColor</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="Text.Caption.Insights" parent="">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Body1" parent="@style/TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="Text.Body2" parent="@style/TextAppearance.AppCompat.Body2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="fontFamily">sans-serif</item>
+    </style>
+
+    <style name="Text.Body2.Bold">
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="Text.Body1.Bold">
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="Text.Caption" parent="@style/TextAppearance.AppCompat.Caption">
+    </style>
+
+    <style name="Text.Subtitle" parent="Text.Caption">
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="Text.Subtitle2" parent="@style/TextAppearance.MaterialComponents.Subtitle2">
+    </style>
+
+    <style name="Text.MessageRequest.Title" parent="Base.TextAppearance.AppCompat.Title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="Text.MessageRequest.Subtitle" parent="Base.TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/textDescriptionColor</item>
+    </style>
+
+    <style name="Text.MessageRequest.Description" parent="Base.TextAppearance.AppCompat.Subhead">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/textDescriptionColor</item>
+    </style>
+
+     <style name="Widget.Button.Base.Primary" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/button_primary_text</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="iconGravity">textEnd</item>
+        <item name="backgroundTint">@color/plexus</item>
+        <item name="iconTint">@color/button_primary_text</item>
+        <item name="rippleColor">@color/button_primary_ripple</item>
+    </style>
+
+    <style name="Widget.Button.Large.Primary" parent="@style/Widget.Button.Base.Primary">
+        <item name="android:minHeight">48dp</item>
+    </style>
+
+    <style name="Widget.Button.Large.Danger" parent="@style/Widget.Button.Large.Primary">
+        <item name="backgroundTint">@color/notice</item>
+    </style>
+
+    <style name="Widget.Button.Medium.Primary" parent="@style/Widget.Button.Base.Primary">
+        <item name="android:minHeight">36dp</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <style name="Widget.Button.Small.Primary" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">7dp</item>
+        <item name="android:paddingStart">14dp</item>
+        <item name="android:paddingEnd">14dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing" tools:targetApi="21">0.01</item>
+        <item name="strokeWidth">1.5dp</item>
+        <item name="cornerRadius">18dp</item>
+        <item name="android:textColor">@color/plexus</item>
+        <item name="strokeColor">@color/button_secondary_stroke</item>
+        <item name="backgroundTint">@color/transparent</item>
+        <item name="rippleColor">@color/button_secondary</item>
+    </style>
+
+    <style name="Widget.Button.Small.Secondary" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">7dp</item>
+        <item name="android:paddingStart">14dp</item>
+        <item name="android:paddingEnd">14dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing" tools:targetApi="21">0.01</item>
+        <item name="android:elevation" tools:ignore="NewApi">0dp</item>
+        <item name="android:textColor">@color/button_secondary_text</item>
+        <item name="background">@color/core_grey_02</item>
+        <item name="rippleColor">@color/core_ultramarine</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.Button.Rounded</item>
+    </style>
+
+    <style name="Widget.Button.Base.Secondary" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/plexus</item>
+        <item name="iconGravity">textEnd</item>
+        <item name="iconTint">@color/plexus</item>
+        <item name="strokeColor">@color/button_secondary_stroke</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="rippleColor">@color/button_secondary_ripple</item>
+    </style>
+
+    <style name="Widget.Button.Large.Secondary" parent="@style/Widget.Button.Base.Secondary">
+        <item name="android:minHeight">48dp</item>
+    </style>
+
+    <style name="Widget.Button.Medium.Secondary" parent="@style/Widget.Button.Base.Secondary">
+        <item name="android:minHeight">36dp</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+
+    <style name="Widget.CompoundButton.RadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="colorControlNormal">@color/core_grey_50</item>
+    </style>
+
+    <style name="Widget.Button.Dialog" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textAppearance">@style/TextAppearance.Button.Dialog</item>
+        <item name="android:textColor">@color/button_secondary_text</item>
+    </style>
+
+    <style name="TextAppearance.Button.Dialog" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="TextAppearance.Mono" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">monospace</item>
+    </style>
+
+    <style name="TextAppearance.Title.InfoCard" parent="">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.Button.Rounded" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="Button.Borderless" parent="Base.Widget.AppCompat.Button.Borderless">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Button.Borderless.Registration">
+        <item name="android:textColor">@color/core_grey_60</item>
+    </style>
+
+    <style name="BackupPassphrase">
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
+    </style>
+
+    <style name="FakeChatViewMessageBubble">
+        <item name="android:paddingLeft">@dimen/medium_spacing</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingRight">@dimen/medium_spacing</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Toolbar.PaymentInfoCard" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="actionOverflowButtonStyle">@style/Toolbar.Overflow.PaymentCard</item>
+        <item name="android:actionOverflowButtonStyle">@style/Toolbar.Overflow.PaymentCard</item>
+    </style>
+
+    <style name="Toolbar.Overflow.PaymentCard" parent="">
+        <item name="android:tint">@color/payment_info_card_overflow_tint</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.BottomSheet.Rounded" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">8dp</item>
+        <item name="cornerSizeTopLeft">8dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <style name="Widget.BottomSheet.Rounded" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.BottomSheet.Rounded</item>
+        <item name="backgroundTint">@color/core_grey_75</item>
+    </style>
+
+    <style name="Widget.BottomSheet.Rounded.Light">
+        <item name="backgroundTint">@color/white</item>
+    </style>
+
+    <style name="PlexusTheme.RoundedBottomSheet.Light">
+        <item name="bottomSheetStyle">@style/Widget.BottomSheet.Rounded.Light</item>
+
+        <item name="android:textColorPrimary">@color/core_grey_90</item>
+
+        <item name="colorAccent">@color/core_ultramarine</item>
+
+        <item name="android:navigationBarColor" tools:ignore="NewApi">@color/white</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
+
+        <item name="android:colorForeground">@color/black</item>
+        <item name="colorSwitchThumbNormal">@color/switch_thumb_material_light</item>
+    </style>
+
+    <style name="PlexusTheme.RoundedBottomSheet" parent="Theme.MaterialComponents.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/Widget.BottomSheet.Rounded</item>
+
+        <item name="android:textColorPrimary">@color/core_grey_05</item>
+
+        <item name="colorAccent">@color/core_ultramarine_light</item>
+
+        <item name="android:navigationBarColor" tools:ignore="NewApi">@color/core_grey_75</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@color/transparent</item>
     </style>
 
 </resources>
