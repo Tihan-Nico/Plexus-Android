@@ -1581,6 +1581,12 @@
     <string name="plexus_pay_currency">Currency</string>
     <string name="plexus_pay_contact_details">Contact Details</string>
     <string name="plexus_pay_shipping_address">Shipping Address</string>
+    <string name="plexus_pay_card_not_supported">Card not supported</string>
+    <string name="plexus_pay_card_not_valid">Card is not valid</string>
+    <string name="plexus_pay_bank_not_support">Bank not supported</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="plexus_pay_add_email">Add Email</string>
+    <string name="plexus_pay_phone_number">Add Phone Number</string>
 
 
 </resources>

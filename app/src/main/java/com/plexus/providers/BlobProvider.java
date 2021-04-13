@@ -7,13 +7,14 @@ import android.media.MediaDataSource;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.annotation.AnyThread;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.WorkerThread;
 
-import com.plexus.BuildConfig;
+import com.plexus.core.utils.StreamUtil;
 import com.plexus.core.utils.concurrent.PlexusExecutors;
 import com.plexus.crypto.AttachmentSecret;
 import com.plexus.crypto.ModernDecryptingPartInputStream;
@@ -21,7 +22,7 @@ import com.plexus.crypto.ModernEncryptingPartOutputStream;
 import com.plexus.crypto.media.ByteArrayMediaDataSource;
 import com.plexus.crypto.media.EncryptedMediaDataSource;
 import com.plexus.utils.IOFunction;
-import com.plexus.utils.StreamUtil;
+import com.plexus.utils.Util;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -34,24 +35,27 @@ import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.plexus.Plexus.TAG;
-
+/**
+ * Allows for the creation and retrieval of blobs.
+ */
 public class BlobProvider {
 
-    private static final String MULTI_SESSION_DIRECTORY = "multi_session_blobs";
+    private static final String TAG = BlobProvider.class.getSimpleName();
+
+    private static final String MULTI_SESSION_DIRECTORY  = "multi_session_blobs";
     private static final String SINGLE_SESSION_DIRECTORY = "single_session_blobs";
 
-    public static final String AUTHORITY = BuildConfig.APPLICATION_ID + ".blob";
-    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/blob");
-    public static final String PATH = "blob/*/*/*/*/*";
+    public static final String AUTHORITY   = BuildConfig.APPLICATION_ID + ".blob";
+    public static final Uri    CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/blob");
+    public static final String PATH        = "blob/*/*/*/*/*";
 
     private static final int STORAGE_TYPE_PATH_SEGMENT = 1;
-    private static final int MIMETYPE_PATH_SEGMENT = 2;
-    private static final int FILENAME_PATH_SEGMENT = 3;
-    private static final int FILESIZE_PATH_SEGMENT = 4;
-    private static final int ID_PATH_SEGMENT = 5;
+    private static final int MIMETYPE_PATH_SEGMENT     = 2;
+    private static final int FILENAME_PATH_SEGMENT     = 3;
+    private static final int FILESIZE_PATH_SEGMENT     = 4;
+    private static final int ID_PATH_SEGMENT           = 5;
 
-    private static final int MATCH = 1;
+    private static final int        MATCH       = 1;
     private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH) {{
         addURI(AUTHORITY, PATH, MATCH);
     }};
@@ -59,6 +63,8 @@ public class BlobProvider {
     private static final BlobProvider INSTANCE = new BlobProvider();
 
     private final Map<Uri, byte[]> memoryBlobs = new HashMap<>();
+
+    private volatile boolean initialized = false;
 
 
     public static BlobProvider getInstance() {
@@ -81,21 +87,19 @@ public class BlobProvider {
 
     /**
      * Retrieve a stream for the content with the specified URI.
-     *
      * @throws IOException If the stream fails to open or the spec of the URI doesn't match.
      */
-    public synchronized @NonNull
-    InputStream getStream(@NonNull Context context, @NonNull Uri uri) throws IOException {
+    public synchronized @NonNull InputStream getStream(@NonNull Context context, @NonNull Uri uri) throws IOException {
+        waitUntilInitialized();
         return getStream(context, uri, 0L);
     }
 
     /**
      * Retrieve a stream for the content with the specified URI starting from the specified position.
-     *
      * @throws IOException If the stream fails to open or the spec of the URI doesn't match.
      */
-    public synchronized @NonNull
-    InputStream getStream(@NonNull Context context, @NonNull Uri uri, long position) throws IOException {
+    public synchronized @NonNull InputStream getStream(@NonNull Context context, @NonNull Uri uri, long position) throws IOException {
+        waitUntilInitialized();
         return getBlobRepresentation(context,
                 uri,
                 bytes -> {
@@ -111,20 +115,20 @@ public class BlobProvider {
     }
 
     @RequiresApi(23)
-    public synchronized @NonNull
-    MediaDataSource getMediaDataSource(@NonNull Context context, @NonNull Uri uri) throws IOException {
+    public synchronized @NonNull MediaDataSource getMediaDataSource(@NonNull Context context, @NonNull Uri uri) throws IOException {
+        waitUntilInitialized();
         return getBlobRepresentation(context,
                 uri,
                 ByteArrayMediaDataSource::new,
                 file -> EncryptedMediaDataSource.createForDiskBlob(getAttachmentSecret(context), file));
     }
 
-    private synchronized @NonNull
-    <T> T getBlobRepresentation(@NonNull Context context,
-                                @NonNull Uri uri,
-                                @NonNull IOFunction<byte[], T> getByteRepresentation,
-                                @NonNull IOFunction<File, T> getFileRepresentation)
-            throws IOException {
+    private synchronized @NonNull <T> T getBlobRepresentation(@NonNull Context context,
+                                                              @NonNull Uri uri,
+                                                              @NonNull IOFunction<byte[], T> getByteRepresentation,
+                                                              @NonNull IOFunction<File, T> getFileRepresentation)
+            throws IOException
+    {
         if (isAuthority(uri)) {
             StorageType storageType = StorageType.decode(uri.getPathSegments().get(STORAGE_TYPE_PATH_SEGMENT));
 
@@ -140,9 +144,9 @@ public class BlobProvider {
                     throw new IOException("Failed to find in-memory blob for: " + uri);
                 }
             } else {
-                String id = uri.getPathSegments().get(ID_PATH_SEGMENT);
+                String id        = uri.getPathSegments().get(ID_PATH_SEGMENT);
                 String directory = getDirectory(storageType);
-                File file = new File(getOrCreateCacheDirectory(context, directory), buildFileName(id));
+                File   file      = new File(getOrCreateDirectory(context, directory), buildFileName(id));
 
                 return getFileRepresentation.apply(file);
             }
@@ -159,10 +163,14 @@ public class BlobProvider {
      * Delete the content with the specified URI.
      */
     public synchronized void delete(@NonNull Context context, @NonNull Uri uri) {
+        waitUntilInitialized();
+
         if (!isAuthority(uri)) {
             Log.d(TAG, "Can't delete. Not the authority for uri: " + uri);
             return;
         }
+
+        Log.d(TAG, "Deleting " + getId(uri));
 
         try {
             StorageType storageType = StorageType.decode(uri.getPathSegments().get(STORAGE_TYPE_PATH_SEGMENT));
@@ -170,53 +178,80 @@ public class BlobProvider {
             if (storageType.isMemory()) {
                 memoryBlobs.remove(uri);
             } else {
-                String id = uri.getPathSegments().get(ID_PATH_SEGMENT);
+                String id        = uri.getPathSegments().get(ID_PATH_SEGMENT);
                 String directory = getDirectory(storageType);
-                File file = new File(getOrCreateCacheDirectory(context, directory), buildFileName(id));
+                File   file      = new File(getOrCreateDirectory(context, directory), buildFileName(id));
 
-                if (!file.delete()) {
+                if (file.delete()) {
+                    Log.d(TAG, "Successfully deleted " + getId(uri));
+                } else {
                     throw new IOException("File wasn't deleted.");
                 }
             }
         } catch (IOException e) {
-            Log.w(TAG, "Failed to delete uri: " + uri, e);
+            Log.w(TAG, "Failed to delete uri: " + getId(uri), e);
         }
     }
 
     /**
-     * Indicates a new app session has started, allowing old single-session blobs to be deleted.
+     * Allows the class to be initialized. Part of this initialization is deleting any leftover
+     * single-session blobs from the previous session. However, this class defers that work to a
+     * background thread, so callers don't have to worry about it.
      */
-    public synchronized void onSessionStart(@NonNull Context context) {
-        File directory = getOrCreateCacheDirectory(context, SINGLE_SESSION_DIRECTORY);
-        for (File file : directory.listFiles()) {
-            file.delete();
-        }
+    @AnyThread
+    public synchronized void initialize(@NonNull Context context) {
+        PlexusExecutors.BOUNDED.execute(() -> {
+            synchronized (this) {
+                File   directory = getOrCreateDirectory(context, SINGLE_SESSION_DIRECTORY);
+                File[] files     = directory.listFiles();
+
+                if (files != null) {
+                    for (File file : files) {
+                        if (file.delete()) {
+                            Log.d(TAG, "Deleted single-session file: " + file.getName());
+                        } else {
+                            Log.w(TAG, "Failed to delete single-session file! " + file.getName());
+                        }
+                    }
+                } else {
+                    Log.w(TAG, "Null directory listing!");
+                }
+
+                Log.i(TAG, "Initialized.");
+                initialized = true;
+                notifyAll();
+            }
+        });
     }
 
-    public static @Nullable
-    String getMimeType(@NonNull Uri uri) {
+    public static @Nullable String getMimeType(@NonNull Uri uri) {
         if (isAuthority(uri)) {
             return uri.getPathSegments().get(MIMETYPE_PATH_SEGMENT);
         }
         return null;
     }
 
-    public static @Nullable
-    String getFileName(@NonNull Uri uri) {
+    public static @Nullable String getFileName(@NonNull Uri uri) {
         if (isAuthority(uri)) {
             return uri.getPathSegments().get(FILENAME_PATH_SEGMENT);
         }
         return null;
     }
 
-    public static @Nullable
-    Long getFileSize(@NonNull Uri uri) {
+    public static @Nullable Long getFileSize(@NonNull Uri uri) {
         if (isAuthority(uri)) {
             try {
                 return Long.parseLong(uri.getPathSegments().get(FILESIZE_PATH_SEGMENT));
             } catch (NumberFormatException e) {
                 return null;
             }
+        }
+        return null;
+    }
+
+    private static @Nullable String getId(@NonNull Uri uri) {
+        if (isAuthority(uri)) {
+            return uri.getPathSegments().get(ID_PATH_SEGMENT);
         }
         return null;
     }
@@ -240,12 +275,17 @@ public class BlobProvider {
     }
 
     @WorkerThread
-    private synchronized @NonNull
-    Uri writeBlobSpecToDisk(@NonNull Context context, @NonNull BlobSpec blobSpec)
-            throws IOException {
-        CountDownLatch latch = new CountDownLatch(1);
+    private synchronized @NonNull Uri writeBlobSpecToDisk(@NonNull Context context, @NonNull BlobSpec blobSpec)
+            throws IOException
+    {
+        waitUntilInitialized();
+
+        CountDownLatch               latch     = new CountDownLatch(1);
         AtomicReference<IOException> exception = new AtomicReference<>(null);
-        Uri uri = writeBlobSpecToDiskAsync(context, blobSpec, latch::countDown, exception::set);
+        Uri                          uri       = writeBlobSpecToDiskAsync(context, blobSpec, latch::countDown, e -> {
+            exception.set(e);
+            latch.countDown();
+        });
 
         try {
             latch.await();
@@ -262,16 +302,16 @@ public class BlobProvider {
 
 
     @WorkerThread
-    private synchronized @NonNull
-    Uri writeBlobSpecToDiskAsync(@NonNull Context context,
-                                 @NonNull BlobSpec blobSpec,
-                                 @Nullable SuccessListener successListener,
-                                 @Nullable ErrorListener errorListener)
-            throws IOException {
+    private synchronized @NonNull Uri writeBlobSpecToDiskAsync(@NonNull Context context,
+                                                               @NonNull BlobSpec blobSpec,
+                                                               @Nullable SuccessListener successListener,
+                                                               @Nullable ErrorListener errorListener)
+            throws IOException
+    {
         AttachmentSecret attachmentSecret = AttachmentSecretProvider.getInstance(context).getOrCreateAttachmentSecret();
-        String directory = getDirectory(blobSpec.getStorageType());
-        File outputFile = new File(getOrCreateCacheDirectory(context, directory), buildFileName(blobSpec.id));
-        OutputStream outputStream = ModernEncryptingPartOutputStream.createFor(attachmentSecret, outputFile, true).second;
+        String           directory        = getDirectory(blobSpec.getStorageType());
+        File             outputFile       = new File(getOrCreateDirectory(context, directory), buildFileName(blobSpec.id));
+        OutputStream     outputStream     = ModernEncryptingPartOutputStream.createFor(attachmentSecret, outputFile, true).second;
 
         PlexusExecutors.UNBOUNDED.execute(() -> {
             try {
@@ -281,6 +321,7 @@ public class BlobProvider {
                     successListener.onSuccess();
                 }
             } catch (IOException e) {
+                Log.w(TAG, "Error during write!", e);
                 if (errorListener != null) {
                     errorListener.onError(e);
                 }
@@ -290,25 +331,21 @@ public class BlobProvider {
         return buildUri(blobSpec);
     }
 
-    private synchronized @NonNull
-    Uri writeBlobSpecToMemory(@NonNull BlobSpec blobSpec, @NonNull byte[] data) {
+    private synchronized @NonNull Uri writeBlobSpecToMemory(@NonNull BlobSpec blobSpec, @NonNull byte[] data) {
         Uri uri = buildUri(blobSpec);
         memoryBlobs.put(uri, data);
         return uri;
     }
 
-    private static @NonNull
-    String buildFileName(@NonNull String id) {
+    private static @NonNull String buildFileName(@NonNull String id) {
         return id + ".blob";
     }
 
-    private static @NonNull
-    String getDirectory(@NonNull StorageType storageType) {
+    private static @NonNull String getDirectory(@NonNull StorageType storageType) {
         return storageType == StorageType.MULTI_SESSION_DISK ? MULTI_SESSION_DIRECTORY : SINGLE_SESSION_DIRECTORY;
     }
 
-    private static @NonNull
-    Uri buildUri(@NonNull BlobSpec blobSpec) {
+    private static @NonNull Uri buildUri(@NonNull BlobSpec blobSpec) {
         return CONTENT_URI.buildUpon()
                 .appendPath(blobSpec.getStorageType().encode())
                 .appendPath(blobSpec.getMimeType())
@@ -318,26 +355,21 @@ public class BlobProvider {
                 .build();
     }
 
-    private static File getOrCreateCacheDirectory(@NonNull Context context, @NonNull String directory) {
-        File file = new File(context.getCacheDir(), directory);
-        if (!file.exists()) {
-            file.mkdir();
-        }
-
-        return file;
+    private static File getOrCreateDirectory(@NonNull Context context, @NonNull String directory) {
+        return context.getDir(directory, Context.MODE_PRIVATE);
     }
 
     public class BlobBuilder {
 
         private InputStream data;
-        private String id;
-        private String mimeType;
-        private String fileName;
-        private long fileSize;
+        private String      id;
+        private String      mimeType;
+        private String      fileName;
+        private long        fileSize;
 
         private BlobBuilder(@NonNull InputStream data, long fileSize) {
-            this.id = UUID.randomUUID().toString();
-            this.data = data;
+            this.id       = UUID.randomUUID().toString();
+            this.data     = data;
             this.fileSize = fileSize;
         }
 
@@ -374,7 +406,8 @@ public class BlobProvider {
         public Uri createForSingleSessionOnDiskAsync(@NonNull Context context,
                                                      @Nullable SuccessListener successListener,
                                                      @Nullable ErrorListener errorListener)
-                throws IOException {
+                throws IOException
+        {
             return writeBlobSpecToDiskAsync(context, buildBlobSpec(StorageType.SINGLE_SESSION_DISK), successListener, errorListener);
         }
 
@@ -391,7 +424,7 @@ public class BlobProvider {
          * Create a blob that will exist for multiple app sessions. The file will be created on disk
          * synchronously, but the data will copied asynchronously. This is helpful when the copy is
          * long-running, such as in the case of recording a voice note.
-         * <p>
+         *
          * It is the caller's responsibility to eventually call {@link BlobProvider#delete(Context, Uri)}
          * when the blob is no longer in use.
          */
@@ -399,8 +432,21 @@ public class BlobProvider {
         public Uri createForMultipleSessionsOnDiskAsync(@NonNull Context context,
                                                         @Nullable SuccessListener successListener,
                                                         @Nullable ErrorListener errorListener)
-                throws IOException {
+                throws IOException
+        {
             return writeBlobSpecToDiskAsync(context, buildBlobSpec(StorageType.MULTI_SESSION_DISK), successListener, errorListener);
+        }
+    }
+
+    private synchronized void waitUntilInitialized() {
+        if (!initialized) {
+            Log.i(TAG, "Waiting for initialization...");
+            synchronized (this) {
+                while (!initialized) {
+                    Util.wait(this, 0);
+                }
+                Log.i(TAG, "Initialization complete.");
+            }
         }
     }
 
@@ -456,48 +502,44 @@ public class BlobProvider {
     private static class BlobSpec {
 
         private final InputStream data;
-        private final String id;
+        private final String      id;
         private final StorageType storageType;
-        private final String mimeType;
-        private final String fileName;
-        private final long fileSize;
+        private final String      mimeType;
+        private final String      fileName;
+        private final long        fileSize;
 
         private BlobSpec(@NonNull InputStream data,
                          @NonNull String id,
                          @NonNull StorageType storageType,
                          @NonNull String mimeType,
                          @Nullable String fileName,
-                         @IntRange(from = 0) long fileSize) {
-            this.data = data;
-            this.id = id;
+                         @IntRange(from = 0) long fileSize)
+        {
+            this.data        = data;
+            this.id          = id;
             this.storageType = storageType;
-            this.mimeType = mimeType;
-            this.fileName = fileName;
-            this.fileSize = fileSize;
+            this.mimeType    = mimeType;
+            this.fileName    = fileName;
+            this.fileSize    = fileSize;
         }
 
-        private @NonNull
-        InputStream getData() {
+        private @NonNull InputStream getData() {
             return data;
         }
 
-        private @NonNull
-        String getId() {
+        private @NonNull String getId() {
             return id;
         }
 
-        private @NonNull
-        StorageType getStorageType() {
+        private @NonNull StorageType getStorageType() {
             return storageType;
         }
 
-        private @NonNull
-        String getMimeType() {
+        private @NonNull String getMimeType() {
             return mimeType;
         }
 
-        private @Nullable
-        String getFileName() {
+        private @Nullable String getFileName() {
             return fileName;
         }
 
@@ -513,11 +555,11 @@ public class BlobProvider {
         SINGLE_SESSION_DISK("single-session-disk", false),
         MULTI_SESSION_DISK("multi-session-disk", false);
 
-        private final String encoded;
+        private final String  encoded;
         private final boolean inMemory;
 
         StorageType(String encoded, boolean inMemory) {
-            this.encoded = encoded;
+            this.encoded  = encoded;
             this.inMemory = inMemory;
         }
 

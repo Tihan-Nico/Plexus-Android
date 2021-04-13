@@ -14,22 +14,30 @@ public class PlexusStore {
     private final KeyValueStore store;
     private final MiscellaneousValues misc;
     private final EmojiValues emojiValues;
+    private final SettingsValue settingsValue;
+    private final PlexusPayValues plexusPayValues;
 
     private PlexusStore() {
         this.store = new KeyValueStore(PlexusDependencies.getApplication());
         this.misc = new MiscellaneousValues(store);
         this.emojiValues = new EmojiValues(store);
+        this.settingsValue = new SettingsValue(store);
+        this.plexusPayValues = new PlexusPayValues(store);
     }
 
     public static void onFirstEverAppLaunch() {
         misc().onFirstEverAppLaunch();
         emojiValues().onFirstEverAppLaunch();
+        settingsValue().onFirstEverAppLaunch();
+        plexusPayValues().onFirstEverAppLaunch();
     }
 
     public static List<String> getKeysToIncludeInBackup() {
         List<String> keys = new ArrayList<>();
         keys.addAll(misc().getKeysToIncludeInBackup());
         keys.addAll(emojiValues().getKeysToIncludeInBackup());
+        keys.addAll(settingsValue().getKeysToIncludeInBackup());
+        keys.addAll(plexusPayValues().getKeysToIncludeInBackup());
         return keys;
     }
 
@@ -41,6 +49,14 @@ public class PlexusStore {
     public static @NonNull
     EmojiValues emojiValues() {
         return INSTANCE.emojiValues;
+    }
+
+    public static  @NonNull SettingsValue settingsValue(){
+        return INSTANCE.settingsValue;
+    }
+
+    public static @NonNull PlexusPayValues plexusPayValues(){
+        return INSTANCE.plexusPayValues;
     }
 
 
