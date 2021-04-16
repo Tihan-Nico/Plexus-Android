@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/comment_footer_outline">
+
+        <com.plexus.components.emoji.EmojiEditText
+            android:id="@+id/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/transparent"
+            android:hint="Type your comment here"
+            android:fontFamily="@font/roboto"
+            android:layout_toStartOf="@id/emoji"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:layout_marginStart="10dp"/>
+
+        <requestFocus/>
+
+        <com.plexus.components.emoji.EmojiToggle
+            android:id="@+id/emoji"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/conversation_compose_height"
+            android:layout_toStartOf="@id/camera"
+            android:layout_centerVertical="true"
+            android:src="@drawable/emoticon_happy_outline"
+            android:background="?selectableItemBackgroundBorderless"
+            android:tint="@color/drawableTintColor"/>
+
+        <ImageView
+            android:id="@+id/camera"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:src="@drawable/camera_outline"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/image"
+            app:tint="@color/drawableTintColor"
+            android:layout_marginStart="10dp"/>
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:src="@drawable/image_outline"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/button_toggle"
+            app:tint="@color/drawableTintColor"
+            android:layout_marginStart="10dp"/>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <com.plexus.components.HidingLinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/image"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp">
+
+
+            </com.plexus.components.HidingLinearLayout>
+
+        </FrameLayout>
+
+        <!--<include layout="@layout/recording_layout" />-->
+
+        <com.plexus.components.AnimatingToggle
+            android:id="@+id/button_toggle"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/circle_tintable"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="15dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/send_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/circle_touch_highlight_background"
+                android:nextFocusLeft="@+id/embedded_text_editor"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/send"
+                app:tint="@color/white" />
+
+        </com.plexus.components.AnimatingToggle>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -6,7 +6,7 @@
     <color name="colorPrimaryDark">#121212</color>
     <color name="colorAccent">#FFFFFF</color>
     <color name="plexus">#f78361</color>
-    <color name="plexus_light">#D9CC775E</color>
+    <color name="plexus_light">#36CC775E</color>
     <color name="thumbnail">#FF3A3939</color>
     <color name="textColor">@color/white</color>
     <color name="textDescriptionColor">#b0b3b8</color>
