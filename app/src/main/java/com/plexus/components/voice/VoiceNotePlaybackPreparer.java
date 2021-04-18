@@ -12,14 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
-import com.annimon.stream.Stream;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector;
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource;
-import com.plexus.internal.models.ConversationMessages;
-import com.plexus.utils.MessageRecordUtil;
 import com.plexus.utils.Util;
 import com.plexus.utils.concurrent.SimpleTask;
 import com.plexus.utils.logging.Log;
@@ -58,13 +55,6 @@ final class VoiceNotePlaybackPreparer implements MediaSessionConnector.PlaybackP
         this.queueDataAdapter = queueDataAdapter;
         this.mediaSourceFactory = mediaSourceFactory;
         this.dataSource = new ConcatenatingMediaSource();
-    }
-
-    private static @NonNull
-    List<ConversationMessages> buildFilteredMessageRecordList(@NonNull List<ConversationMessages> recordsAfter) {
-        return Stream.of(recordsAfter)
-                .takeWhile(MessageRecordUtil::hasAudio)
-                .toList();
     }
 
     @Override

@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.ui.PlayerNotificationManager;
 import com.plexus.R;
+import com.plexus.messaging.activity.MessageUserActivity;
 import com.plexus.notifications.NotificationChannels;
 
 import java.util.Objects;
@@ -39,7 +40,7 @@ class VoiceNoteNotificationManager {
         }
 
         notificationManager = PlayerNotificationManager.createWithNotificationChannel(context,
-                NotificationChannels.VOICE,
+                "NotificationChannels.VOICE",
                 R.string.NotificationChannel_voice_notes,
                 NOW_PLAYING_NOTIFICATION_ID,
                 new DescriptionAdapter());
@@ -97,7 +98,7 @@ class VoiceNoteNotificationManager {
 
             /*notificationManager.setColor(color.toNotificationColor(context));*/
 
-            Intent conversationActivity = new Intent(context, ConversationActivity.class);
+            Intent conversationActivity = new Intent(context, MessageUserActivity.class);
 
             conversationActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 

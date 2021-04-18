@@ -66,7 +66,7 @@ class ReactionViewPagerAdapter extends ListAdapter<EmojiCount, ReactionViewPager
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final RecyclerView              recycler;
-        private final ReactionRecipientsAdapter adapter = new ReactionRecipientsAdapter();
+        /*private final ReactionRecipientsAdapter adapter = new ReactionRecipientsAdapter();*/
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,11 +77,11 @@ class ReactionViewPagerAdapter extends ListAdapter<EmojiCount, ReactionViewPager
                     ViewGroup.LayoutParams.MATCH_PARENT);
 
             recycler.setLayoutParams(params);
-            recycler.setAdapter(adapter);
+           /* recycler.setAdapter(adapter);*/
         }
 
         public void onBind(@NonNull EmojiCount emojiCount) {
-            adapter.updateData(emojiCount.getReactions());
+            /*adapter.updateData(emojiCount.getReactions());*/
         }
 
         public void setSelected(int position) {

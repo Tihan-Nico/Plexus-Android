@@ -1332,7 +1332,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
             post_layout = itemView.findViewById(R.id.post_layout);
             shared = itemView.findViewById(R.id.shared);
-            follow = itemView.findViewById(R.id.follow);
             image_profile = itemView.findViewById(R.id.image_profile);
             image_profile_shared = itemView.findViewById(R.id.image_profile_shared);
             post_video = itemView.findViewById(R.id.post_video);

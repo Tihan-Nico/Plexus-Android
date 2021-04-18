@@ -5,14 +5,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -20,35 +16,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.plexus.R;
-import com.plexus.components.background.DialogInformation;
 import com.plexus.main.fragments.HomeFragment;
 import com.plexus.main.fragments.NotificationsFragment;
 import com.plexus.main.fragments.ProfileFragment;
 import com.plexus.main.fragments.SearchFragment;
-import com.plexus.messaging.fragment.ChatlistFragment;
-import com.plexus.model.Token;
-import com.plexus.model.account.User;
-import com.plexus.model.notifications.PlexusNotification;
 import com.plexus.services.LocationService;
 import com.plexus.startup.PermissionActivity;
-import com.plexus.utils.MasterCipher;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
+import com.plexus.utils.AccountUtil;
 
 /******************************************************************************
  * Copyright (c) 2020. Plexus, Inc.                                           *
@@ -126,10 +105,6 @@ public class MainActivity extends AppCompatActivity {
                     selectedfragment = new HomeFragment();
                     break;
 
-                case R.id.message_nav:
-                    selectedfragment = new ChatlistFragment();
-                    break;
-
                 case R.id.notifications_nav:
                     selectedfragment = new NotificationsFragment();
                     break;
@@ -157,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 LocationService.LocationResult locationResult = new LocationService.LocationResult() {
                     @Override
                     public void gotLocation(Location location) {
-                        addLoginDetails(location.getLatitude(), location.getLongitude());
+                        AccountUtil.addLoginDetails(location.getLatitude(), location.getLongitude(), getContentResolver());
                     }
                 };
 
@@ -167,129 +142,21 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-
-        updateToken(FirebaseInstanceId.getInstance().getToken());
-        getUnreadNotifications();
+        AccountUtil.getUnreadNotifications(bottomNavigationView);
 
         if (!hasPermissions(this, PERMISSIONS)) {
             startActivity(new Intent(getApplicationContext(), PermissionActivity.class));
         }
-
-        checkIfVerifiedBefore();
     }
 
-    private void updateToken(String s) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Tokens");
-        Token token = new Token(s);
-        databaseReference.child(firebaseUser.getUid()).setValue(token);
-    }
-
-    public static @NonNull
-    Intent clearTop(@NonNull Context context) {
+    public static @NonNull Intent clearTop(@NonNull Context context) {
         Intent intent = new Intent(context, MainActivity.class);
 
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                Intent.FLAG_ACTIVITY_NEW_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK  |
                 Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         return intent;
-    }
-
-    private void updateAccount(String userID) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userID);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userID).child("Privacy").child("Posts");
-
-                HashMap<String, Object> deviceInfoMap = new HashMap<>();
-                deviceInfoMap.put("name", MasterCipher.decrypt(user.getName()));
-                deviceInfoMap.put("surname", MasterCipher.decrypt(user.getSurname()));
-                deviceInfoMap.put("bio", MasterCipher.decrypt(user.getBio()));
-                deviceInfoMap.put("country", MasterCipher.decrypt(user.getCountry()));
-                deviceInfoMap.put("username", MasterCipher.decrypt(user.getUsername()));
-                deviceInfoMap.put("imageurl", MasterCipher.decrypt(user.getImageurl()));
-                deviceInfoMap.put("profile_cover", MasterCipher.decrypt(user.getProfile_cover()));
-                deviceInfoMap.put("website", MasterCipher.decrypt(user.getWebsite()));
-
-                reference.updateChildren(deviceInfoMap);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void checkIfVerifiedBefore() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                if (!user.isVerifiedBefore()) {
-                    if (user.isVerified()) {
-                        DialogInformation.showVerified(MainActivity.this);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void getUnreadNotifications() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Notification");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int unread = 0;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    PlexusNotification plexusNotification = snapshot.getValue(PlexusNotification.class);
-                    if (!plexusNotification.isNotificationRead()) {
-                        unread++;
-                    }
-                }
-
-                BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.notifications_nav);
-                if ((unread == 0)) {
-                    badge.setVisible(false);
-                } else {
-                    badge.setBadgeTextColor(Color.WHITE);
-                    badge.setBackgroundColor(Color.parseColor("#f78361"));
-                    badge.setNumber(unread);
-                    badge.setVisible(true);
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void addLoginDetails(double latitude, double longitude) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Security").child("Login Activity");
-        String ID = databaseReference.push().getKey();
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("id", ID);
-        hashMap.put("device_name", Settings.Global.getString(getContentResolver(), "device_name"));
-        hashMap.put("device_login_time", new SimpleDateFormat("d MMMM yyyy", Locale.getDefault()).format(new Date()));
-        hashMap.put("device_latitude", latitude);
-        hashMap.put("device_longitude", longitude);
-        hashMap.put("device_token", FirebaseInstanceId.getInstance().getToken());
-
-        databaseReference.child(ID).setValue(hashMap);
     }
 
     @Override

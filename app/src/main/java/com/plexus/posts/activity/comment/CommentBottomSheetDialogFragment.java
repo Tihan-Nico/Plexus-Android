@@ -47,11 +47,11 @@ public class CommentBottomSheetDialogFragment extends BottomSheetDialogFragment 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        if (ThemeUtil.isDarkTheme(requireContext())) {
+        /*if (ThemeUtil.isDarkTheme(requireContext())) {
             setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_Signal_BottomSheetDialog_Fixed_ReactWithAny);
         } else {
             setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_Signal_Light_BottomSheetDialog_Fixed_ReactWithAny);
-        }
+        }*/
 
         super.onCreate(savedInstanceState);
     }
@@ -93,7 +93,7 @@ public class CommentBottomSheetDialogFragment extends BottomSheetDialogFragment 
     }
 
     private void setUpViewModel() {
-        CommentsViewModel.Factory factory = new CommentsViewModel.Factory(reactionsLoader);
+        /*CommentsViewModel.Factory factory = new CommentsViewModel.Factory(reactionsLoader);
 
         viewModel = ViewModelProviders.of(this, factory).get(ReactionsViewModel.class);
 
@@ -101,12 +101,12 @@ public class CommentBottomSheetDialogFragment extends BottomSheetDialogFragment 
             if (emojiCounts.size() <= 1) dismiss();
 
             recipientsAdapter.submitList(emojiCounts);
-        });
+        });*/
     }
 
     @Override
     public void onDestroyView() {
-        LoaderManager.getInstance(requireActivity()).destroyLoader((int) postid);
+       /* LoaderManager.getInstance(requireActivity()).destroyLoader((int) postid);*/
         super.onDestroyView();
     }
 

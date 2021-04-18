@@ -55,9 +55,9 @@ public class ReactionsViewModel extends ViewModel {
 
     private @NonNull String getCountDisplayEmoji(@NonNull List<ReactionDetails> reactions) {
         for (ReactionDetails reaction : reactions) {
-            if (reaction.getSender().isSelf()) {
+            /*if (reaction.getSender().isSelf()) {
                 return reaction.getDisplayEmoji();
-            }
+            }*/
         }
 
         return reactions.get(reactions.size() - 1).getDisplayEmoji();

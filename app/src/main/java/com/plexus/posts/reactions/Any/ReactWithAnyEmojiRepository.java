@@ -44,12 +44,12 @@ final class ReactWithAnyEmojiRepository {
                 .distinct()
                 .toList();
 
-        if (thisMessage.isEmpty()) {
+        /*if (thisMessage.isEmpty()) {
             pages.add(new ReactWithAnyEmojiPage(Collections.singletonList(new ReactWithAnyEmojiPageBlock(R.string.ReactWithAnyEmojiBottomSheetDialogFragment__recently_used, recentEmojiPageModel))));
         } else {
             pages.add(new ReactWithAnyEmojiPage(Arrays.asList(new ReactWithAnyEmojiPageBlock(R.string.ReactWithAnyEmojiBottomSheetDialogFragment__this_message, new ThisMessageEmojiPageModel(thisMessage)),
                     new ReactWithAnyEmojiPageBlock(R.string.ReactWithAnyEmojiBottomSheetDialogFragment__recently_used, recentEmojiPageModel))));
-        }
+        }*/
 
         pages.addAll(emojiPages);
 

@@ -10,7 +10,7 @@ import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
+import android.os.Build;
 import android.util.Pair;
 
 import androidx.annotation.NonNull;
@@ -18,9 +18,10 @@ import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 import androidx.exifinterface.media.ExifInterface;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.plexus.GlideApp;
+import com.plexus.core.utils.ThreadUtil;
+import com.plexus.core.utils.logging.Log;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -38,7 +39,7 @@ import javax.microedition.khronos.egl.EGLDisplay;
 
 public class BitmapUtil {
 
-    private static final String TAG = BitmapUtil.class.getSimpleName();
+    private static final String TAG = Log.tag(BitmapUtil.class);
 
     private static final int MAX_COMPRESSION_QUALITY          = 90;
     private static final int MIN_COMPRESSION_QUALITY          = 45;
@@ -46,6 +47,11 @@ public class BitmapUtil {
     private static final int MIN_COMPRESSION_QUALITY_DECREASE = 5;
     private static final int MAX_IMAGE_HALF_SCALES            = 3;
 
+    /**
+     * @deprecated You probably want to use {@link ImageCompressionUtil} instead, which has a clearer
+     *             contract and handles mimetypes properly.
+     */
+    @Deprecated
     @WorkerThread
     public static <T> ScaleResult createScaledBytes(@NonNull Context context, @NonNull T model, @NonNull MediaConstraints constraints)
             throws BitmapDecodingException
@@ -56,6 +62,10 @@ public class BitmapUtil {
                 constraints.getImageMaxSize(context));
     }
 
+    /**
+     * @deprecated You probably want to use {@link ImageCompressionUtil} instead, which has a clearer
+     *             contract and handles mimetypes properly.
+     */
     @WorkerThread
     public static <T> ScaleResult createScaledBytes(@NonNull Context context,
                                                     @NonNull T model,
@@ -67,6 +77,10 @@ public class BitmapUtil {
         return createScaledBytes(context, model, maxImageWidth, maxImageHeight, maxImageSize, CompressFormat.JPEG);
     }
 
+    /**
+     * @deprecated You probably want to use {@link ImageCompressionUtil} instead, which has a clearer
+     *             contract and handles mimetypes properly.
+     */
     @WorkerThread
     public static <T> ScaleResult createScaledBytes(Context context,
                                                     T model,
@@ -95,9 +109,7 @@ public class BitmapUtil {
             int    attempts = 0;
             byte[] bytes;
 
-            SimpleDraweeView simpleDraweeView;
-
-            Bitmap scaledBitmap = Glide.with(context.getApplicationContext())
+            Bitmap scaledBitmap = GlideApp.with(context.getApplicationContext())
                     .asBitmap()
                     .load(model)
                     .skipMemoryCache(true)
@@ -163,7 +175,7 @@ public class BitmapUtil {
             throws BitmapDecodingException
     {
         try {
-            return Glide.with(context.getApplicationContext())
+            return GlideApp.with(context.getApplicationContext())
                     .asBitmap()
                     .load(model)
                     .centerInside()
@@ -265,6 +277,17 @@ public class BitmapUtil {
         if (bitmap == null) return null;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
+    }
+
+    public static @Nullable byte[] toWebPByteArray(@Nullable Bitmap bitmap) {
+        if (bitmap == null) return null;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        if (Build.VERSION.SDK_INT >= 30) {
+            bitmap.compress(CompressFormat.WEBP_LOSSLESS, 100, stream);
+        } else {
+            bitmap.compress(CompressFormat.WEBP, 100, stream);
+        }
         return stream.toByteArray();
     }
 
@@ -386,7 +409,7 @@ public class BitmapUtil {
             }
         };
 
-        Util.runOnMain(runnable);
+        ThreadUtil.runOnMain(runnable);
 
         synchronized (result) {
             while (!created.get()) Util.wait(result, 0);

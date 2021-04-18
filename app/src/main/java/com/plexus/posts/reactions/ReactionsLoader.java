@@ -35,8 +35,9 @@ public class ReactionsLoader implements ReactionsViewModel.Repository, LoaderMan
 
     @Override
     public @NonNull Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        return isMms ? new MmsMessageRecordCursorLoader(appContext, messageId)
-                : new SmsMessageRecordCursorLoader(appContext, messageId);
+        /*return isMms ? new MmsMessageRecordCursorLoader(appContext, messageId)
+                : new SmsMessageRecordCursorLoader(appContext, messageId);*/
+        return null;
     }
 
     @Override
@@ -44,7 +45,7 @@ public class ReactionsLoader implements ReactionsViewModel.Repository, LoaderMan
         PlexusExecutors.BOUNDED.execute(() -> {
             data.moveToPosition(-1);
 
-            MessageRecord record = isMms ? MmsDatabase.readerFor(data).getNext()
+           /* MessageRecord record = isMms ? MmsDatabase.readerFor(data).getNext()
                     : SmsDatabase.readerFor(data).getNext();
 
             if (record == null) {
@@ -56,7 +57,7 @@ public class ReactionsLoader implements ReactionsViewModel.Repository, LoaderMan
                                 reactionRecord.getEmoji(),
                                 reactionRecord.getDateReceived()))
                         .toList());
-            }
+            }*/
         });
     }
 
@@ -70,7 +71,7 @@ public class ReactionsLoader implements ReactionsViewModel.Repository, LoaderMan
         return internalLiveData;
     }
 
-    private static final class MmsMessageRecordCursorLoader extends AbstractCursorLoader {
+    /*private static final class MmsMessageRecordCursorLoader extends AbstractCursorLoader {
 
         private final long messageId;
 
@@ -98,6 +99,6 @@ public class ReactionsLoader implements ReactionsViewModel.Repository, LoaderMan
         public Cursor getCursor() {
             return DatabaseFactory.getSmsDatabase(context).getMessageCursor(messageId);
         }
-    }
+    }*/
 
 }

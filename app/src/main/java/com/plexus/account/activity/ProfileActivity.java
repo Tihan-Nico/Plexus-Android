@@ -38,7 +38,6 @@ import com.plexus.model.Token;
 import com.plexus.model.account.User;
 import com.plexus.model.posts.Post;
 import com.plexus.notifications.fcm.FirebaseNotificationHelper;
-import com.plexus.qr.activity.QrGetLinkActivity;
 import com.plexus.utils.MasterCipher;
 
 import org.jetbrains.annotations.NotNull;
@@ -97,7 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_profile);
+        setContentView(R.layout.profile_view);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         storageReference = FirebaseStorage.getInstance().getReference("avatars/covers");
@@ -106,17 +105,13 @@ public class ProfileActivity extends AppCompatActivity {
         profile_cover = findViewById(R.id.image_cover);
         username = findViewById(R.id.username);
         posts = findViewById(R.id.posts);
-        follow = findViewById(R.id.follow);
         fullname = findViewById(R.id.fullname);
         bio = findViewById(R.id.about);
         menu = findViewById(R.id.menu);
         verified = findViewById(R.id.verified);
-        disabled = findViewById(R.id.blocked);
         followers = findViewById(R.id.followers);
         following = findViewById(R.id.following);
         recycler_view = findViewById(R.id.recycler_view);
-        show_account_private = findViewById(R.id.show_account_private);
-        profile_empty_state = findViewById(R.id.profile_empty_state);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 

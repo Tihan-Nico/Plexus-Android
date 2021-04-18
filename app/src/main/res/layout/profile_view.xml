@@ -28,7 +28,7 @@
         android:layout_height="match_parent"
         android:scrollbars="none"
         android:overScrollMode="never"
-        android:background="@color/colorPrimary">
+        android:background="@color/backgroundColor">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -40,47 +40,12 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
-                    app:elevation="0dp"
-                    android:elevation="0dp"
-                    android:background="@color/toolbarColor">
-
-                    <TextView
-                        android:id="@+id/username"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:background="@drawable/bg_post_create"
-                        android:fontFamily="@font/roboto"
-                        android:gravity="center"
-                        android:paddingStart="15dp"
-                        android:paddingTop="2dp"
-                        android:paddingEnd="15dp"
-                        android:paddingBottom="2dp"
-                        android:textColor="@color/textColor"
-                        android:textSize="16sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/menu"
-                        android:layout_margin="15dp"
-                        android:src="@drawable/menu_vert"
-                        android:layout_gravity="end"
-                        app:tint="@color/drawableTintColor" />
-
-                </com.google.android.material.appbar.MaterialToolbar>
-
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:layout_width="match_parent"
                     android:layout_height="170dp"
                     android:scaleType="centerCrop"
-                    app:placeholderImage="@color/white"
-                    android:id="@+id/image_cover"
-                    android:layout_below="@id/toolbar"/>
+                    app:placeholderImage="@color/green_500"
+                    android:id="@+id/image_cover"/>
 
                 <ImageView
                     android:layout_width="30dp"
@@ -138,10 +103,19 @@
                 android:textColor="@color/textColor"/>
 
             <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tihannico"
+                android:textColor="@color/textDescriptionColor"
+                android:layout_below="@id/full_name"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
                 android:id="@+id/bio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/full_name"
+                android:layout_below="@id/username"
                 android:text="ssdgddsgdsdgdsgsdgsdsvdvdvdsvvdv"
                 android:textSize="16sp"
                 android:fontFamily="@font/roboto"
@@ -153,92 +127,131 @@
                 android:textAlignment="center"
                 android:maxLines="2"/>
 
+            <LinearLayout
+                android:id="@+id/account_actions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_below="@id/bio">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_marginTop="15dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/circle_bg_plexus_light"
+                        android:src="@drawable/ic_add"
+                        app:tint="@color/plexus"
+                        android:padding="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textColor="@color/plexus"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Create story"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_marginTop="15dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/circle_account_actions"
+                        android:src="@drawable/account_edit_outline"
+                        app:tint="@color/drawableTintColor"
+                        android:padding="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textColor="@color/textDescriptionColor"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Edit Profile"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_marginTop="15dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/circle_account_actions"
+                        android:src="@drawable/profile_activity"
+                        app:tint="@color/drawableTintColor"
+                        android:padding="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textColor="@color/textDescriptionColor"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Activity Log"
+                        android:textAlignment="center"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_marginTop="15dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/circle_account_actions"
+                        android:src="@drawable/more_horizontal"
+                        app:tint="@color/drawableTintColor"
+                        android:padding="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textColor="@color/textDescriptionColor"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="More"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
             <View
                 android:id="@+id/guideline"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/guidelineColor"
-                android:layout_below="@id/bio"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"/>
-
-            <LinearLayout
-                android:id="@+id/country"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@id/guideline"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/home_outline"
-                    app:tint="@color/drawableTintColor" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cape Town, South Africa"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/roboto"
-                    android:textColor="@color/textDescriptionColor"
-                    android:textSize="16sp"
-                    android:layout_marginStart="15dp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/work"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@id/country"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginTop="15dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/briefcase_outline"
-                    app:tint="@color/drawableTintColor" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Plexus, Inc"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/roboto"
-                    android:textColor="@color/textDescriptionColor"
-                    android:textSize="16sp"
-                    android:layout_marginStart="15dp"/>
-
-            </LinearLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/edit_details"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/work"
-                app:cornerRadius="8dp"
-                android:text="Edit Public Details"
-                android:textColor="@color/plexus"
-                app:backgroundTint="@color/plexus_light"
-                android:textAllCaps="false"
-                android:layout_marginEnd="15dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
-                android:elevation="0dp"
-                app:elevation="0dp"/>
-
-            <View
-                android:id="@+id/guideline2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/guidelineColor"
-                android:layout_below="@id/edit_details"
+                android:layout_below="@id/account_actions"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"/>
 
@@ -248,7 +261,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="3"
-                android:layout_below="@id/guideline2">
+                android:layout_marginBottom="15dp"
+                android:layout_below="@id/guideline">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -333,6 +347,87 @@
                 android:layout_height="1dp"
                 android:background="@color/guidelineColor"
                 android:layout_below="@id/account_details"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"/>
+
+            <LinearLayout
+                android:id="@+id/country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/guideline3"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/home_outline"
+                    app:tint="@color/drawableTintColor" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cape Town, South Africa"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto"
+                    android:textColor="@color/textDescriptionColor"
+                    android:textSize="16sp"
+                    android:layout_marginStart="15dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/work"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/country"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="15dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/briefcase_outline"
+                    app:tint="@color/drawableTintColor" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Plexus, Inc"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto"
+                    android:textColor="@color/textDescriptionColor"
+                    android:textSize="16sp"
+                    android:layout_marginStart="15dp"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/edit_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/work"
+                app:cornerRadius="8dp"
+                android:text="Edit Profile Details"
+                android:textColor="@color/plexus"
+                app:backgroundTint="@color/plexus_light"
+                android:textAllCaps="false"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:elevation="0dp"
+                app:elevation="0dp"/>
+
+            <View
+                android:id="@+id/guideline2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/guidelineColor"
+                android:layout_below="@id/edit_details"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"/>
 
@@ -340,7 +435,7 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/guideline3"/>
+                android:layout_below="@id/guideline2"/>
 
         </RelativeLayout>
 

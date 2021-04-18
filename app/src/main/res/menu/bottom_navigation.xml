@@ -28,11 +28,6 @@
         android:title="@string/search"/>
 
     <item
-        android:id="@+id/message_nav"
-        android:icon="@drawable/comment_multiple_outline"
-        android:title="@string/add_nav" />
-
-    <item
         android:id="@+id/notifications_nav"
         android:icon="@drawable/bell_outline"
         android:title="@string/notifications_nav"/>

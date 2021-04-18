@@ -7,7 +7,7 @@
     <color name="colorPrimaryDark">#121212</color>
     <color name="colorAccent">#FFFFFF</color>
     <color name="plexus">#f78361</color>
-    <color name="plexus_light">#D9CC775E</color>
+    <color name="plexus_light">#36CC775E</color>
     <color name="thumbnail">#FF3A3939</color>
     <color name="textColor">@color/black</color>
     <color name="textDescriptionColor">#a6a5a9</color>
@@ -99,6 +99,15 @@
     <!--Payment-->
     <color name="payment_info_card_overflow_tint">@color/core_grey_45</color>
     <color name="payment_currency_code_foreground_color">@color/core_grey_45</color>
+
+    <color name="megaphone_background_color">@color/white</color>
+    <color name="megaphone_body_text_color">@color/core_grey_65</color>
+    <color name="megaphone_reactions_shade">@color/core_grey_02</color>
+    <color name="megaphone_reactions_close_tint">@color/black</color>
+
+    <color name="reactions_pill_text_color">@color/core_grey_60</color>
+    <color name="reactions_pill_selected_text_color">@color/core_grey_75</color>
+    <color name="reactions_screen_shade_color">@color/transparent_black_40</color>
 
     <color name="grayScale">#B8ACAC</color>
     <color name="background_light">#212121</color>

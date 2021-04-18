@@ -106,13 +106,14 @@ public class PlexusPayValues extends PlexusStoreValues{
     }
 
     private @NonNull Currency determineCurrency() {
-        String localE164 = TextSecurePreferences.getLocalNumber(PlexusDependencies.getApplication());
+        /*String localE164 = TextSecurePreferences.getLocalNumber(PlexusDependencies.getApplication());
         if (localE164 == null) {
             localE164 = "";
         }
         return Util.firstNonNull(CurrencyUtil.getCurrencyByE164(localE164),
                 CurrencyUtil.getCurrencyByLocale(Locale.getDefault()),
-                Currency.getInstance(DEFAULT_CURRENCY_CODE));
+                Currency.getInstance(DEFAULT_CURRENCY_CODE));*/
+        return null;
     }
 
     public static @Nullable Currency getCurrencyByLocale(@Nullable Locale locale) {

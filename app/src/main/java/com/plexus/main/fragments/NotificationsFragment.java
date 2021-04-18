@@ -63,17 +63,7 @@ public class NotificationsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
 
-        clear_notifications = view.findViewById(R.id.clear_notifications);
-        tabLayout = view.findViewById(R.id.tabLayout);
-        viewPager = view.findViewById(R.id.viewPager);
-
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        /*if (PlexusPreferences.getLookoutNotificationEnabled(getContext())){
-            initAll();
-        } else {
-            initPlexusOnly();
-        }*/
 
         return view;
     }

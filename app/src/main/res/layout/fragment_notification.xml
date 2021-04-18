@@ -15,72 +15,19 @@
   ~  limitations under the License.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@color/black">
+    android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <com.plexus.components.components.PlexusRecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent" />
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            app:elevation="0dp"
-            android:elevation="0dp"
-            android:background="@color/toolbarColor">
-
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:background="@drawable/bg_post_create"
-                android:fontFamily="@font/roboto"
-                android:gravity="center"
-                android:paddingStart="15dp"
-                android:paddingTop="2dp"
-                android:paddingEnd="15dp"
-                android:paddingBottom="2dp"
-                android:visibility="gone"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
-                android:textSize="20sp"
-                android:text="Notifications"
-                android:textColor="@color/colorAccent" />
-
-            <ImageView
-                android:id="@+id/clear_notifications"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="15dp"
-                android:src="@drawable/ic_clear_notifications"
-                app:tint="@color/drawableTintColor" />
-
-        </com.google.android.material.appbar.MaterialToolbar>
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/toolbarColor"/>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/backgroundColor"/>
+    <include
+        android:id="@+id/empty_state"
+        layout="@layout/notification_empty_state" />
 
 </LinearLayout>

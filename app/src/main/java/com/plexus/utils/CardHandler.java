@@ -17,7 +17,7 @@ public class CardHandler {
         banks = new HashMap<String, String>();
         banksLogo = new HashMap<String, Integer>();
 
-        banks.put("603799","بانک ملی ایران");
+        /*banks.put("603799","بانک ملی ایران");
         banksLogo.put("بانک ملی ایران",R.drawable.bank_meli);
 
         banks.put("636214","بانک آینده");
@@ -119,7 +119,7 @@ public class CardHandler {
         banksLogo.put("موسسه اعتباری توسعه",R.drawable.moasseseh_tosee);
 
         banks.put("505801","موسسه اعتباری کوثر");
-        banksLogo.put("موسسه اعتباری کوثر",R.drawable.moasseseh_kosar);
+        banksLogo.put("موسسه اعتباری کوثر",R.drawable.moasseseh_kosar);*/
     }
 
     public boolean CardValidation(String cardNo){

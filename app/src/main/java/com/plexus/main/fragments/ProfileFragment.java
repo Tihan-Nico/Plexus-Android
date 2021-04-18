@@ -89,7 +89,7 @@ public class ProfileFragment extends Fragment {
     @SuppressLint("CheckResult")
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.profile_view, container, false);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         storageReference = FirebaseStorage.getInstance().getReference("avatars/covers");
@@ -98,7 +98,6 @@ public class ProfileFragment extends Fragment {
         profile_cover = view.findViewById(R.id.image_cover);
         username = view.findViewById(R.id.username);
         posts = view.findViewById(R.id.posts);
-        follow = view.findViewById(R.id.follow);
         fullname = view.findViewById(R.id.fullname);
         bio = view.findViewById(R.id.about);
         menu = view.findViewById(R.id.menu);

@@ -103,6 +103,15 @@
     <color name="payment_info_card_overflow_tint">@color/core_grey_45</color>
     <color name="payment_currency_code_foreground_color">@color/core_grey_45</color>
 
+    <color name="megaphone_background_color">@color/core_grey_85</color>
+    <color name="megaphone_body_text_color">@color/core_grey_25</color>
+    <color name="megaphone_reactions_shade">@color/core_grey_70</color>
+    <color name="megaphone_reactions_close_tint">@color/core_grey_15</color>
+
+    <color name="reactions_pill_text_color">@color/core_grey_35</color>
+    <color name="reactions_pill_selected_text_color">@color/core_grey_15</color>
+    <color name="reactions_screen_shade_color">@color/transparent_black_60</color>
+
     <color name="grayScale">#B8ACAC</color>
     <color name="background_light">#212121</color>
     <color name="black">#000000</color>

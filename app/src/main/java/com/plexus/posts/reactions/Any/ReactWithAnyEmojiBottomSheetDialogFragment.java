@@ -32,6 +32,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.plexus.R;
 import com.plexus.components.emoji.EmojiKeyboardProvider;
 import com.plexus.components.emoji.EmojiPageViewGridAdapter;
+import com.plexus.model.posts.Post;
 import com.plexus.posts.reactions.ReactionsLoader;
 import com.plexus.utils.ThemeUtil;
 import com.plexus.utils.ViewUtil;
@@ -59,12 +60,11 @@ public final class ReactWithAnyEmojiBottomSheetDialogFragment extends BottomShee
     private Callback                                              callback;
     private ReactionsLoader                                       reactionsLoader;
 
-    public static DialogFragment createForMessageRecord(@NonNull MessageRecord messageRecord, int startingPage) {
+    public static DialogFragment createForMessageRecord(@NonNull Post messageRecord, int startingPage) {
         DialogFragment fragment = new ReactWithAnyEmojiBottomSheetDialogFragment();
         Bundle         args     = new Bundle();
 
-        args.putLong(ARG_MESSAGE_ID, messageRecord.getId());
-        args.putBoolean(ARG_IS_MMS, messageRecord.isMms());
+        args.putString(ARG_MESSAGE_ID, messageRecord.getPostid());
         args.putInt(ARG_START_PAGE, startingPage);
         args.putBoolean(ARG_SHADOWS, false);
         args.putString(ARG_RECENT_KEY, REACTION_STORAGE_KEY);
@@ -97,13 +97,13 @@ public final class ReactWithAnyEmojiBottomSheetDialogFragment extends BottomShee
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         boolean shadows = requireArguments().getBoolean(ARG_SHADOWS);
-        if (ThemeUtil.isDarkTheme(requireContext())) {
+        /*if (ThemeUtil.isDarkTheme(requireContext())) {
             setStyle(DialogFragment.STYLE_NORMAL, shadows ? R.style.Theme_Signal_BottomSheetDialog_Fixed_ReactWithAny
                     : R.style.Theme_Signal_BottomSheetDialog_Fixed_ReactWithAny_Shadowless);
         } else {
             setStyle(DialogFragment.STYLE_NORMAL, shadows ? R.style.Theme_Signal_Light_BottomSheetDialog_Fixed_ReactWithAny
                     : R.style.Theme_Signal_Light_BottomSheetDialog_Fixed_ReactWithAny_Shadowless);
-        }
+        }*/
 
         super.onCreate(savedInstanceState);
     }
@@ -117,7 +117,7 @@ public final class ReactWithAnyEmojiBottomSheetDialogFragment extends BottomShee
                 .build();
         MaterialShapeDrawable dialogBackground     = new MaterialShapeDrawable(shapeAppearanceModel);
 
-        dialogBackground.setTint(ContextCompat.getColor(requireContext(), R.color.signal_background_dialog));
+        /*dialogBackground.setTint(ContextCompat.getColor(requireContext(), R.color.signal_background_dialog));*/
 
         dialog.getBehavior().addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -202,10 +202,10 @@ public final class ReactWithAnyEmojiBottomSheetDialogFragment extends BottomShee
             container.addView(categoryTabs);
             ViewCompat.setOnApplyWindowInsetsListener(container, (v, insets) -> insets.consumeSystemWindowInsets());
 
-            new TabLayoutMediator(categoryTabs, categoryPager, (tab, position) -> {
+            /*new TabLayoutMediator(categoryTabs, categoryPager, (tab, position) -> {
                 tab.setCustomView(react_with_any_emoji_tab)
                         .setIcon(ThemeUtil.getThemedDrawable(requireContext(), adapter.getItem(position).getIconAttr()));
-            }).attach();
+            }).attach();*/
         }
     }
 

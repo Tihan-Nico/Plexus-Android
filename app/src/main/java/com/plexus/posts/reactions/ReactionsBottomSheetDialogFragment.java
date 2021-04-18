@@ -23,6 +23,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.plexus.R;
 import com.plexus.components.emoji.EmojiImageView;
 import com.plexus.utils.ThemeUtil;
+import com.plexus.utils.ViewUtil;
 
 import java.util.Objects;
 
@@ -59,11 +60,11 @@ public final class ReactionsBottomSheetDialogFragment extends BottomSheetDialogF
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        if (ThemeUtil.isDarkTheme(requireContext())) {
+        /*if (ThemeUtil.isDarkTheme(requireContext())) {
             setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_Signal_BottomSheetDialog_Fixed_ReactWithAny);
         } else {
             setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_Signal_Light_BottomSheetDialog_Fixed_ReactWithAny);
-        }
+        }*/
 
         super.onCreate(savedInstanceState);
     }
@@ -95,7 +96,7 @@ public final class ReactionsBottomSheetDialogFragment extends BottomSheetDialogF
 
             ViewCompat.setOnApplyWindowInsetsListener(container, (v, insets) -> insets.consumeSystemWindowInsets());
 
-            new TabLayoutMediator(emojiTabs, recipientPagerView, (tab, position) -> {
+            /*new TabLayoutMediator(emojiTabs, recipientPagerView, (tab, position) -> {
                 tab.setCustomView(R.layout.reactions_bottom_sheet_dialog_fragment_emoji_item);
 
                 View           customView = Objects.requireNonNull(tab.getCustomView());
@@ -111,7 +112,7 @@ public final class ReactionsBottomSheetDialogFragment extends BottomSheetDialogF
                     emoji.setVisibility(View.GONE);
                     text.setText(requireContext().getString(R.string.ReactionsBottomSheetDialogFragment_all, emojiCount.getCount()));
                 }
-            }).attach();
+            }).attach();*/
         }
 
         setUpViewModel();

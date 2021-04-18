@@ -43,7 +43,7 @@ public class LookOutNotificationFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_notification_lookout, container, false);
+        View view = inflater.inflate(R.layout.fragment_notification, container, false);
 
         empty_state = view.findViewById(R.id.empty_state);
         recyclerView = view.findViewById(R.id.recycler_view);

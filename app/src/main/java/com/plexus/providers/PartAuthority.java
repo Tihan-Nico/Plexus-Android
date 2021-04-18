@@ -12,7 +12,7 @@ import java.io.InputStream;
 
 public class PartAuthority {
 
-    private static final String AUTHORITY             = BuildConfig.APPLICATION_ID;
+    private static final String AUTHORITY             = "BuildConfig.APPLICATION_ID";
     private static final String PART_URI_STRING       = "content://" + AUTHORITY + "/part";
     private static final Uri    PART_CONTENT_URI      = Uri.parse(PART_URI_STRING);
 

@@ -1588,5 +1588,91 @@
     <string name="plexus_pay_add_email">Add Email</string>
     <string name="plexus_pay_phone_number">Add Phone Number</string>
 
+    <!--Navigation Drawer-->
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <!-- Megaphones -->
+    <string name="Megaphones_introducing_reactions">Introducing Reactions</string>
+    <string name="Megaphones_tap_and_hold_any_message_to_quicky_share_how_you_feel">Tap and hold any post to quickly react to it.</string>
+    <string name="Megaphones_remind_me_later">Remind me later</string>
+    <string name="Megaphones_get_started">Get started</string>
+
+    <!-- SupportEmailUtil -->
+    <string name="SupportEmailUtil_support_email" translatable="false">support@signal.org</string>
+    <string name="SupportEmailUtil_filter">Filter:</string>
+    <string name="SupportEmailUtil_device_info">Device info:</string>
+    <string name="SupportEmailUtil_android_version">Android version:</string>
+    <string name="SupportEmailUtil_signal_version">Signal version:</string>
+    <string name="SupportEmailUtil_signal_package">Signal package:</string>
+    <string name="SupportEmailUtil_registration_lock">Registration lock:</string>
+    <string name="SupportEmailUtil_locale">Locale:</string>
+
+    <!-- HelpFragment -->
+    <string name="HelpFragment__have_you_read_our_faq_yet">Have you read our FAQ yet?</string>
+    <string name="HelpFragment__next">Next</string>
+    <string name="HelpFragment__contact_us">Contact us</string>
+    <string name="HelpFragment__tell_us_whats_going_on">Tell us what\'s going on</string>
+    <string name="HelpFragment__include_debug_log">Include debug log.</string>
+    <string name="HelpFragment__whats_this">What\'s this?</string>
+    <string name="HelpFragment__how_do_you_feel">How do you feel? (Optional)</string>
+    <string name="HelpFragment__tell_us_why_youre_reaching_out">Tell us why you\'re reaching out.</string>
+    <string name="HelpFragment__emoji_5" translatable="false">emoji_5</string>
+    <string name="HelpFragment__emoji_4" translatable="false">emoji_4</string>
+    <string name="HelpFragment__emoji_3" translatable="false">emoji_3</string>
+    <string name="HelpFragment__emoji_2" translatable="false">emoji_2</string>
+    <string name="HelpFragment__emoji_1" translatable="false">emoji_1</string>
+    <string name="HelpFragment__link__debug_info" translatable="false">https://support.signal.org/hc/articles/360007318591</string>
+    <string name="HelpFragment__link__faq" translatable="false">https://support.signal.org</string>
+    <string name="HelpFragment__support_info">Support Info</string>
+    <string name="HelpFragment__signal_android_support_request">Signal Android Support Request</string>
+    <string name="HelpFragment__debug_log">Debug Log:</string>
+    <string name="HelpFragment__could_not_upload_logs">Could not upload logs</string>
+    <string name="HelpFragment__please_be_as_descriptive_as_possible">Please be as descriptive as possible to help us understand the issue.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string-array name="HelpFragment__categories">
+        <item>Something\'s Not Working</item>
+        <item>Feature Request</item>
+        <item>Question</item>
+        <item>Feedback</item>
+        <item>Other</item>
+        <item>Payments</item>
+    </string-array>
+
+    <!-- SaveAttachmentTask -->
+    <string name="SaveAttachmentTask_saved_to">Saved to %s</string>
+    <string name="SaveAttachmentTask_saved">Saved</string>
+    <string name="SaveAttachmentTask_unable_to_write_to_sd_card_exclamation">Unable to write to storage!</string>
+    <plurals name="SaveAttachmentTask_saving_n_attachments">
+        <item quantity="one">Saving attachment</item>
+        <item quantity="other">Saving %1$d attachments</item>
+    </plurals>
+    <plurals name="SaveAttachmentTask_saving_n_attachments_to_sd_card">
+        <item quantity="one">Saving attachment to storage…</item>
+        <item quantity="other">Saving %1$d attachments to storage…</item>
+    </plurals>
+    <string name="SaveAttachmentTask_save_to_sd_card">Save to storage?</string>
+    <plurals name="SaveAttachmentTask_saving_n_media_to_storage_warning">
+        <item quantity="one">Saving this media to storage will allow any other apps on your device to access it.\n\nContinue?</item>
+        <item quantity="other">Saving all %1$d media to storage will allow any other apps on your device to access them.\n\nContinue?</item>
+    </plurals>
+    <plurals name="SaveAttachmentTask_error_while_saving_attachments_to_sd_card">
+        <item quantity="one">Error while saving attachment to storage!</item>
+        <item quantity="other">Error while saving attachments to storage!</item>
+    </plurals>
+
+    <!-- ReactWithAnyEmojiBottomSheetDialogFragment -->
+    <string name="ReactWithAnyEmojiBottomSheetDialogFragment__this_message">This Message</string>
+    <string name="ReactWithAnyEmojiBottomSheetDialogFragment__recently_used">Recently Used</string>
+    <string name="ReactWithAnyEmojiBottomSheetDialogFragment__smileys_and_people">Smileys &amp; People</string>
+    <string name="ReactWithAnyEmojiBottomSheetDialogFragment__nature">Nature</string>
+    <string name="ReactWithAnyEmojiBottomSheetDialogFragment__food">Food</string>
+    <string name="ReactWithAnyEmojiBottomSheetDialogFragment__activities">Activities</string>
+    <string name="ReactWithAnyEmojiBottomSheetDialogFragment__places">Places</string>
+    <string name="ReactWithAnyEmojiBottomSheetDialogFragment__objects">Objects</string>
+    <string name="ReactWithAnyEmojiBottomSheetDialogFragment__symbols">Symbols</string>
+    <string name="ReactWithAnyEmojiBottomSheetDialogFragment__flags">Flags</string>
+    <string name="ReactWithAnyEmojiBottomSheetDialogFragment__emoticons">Emoticons</string>
 
 </resources>
