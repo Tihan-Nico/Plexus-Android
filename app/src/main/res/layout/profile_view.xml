@@ -48,6 +48,7 @@
                     android:id="@+id/image_cover"/>
 
                 <ImageView
+                    android:id="@+id/edit_profile_cover"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/circle_bg"
@@ -136,6 +137,7 @@
                 android:layout_below="@id/bio">
 
                 <LinearLayout
+                    android:id="@+id/lin_add_story"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -163,6 +165,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/lin_edit_profile"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -190,6 +193,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/lin_logs"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -218,6 +222,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/lin_more"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -379,7 +384,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/work"
+                android:id="@+id/website"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -391,7 +396,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/briefcase_outline"
+                    android:src="@drawable/web"
                     app:tint="@color/drawableTintColor" />
 
                 <TextView
@@ -410,9 +415,9 @@
                 android:id="@+id/edit_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/work"
+                android:layout_below="@id/website"
                 app:cornerRadius="8dp"
-                android:text="Edit Profile Details"
+                android:text="Edit About Details"
                 android:textColor="@color/plexus"
                 app:backgroundTint="@color/plexus_light"
                 android:textAllCaps="false"

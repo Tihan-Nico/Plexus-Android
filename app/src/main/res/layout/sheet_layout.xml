@@ -15,6 +15,7 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -27,5 +28,63 @@
         android:dividerHeight="1dp"
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"/>
+
+    <LinearLayout
+        android:id="@+id/profile_link_lin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Plexus Link"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@color/textColor"
+            android:textSize="18sp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your personalized link for your Plexus account."
+            android:layout_marginStart="15dp"
+            android:textColor="@color/textDescriptionColor"
+            android:textSize="16sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sheet_copy_link_background"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:id="@+id/link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="plexus.dev/tihannico"
+                android:layout_marginStart="15dp"
+                android:textColor="@color/textDescriptionColor"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/copy_link"/>
+
+            <ImageView
+                android:id="@+id/copy_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/message_copy"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                app:tint="@color/drawableTintColor" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

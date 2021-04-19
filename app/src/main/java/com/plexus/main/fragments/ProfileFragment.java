@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,11 +39,13 @@ import com.plexus.account.activity.settings.ProfileLogActivity;
 import com.plexus.account.adapters.ProfilePostAdapter;
 import com.plexus.components.components.bottomsheet.adapter.SheetOptionsAdapter;
 import com.plexus.components.components.bottomsheet.model.SheetOptions;
+import com.plexus.dependecies.PlexusDependencies;
 import com.plexus.model.account.User;
 import com.plexus.model.posts.Post;
 import com.plexus.posts.activity.saved_posts.SavedPostsActivity;
 import com.plexus.qr.activity.QrGetLinkActivity;
 import com.plexus.settings.activity.privacy.PrivacyActivity;
+import com.plexus.story.activity.AddStoryActivity;
 import com.plexus.utils.MasterCipher;
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -70,20 +74,28 @@ import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
-    public static final String[] titles = new String[]{"Profile Activity", "Account Privacy", "Account Status", "Archive", "Saved Posts", "Profile Link"};
-    public static final Integer[] images = {R.drawable.profile_activity, R.drawable.lock_outline, R.drawable.error, R.drawable.archive_outline, R.drawable.bookmark_multiple_outline, R.drawable.link_variant};
-    public ImageView verified, menu;
-    StorageReference storageReference;
     TextView posts, fullname, bio, username;
     TextView followers, following;
-    Button follow;
+    MaterialButton edit_details;
+    LinearLayout lin_add_story, lin_edit_profile, lin_logs, lin_more;
     RecyclerView recycler_view;
-    ArrayList<SheetOptions> rowItems;
-    private SimpleDraweeView profile_cover;
+    private SimpleDraweeView profile_cover, image_profile;
+    private BottomSheetDialog profile_sheet, profile_image_sheet, profile_cover_sheet;
+
     private FirebaseUser firebaseUser;
+    StorageReference storageReference;
+
+    public static final String[] titles = new String[]{"Account Privacy", "Account Status", "Archive"};
+    public static final Integer[] images = {R.drawable.lock_outline, R.drawable.error, R.drawable.archive_outline};
+
+    public static final String[] profile_image_titles = new String[]{"View Profile Picture", "Select Profile Picture"};
+    public static final String[] profile_image_images = {};
+
+    public static final String[] profile_cover_titles = new String[]{"View Profile Cover", "Upload Cover Photo", "Select Plexus Covers"};
+    public static final String[] profile_cover_images = {};
+
+    ArrayList<SheetOptions> rowItems;
     private List<Post> postList;
-    private SimpleDraweeView image_profile;
-    private BottomSheetDialog profile_sheet;
     private ProfilePostAdapter profilePostAdapter;
 
     @SuppressLint("CheckResult")
@@ -96,15 +108,18 @@ public class ProfileFragment extends Fragment {
 
         image_profile = view.findViewById(R.id.profile_image);
         profile_cover = view.findViewById(R.id.image_cover);
+        edit_details = view.findViewById(R.id.edit_details);
         username = view.findViewById(R.id.username);
         posts = view.findViewById(R.id.posts);
         fullname = view.findViewById(R.id.fullname);
         bio = view.findViewById(R.id.about);
-        menu = view.findViewById(R.id.menu);
-        verified = view.findViewById(R.id.verified);
         followers = view.findViewById(R.id.followers);
         following = view.findViewById(R.id.following);
         recycler_view = view.findViewById(R.id.recycler_view);
+        lin_add_story = view.findViewById(R.id.lin_add_story);
+        lin_edit_profile = view.findViewById(R.id.lin_edit_profile);
+        lin_logs = view.findViewById(R.id.lin_logs);
+        lin_more = view.findViewById(R.id.lin_more);
 
         init();
 
@@ -162,19 +177,24 @@ public class ProfileFragment extends Fragment {
 
         });
 
-        menu.setOnClickListener(v -> profile_sheet.show());
+        lin_add_story.setOnClickListener(v -> startActivity(new Intent(PlexusDependencies.getApplication(), AddStoryActivity.class)));
 
-        follow.setOnClickListener(v -> startActivity(new Intent(getContext(), EditProfileActivity.class)));
+        lin_more.setOnClickListener(v -> profile_sheet.show());
+
+        lin_edit_profile.setOnClickListener(v -> startActivity(new Intent(PlexusDependencies.getApplication(), EditProfileActivity.class)));
+
+        lin_logs.setOnClickListener(v -> startActivity(new Intent(PlexusDependencies.getApplication(), ProfileLogActivity.class)));
+
         profile_cover.setOnClickListener(v -> CropImage.activity().start(requireContext(), this));
 
         following.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), FollowingActivity.class);
+            Intent intent = new Intent(PlexusDependencies.getApplication(), FollowingActivity.class);
             intent.putExtra("profileid", firebaseUser.getUid());
             startActivity(intent);
         });
 
         followers.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), FollowersActivity.class);
+            Intent intent = new Intent(PlexusDependencies.getApplication(), FollowersActivity.class);
             intent.putExtra("profileid", firebaseUser.getUid());
             startActivity(intent);
         });
@@ -275,12 +295,6 @@ public class ProfileFragment extends Fragment {
 
                 image_profile.setImageURI(MasterCipher.decrypt(user.getImageurl()));
                 profile_cover.setImageURI(MasterCipher.decrypt(user.getProfile_cover()));
-
-                if (user.isVerified()) {
-                    verified.setVisibility(View.VISIBLE);
-                } else {
-                    verified.setVisibility(View.GONE);
-                }
             }
 
             @Override

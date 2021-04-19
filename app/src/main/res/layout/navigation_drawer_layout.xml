@@ -259,14 +259,14 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_archive" />
+                    android:src="@drawable/ic_bookmark" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:fontFamily="@font/roboto"
-                    android:text="Archived Posts"
+                    android:text="Saved Posts"
                     android:layout_marginTop="10dp"/>
 
             </LinearLayout>
@@ -279,7 +279,6 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:orientation="horizontal"
-        android:background="#1C1C1C"
         android:layout_marginTop="30dp">
 
         <ImageView
@@ -305,7 +304,6 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:orientation="horizontal"
-        android:background="#1C1C1C"
         android:layout_marginTop="5dp">
 
         <ImageView
@@ -331,7 +329,6 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:orientation="horizontal"
-        android:background="#1C1C1C"
         android:layout_marginTop="5dp">
 
         <ImageView
