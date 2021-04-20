@@ -71,12 +71,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends Fragment {
 
-    LinearLayout image_upload, camera_upload, voice_note_upload;
-    TextView text_upload;
     RecyclerView recyclerView;
-    SimpleDraweeView profile_image;
     RecyclerView recyclerView_story;
-    BottomSheetDialog bottomSheetDialog;
     FirebaseUser firebaseUser;
     FirebaseAuth firebaseAuth;
     private PostAdapter postAdapter;
@@ -97,12 +93,6 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         SharedPreferences prefs = getContext().getSharedPreferences("plexus", MODE_PRIVATE);
-
-        profile_image = view.findViewById(R.id.profile_image);
-        voice_note_upload = view.findViewById(R.id.voice_note_upload);
-        image_upload = view.findViewById(R.id.image_upload);
-        camera_upload = view.findViewById(R.id.camera_upload);
-        text_upload = view.findViewById(R.id.text_upload);
 
         recyclerView = view.findViewById(R.id.recycler_view_post);
         recyclerView.setHasFixedSize(true);
@@ -125,106 +115,10 @@ public class HomeFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        //Account Manage Sheet
-        bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme);
-        bottomSheetDialog.setContentView(R.layout.sheet_feed);
-        SimpleDraweeView profile_image_sheet = bottomSheetDialog.findViewById(R.id.profile_image);
-        TextView fullname = bottomSheetDialog.findViewById(R.id.fullname);
-        ImageView logout = bottomSheetDialog.findViewById(R.id.logout);
-        LinearLayout privacy_main = bottomSheetDialog.findViewById(R.id.privacy);
-        LinearLayout information_centre = bottomSheetDialog.findViewById(R.id.information_centre);
-        LinearLayout groups = bottomSheetDialog.findViewById(R.id.groups);
-        TextView email = bottomSheetDialog.findViewById(R.id.email);
-        LinearLayout settings = bottomSheetDialog.findViewById(R.id.settings);
-
         CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-        Disposable privacy_sheet = RxView.clicks(privacy_main).subscribe(unit -> {
-            startActivity(new Intent(getContext(), PrivacyActivity.class));
-            bottomSheetDialog.dismiss();
-        });
-        compositeDisposable.add(privacy_sheet);
-
-        Disposable settings_sheet = RxView.clicks(settings).subscribe(unit -> {
-            startActivity(new Intent(getContext(), SettingsActivity.class));
-            bottomSheetDialog.dismiss();
-        });
-        compositeDisposable.add(settings_sheet);
-
-        Disposable logout_sheet = RxView.clicks(logout).subscribe(unit -> {
-            firebaseAuth.signOut();
-            startActivity(new Intent(getActivity(), LoginActivity.class));
-            getActivity().finish();
-        });
-        compositeDisposable.add(logout_sheet);
-
-        Disposable group_sheet = RxView.clicks(groups).subscribe(unit -> {
-            startActivity(new Intent(getActivity(), AllGroupActivity.class));
-            bottomSheetDialog.dismiss();
-        });
-        compositeDisposable.add(group_sheet);
-
-        Disposable a = RxView.clicks(profile_image).subscribe(unit -> bottomSheetDialog.show());
-        compositeDisposable.add(a);
-
-        Disposable information = RxView.clicks(information_centre).subscribe(unit -> startActivity(new Intent(getActivity(), Covid_Information.class)));
-        compositeDisposable.add(information);
-
-        Disposable voice_note = RxView.clicks(voice_note_upload).subscribe(unit -> {
-            Intent intent = new Intent(getContext(), CreatePostActivity.class);
-            intent.putExtra("isRecordingUpload", true);
-            startActivity(intent);
-        });
-        compositeDisposable.add(voice_note);
-
-        Disposable image = RxView.clicks(image_upload).subscribe(unit -> {
-            Intent intent = new Intent(getContext(), CreatePostActivity.class);
-            intent.putExtra("isUploadImage", true);
-            startActivity(intent);
-        });
-        compositeDisposable.add(image);
-
-        Disposable camera = RxView.clicks(camera_upload).subscribe(unit -> {
-            Intent intent = new Intent(getContext(), CreatePostActivity.class);
-            intent.putExtra("isUploadCamera", true);
-            startActivity(intent);
-        });
-        compositeDisposable.add(camera);
-
-        Disposable text = RxView.clicks(text_upload).subscribe(unit -> {
-            Intent intent = new Intent(getContext(), CreatePostActivity.class);
-            intent.putExtra("isText", true);
-            startActivity(intent);
-        });
-        compositeDisposable.add(text);
-
         checkFollowing();
-        getUserData(fullname, profile_image_sheet, email);
 
-    }
-
-    private void getUserData(TextView fullname, SimpleDraweeView profile_image_sheet, TextView email) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mHandler.post(() -> {
-                    String image = dataSnapshot.child("imageurl").getValue(String.class);
-                    String name = dataSnapshot.child("name").getValue(String.class);
-                    String surname = dataSnapshot.child("surname").getValue(String.class);
-
-                    fullname.setText(MasterCipher.decrypt(name) + " " + MasterCipher.decrypt(surname));
-                    profile_image_sheet.setImageURI(MasterCipher.decrypt(image));
-                    profile_image.setImageURI(MasterCipher.decrypt(image));
-                    email.setText(firebaseUser.getEmail());
-                });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
     }
 
     private void checkFollowing() {

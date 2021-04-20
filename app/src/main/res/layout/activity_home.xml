@@ -27,13 +27,13 @@
         android:layout_height="match_parent">
 
         <include
-            android:id="@+id/toolbar"
             layout="@layout/toolbar"/>
 
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/toolbar"
             android:layout_above="@id/bottom_navigation"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
@@ -53,7 +53,8 @@
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="start">
 
         <include
             layout="@layout/navigation_drawer_layout"/>

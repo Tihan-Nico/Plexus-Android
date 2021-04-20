@@ -63,6 +63,9 @@ public class AccountUtil {
     }
 
     public static void getUnreadNotifications(BottomNavigationView bottomNavigationView) {
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Notification");
         reference.addValueEventListener(new ValueEventListener() {
             @Override

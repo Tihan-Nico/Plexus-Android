@@ -45,10 +45,6 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
-    dataBinding {
-        enabled = true
-    }
-
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'
@@ -182,9 +178,9 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-ads:19.8.0'
     implementation 'com.google.android.material:material:1.4.0-alpha02'
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.11.7'
-    implementation 'com.google.android.exoplayer:exoplayer-ui:2.11.7'
-    implementation 'com.google.android.exoplayer:extension-mediasession:2.9.1'
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.13.3'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.13.3'
+    implementation 'com.google.android.exoplayer:extension-mediasession:2.13.3'
     implementation 'com.google.zxing:core:3.3.3'
     implementation 'com.google.zxing:android-integration:3.1.0'
     implementation 'com.google.code.gson:gson:2.8.6'
@@ -221,7 +217,7 @@ dependencies {
     implementation 'com.vanniktech:emoji-twitter:0.7.0'
     implementation 'com.airbnb.android:lottie:3.6.1'
     implementation 'commons-io:commons-io:20030203.000550'
-    implementation 'org.osmdroid:osmdroid-android:6.1.8'
+    implementation 'org.osmdroid:osmdroid-android:6.1.10'
     implementation (
             [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.4.1'],
             [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.4.1'],

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -88,8 +89,13 @@ public class MainActivity extends AppCompatActivity {
         back.setVisibility(View.GONE);
         toolbar_name.setText("PLEXUS");
 
+        Typeface font = Typeface.createFromAsset(getAssets(),
+                "font/roboto_bold.ttf");
+        toolbar_name.setTypeface(font);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
 
         drawerToggle = setupDrawerToggle();
 
@@ -162,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
                 LocationService locationService = new LocationService();
                 locationService.getLocation(this, locationResult);
             }
-
         }
 
         AccountUtil.getUnreadNotifications(bottomNavigationView);
