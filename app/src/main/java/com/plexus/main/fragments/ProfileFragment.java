@@ -112,7 +112,7 @@ public class ProfileFragment extends Fragment {
         username = view.findViewById(R.id.username);
         posts = view.findViewById(R.id.posts);
         fullname = view.findViewById(R.id.fullname);
-        bio = view.findViewById(R.id.about);
+        bio = view.findViewById(R.id.bio);
         followers = view.findViewById(R.id.followers);
         following = view.findViewById(R.id.following);
         recycler_view = view.findViewById(R.id.recycler_view);

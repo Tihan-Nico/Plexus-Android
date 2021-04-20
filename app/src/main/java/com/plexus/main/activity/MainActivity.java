@@ -89,10 +89,6 @@ public class MainActivity extends AppCompatActivity {
         back.setVisibility(View.GONE);
         toolbar_name.setText("PLEXUS");
 
-        Typeface font = Typeface.createFromAsset(getAssets(),
-                "font/roboto_bold.ttf");
-        toolbar_name.setTypeface(font);
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");

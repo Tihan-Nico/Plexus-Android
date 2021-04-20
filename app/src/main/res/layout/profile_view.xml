@@ -92,7 +92,7 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/full_name"
+                android:id="@+id/fullname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/profile_image_view"
@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:text="tihannico"
                 android:textColor="@color/textDescriptionColor"
-                android:layout_below="@id/full_name"
+                android:layout_below="@id/fullname"
                 android:layout_centerHorizontal="true"/>
 
             <TextView
