@@ -15,10 +15,11 @@
   ~  limitations under the License.
   -->
 
-<RelativeLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,9 +55,9 @@
         android:id="@+id/create_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
+        android:layout_gravity="end|bottom"
         android:src="@drawable/ic_add"
-        android:layout_margin="15dp"/>
+        android:layout_margin="15dp"
+        app:layout_behavior="com.plexus.components.ScrollingFabBehaviour"/>
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

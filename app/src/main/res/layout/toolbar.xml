@@ -5,7 +5,8 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="@color/toolbarColor">
+    android:background="@color/toolbarColor"
+    app:layout_scrollFlags="scroll|enterAlways">
 
     <ImageView
         android:id="@+id/back"
