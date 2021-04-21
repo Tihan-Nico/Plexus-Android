@@ -1,7 +1,8 @@
 package com.plexus.main.fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,18 +11,16 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.view.animation.LinearInterpolator;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,19 +28,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.jakewharton.rxbinding4.view.RxView;
 import com.plexus.R;
-import com.plexus.groups.activity.AllGroupActivity;
-import com.plexus.information_centre.Covid_Information;
 import com.plexus.model.posts.Post;
 import com.plexus.model.posts.Story;
-import com.plexus.posts.activity.CreatePostActivity;
 import com.plexus.posts.adapter.PostAdapter;
-import com.plexus.settings.activity.SettingsActivity;
-import com.plexus.settings.activity.privacy.PrivacyActivity;
-import com.plexus.startup.LoginActivity;
 import com.plexus.story.adapter.StoryAdapter;
-import com.plexus.utils.MasterCipher;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -49,7 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.disposables.Disposable;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -73,6 +63,7 @@ public class HomeFragment extends Fragment {
 
     RecyclerView recyclerView;
     RecyclerView recyclerView_story;
+    Toolbar toolbar;
     FirebaseUser firebaseUser;
     FirebaseAuth firebaseAuth;
     private PostAdapter postAdapter;
@@ -81,6 +72,8 @@ public class HomeFragment extends Fragment {
     private List<Story> storyList;
     private List<String> followingList;
     private final Handler mHandler = new Handler(Looper.getMainLooper());
+
+    private static final float TOOLBAR_ELEVATION = 14f;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -93,6 +86,8 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         SharedPreferences prefs = getContext().getSharedPreferences("plexus", MODE_PRIVATE);
+
+        toolbar = getActivity().findViewById(R.id.toolbar);
 
         recyclerView = view.findViewById(R.id.recycler_view_post);
         recyclerView.setHasFixedSize(true);
@@ -119,6 +114,97 @@ public class HomeFragment extends Fragment {
 
         checkFollowing();
 
+        init();
+    }
+
+    private void init(){
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            // Keeps track of the overall vertical offset in the list
+            int verticalOffset;
+
+            // Determines the scroll UP/DOWN direction
+            boolean scrollingUp;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    if (scrollingUp) {
+                        if (verticalOffset > toolbar.getHeight()) {
+                            toolbarAnimateHide();
+                        } else {
+                            toolbarAnimateShow(verticalOffset);
+                        }
+                    } else {
+                        if (toolbar.getTranslationY() < toolbar.getHeight() * -0.6 && verticalOffset > toolbar.getHeight()) {
+                            toolbarAnimateHide();
+                        } else {
+                            toolbarAnimateShow(verticalOffset);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public final void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                verticalOffset += dy;
+                scrollingUp = dy > 0;
+                int toolbarYOffset = (int) (dy - toolbar.getTranslationY());
+                toolbar.animate().cancel();
+                if (scrollingUp) {
+                    if (toolbarYOffset < toolbar.getHeight()) {
+                        if (verticalOffset > toolbar.getHeight()) {
+                            toolbarSetElevation(TOOLBAR_ELEVATION);
+                        }
+                        toolbar.setTranslationY(-toolbarYOffset);
+                    } else {
+                        toolbarSetElevation(0);
+                        toolbar.setTranslationY(-toolbar.getHeight());
+                    }
+                } else {
+                    if (toolbarYOffset < 0) {
+                        if (verticalOffset <= 0) {
+                            toolbarSetElevation(0);
+                        }
+                        toolbar.setTranslationY(0);
+                    } else {
+                        if (verticalOffset > toolbar.getHeight()) {
+                            toolbarSetElevation(TOOLBAR_ELEVATION);
+                        }
+                        toolbar.setTranslationY(-toolbarYOffset);
+                    }
+                }
+            }
+        });
+    }
+
+    private void toolbarSetElevation(float elevation) {
+        toolbar.setElevation(elevation);
+    }
+
+    private void toolbarAnimateShow(final int verticalOffset) {
+        toolbar.animate()
+                .translationY(0)
+                .setInterpolator(new LinearInterpolator())
+                .setDuration(180)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        toolbarSetElevation(verticalOffset == 0 ? 0 : TOOLBAR_ELEVATION);
+                    }
+                });
+    }
+
+    private void toolbarAnimateHide() {
+        toolbar.animate()
+                .translationY(-toolbar.getHeight())
+                .setInterpolator(new LinearInterpolator())
+                .setDuration(180)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        toolbarSetElevation(0);
+                    }
+                });
     }
 
     private void checkFollowing() {
@@ -221,5 +307,11 @@ public class HomeFragment extends Fragment {
         protected void onPostExecute(DatabaseReference databaseReference) {
             super.onPostExecute(databaseReference);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
 }

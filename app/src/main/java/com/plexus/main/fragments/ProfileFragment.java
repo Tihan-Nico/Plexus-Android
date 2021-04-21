@@ -1,6 +1,9 @@
 package com.plexus.main.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -139,6 +143,19 @@ public class ProfileFragment extends Fragment {
         profile_sheet.setContentView(R.layout.sheet_layout);
         ListView listView = profile_sheet.findViewById(R.id.listview);
 
+        ImageView copy_link = profile_sheet.findViewById(R.id.copy_link);
+        TextView link = profile_sheet.findViewById(R.id.link);
+
+        copy_link.setOnClickListener(v -> {
+            ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("Plexus Account Link", link.getText().toString());
+            clipboard.setPrimaryClip(clip);
+
+            Toast.makeText(getActivity(), "Link Copied Successfully!", Toast.LENGTH_SHORT).show();
+        });
+
+        link.setText("https://plexus.dev/" + username.getText().toString());
+
         rowItems = new ArrayList<>();
         for (int i = 0; i < titles.length; i++) {
             SheetOptions item = new SheetOptions(titles[i], images[i]);
@@ -164,38 +181,26 @@ public class ProfileFragment extends Fragment {
                 profile_sheet.dismiss();
             }
 
-            if (position == 4) {
-                startActivity(new Intent(getContext(), SavedPostsActivity.class));
-                profile_sheet.dismiss();
-            }
-
-            if (position == 5) {
-                Intent intent = new Intent(getContext(), QrGetLinkActivity.class);
-                intent.putExtra("type", "profile");
-                intent.putExtra("id", firebaseUser.getUid());
-                startActivity(intent);
-            }
-
         });
 
-        lin_add_story.setOnClickListener(v -> startActivity(new Intent(PlexusDependencies.getApplication(), AddStoryActivity.class)));
+        lin_add_story.setOnClickListener(v -> startActivity(new Intent(getActivity(), AddStoryActivity.class)));
 
         lin_more.setOnClickListener(v -> profile_sheet.show());
 
-        lin_edit_profile.setOnClickListener(v -> startActivity(new Intent(PlexusDependencies.getApplication(), EditProfileActivity.class)));
+        lin_edit_profile.setOnClickListener(v -> startActivity(new Intent(getActivity(), EditProfileActivity.class)));
 
-        lin_logs.setOnClickListener(v -> startActivity(new Intent(PlexusDependencies.getApplication(), ProfileLogActivity.class)));
+        lin_logs.setOnClickListener(v -> startActivity(new Intent(getActivity(), ProfileLogActivity.class)));
 
         profile_cover.setOnClickListener(v -> CropImage.activity().start(requireContext(), this));
 
         following.setOnClickListener(v -> {
-            Intent intent = new Intent(PlexusDependencies.getApplication(), FollowingActivity.class);
+            Intent intent = new Intent(getActivity(), FollowingActivity.class);
             intent.putExtra("profileid", firebaseUser.getUid());
             startActivity(intent);
         });
 
         followers.setOnClickListener(v -> {
-            Intent intent = new Intent(PlexusDependencies.getApplication(), FollowersActivity.class);
+            Intent intent = new Intent(getActivity(), FollowersActivity.class);
             intent.putExtra("profileid", firebaseUser.getUid());
             startActivity(intent);
         });
@@ -304,17 +309,6 @@ public class ProfileFragment extends Fragment {
             }
         };
         databaseReference.addValueEventListener(valueEventListener);
-    }
-
-    private String generateDeepLinkUrl(String pushID) {
-        return "https://plexus.dev/profile=" + pushID;
-    }
-
-    private void shareDeepLink(String url) {
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, url);
-        startActivity(Intent.createChooser(shareIntent, "Share Profile via"));
     }
 
     @Override

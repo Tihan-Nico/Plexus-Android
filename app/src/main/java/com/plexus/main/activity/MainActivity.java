@@ -7,12 +7,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,17 +20,29 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.plexus.R;
+import com.plexus.information_centre.Covid_Information;
 import com.plexus.main.fragments.HomeFragment;
 import com.plexus.main.fragments.NotificationsFragment;
 import com.plexus.main.fragments.ProfileFragment;
 import com.plexus.main.fragments.SearchFragment;
+import com.plexus.model.account.User;
+import com.plexus.posts.activity.saved_posts.SavedPostsActivity;
 import com.plexus.services.LocationService;
 import com.plexus.startup.PermissionActivity;
 import com.plexus.utils.AccountUtil;
@@ -59,12 +71,20 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
 
+    //Navigation Drawer
+    private SimpleDraweeView profile_image;
+    private TextView fullname_nav, view_profile;
+    private LinearLayout signout;
+    private CardView covid_information_centre, my_posts, followers, groups, shopping, saved_posts;
+
     ImageView back;
     TextView toolbar_name;
 
     String profileid;
     SharedPreferences prefs;
     Fragment selectedfragment = null;
+
+    FirebaseUser firebaseUser;
 
     String[] PERMISSIONS = {
             Manifest.permission.CAMERA,
@@ -78,6 +98,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        profile_image = findViewById(R.id.profile_image);
+        fullname_nav = findViewById(R.id.fullname_nav);
+        view_profile = findViewById(R.id.view_profile);
+        signout = findViewById(R.id.signout);
+        saved_posts = findViewById(R.id.saved_posts);
+        covid_information_centre = findViewById(R.id.covid_information_centre);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         toolbar = findViewById(R.id.toolbar);
@@ -101,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         prefs = getSharedPreferences("plexus", MODE_PRIVATE);
         profileid = prefs.getString("profileid", "none");
@@ -171,11 +200,51 @@ public class MainActivity extends AppCompatActivity {
         if (!hasPermissions(this, PERMISSIONS)) {
             startActivity(new Intent(getApplicationContext(), PermissionActivity.class));
         }
+
+        navigationDrawerData();
+        handleDrawerNavigation();
+    }
+
+    private void navigationDrawerData(){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+
+                fullname_nav.setText(user.getName() + " " + user.getSurname());
+                profile_image.setImageURI(user.getImageurl());
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void handleDrawerNavigation(){
+        view_profile.setOnClickListener(v -> {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new ProfileFragment()).commit();
+
+            mDrawer.closeDrawers();
+        });
+
+        covid_information_centre.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), Covid_Information.class));
+            mDrawer.closeDrawers();
+        });
+
+        saved_posts.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), SavedPostsActivity.class));
+
+            mDrawer.closeDrawers();
+        });
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
-        // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
-        // and will not render the hamburger icon without it.
         return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
     }
 
