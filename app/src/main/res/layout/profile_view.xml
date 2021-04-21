@@ -251,12 +251,69 @@
 
             </LinearLayout>
 
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/account_actions"
+                android:layout_marginTop="15dp"
+                android:visibility="gone">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/follower"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cornerRadius="8dp"
+                    android:text="Follow"
+                    app:icon="@drawable/account_plus_outline"
+                    app:iconTint="@color/drawableTintColor"
+                    app:iconGravity="textStart"
+                    android:textColor="@color/textDescriptionColor"
+                    android:textAllCaps="false"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:elevation="0dp"
+                    app:elevation="0dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@id/lin_more_rel"/>
+
+                <LinearLayout
+                    android:id="@+id/lin_more_rel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingEnd="30dp"
+                    android:paddingStart="30dp"
+                    android:layout_alignParentEnd="true">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/circle_account_actions"
+                        android:src="@drawable/more_horizontal"
+                        app:tint="@color/drawableTintColor"
+                        android:padding="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textColor="@color/textDescriptionColor"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="More"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
             <View
                 android:id="@+id/guideline"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/guidelineColor"
-                android:layout_below="@id/account_actions"
+                android:layout_below="@id/relativeLayout"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"/>
 
