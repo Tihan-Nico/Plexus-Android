@@ -115,4 +115,18 @@ public class AccountUtil {
         databaseReference.child(ID).setValue(hashMap);
     }
 
+    public static void profileActivity(String profileid) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Activity Log");
+        String id = reference.push().getKey();
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("id", id);
+        hashMap.put("title", "You started to follow someone.");
+        hashMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
+        hashMap.put("isFollow", true);
+        hashMap.put("userid", profileid);
+
+        reference.child(id).setValue(hashMap);
+    }
+
 }

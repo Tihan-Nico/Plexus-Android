@@ -9,8 +9,14 @@ public class GiphyResponse {
     @JsonProperty
     private List<GiphyImage> data;
 
+    @JsonProperty
+    private GiphyPagination pagination;
+
     public List<GiphyImage> getData() {
         return data;
     }
 
+    public GiphyPagination getPagination() {
+        return pagination;
+    }
 }

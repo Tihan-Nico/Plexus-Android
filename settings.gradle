@@ -4,7 +4,12 @@
  *  controlled environment under Plexus's supervision. By editing this code while not under Plexus supervision may
  *   result in suspension of user account and will lead to legal action.
  */
-
+include ':video'
 include ':app'
 include ':core-utils'
 include ':argon'
+include ':paging'
+
+project(':app').name = 'Plexus-Android'
+
+rootProject.name='Plexus'

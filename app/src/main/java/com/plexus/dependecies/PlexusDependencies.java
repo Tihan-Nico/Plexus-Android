@@ -8,10 +8,14 @@ import androidx.annotation.NonNull;
 import com.plexus.database.DatabaseObserver;
 import com.plexus.jobmanagers.JobManager;
 import com.plexus.megaphone.MegaphoneRepository;
+import com.plexus.net.ContentProxySelector;
+import com.plexus.net.StandardUserAgentInterceptor;
 import com.plexus.notifications.MessageNotifier;
 import com.plexus.shakereport.ShakeToReport;
 import com.plexus.utils.AppForegroundObserver;
 import com.plexus.utils.FrameRateTracker;
+
+import okhttp3.OkHttpClient;
 
 /**
  * Location for storing and retrieving application-scoped singletons. Users must call
@@ -37,6 +41,7 @@ public class PlexusDependencies {
     private static volatile FrameRateTracker frameRateTracker;
     private static volatile DatabaseObserver databaseObserver;
     private static volatile ShakeToReport shakeToReport;
+    private static volatile OkHttpClient okHttpClient;
 
     @MainThread
     public static void init(@NonNull Application application, @NonNull Provider provider) {
@@ -127,6 +132,21 @@ public class PlexusDependencies {
         }
 
         return shakeToReport;
+    }
+
+    public static @NonNull OkHttpClient getOkHttpClient() {
+        if (okHttpClient == null) {
+            synchronized (LOCK) {
+                if (okHttpClient == null) {
+                    okHttpClient = new OkHttpClient.Builder()
+                            .proxySelector(new ContentProxySelector())
+                            .addInterceptor(new StandardUserAgentInterceptor())
+                            .build();
+                }
+            }
+        }
+
+        return okHttpClient;
     }
 
     public static @NonNull

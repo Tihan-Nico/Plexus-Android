@@ -970,16 +970,6 @@
     <string name="timeline_management">Timeline Management</string>
     <string name="notification_settings">Notification Settings</string>
 
-    <!-- GiphyActivity -->
-    <string name="GiphyActivity_error_while_retrieving_full_resolution_gif">Error while retrieving full resolution GIF</string>
-
-    <!-- giphy_fragment -->
-    <string name="giphy_fragment__nothing_found">Nothing found</string>
-
-    <!-- GiphyFragmentPageAdapter -->
-    <string name="GiphyFragmentPagerAdapter_gifs">GIFs</string>
-    <string name="GiphyFragmentPagerAdapter_stickers">Stickers</string>
-
     <!-- Notification Channels -->
     <string name="NotificationChannel_Plexus">Plexus</string>
     <string name="NotificationChannel_PlexusMessageRequest">Plexus Message Requests</string>
@@ -1674,5 +1664,18 @@
     <string name="ReactWithAnyEmojiBottomSheetDialogFragment__symbols">Symbols</string>
     <string name="ReactWithAnyEmojiBottomSheetDialogFragment__flags">Flags</string>
     <string name="ReactWithAnyEmojiBottomSheetDialogFragment__emoticons">Emoticons</string>
+
+    <!-- GiphyActivity -->
+    <string name="GiphyActivity_error_while_retrieving_full_resolution_gif">Error while retrieving full resolution GIF</string>
+
+    <!-- GiphyFragmentPageAdapter -->
+    <string name="GiphyFragmentPagerAdapter_gifs">GIFs</string>
+    <string name="GiphyFragmentPagerAdapter_stickers">Stickers</string>
+
+    <!-- giphy_activity -->
+    <string name="giphy_activity_toolbar__search_gifs">Search GIFs</string>
+
+    <!-- giphy_fragment -->
+    <string name="giphy_fragment__nothing_found">Nothing found</string>
 
 </resources>

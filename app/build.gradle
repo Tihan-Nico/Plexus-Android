@@ -1,3 +1,4 @@
+import java.security.MessageDigest
 /*
  * Copyright (c) 2020. Plexus, Inc.
  *
@@ -25,6 +26,13 @@ def canonicalVersionCode = 200
 def canonicalVersionName = "2.0.0"
 
 def postFixSize = 2
+def abiPostFix = ['universal'   : 0,
+                  'armeabi-v7a' : 1,
+                  'arm64-v8a'   : 2,
+                  'x86'         : 3,
+                  'x86_64'      : 4]
+
+def keystores = [ 'debug'  : loadKeystoreProperties('keystore.debug.properties') ]
 
 protobuf {
     protoc {
@@ -42,8 +50,25 @@ protobuf {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    buildToolsVersion BUILD_TOOL_VERSION
+    compileSdkVersion COMPILE_SDK
+
+    signingConfigs {
+        if (keystores.debug != null) {
+            debug {
+                storeFile file("${project.rootDir}/${keystores.debug.storeFile}")
+                storePassword keystores.debug.storePassword
+                keyAlias keystores.debug.keyAlias
+                keyPassword keystores.debug.keyPassword
+            }
+        }
+    }
+
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JAVA_VERSION
+        targetCompatibility JAVA_VERSION
+    }
 
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
@@ -79,10 +104,48 @@ android {
     }
 
     buildTypes {
+        debug {
+            if (keystores['debug'] != null) {
+                signingConfig signingConfigs.debug
+            }
+            isDefault true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard/proguard-firebase-messaging.pro',
+                    'proguard/proguard-google-play-services.pro',
+                    'proguard/proguard-jackson.pro',
+                    'proguard/proguard-sqlite.pro',
+                    'proguard/proguard-appcompat-v7.pro',
+                    'proguard/proguard-square-okhttp.pro',
+                    'proguard/proguard-square-okio.pro',
+                    'proguard/proguard-glide.pro',
+                    'proguard/proguard-retrofit.pro',
+                    'proguard/proguard-retrolambda.pro',
+                    'proguard/proguard-okhttp.pro'
+            testProguardFiles 'proguard/proguard-automation.pro',
+                    'proguard/proguard.cfg'
+        }
+        flipper {
+            initWith debug
+            isDefault false
+            minifyEnabled false
+            matchingFallbacks = ['debug']
+        }
         release {
             minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles = buildTypes.debug.proguardFiles
+        }
+        perf {
+            initWith debug
+            isDefault false
+            debuggable false
+            matchingFallbacks = ['debug']
+        }
+        mock {
+            initWith debug
+            isDefault false
+            minifyEnabled false
+            matchingFallbacks = ['debug']
         }
     }
 
@@ -125,9 +188,33 @@ android {
 
     }
 
-    compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.outputFileName = output.outputFileName.replace(".apk", "-${variant.versionName}.apk")
+            def abiName = output.getFilter("ABI") ?: 'universal'
+            def postFix = abiPostFix.get(abiName, 0)
+
+            if (postFix >= postFixSize) throw new AssertionError("postFix is too large")
+
+            output.versionCodeOverride = canonicalVersionCode * postFixSize + postFix
+        }
+    }
+
+    android.variantFilter { variant ->
+        def distribution = variant.getFlavors().get(0).name
+        def buildType    = variant.buildType.name
+
+        if (distribution == 'study' && buildType != 'perf' && buildType != 'mock') {
+            variant.setIgnore(true)
+        } else if (distribution != 'study' && buildType == 'mock') {
+            variant.setIgnore(true)
+        }
+    }
+
+    lintOptions {
+        abortOnError true
+        baseline file("lint-baseline.xml")
+        disable "LintError"
     }
 
     testOptions {
@@ -139,6 +226,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
     //Android Dependencies
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -178,8 +267,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-ads:19.8.0'
     implementation 'com.google.android.material:material:1.4.0-alpha02'
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.11.7'
-    implementation 'com.google.android.exoplayer:exoplayer-ui:2.11.7'
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.9.1'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.9.1'
     implementation 'com.google.android.exoplayer:extension-mediasession:2.9.1'
     implementation 'com.google.zxing:core:3.3.3'
     implementation 'com.google.zxing:android-integration:3.1.0'
@@ -225,11 +314,68 @@ dependencies {
     )
 
     implementation project(':core-utils')
+    implementation project(':paging')
+    implementation project(':video')
 
     //Test Libraries
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
+
+def assembleWebsiteDescriptor = { variant, file ->
+    if (file.exists()) {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        file.eachByte 4096, {bytes, size ->
+            md.update(bytes, 0, size);
+        }
+
+        String digest  = md.digest().collect {String.format "%02x", it}.join();
+        String url     = variant.productFlavors.get(0).ext.websiteUpdateUrl
+        String apkName = file.getName()
+
+        String descriptor = "{" +
+                "\"versionCode\" : ${canonicalVersionCode * postFixSize + abiPostFix['universal']}," +
+                "\"versionName\" : \"$canonicalVersionName\"," +
+                "\"sha256sum\" : \"$digest\"," +
+                "\"url\" : \"$url/$apkName\"" +
+                "}"
+
+        File descriptorFile = new File(file.getParent(), apkName.replace(".apk", ".json"))
+
+        descriptorFile.write(descriptor)
+    }
+}
+
+def signProductionRelease = { variant ->
+    variant.outputs.collect { output ->
+        String apkName    = output.outputFile.name
+        File   inputFile  = new File(output.outputFile.path)
+        File   outputFile = new File(output.outputFile.parent, apkName.replace('-unsigned', ''))
+
+        inputFile.delete()
+        outputFile
+    }
+}
+
+task signProductionPlayRelease {
+    doLast {
+        signProductionRelease(android.applicationVariants.find { (it.name == 'playProdRelease') })
+    }
+}
+
+task signProductionInternalRelease {
+    doLast {
+        signProductionRelease(android.applicationVariants.find { (it.name == 'internalProdRelease') })
+    }
+}
+
+task signProductionWebsiteRelease {
+    doLast {
+        def  variant       = android.applicationVariants.find { (it.name == 'websiteProdRelease') }
+        File signedRelease = signProductionRelease(variant).find { it.name.contains('universal') }
+        assembleWebsiteDescriptor(variant, signedRelease)
+    }
 }
 
 def getLastCommitTimestamp() {
@@ -241,5 +387,25 @@ def getLastCommitTimestamp() {
         }
 
         return os.toString() + "000"
+    }
+}
+
+def getGitHash() {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+def loadKeystoreProperties(filename) {
+    def keystorePropertiesFile = file("${project.rootDir}/${filename}")
+    if (keystorePropertiesFile.exists()) {
+        def keystoreProperties = new Properties()
+        keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+        return keystoreProperties;
+    } else {
+        return null;
     }
 }

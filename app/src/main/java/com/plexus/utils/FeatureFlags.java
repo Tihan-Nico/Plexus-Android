@@ -38,7 +38,11 @@ import java.util.concurrent.TimeUnit;
  */
 public final class FeatureFlags {
 
+    private static final String TAG = Log.tag(FeatureFlags.class);
+
     private static final String PAYMENTS_KILL_SWITCH              = "android.payments.kill";
+    private static final String MP4_GIF_SEND_SUPPORT              = "android.mp4GifSendSupport";
+    private static final String CLIENT_EXPIRATION                 = "android.clientExpiration";
 
     @VisibleForTesting
     static final Set<String> NOT_REMOTE_CAPABLE = SetUtil.newHashSet(
@@ -53,8 +57,7 @@ public final class FeatureFlags {
     @VisibleForTesting
     static final Map<String, Object> FORCED_VALUES = new HashMap<String, Object>() {{
     }};
-    private static final String TAG = Log.tag(FeatureFlags.class);
-    private static final String CLIENT_EXPIRATION = "android.clientExpiration";
+
     /**
      * We will only store remote values for flags in this set. If you want a flag to be controllable
      * remotely, place it in here.
@@ -62,7 +65,8 @@ public final class FeatureFlags {
     @VisibleForTesting
     static final Set<String> REMOTE_CAPABLE = SetUtil.newHashSet(
             PAYMENTS_KILL_SWITCH,
-            CLIENT_EXPIRATION
+            CLIENT_EXPIRATION,
+            MP4_GIF_SEND_SUPPORT
     );
     /**
      * By default, flags are only updated once at app start. This is to ensure that values don't
@@ -73,7 +77,8 @@ public final class FeatureFlags {
      */
     @VisibleForTesting
     static final Set<String> HOT_SWAPPABLE = SetUtil.newHashSet(
-            CLIENT_EXPIRATION
+            CLIENT_EXPIRATION,
+            MP4_GIF_SEND_SUPPORT
     );
     private static final String INTERNAL_USER = "android.internalUser";
     private static final String DEFAULT_MAX_BACKOFF = "android.defaultMaxBackoff";
@@ -216,6 +221,10 @@ public final class FeatureFlags {
      */
     public static boolean internalUser() {
         return getBoolean(INTERNAL_USER, false);
+    }
+
+    public static boolean mp4GifSendSupport() {
+        return getBoolean(MP4_GIF_SEND_SUPPORT, false);
     }
 
     private static boolean getBoolean(@NonNull String key, boolean defaultValue) {

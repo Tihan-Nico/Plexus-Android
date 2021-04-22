@@ -38,6 +38,7 @@ import com.plexus.model.Token;
 import com.plexus.model.account.User;
 import com.plexus.model.posts.Post;
 import com.plexus.notifications.fcm.FirebaseNotificationHelper;
+import com.plexus.utils.AccountUtil;
 import com.plexus.utils.MasterCipher;
 
 import org.jetbrains.annotations.NotNull;
@@ -163,11 +164,6 @@ public class ProfileActivity extends AppCompatActivity {
                     blockUser(profileid);
                 }
             }
-
-            if (position == 2) {
-                shareDeepLink(generateDeepLinkUrl());
-            }
-
         });
 
         menu.setOnClickListener(v -> profile_sheet.show());
@@ -196,7 +192,7 @@ public class ProfileActivity extends AppCompatActivity {
                             .child("followers")
                             .child(firebaseUser.getUid())
                             .setValue(true);
-                    profileActivity();
+                    AccountUtil.profileActivity(profileid);
                     addNotification();
                     sendNotification();
                     break;
@@ -464,20 +460,6 @@ public class ProfileActivity extends AppCompatActivity {
         return jsonObjectData.toString();
     }
 
-    private void profileActivity() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Activity Log");
-        String id = reference.push().getKey();
-
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("id", id);
-        hashMap.put("title", "You started to follow someone.");
-        hashMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
-        hashMap.put("isFollow", true);
-        hashMap.put("userid", profileid);
-
-        reference.child(id).setValue(hashMap);
-    }
-
     private void myFotos() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
         reference.addValueEventListener(new ValueEventListener() {
@@ -608,21 +590,4 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
     }
-
-    private String generateDeepLinkUrl() {
-        Uri.Builder builder = new Uri.Builder();
-        builder.scheme("https")
-                .authority("plexus.dev")
-                .appendPath("profile")
-                .appendQueryParameter("id", firebaseUser.getUid());
-        return builder.build().toString();
-    }
-
-    private void shareDeepLink(String url) {
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, url);
-        startActivity(Intent.createChooser(shareIntent, "Share Group via"));
-    }
-
 }
