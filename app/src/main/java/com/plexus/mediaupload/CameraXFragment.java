@@ -27,8 +27,8 @@ import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureException;
 import androidx.camera.core.ImageProxy;
 import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.camera.view.PlexusCameraView;
 import androidx.camera.view.PreviewView;
-import androidx.camera.view.SignalCameraView;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -63,7 +63,7 @@ public class CameraXFragment extends LoggingFragment implements CameraFragment {
     private static final String TAG              = Log.tag(CameraXFragment.class);
     private static final String IS_VIDEO_ENABLED = "is_video_enabled";
 
-    private SignalCameraView     camera;
+    private PlexusCameraView     camera;
     private ViewGroup            controlsContainer;
     private Controller           controller;
     private MediaSendViewModel   viewModel;
@@ -228,7 +228,7 @@ public class CameraXFragment extends LoggingFragment implements CameraFragment {
                 Animation inAnimation  = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in);
                 Animation outAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out);
 
-                camera.setCaptureMode(SignalCameraView.CaptureMode.MIXED);
+                camera.setCaptureMode(PlexusCameraView.CaptureMode.MIXED);
 
                 int maxDuration = VideoUtil.getMaxVideoRecordDurationInSeconds(requireContext(), viewModel.getMediaConstraints());
                 Log.d(TAG, "Max duration: " + maxDuration + " sec");
@@ -288,7 +288,7 @@ public class CameraXFragment extends LoggingFragment implements CameraFragment {
             TooltipPopup.forTarget(captureButton)
                     .setOnDismissListener(this::neverDisplayVideoRecordingTooltipAgain)
                     .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.core_ultramarine))
-                    .setTextColor(ContextCompat.getColor(requireContext(), R.color.signal_text_toolbar_title))
+                    .setTextColor(ContextCompat.getColor(requireContext(), R.color.Plexus_text_toolbar_title))
                     .setText(R.string.CameraXFragment_tap_for_photo_hold_for_video)
                     .show(displayRotation == Surface.ROTATION_0 || displayRotation == Surface.ROTATION_180 ? TooltipPopup.POSITION_ABOVE : TooltipPopup.POSITION_START);
         }

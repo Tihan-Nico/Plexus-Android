@@ -30,6 +30,7 @@ import com.google.android.exoplayer2.ui.PlayerControlView;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.plexus.core.utils.logging.Log;
+import com.plexus.slides.VideoSlide;
 import com.plexus.video.exo.AttachmentDataSourceFactory;
 
 import java.util.concurrent.TimeUnit;
@@ -61,9 +62,9 @@ public class VideoPlayer extends FrameLayout {
   public VideoPlayer(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
 
-    inflate(context, R.layout.video_player, this);
+    inflate(context, com.plexus.R.layout.video_player, this);
 
-    this.exoView     = findViewById(R.id.video_view);
+    this.exoView     = findViewById(com.plexus.R.id.video_view);
     this.exoControls = new PlayerControlView(getContext());
     this.exoControls.setShowTimeoutMs(-1);
   }

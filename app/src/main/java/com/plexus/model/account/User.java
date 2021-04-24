@@ -1,5 +1,13 @@
 package com.plexus.model.account;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import java.util.Objects;
+
 /******************************************************************************
  * Copyright (c) 2020. Plexus, Inc.                                           *
  *                                                                            *
@@ -16,7 +24,7 @@ package com.plexus.model.account;
  *  limitations under the License.                                            *
  ******************************************************************************/
 
-public class User {
+public class User implements Parcelable {
     public String username;
     public String name;
     public String surname;
@@ -111,6 +119,90 @@ public class User {
 
     public User() {
     }
+
+    protected User(Parcel in) {
+        username = in.readString();
+        name = in.readString();
+        surname = in.readString();
+        country = in.readString();
+        bio = in.readString();
+        id = in.readString();
+        imageurl = in.readString();
+        profile_cover = in.readString();
+        account_type = in.readString();
+        verified = in.readByte() != 0;
+        user = in.readByte() != 0;
+        company = in.readByte() != 0;
+        artist = in.readByte() != 0;
+        birthday = in.readString();
+        gender = in.readString();
+        website = in.readString();
+        feeling = in.readString();
+        registration_time = in.readString();
+        active = in.readByte() != 0;
+        online_presence = in.readString();
+        private_account = in.readByte() != 0;
+        blocked = in.readByte() != 0;
+        blocked_timestamp = in.readString();
+        blocked_platform = in.readString();
+        nickname = in.readString();
+        banned = in.readByte() != 0;
+        token = in.readString();
+        online = in.readLong();
+        verifiedBefore = in.readByte() != 0;
+        encryption_error_fixed = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(username);
+        dest.writeString(name);
+        dest.writeString(surname);
+        dest.writeString(country);
+        dest.writeString(bio);
+        dest.writeString(id);
+        dest.writeString(imageurl);
+        dest.writeString(profile_cover);
+        dest.writeString(account_type);
+        dest.writeByte((byte) (verified ? 1 : 0));
+        dest.writeByte((byte) (user ? 1 : 0));
+        dest.writeByte((byte) (company ? 1 : 0));
+        dest.writeByte((byte) (artist ? 1 : 0));
+        dest.writeString(birthday);
+        dest.writeString(gender);
+        dest.writeString(website);
+        dest.writeString(feeling);
+        dest.writeString(registration_time);
+        dest.writeByte((byte) (active ? 1 : 0));
+        dest.writeString(online_presence);
+        dest.writeByte((byte) (private_account ? 1 : 0));
+        dest.writeByte((byte) (blocked ? 1 : 0));
+        dest.writeString(blocked_timestamp);
+        dest.writeString(blocked_platform);
+        dest.writeString(nickname);
+        dest.writeByte((byte) (banned ? 1 : 0));
+        dest.writeString(token);
+        dest.writeLong(online);
+        dest.writeByte((byte) (verifiedBefore ? 1 : 0));
+        dest.writeByte((byte) (encryption_error_fixed ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -351,4 +443,9 @@ public class User {
     public void setEncryption_error_fixed(boolean encryption_error_fixed) {
         this.encryption_error_fixed = encryption_error_fixed;
     }
+
+    public static User from(@NonNull String id) {
+        return User.from(id);
+    }
+
 }

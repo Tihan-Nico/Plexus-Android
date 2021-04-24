@@ -43,6 +43,9 @@ public final class FeatureFlags {
     private static final String PAYMENTS_KILL_SWITCH              = "android.payments.kill";
     private static final String MP4_GIF_SEND_SUPPORT              = "android.mp4GifSendSupport";
     private static final String CLIENT_EXPIRATION                 = "android.clientExpiration";
+    private static final String CUSTOM_VIDEO_MUXER                = "android.customVideoMuxer";
+    private static final String ANIMATED_STICKER_MIN_MEMORY       = "android.animatedStickerMinMemory";
+    private static final String ANIMATED_STICKER_MIN_TOTAL_MEMORY = "android.animatedStickerMinTotalMemory";
 
     @VisibleForTesting
     static final Set<String> NOT_REMOTE_CAPABLE = SetUtil.newHashSet(
@@ -66,7 +69,10 @@ public final class FeatureFlags {
     static final Set<String> REMOTE_CAPABLE = SetUtil.newHashSet(
             PAYMENTS_KILL_SWITCH,
             CLIENT_EXPIRATION,
-            MP4_GIF_SEND_SUPPORT
+            ANIMATED_STICKER_MIN_MEMORY,
+            ANIMATED_STICKER_MIN_TOTAL_MEMORY,
+            MP4_GIF_SEND_SUPPORT,
+            CUSTOM_VIDEO_MUXER
     );
     /**
      * By default, flags are only updated once at app start. This is to ensure that values don't
@@ -78,7 +84,10 @@ public final class FeatureFlags {
     @VisibleForTesting
     static final Set<String> HOT_SWAPPABLE = SetUtil.newHashSet(
             CLIENT_EXPIRATION,
-            MP4_GIF_SEND_SUPPORT
+            ANIMATED_STICKER_MIN_MEMORY,
+            ANIMATED_STICKER_MIN_TOTAL_MEMORY,
+            MP4_GIF_SEND_SUPPORT,
+            CUSTOM_VIDEO_MUXER
     );
     private static final String INTERNAL_USER = "android.internalUser";
     private static final String DEFAULT_MAX_BACKOFF = "android.defaultMaxBackoff";
@@ -223,8 +232,23 @@ public final class FeatureFlags {
         return getBoolean(INTERNAL_USER, false);
     }
 
+    /** The minimum memory class required for rendering animated stickers in the keyboard and such */
+    public static int animatedStickerMinimumMemoryClass() {
+        return getInteger(ANIMATED_STICKER_MIN_MEMORY, 193);
+    }
+
+    /** The minimum total memory for rendering animated stickers in the keyboard and such */
+    public static int animatedStickerMinimumTotalMemoryMb() {
+        return getInteger(ANIMATED_STICKER_MIN_TOTAL_MEMORY, (int) ByteUnit.GIGABYTES.toMegabytes(3));
+    }
+
     public static boolean mp4GifSendSupport() {
         return getBoolean(MP4_GIF_SEND_SUPPORT, false);
+    }
+
+    /** Whether to use the custom streaming muxer or built in android muxer. */
+    public static boolean useStreamingVideoMuxer() {
+        return getBoolean(CUSTOM_VIDEO_MUXER, false);
     }
 
     private static boolean getBoolean(@NonNull String key, boolean defaultValue) {

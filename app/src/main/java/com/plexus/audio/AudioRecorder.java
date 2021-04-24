@@ -3,12 +3,12 @@ package com.plexus.audio;
 import android.content.Context;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
-import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.NonNull;
 
 import com.plexus.core.utils.concurrent.PlexusExecutors;
+import com.plexus.core.utils.logging.Log;
 import com.plexus.providers.BlobProvider;
 import com.plexus.utils.MediaUtil;
 import com.plexus.utils.Util;
@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutorService;
 
 public class AudioRecorder {
 
-    private static final String TAG = AudioRecorder.class.getSimpleName();
+    private static final String TAG = Log.tag(AudioRecorder.class);
 
     private static final ExecutorService executor = PlexusExecutors.newCachedSingleThreadExecutor("AudioRecorder");
 

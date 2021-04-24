@@ -1,23 +1,38 @@
 package com.plexus.utils;
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.media.MediaDataSource;
+import android.media.MediaMetadataRetriever;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
+import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.plexus.GlideApp;
 import com.plexus.core.utils.logging.Log;
+import com.plexus.providers.BlobProvider;
 import com.plexus.providers.PartAuthority;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLConnection;
 import java.util.concurrent.ExecutionException;
+
+import static com.plexus.crypto.media.DecryptableStreamUriLoader.*;
 
 /******************************************************************************
  * Copyright (c) 2020. Plexus, Inc.                                           *
@@ -36,6 +51,8 @@ import java.util.concurrent.ExecutionException;
  ******************************************************************************/
 
 public class MediaUtil {
+
+    private static final String TAG = Log.tag(MediaUtil.class);
 
     public static final String IMAGE_PNG         = "image/png";
     public static final String IMAGE_JPEG        = "image/jpeg";
@@ -124,6 +141,71 @@ public class MediaUtil {
         return size;
     }
 
+    @androidx.annotation.WorkerThread
+    public static Pair<Integer, Integer> getDimensions(@NonNull Context context, @Nullable String contentType, @Nullable Uri uri) {
+        if (uri == null || (!MediaUtil.isImageType(contentType) && !MediaUtil.isVideoType(contentType))) {
+            return new Pair<>(0, 0);
+        }
+
+        Pair<Integer, Integer> dimens = null;
+
+        if (MediaUtil.isGif(contentType)) {
+            try {
+                GifDrawable drawable = GlideApp.with(context)
+                        .asGif()
+                        .skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .load(new DecryptableUri(uri))
+                        .submit()
+                        .get();
+                dimens = new Pair<>(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+            } catch (InterruptedException e) {
+                Log.w(TAG, "Was unable to complete work for GIF dimensions.", e);
+            } catch (ExecutionException e) {
+                Log.w(TAG, "Glide experienced an exception while trying to get GIF dimensions.", e);
+            }
+        } else if (MediaUtil.hasVideoThumbnail(context, uri)) {
+            Bitmap thumbnail = MediaUtil.getVideoThumbnail(context, uri, 1000);
+
+            if (thumbnail != null) {
+                dimens = new Pair<>(thumbnail.getWidth(), thumbnail.getHeight());
+            }
+        } else {
+            InputStream attachmentStream = null;
+            try {
+                if (MediaUtil.isJpegType(contentType)) {
+                    attachmentStream = PartAuthority.getAttachmentStream(context, uri);
+                    dimens = BitmapUtil.getExifDimensions(attachmentStream);
+                    attachmentStream.close();
+                    attachmentStream = null;
+                }
+                if (dimens == null) {
+                    attachmentStream = PartAuthority.getAttachmentStream(context, uri);
+                    dimens = BitmapUtil.getDimensions(attachmentStream);
+                }
+            } catch (FileNotFoundException e) {
+                Log.w(TAG, "Failed to find file when retrieving media dimensions.", e);
+            } catch (IOException e) {
+                Log.w(TAG, "Experienced a read error when retrieving media dimensions.", e);
+            } catch (BitmapDecodingException e) {
+                Log.w(TAG, "Bitmap decoding error when retrieving dimensions.", e);
+            } finally {
+                if (attachmentStream != null) {
+                    try {
+                        attachmentStream.close();
+                    } catch (IOException e) {
+                        Log.w(TAG, "Failed to close stream after retrieving dimensions.", e);
+                    }
+                }
+            }
+        }
+        if (dimens == null) {
+            dimens = new Pair<>(0, 0);
+        }
+        Log.d(TAG, "Dimensions for [" + uri + "] are " + dimens.first + " x " + dimens.second);
+        return dimens;
+    }
+
     public static boolean isVideo(String contentType) {
         return !TextUtils.isEmpty(contentType) && contentType.trim().startsWith("video/");
     }
@@ -174,6 +256,133 @@ public class MediaUtil {
 
     public static boolean isViewOnceType(String contentType) {
         return (null != contentType) && contentType.equals(VIEW_ONCE);
+    }
+
+    public static boolean hasVideoThumbnail(@NonNull Context context, @Nullable Uri uri) {
+        if (uri == null) {
+            return false;
+        }
+
+        if (BlobProvider.isAuthority(uri) && MediaUtil.isVideo(BlobProvider.getMimeType(uri)) && Build.VERSION.SDK_INT >= 23) {
+            return true;
+        }
+
+        if (!isSupportedVideoUriScheme(uri.getScheme())) {
+            return false;
+        }
+
+        if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
+            return uri.getLastPathSegment().contains("video");
+        } else if (uri.toString().startsWith(MediaStore.Video.Media.EXTERNAL_CONTENT_URI.toString())) {
+            return true;
+        } else if (uri.toString().startsWith("file://") &&
+                MediaUtil.isVideo(URLConnection.guessContentTypeFromName(uri.toString()))) {
+            return true;
+        } else if (PartAuthority.isAttachmentUri(uri) && MediaUtil.isVideoType(PartAuthority.getAttachmentContentType(context, uri))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @WorkerThread
+    public static @Nullable Bitmap getVideoThumbnail(@NonNull Context context, @Nullable Uri uri, long timeUs) {
+        if (uri == null) {
+            return null;
+        } else if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
+            long videoId = Long.parseLong(uri.getLastPathSegment().split(":")[1]);
+
+            return MediaStore.Video.Thumbnails.getThumbnail(context.getContentResolver(),
+                    videoId,
+                    MediaStore.Images.Thumbnails.MINI_KIND,
+                    null);
+        } else if (uri.toString().startsWith(MediaStore.Video.Media.EXTERNAL_CONTENT_URI.toString())) {
+            long videoId = Long.parseLong(uri.getLastPathSegment());
+
+            return MediaStore.Video.Thumbnails.getThumbnail(context.getContentResolver(),
+                    videoId,
+                    MediaStore.Images.Thumbnails.MINI_KIND,
+                    null);
+        } else if (uri.toString().startsWith("file://") &&
+                MediaUtil.isVideo(URLConnection.guessContentTypeFromName(uri.toString()))) {
+            return ThumbnailUtils.createVideoThumbnail(uri.toString().replace("file://", ""),
+                    MediaStore.Video.Thumbnails.MINI_KIND);
+        } else if (Build.VERSION.SDK_INT >= 23   &&
+                BlobProvider.isAuthority(uri) &&
+                MediaUtil.isVideo(BlobProvider.getMimeType(uri)))
+        {
+            try {
+                MediaDataSource source = BlobProvider.getInstance().getMediaDataSource(context, uri);
+                return extractFrame(source, timeUs);
+            } catch (IOException e) {
+                Log.w(TAG, "Failed to extract frame for URI: " + uri, e);
+            }
+        } else if (Build.VERSION.SDK_INT >= 23        &&
+                PartAuthority.isAttachmentUri(uri) &&
+                MediaUtil.isVideoType(PartAuthority.getAttachmentContentType(context, uri)))
+        {
+            try {
+                AttachmentId    attachmentId = PartAuthority.requireAttachmentId(uri);
+                MediaDataSource source       = DatabaseFactory.getAttachmentDatabase(context).mediaDataSourceFor(attachmentId);
+                return extractFrame(source, timeUs);
+            } catch (IOException e) {
+                Log.w(TAG, "Failed to extract frame for URI: " + uri, e);
+            }
+        }
+
+        return null;
+    }
+
+    private static @Nullable Bitmap extractFrame(@Nullable MediaDataSource dataSource, long timeUs) throws IOException {
+        if (dataSource == null) {
+            return null;
+        }
+
+        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+
+        MediaMetadataRetrieverUtil.setDataSource(mediaMetadataRetriever, dataSource);
+        return mediaMetadataRetriever.getFrameAtTime(timeUs);
+    }
+
+    public static class ThumbnailData implements AutoCloseable {
+
+        @NonNull private final Bitmap bitmap;
+        private final float  aspectRatio;
+
+        public ThumbnailData(@NonNull Bitmap bitmap) {
+            this.bitmap      = bitmap;
+            this.aspectRatio = (float) bitmap.getWidth() / (float) bitmap.getHeight();
+        }
+
+        public @NonNull Bitmap getBitmap() {
+            return bitmap;
+        }
+
+        public float getAspectRatio() {
+            return aspectRatio;
+        }
+
+        public InputStream toDataStream() {
+            return BitmapUtil.toCompressedJpeg(bitmap);
+        }
+
+        @Override
+        public void close() {
+            bitmap.recycle();
+        }
+    }
+
+    private static boolean isSupportedVideoUriScheme(@Nullable String scheme) {
+        return ContentResolver.SCHEME_CONTENT.equals(scheme) ||
+                ContentResolver.SCHEME_FILE.equals(scheme);
+    }
+
+    public enum SlideType {
+        GIF,
+        IMAGE,
+        VIDEO,
+        AUDIO,
+        LONG_TEXT
     }
 
 }

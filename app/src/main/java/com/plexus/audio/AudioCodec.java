@@ -6,8 +6,8 @@ import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
 import android.media.MediaRecorder;
-import android.util.Log;
 
+import com.plexus.core.utils.logging.Log;
 import com.plexus.utils.StreamUtil;
 import com.plexus.utils.Util;
 
@@ -17,7 +17,7 @@ import java.nio.ByteBuffer;
 
 public class AudioCodec {
 
-    private static final String TAG = AudioCodec.class.getSimpleName();
+    private static final String TAG = Log.tag(AudioCodec.class);
 
     private static final int    SAMPLE_RATE       = 44100;
     private static final int    SAMPLE_RATE_INDEX = 4;

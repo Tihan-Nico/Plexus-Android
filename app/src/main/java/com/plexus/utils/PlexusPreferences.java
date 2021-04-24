@@ -78,6 +78,7 @@ public class PlexusPreferences {
     public static final String SYSTEM_EMOJI_PREF = "pref_system_emoji";
     private static final String LOG_ENCRYPTED_SECRET   = "pref_log_encrypted_secret";
     private static final String LOG_UNENCRYPTED_SECRET = "pref_log_unencrypted_secret";
+    public  static final String INCOGNITO_KEYBORAD_PREF          = "pref_incognito_keyboard";
 
     //APIs
     public static final String ANONYMOUS_TOKEN = "pref_anonymous_token";
@@ -93,6 +94,11 @@ public class PlexusPreferences {
     public static final String AUTH_TYPE = "pref_auth_type";
     public static final String AUTH_CREDENTIAL = "pref_auth_credential";
     public static final String AUTH_PASSWORD = "pref_auth_password";
+
+    private static final String[] booleanPreferencesToBackup = {SCREEN_SECURITY_PREF,
+            NOTIFICATION_PREF,
+            VIBRATE_PREF,
+            SYSTEM_EMOJI_PREF};
 
     public static void setDirectCaptureCameraId(Context context, int value) {
         setIntegerPrefrence(context, DIRECT_CAPTURE_CAMERA_ID, value);
@@ -577,7 +583,9 @@ public class PlexusPreferences {
         return getStringPreference(context, LOG_UNENCRYPTED_SECRET, null);
     }
 
-
+    public static boolean isIncognitoKeyboardEnabled(Context context) {
+        return getBooleanPreference(context, INCOGNITO_KEYBORAD_PREF, false);
+    }
 
 
 

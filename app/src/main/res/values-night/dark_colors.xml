@@ -23,6 +23,7 @@
     <color name="profileBackgroundColor">#242526</color>
     <color name="guidelineColor">#353232</color>
 
+    <color name="transparent_black">#00000000</color>
     <color name="transparent_black_05">#0D000000</color>
     <color name="transparent_black_10">#18000000</color>
     <color name="transparent_black_15">#26000000</color>
@@ -111,6 +112,15 @@
     <color name="reactions_pill_text_color">@color/core_grey_35</color>
     <color name="reactions_pill_selected_text_color">@color/core_grey_15</color>
     <color name="reactions_screen_shade_color">@color/transparent_black_60</color>
+
+    <color name="tooltip_default_color">@color/core_grey_75</color>
+
+    <color name="sticker_management_action_button_color">@color/core_grey_25</color>
+
+    <color name="wallpaper_bubble_color">@color/transparent_black_80</color>
+    <color name="wallpaper_preview_background">@color/transparent_black_60</color>
+    <color name="wallpaper_compose_background">#f3121212</color>
+    <color name="wallpaper_toolbar_background">@color/black</color>
 
     <color name="grayScale">#B8ACAC</color>
     <color name="background_light">#212121</color>

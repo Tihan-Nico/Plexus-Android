@@ -16,6 +16,7 @@ public class PlexusStore {
     private final EmojiValues emojiValues;
     private final SettingsValue settingsValue;
     private final PlexusPayValues plexusPayValues;
+    private final TooltipValues tooltipValues;
 
     private PlexusStore() {
         this.store = new KeyValueStore(PlexusDependencies.getApplication());
@@ -23,6 +24,7 @@ public class PlexusStore {
         this.emojiValues = new EmojiValues(store);
         this.settingsValue = new SettingsValue(store);
         this.plexusPayValues = new PlexusPayValues(store);
+        this.tooltipValues = new TooltipValues(store);
     }
 
     public static void onFirstEverAppLaunch() {
@@ -30,6 +32,7 @@ public class PlexusStore {
         emojiValues().onFirstEverAppLaunch();
         settingsValue().onFirstEverAppLaunch();
         plexusPayValues().onFirstEverAppLaunch();
+        tooltipValues().onFirstEverAppLaunch();
     }
 
     public static List<String> getKeysToIncludeInBackup() {
@@ -38,6 +41,7 @@ public class PlexusStore {
         keys.addAll(emojiValues().getKeysToIncludeInBackup());
         keys.addAll(settingsValue().getKeysToIncludeInBackup());
         keys.addAll(plexusPayValues().getKeysToIncludeInBackup());
+        keys.addAll(tooltipValues().getKeysToIncludeInBackup());
         return keys;
     }
 
@@ -57,6 +61,10 @@ public class PlexusStore {
 
     public static @NonNull PlexusPayValues plexusPayValues(){
         return INSTANCE.plexusPayValues;
+    }
+
+    public static @NonNull TooltipValues tooltipValues(){
+        return INSTANCE.tooltipValues;
     }
 
 

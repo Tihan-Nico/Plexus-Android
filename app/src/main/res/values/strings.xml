@@ -1678,4 +1678,123 @@
     <!-- giphy_fragment -->
     <string name="giphy_fragment__nothing_found">Nothing found</string>
 
+    <!--Camera-->
+    <string name="Camera_enable_the_microphone_permission_to_capture_videos_with_sound">Enable the microphone permission to capture videos with sound</string>
+    <string name="Camera_Plexus_needs_the_recording_permissions_to_capture_video">Plexusneeds the recording permissions to capture video</string>
+    <string name="Camera_Plexus_needs_recording_permissions_to_capture_video">Plexus needs recording permissions to capture video</string>
+
+    <!-- MediaPickerActivity -->
+    <string name="MediaPickerActivity_send_to">Send to %s</string>
+    <string name="MediaPickerActivity__menu_open_camera">Open camera</string>
+
+    <!-- MediaRepository -->
+    <string name="MediaRepository_all_media">All media</string>
+    <string name="MediaRepository__camera">Camera</string>
+
+    <!-- MediaSendActivity -->
+    <string name="MediaSendActivity_add_a_caption">Add a caption…</string>
+    <string name="MediaSendActivity_an_item_was_removed_because_it_exceeded_the_size_limit">An item was removed because it exceeded the size limit</string>
+    <string name="MediaSendActivity_camera_unavailable">Camera unavailable.</string>
+    <string name="MediaSendActivity_message_to_s">Message to %s</string>
+    <string name="MediaSendActivity_message">Message</string>
+    <string name="MediaSendActivity_select_recipients">Select recipients</string>
+    <plurals name="MediaSendActivity_cant_share_more_than_n_items">
+        <item quantity="one">You can\'t share more than %d item.</item>
+        <item quantity="other">You can\'t share more than %d items.</item>
+    </plurals>
+    <string name="MediaSendActivity_select_recipients_description">Select recipients</string>
+    <string name="MediaSendActivity_tap_here_to_make_this_message_disappear_after_it_is_viewed">Tap here to make this message disappear after it is viewed.</string>
+
+    <!-- MediaPreviewActivity -->
+    <string name="MediaPreviewActivity_you">You</string>
+    <string name="MediaPreviewActivity_unssuported_media_type">Unsupported media type</string>
+    <string name="MediaPreviewActivity_draft">Draft</string>
+    <string name="MediaPreviewActivity_plexus_needs_the_storage_permission_in_order_to_write_to_external_storage_but_it_has_been_permanently_denied">Plexus needs the Storage permission in order to save to external storage, but it has been permanently denied. Please continue to app settings, select \"Permissions\", and enable \"Storage\".</string>
+    <string name="MediaPreviewActivity_unable_to_write_to_external_storage_without_permission">Unable to save to external storage without permissions</string>
+    <string name="MediaPreviewActivity_media_delete_confirmation_title">Delete message?</string>
+    <string name="MediaPreviewActivity_media_delete_confirmation_message">This will permanently delete this message.</string>
+    <string name="MediaPreviewActivity_s_to_s">%1$s to %2$s</string>
+    <string name="MediaPreviewActivity_media_no_longer_available">Media no longer available.</string>
+    <string name="MediaPreviewActivity_cant_find_an_app_able_to_share_this_media">Can\'t find an app able to share this media.</string>
+
+    <!-- ImageEditorHud -->
+    <string name="ImageEditorHud_blur_faces">Blur faces</string>
+    <string name="ImageEditorHud_new_blur_faces_or_draw_anywhere_to_blur">New: Blur faces or draw anywhere to blur</string>
+    <string name="ImageEditorHud_draw_anywhere_to_blur">Draw anywhere to blur</string>
+    <string name="ImageEditorHud_draw_to_blur_additional_faces_or_areas">Draw to blur additional faces or areas</string>
+
+    <!--Stickers-->
+    <string name="Stickers_sticker_pack_installed">Sticker pack installed</string>
+    <string name="Stickers_new_say_it_with_stickers">New! Say it with stickers</string>
+
+    <!-- StickerManagementActivity -->
+    <string name="StickerManagementActivity_stickers">Stickers</string>
+
+    <!-- StickerManagementAdapter -->
+    <string name="StickerManagementAdapter_installed_stickers">Installed Stickers</string>
+    <string name="StickerManagementAdapter_stickers_you_received">Stickers You Received</string>
+    <string name="StickerManagementAdapter_signal_artist_series">Signal Artist Series</string>
+    <string name="StickerManagementAdapter_no_stickers_installed">No stickers installed</string>
+    <string name="StickerManagementAdapter_stickers_from_incoming_messages_will_appear_here">Stickers from incoming messages will appear here</string>
+    <string name="StickerManagementAdapter_untitled">Untitled</string>
+    <string name="StickerManagementAdapter_unknown">Unknown</string>
+
+    <!-- StickerPackPreviewActivity -->
+    <string name="StickerPackPreviewActivity_untitled">Untitled</string>
+    <string name="StickerPackPreviewActivity_unknown">Unknown</string>
+    <string name="StickerPackPreviewActivity_install">Install</string>
+    <string name="StickerPackPreviewActivity_remove">Remove</string>
+    <string name="StickerPackPreviewActivity_stickers">Stickers</string>
+    <string name="StickerPackPreviewActivity_failed_to_load_sticker_pack">Failed to load sticker pack</string>
+
+    <!--Draft Database-->
+    <string name="DraftDatabase_Draft_image_snippet">Image Snippet</string>
+    <string name="DraftDatabase_Draft_video_snippet">Video Snippet</string>
+    <string name="DraftDatabase_Draft_audio_snippet">Audio Snippet</string>
+    <string name="DraftDatabase_Draft_quote_snippet">Quote Snippet</string>
+
+    <!-- ChatWallpaperActivity -->
+    <string name="ChatWallpaperActivity__chat_wallpaper">Chat wallpaper</string>
+
+    <!-- ChatWallpaperFragment -->
+    <string name="ChatWallpaperFragment__set_wallpaper">Set wallpaper</string>
+    <string name="ChatWallpaperFragment__dark_theme_dims_wallpaper">Dark theme dims wallpaper</string>
+    <string name="ChatWallpaperFragment__clear_wallpaper">Clear wallpaper</string>
+    <string name="ChatWallpaperFragment__clear_wallpaper_for_this_chat">Clear wallpaper for this chat?</string>
+    <string name="ChatWallpaperFragment__clear_wallpaper_this_will_not">Clear wallpaper? This will not clear custom wallpapers you’ve set for your chats.</string>
+    <string name="ChatWallpaperFragment__reset_all_wallpapers">Reset all wallpapers</string>
+    <string name="ChatWallpaperFragment__reset_all_wallpapers_including_custom">Reset all wallpapers, including custom wallpapers you’ve set for your chats?</string>
+    <string name="ChatWallpaperFragment__contact_name">Contact name</string>
+    <string name="ChatWallpaperFragment__reset">Reset</string>
+    <string name="ChatWallpaperFragment__clear">Clear</string>
+    <string name="ChatWallpaperFragment__wallpaper_preview_description">Wallpaper preview</string>
+
+    <!-- ChatWallpaperSelectionFragment -->
+    <string name="ChatWallpaperSelectionFragment__choose_from_photos">Choose from photos</string>
+    <string name="ChatWallpaperSelectionFragment__presets">Presets</string>
+
+    <!-- ChatWallpaperPreviewActivity -->
+    <string name="ChatWallpaperPreviewActivity__preview">Preview</string>
+    <string name="ChatWallpaperPreviewActivity__set_wallpaper">Set wallpaper</string>
+    <string name="ChatWallpaperPreviewActivity__swipe_to_preview_more_wallpapers">Swipe to preview more wallpapers</string>
+    <string name="ChatWallpaperPreviewActivity__set_wallpaper_for_all_chats">Set wallpaper for all chats</string>
+    <string name="ChatWallpaperPreviewActivity__set_wallpaper_for_s">Set wallpaper for %1$s</string>
+    <string name="ChatWallpaperPreviewActivity__viewing_your_gallery_requires_the_storage_permission">Viewing your gallery requires the storage permission.</string>
+
+    <!-- WallpaperImageSelectionActivity -->
+    <string name="WallpaperImageSelectionActivity__choose_wallpaper_image">Choose wallpaper image</string>
+
+    <!-- WallpaperCropActivity -->
+    <string name="WallpaperCropActivity__pinch_to_zoom_drag_to_adjust">Pinch to zoom, drag to adjust.</string>
+    <string name="WallpaperCropActivity__set_wallpaper_for_all_chats">Set wallpaper for all chats.</string>
+    <string name="WallpaperCropActivity__set_wallpaper_for_s">Set wallpaper for %s.</string>
+    <string name="WallpaperCropActivity__error_setting_wallpaper">Error setting wallpaper.</string>
+    <string name="WallpaperCropActivity__blur_photo">Blur photo</string>
+
+    <!-- DateUtils -->
+    <string name="DateUtils_just_now">Now</string>
+    <string name="DateUtils_minutes_ago">%dm</string>
+    <string name="DateUtils_today">Today</string>
+    <string name="DateUtils_yesterday">Yesterday</string>
+
 </resources>

@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment;
 
 import com.plexus.R;
 import com.plexus.core.utils.logging.Log;
+import com.plexus.scribbles.VideoEditorHud;
+import com.plexus.slides.VideoSlide;
 import com.plexus.utils.MediaConstraints;
 import com.plexus.utils.Throttler;
 import com.plexus.video.VideoBitRateCalculator;

@@ -13,7 +13,7 @@ import java.io.IOException;
  */
 public class Media implements Parcelable {
 
-    public static final String ALL_MEDIA_BUCKET_ID = "org.thoughtcrime.securesms.ALL_MEDIA";
+    public static final String ALL_MEDIA_BUCKET_ID = "com.plexus.ALL_MEDIA";
 
     private final Uri     uri;
     private final String  mimeType;

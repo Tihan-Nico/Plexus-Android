@@ -17,7 +17,7 @@ public final class DeviceProperties {
      * Whether or not we believe the device has the performance capabilities to efficiently render
      * large numbers of APNGs simultaneously.
      */
-    /*public static boolean shouldAllowApngStickerAnimation(@NonNull Context context) {
+    public static boolean shouldAllowApngStickerAnimation(@NonNull Context context) {
         if (Build.VERSION.SDK_INT < 26) {
             return false;
         }
@@ -25,13 +25,11 @@ public final class DeviceProperties {
         MemoryInfo memoryInfo = getMemoryInfo(context);
         int        memoryMb   = (int) ByteUnit.BYTES.toMegabytes(memoryInfo.totalMem);
 
-        *//*return !isLowMemoryDevice(context) &&
+        return !isLowMemoryDevice(context) &&
                 !memoryInfo.lowMemory       &&
                 (memoryMb                >= FeatureFlags.animatedStickerMinimumTotalMemoryMb() ||
-                        getMemoryClass(context) >= FeatureFlags.animatedStickerMinimumMemoryClass());*//*
-
-        return null;
-    }*/
+                        getMemoryClass(context) >= FeatureFlags.animatedStickerMinimumMemoryClass());
+    }
 
     public static boolean isLowMemoryDevice(@NonNull Context context) {
         ActivityManager activityManager = ServiceUtil.getActivityManager(context);

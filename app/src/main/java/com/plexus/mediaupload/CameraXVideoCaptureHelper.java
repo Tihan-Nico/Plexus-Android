@@ -110,9 +110,9 @@ class CameraXVideoCaptureHelper implements CameraButtonView.VideoCaptureListener
         Permissions.with(fragment)
                 .request(Manifest.permission.RECORD_AUDIO)
                 .ifNecessary()
-                .withRationaleDialog(fragment.getString(R.string.ConversationActivity_enable_the_microphone_permission_to_capture_videos_with_sound), R.drawable.ic_mic_solid_24)
-                .withPermanentDenialDialog(fragment.getString(R.string.ConversationActivity_Plexus_needs_the_recording_permissions_to_capture_video))
-                .onAnyDenied(() -> Toast.makeText(fragment.requireContext(), R.string.ConversationActivity_Plexus_needs_recording_permissions_to_capture_video, Toast.LENGTH_LONG).show())
+                .withRationaleDialog(fragment.getString(R.string.Camera_enable_the_microphone_permission_to_capture_videos_with_sound), R.drawable.microphone)
+                .withPermanentDenialDialog(fragment.getString(R.string.Camera_Plexus_needs_the_recording_permissions_to_capture_video))
+                .onAnyDenied(() -> Toast.makeText(fragment.requireContext(), R.string.Camera_Plexus_needs_recording_permissions_to_capture_video, Toast.LENGTH_LONG).show())
                 .execute();
     }
 

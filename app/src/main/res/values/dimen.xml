@@ -151,4 +151,26 @@
     <dimen name="react_with_any_emoji_bottom_sheet_dialog_fragment_min_height">340dp</dimen>
     <dimen name="react_with_any_emoji_bottom_sheet_dialog_fragment_tabs_height">40dp</dimen>
 
+    <!--Media Picker-->
+    <dimen name="media_picker_folder_width">175dp</dimen>
+    <dimen name="media_picker_item_width">85dp</dimen>
+    <dimen name="media_picker_rail_padding_affordance">130dp</dimen>
+
+    <!--Progress Dialog-->
+    <dimen name="progress_dialog_size">120dp</dimen>
+
+    <!--Stickers-->
+    <dimen name="sticker_page_item_padding">8dp</dimen>
+    <dimen name="sticker_page_item_divisor">88dp</dimen>
+    <dimen name="sticker_page_item_multiplier">8dp</dimen>
+    <dimen name="sticker_management_horizontal_margin">16dp</dimen>
+    <dimen name="sticker_preview_sticker_size">96dp</dimen>
+    <dimen name="sticker_preview_gutter_size">16dp</dimen>
+
+    <!--Thumbnail-->
+    <dimen name="thumbnail_default_radius">4dp</dimen>
+
+    <!--Mention-->
+    <dimen name="mention_corner_radius">4dp</dimen>
+
 </resources>

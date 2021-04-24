@@ -10,10 +10,13 @@ import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.plexus.R;
+import com.plexus.components.TooltipPopup;
+import com.plexus.imageeditor.ImageEditorView;
 import com.plexus.scribbles.widget.ColorPaletteAdapter;
 import com.plexus.scribbles.widget.VerticalSlideColorPicker;
 import com.plexus.utils.Debouncer;
@@ -24,376 +27,371 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class ImageEditorHud extends LinearLayout {
+/**
+ * The HUD (heads-up display) that contains all of the tools for interacting with
+ * {@link ImageEditorView}
+ */
+public final class ImageEditorHud extends LinearLayout {
 
-    private static final EventListener NULL_EVENT_LISTENER = new EventListener() {
+  private View                     cropButton;
+  private View                     cropFlipButton;
+  private View                     cropRotateButton;
+  private ImageView                cropAspectLock;
+  private View                     drawButton;
+  private View                     highlightButton;
+  private View                     blurButton;
+  private View                     textButton;
+  private View                     stickerButton;
+  private View                     undoButton;
+  private View                     saveButton;
+  private View                     deleteButton;
+  private View                     confirmButton;
+  private View                     doneButton;
+  private View                     blurToggleHud;
+  private Switch                   blurToggle;
+  private View                     blurToast;
+  private VerticalSlideColorPicker colorPicker;
+  private RecyclerView             colorPalette;
 
-        @Override
-        public void onModeStarted(@NonNull Mode mode) {
-        }
 
-        @Override
-        public void onColorChange(int color) {
-        }
+  @NonNull
+  private EventListener              eventListener = NULL_EVENT_LISTENER;
+  @Nullable
+  private ColorPaletteAdapter colorPaletteAdapter;
 
-        @Override
-        public void onBlurFacesToggled(boolean enabled) {
-        }
+  private final Map<Mode, Set<View>> visibilityModeMap = new HashMap<>();
+  private final Set<View>            allViews          = new HashSet<>();
+  private final Debouncer toastDebouncer    = new Debouncer(3000);
 
-        @Override
-        public void onUndo() {
-        }
+  private Mode    currentMode;
+  private boolean undoAvailable;
 
-        @Override
-        public void onDelete() {
-        }
+  public ImageEditorHud(@NonNull Context context) {
+    super(context);
+    initialize();
+  }
 
-        @Override
-        public void onSave() {
-        }
+  public ImageEditorHud(@NonNull Context context, @Nullable AttributeSet attrs) {
+    super(context, attrs);
+    initialize();
+  }
 
-        @Override
-        public void onFlipHorizontal() {
-        }
+  public ImageEditorHud(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+    initialize();
+  }
 
-        @Override
-        public void onRotate90AntiClockwise() {
-        }
+  private void initialize() {
+    inflate(getContext(), R.layout.image_editor_hud, this);
+    setOrientation(VERTICAL);
 
-        @Override
-        public void onCropAspectLock(boolean locked) {
-        }
+    cropButton       = findViewById(R.id.scribble_crop_button);
+    cropFlipButton   = findViewById(R.id.scribble_crop_flip);
+    cropRotateButton = findViewById(R.id.scribble_crop_rotate);
+    cropAspectLock   = findViewById(R.id.scribble_crop_aspect_lock);
+    colorPalette     = findViewById(R.id.scribble_color_palette);
+    drawButton       = findViewById(R.id.scribble_draw_button);
+    highlightButton  = findViewById(R.id.scribble_highlight_button);
+    blurButton       = findViewById(R.id.scribble_blur_button);
+    textButton       = findViewById(R.id.scribble_text_button);
+    stickerButton    = findViewById(R.id.scribble_sticker_button);
+    undoButton       = findViewById(R.id.scribble_undo_button);
+    saveButton       = findViewById(R.id.scribble_save_button);
+    deleteButton     = findViewById(R.id.scribble_delete_button);
+    confirmButton    = findViewById(R.id.scribble_confirm_button);
+    colorPicker      = findViewById(R.id.scribble_color_picker);
+    doneButton       = findViewById(R.id.scribble_done_button);
+    blurToggleHud    = findViewById(R.id.scribble_blur_toggle_hud);
+    blurToggle       = findViewById(R.id.scribble_blur_toggle);
+    blurToast        = findViewById(R.id.scribble_blur_toast);
 
-        @Override
-        public boolean isCropAspectLocked() {
-            return false;
-        }
+    cropAspectLock.setOnClickListener(v -> {
+      eventListener.onCropAspectLock(!eventListener.isCropAspectLocked());
+      updateCropAspectLockImage(eventListener.isCropAspectLocked());
+    });
 
-        @Override
-        public void onRequestFullScreen(boolean fullScreen, boolean hideKeyboard) {
-        }
+    initializeViews();
+    initializeVisibilityMap();
+    setMode(Mode.NONE);
+  }
 
-        @Override
-        public void onDone() {
-        }
-    };
-    private final Map<Mode, Set<View>> visibilityModeMap = new HashMap<>();
-    private final Set<View> allViews = new HashSet<>();
-    private final Debouncer toastDebouncer = new Debouncer(3000);
-    private View cropButton;
-    private View cropFlipButton;
-    private View cropRotateButton;
-    private ImageView cropAspectLock;
-    private View drawButton;
-    private View highlightButton;
-    private View blurButton;
-    private View textButton;
-    private View stickerButton;
-    private View undoButton;
-    private View saveButton;
-    private View deleteButton;
-    private View confirmButton;
-    private View doneButton;
-    private View blurToggleHud;
-    private Switch blurToggle;
-    private View blurToast;
-    private VerticalSlideColorPicker colorPicker;
-    private RecyclerView colorPalette;
-    @NonNull
-    private EventListener eventListener = NULL_EVENT_LISTENER;
-    private final VerticalSlideColorPicker.OnColorChangeListener standardOnColorChangeListener = selectedColor -> eventListener.onColorChange(selectedColor);
-    private final VerticalSlideColorPicker.OnColorChangeListener highlightOnColorChangeListener = selectedColor -> eventListener.onColorChange(withHighlighterAlpha(selectedColor));
-    @Nullable
-    private ColorPaletteAdapter colorPaletteAdapter;
-    private Mode currentMode;
-    private boolean undoAvailable;
+  private void updateCropAspectLockImage(boolean cropAspectLocked) {
+    cropAspectLock.setImageDrawable(getResources().getDrawable(cropAspectLocked ? R.drawable.ic_lock : R.drawable.crop));
+  }
 
-    public ImageEditorHud(@NonNull Context context) {
-        super(context);
-        initialize();
+  private void initializeVisibilityMap() {
+    setVisibleViewsWhenInMode(Mode.NONE, drawButton, blurButton, textButton, stickerButton, cropButton, undoButton, saveButton);
+
+    setVisibleViewsWhenInMode(Mode.DRAW, confirmButton, undoButton, colorPicker, colorPalette, highlightButton);
+
+    setVisibleViewsWhenInMode(Mode.HIGHLIGHT, confirmButton, undoButton, colorPicker, colorPalette, drawButton);
+
+    setVisibleViewsWhenInMode(Mode.BLUR, confirmButton, undoButton, blurToggleHud);
+
+    setVisibleViewsWhenInMode(Mode.TEXT, confirmButton, deleteButton, colorPicker, colorPalette);
+
+    setVisibleViewsWhenInMode(Mode.MOVE_DELETE, confirmButton, deleteButton);
+
+    setVisibleViewsWhenInMode(Mode.INSERT_STICKER, confirmButton);
+
+    setVisibleViewsWhenInMode(Mode.CROP, confirmButton, cropFlipButton, cropRotateButton, cropAspectLock, undoButton);
+
+    for (Set<View> views : visibilityModeMap.values()) {
+      allViews.addAll(views);
     }
 
-    public ImageEditorHud(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        initialize();
+    allViews.add(stickerButton);
+    allViews.add(doneButton);
+  }
+
+  private void setVisibleViewsWhenInMode(Mode mode, View... views) {
+    visibilityModeMap.put(mode, new HashSet<>(Arrays.asList(views)));
+  }
+
+  private void initializeViews() {
+    undoButton.setOnClickListener(v -> eventListener.onUndo());
+
+    deleteButton.setOnClickListener(v -> {
+      eventListener.onDelete();
+      setMode(Mode.NONE);
+    });
+
+    cropButton.setOnClickListener(v -> setMode(Mode.CROP));
+    cropFlipButton.setOnClickListener(v -> eventListener.onFlipHorizontal());
+    cropRotateButton.setOnClickListener(v -> eventListener.onRotate90AntiClockwise());
+
+    confirmButton.setOnClickListener(v -> setMode(Mode.NONE));
+
+    colorPaletteAdapter = new ColorPaletteAdapter();
+    colorPaletteAdapter.setEventListener(colorPicker::setActiveColor);
+
+    colorPalette.setLayoutManager(new LinearLayoutManager(getContext()));
+    colorPalette.setAdapter(colorPaletteAdapter);
+
+    drawButton.setOnClickListener(v -> setMode(Mode.DRAW));
+    blurButton.setOnClickListener(v -> setMode(Mode.BLUR));
+    highlightButton.setOnClickListener(v -> setMode(Mode.HIGHLIGHT));
+    textButton.setOnClickListener(v -> setMode(Mode.TEXT));
+    stickerButton.setOnClickListener(v -> setMode(Mode.INSERT_STICKER));
+    saveButton.setOnClickListener(v -> eventListener.onSave());
+    doneButton.setOnClickListener(v -> eventListener.onDone());
+    blurToggle.setOnCheckedChangeListener((button, enabled) -> eventListener.onBlurFacesToggled(enabled));
+  }
+
+  public void setUpForAvatarEditing() {
+    visibilityModeMap.get(Mode.NONE).add(doneButton);
+    visibilityModeMap.get(Mode.NONE).remove(saveButton);
+    visibilityModeMap.get(Mode.CROP).remove(cropAspectLock);
+
+    if (currentMode == Mode.NONE) {
+      doneButton.setVisibility(View.VISIBLE);
+      saveButton.setVisibility(View.GONE);
+    } else if (currentMode == Mode.CROP) {
+      cropAspectLock.setVisibility(View.GONE);
+    }
+  }
+
+  public void setColorPalette(@NonNull Set<Integer> colors) {
+    if (colorPaletteAdapter != null) {
+      colorPaletteAdapter.setColors(colors);
+    }
+  }
+
+  public int getActiveColor() {
+    return colorPicker.getActiveColor();
+  }
+
+  public void setActiveColor(int color) {
+    colorPicker.setActiveColor(color);
+  }
+
+  public void setBlurFacesToggleEnabled(boolean enabled) {
+    blurToggle.setOnCheckedChangeListener(null);
+    blurToggle.setChecked(enabled);
+    blurToggle.setOnCheckedChangeListener((button, value) -> eventListener.onBlurFacesToggled(value));
+  }
+
+  public void showBlurHudTooltip() {
+    TooltipPopup.forTarget(blurButton)
+                .setText(R.string.ImageEditorHud_new_blur_faces_or_draw_anywhere_to_blur)
+                .setBackgroundTint(ContextCompat.getColor(getContext(), R.color.plexus))
+                .setTextColor(ContextCompat.getColor(getContext(), R.color.white))
+                .show(TooltipPopup.POSITION_BELOW);
+  }
+
+  public void showBlurToast() {
+    blurToast.clearAnimation();
+    blurToast.setVisibility(View.VISIBLE);
+    toastDebouncer.publish(() -> blurToast.setVisibility(GONE));
+  }
+
+  public void hideBlurToast() {
+    blurToast.clearAnimation();
+    blurToast.setVisibility(View.GONE);
+    toastDebouncer.clear();
+  }
+
+  public void setEventListener(@Nullable EventListener eventListener) {
+    this.eventListener = eventListener != null ? eventListener : NULL_EVENT_LISTENER;
+  }
+
+  public void enterMode(@NonNull Mode mode) {
+    setMode(mode, false);
+  }
+
+  public void setMode(@NonNull Mode mode) {
+    setMode(mode, true);
+  }
+
+  private void setMode(@NonNull Mode mode, boolean notify) {
+    this.currentMode = mode;
+    updateButtonVisibility(mode);
+
+    switch (mode) {
+      case NONE:      presentModeNone();      break;
+      case CROP:      presentModeCrop();      break;
+      case DRAW:      presentModeDraw();      break;
+      case BLUR:      presentModeBlur();      break;
+      case HIGHLIGHT: presentModeHighlight(); break;
+      case TEXT:      presentModeText();      break;
     }
 
-    public ImageEditorHud(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initialize();
+    if (notify) {
+      eventListener.onModeStarted(mode);
+    }
+    eventListener.onRequestFullScreen(mode != Mode.NONE, mode != Mode.TEXT);
+  }
+
+  private void updateButtonVisibility(@NonNull Mode mode) {
+    Set<View> visibleButtons = visibilityModeMap.get(mode);
+    for (View button : allViews) {
+      button.setVisibility(buttonIsVisible(visibleButtons, button) ? VISIBLE : GONE);
+    }
+  }
+
+  private boolean buttonIsVisible(@Nullable Set<View> visibleButtons, @NonNull View button) {
+    return visibleButtons != null &&
+           visibleButtons.contains(button) &&
+           (button != undoButton || undoAvailable);
+  }
+
+  private void presentModeNone() {
+    blurToast.setVisibility(GONE);
+  }
+
+  private void presentModeCrop() {
+    updateCropAspectLockImage(eventListener.isCropAspectLocked());
+  }
+
+  private void presentModeDraw() {
+    colorPicker.setOnColorChangeListener(standardOnColorChangeListener);
+    colorPicker.setActiveColor(Color.RED);
+  }
+
+  private void presentModeBlur() {
+    colorPicker.setOnColorChangeListener(standardOnColorChangeListener);
+    colorPicker.setActiveColor(Color.BLACK);
+  }
+
+  private void presentModeHighlight() {
+    colorPicker.setOnColorChangeListener(highlightOnColorChangeListener);
+    colorPicker.setActiveColor(Color.YELLOW);
+  }
+
+  private void presentModeText() {
+    colorPicker.setOnColorChangeListener(standardOnColorChangeListener);
+    colorPicker.setActiveColor(Color.WHITE);
+  }
+
+  private final VerticalSlideColorPicker.OnColorChangeListener standardOnColorChangeListener = selectedColor -> eventListener.onColorChange(selectedColor);
+
+  private final VerticalSlideColorPicker.OnColorChangeListener highlightOnColorChangeListener = selectedColor -> eventListener.onColorChange(withHighlighterAlpha(selectedColor));
+
+  private static int withHighlighterAlpha(int color) {
+    return color & ~0xff000000 | 0x60000000;
+  }
+
+  public void setUndoAvailability(boolean undoAvailable) {
+    this.undoAvailable = undoAvailable;
+
+    undoButton.setVisibility(buttonIsVisible(visibilityModeMap.get(currentMode), undoButton) ? VISIBLE : GONE);
+  }
+
+  public enum Mode {
+    NONE,
+    CROP,
+    TEXT,
+    DRAW,
+    HIGHLIGHT,
+    BLUR,
+    MOVE_DELETE,
+    INSERT_STICKER,
+  }
+
+  public interface EventListener {
+    void onModeStarted(@NonNull Mode mode);
+    void onColorChange(int color);
+    void onBlurFacesToggled(boolean enabled);
+    void onUndo();
+    void onDelete();
+    void onSave();
+    void onFlipHorizontal();
+    void onRotate90AntiClockwise();
+    void onCropAspectLock(boolean locked);
+    boolean isCropAspectLocked();
+    void onRequestFullScreen(boolean fullScreen, boolean hideKeyboard);
+    void onDone();
+  }
+
+  private static final EventListener NULL_EVENT_LISTENER = new EventListener() {
+
+    @Override
+    public void onModeStarted(@NonNull Mode mode) {
     }
 
-    private static int withHighlighterAlpha(int color) {
-        return color & ~0xff000000 | 0x60000000;
+    @Override
+    public void onColorChange(int color) {
     }
 
-    private void initialize() {
-        inflate(getContext(), R.layout.image_editor_hud, this);
-        setOrientation(VERTICAL);
-
-        cropButton = findViewById(R.id.scribble_crop_button);
-        cropFlipButton = findViewById(R.id.scribble_crop_flip);
-        cropRotateButton = findViewById(R.id.scribble_crop_rotate);
-        cropAspectLock = findViewById(R.id.scribble_crop_aspect_lock);
-        colorPalette = findViewById(R.id.scribble_color_palette);
-        drawButton = findViewById(R.id.scribble_draw_button);
-        highlightButton = findViewById(R.id.scribble_highlight_button);
-        blurButton = findViewById(R.id.scribble_blur_button);
-        textButton = findViewById(R.id.scribble_text_button);
-        stickerButton = findViewById(R.id.scribble_sticker_button);
-        undoButton = findViewById(R.id.scribble_undo_button);
-        saveButton = findViewById(R.id.scribble_save_button);
-        deleteButton = findViewById(R.id.scribble_delete_button);
-        confirmButton = findViewById(R.id.scribble_confirm_button);
-        colorPicker = findViewById(R.id.scribble_color_picker);
-        doneButton = findViewById(R.id.scribble_done_button);
-        blurToggleHud = findViewById(R.id.scribble_blur_toggle_hud);
-        blurToggle = findViewById(R.id.scribble_blur_toggle);
-        blurToast = findViewById(R.id.scribble_blur_toast);
-
-        cropAspectLock.setOnClickListener(v -> {
-            eventListener.onCropAspectLock(!eventListener.isCropAspectLocked());
-            updateCropAspectLockImage(eventListener.isCropAspectLocked());
-        });
-
-        initializeViews();
-        initializeVisibilityMap();
-        setMode(Mode.NONE);
+    @Override
+    public void onBlurFacesToggled(boolean enabled) {
     }
 
-    private void updateCropAspectLockImage(boolean cropAspectLocked) {
-        cropAspectLock.setImageDrawable(getResources().getDrawable(cropAspectLocked ? R.drawable.lock_outline : R.drawable.lock_open_variant_outline));
+    @Override
+    public void onUndo() {
     }
 
-    private void initializeVisibilityMap() {
-        setVisibleViewsWhenInMode(Mode.NONE, drawButton, blurButton, textButton, stickerButton, cropButton, undoButton, saveButton);
-
-        setVisibleViewsWhenInMode(Mode.DRAW, confirmButton, undoButton, colorPicker, colorPalette, highlightButton);
-
-        setVisibleViewsWhenInMode(Mode.HIGHLIGHT, confirmButton, undoButton, colorPicker, colorPalette, drawButton);
-
-        setVisibleViewsWhenInMode(Mode.BLUR, confirmButton, undoButton, blurToggleHud);
-
-        setVisibleViewsWhenInMode(Mode.TEXT, confirmButton, deleteButton, colorPicker, colorPalette);
-
-        setVisibleViewsWhenInMode(Mode.MOVE_DELETE, confirmButton, deleteButton);
-
-        setVisibleViewsWhenInMode(Mode.INSERT_STICKER, confirmButton);
-
-        setVisibleViewsWhenInMode(Mode.CROP, confirmButton, cropFlipButton, cropRotateButton, cropAspectLock, undoButton);
-
-        for (Set<View> views : visibilityModeMap.values()) {
-            allViews.addAll(views);
-        }
-
-        allViews.add(stickerButton);
-        allViews.add(doneButton);
+    @Override
+    public void onDelete() {
     }
 
-    private void setVisibleViewsWhenInMode(Mode mode, View... views) {
-        visibilityModeMap.put(mode, new HashSet<>(Arrays.asList(views)));
+    @Override
+    public void onSave() {
     }
 
-    private void initializeViews() {
-        undoButton.setOnClickListener(v -> eventListener.onUndo());
-
-        deleteButton.setOnClickListener(v -> {
-            eventListener.onDelete();
-            setMode(Mode.NONE);
-        });
-
-        cropButton.setOnClickListener(v -> setMode(Mode.CROP));
-        cropFlipButton.setOnClickListener(v -> eventListener.onFlipHorizontal());
-        cropRotateButton.setOnClickListener(v -> eventListener.onRotate90AntiClockwise());
-
-        confirmButton.setOnClickListener(v -> setMode(Mode.NONE));
-
-        colorPaletteAdapter = new ColorPaletteAdapter();
-        colorPaletteAdapter.setEventListener(colorPicker::setActiveColor);
-
-        colorPalette.setLayoutManager(new LinearLayoutManager(getContext()));
-        colorPalette.setAdapter(colorPaletteAdapter);
-
-        drawButton.setOnClickListener(v -> setMode(Mode.DRAW));
-        blurButton.setOnClickListener(v -> setMode(Mode.BLUR));
-        highlightButton.setOnClickListener(v -> setMode(Mode.HIGHLIGHT));
-        textButton.setOnClickListener(v -> setMode(Mode.TEXT));
-        stickerButton.setOnClickListener(v -> setMode(Mode.INSERT_STICKER));
-        saveButton.setOnClickListener(v -> eventListener.onSave());
-        doneButton.setOnClickListener(v -> eventListener.onDone());
-        blurToggle.setOnCheckedChangeListener((button, enabled) -> eventListener.onBlurFacesToggled(enabled));
+    @Override
+    public void onFlipHorizontal() {
     }
 
-    public void setUpForAvatarEditing() {
-        visibilityModeMap.get(Mode.NONE).add(doneButton);
-        visibilityModeMap.get(Mode.NONE).remove(saveButton);
-        visibilityModeMap.get(Mode.CROP).remove(cropAspectLock);
-
-        if (currentMode == Mode.NONE) {
-            doneButton.setVisibility(View.VISIBLE);
-            saveButton.setVisibility(View.GONE);
-        } else if (currentMode == Mode.CROP) {
-            cropAspectLock.setVisibility(View.GONE);
-        }
+    @Override
+    public void onRotate90AntiClockwise() {
     }
 
-    public void setColorPalette(@NonNull Set<Integer> colors) {
-        if (colorPaletteAdapter != null) {
-            colorPaletteAdapter.setColors(colors);
-        }
+    @Override
+    public void onCropAspectLock(boolean locked) {
     }
 
-    public int getActiveColor() {
-        return colorPicker.getActiveColor();
+    @Override
+    public boolean isCropAspectLocked() {
+      return false;
     }
 
-    public void setActiveColor(int color) {
-        colorPicker.setActiveColor(color);
+    @Override
+    public void onRequestFullScreen(boolean fullScreen, boolean hideKeyboard) {
     }
 
-    public void setBlurFacesToggleEnabled(boolean enabled) {
-        blurToggle.setOnCheckedChangeListener(null);
-        blurToggle.setChecked(enabled);
-        blurToggle.setOnCheckedChangeListener((button, value) -> eventListener.onBlurFacesToggled(value));
+    @Override
+    public void onDone() {
     }
-
-    public void showBlurToast() {
-        blurToast.clearAnimation();
-        blurToast.setVisibility(View.VISIBLE);
-        toastDebouncer.publish(() -> blurToast.setVisibility(GONE));
-    }
-
-    public void hideBlurToast() {
-        blurToast.clearAnimation();
-        blurToast.setVisibility(View.GONE);
-        toastDebouncer.clear();
-    }
-
-    public void setEventListener(@Nullable EventListener eventListener) {
-        this.eventListener = eventListener != null ? eventListener : NULL_EVENT_LISTENER;
-    }
-
-    public void enterMode(@NonNull Mode mode) {
-        setMode(mode, false);
-    }
-
-    public void setMode(@NonNull Mode mode) {
-        setMode(mode, true);
-    }
-
-    private void setMode(@NonNull Mode mode, boolean notify) {
-        this.currentMode = mode;
-        updateButtonVisibility(mode);
-
-        switch (mode) {
-            case NONE:
-                presentModeNone();
-                break;
-            case CROP:
-                presentModeCrop();
-                break;
-            case DRAW:
-                presentModeDraw();
-                break;
-            case BLUR:
-                presentModeBlur();
-                break;
-            case HIGHLIGHT:
-                presentModeHighlight();
-                break;
-            case TEXT:
-                presentModeText();
-                break;
-        }
-
-        if (notify) {
-            eventListener.onModeStarted(mode);
-        }
-        eventListener.onRequestFullScreen(mode != Mode.NONE, mode != Mode.TEXT);
-    }
-
-    private void updateButtonVisibility(@NonNull Mode mode) {
-        Set<View> visibleButtons = visibilityModeMap.get(mode);
-        for (View button : allViews) {
-            button.setVisibility(buttonIsVisible(visibleButtons, button) ? VISIBLE : GONE);
-        }
-    }
-
-    private boolean buttonIsVisible(@Nullable Set<View> visibleButtons, @NonNull View button) {
-        return visibleButtons != null &&
-                visibleButtons.contains(button) &&
-                (button != undoButton || undoAvailable);
-    }
-
-    private void presentModeNone() {
-        blurToast.setVisibility(GONE);
-    }
-
-    private void presentModeCrop() {
-        updateCropAspectLockImage(eventListener.isCropAspectLocked());
-    }
-
-    private void presentModeDraw() {
-        colorPicker.setOnColorChangeListener(standardOnColorChangeListener);
-        colorPicker.setActiveColor(Color.RED);
-    }
-
-    private void presentModeBlur() {
-        colorPicker.setOnColorChangeListener(standardOnColorChangeListener);
-        colorPicker.setActiveColor(Color.BLACK);
-    }
-
-    private void presentModeHighlight() {
-        colorPicker.setOnColorChangeListener(highlightOnColorChangeListener);
-        colorPicker.setActiveColor(Color.YELLOW);
-    }
-
-    private void presentModeText() {
-        colorPicker.setOnColorChangeListener(standardOnColorChangeListener);
-        colorPicker.setActiveColor(Color.WHITE);
-    }
-
-    public void setUndoAvailability(boolean undoAvailable) {
-        this.undoAvailable = undoAvailable;
-
-        undoButton.setVisibility(buttonIsVisible(visibilityModeMap.get(currentMode), undoButton) ? VISIBLE : GONE);
-    }
-
-    public enum Mode {
-        NONE,
-        CROP,
-        TEXT,
-        DRAW,
-        HIGHLIGHT,
-        BLUR,
-        MOVE_DELETE,
-        INSERT_STICKER,
-    }
-
-    public interface EventListener {
-        void onModeStarted(@NonNull Mode mode);
-
-        void onColorChange(int color);
-
-        void onBlurFacesToggled(boolean enabled);
-
-        void onUndo();
-
-        void onDelete();
-
-        void onSave();
-
-        void onFlipHorizontal();
-
-        void onRotate90AntiClockwise();
-
-        void onCropAspectLock(boolean locked);
-
-        boolean isCropAspectLocked();
-
-        void onRequestFullScreen(boolean fullScreen, boolean hideKeyboard);
-
-        void onDone();
-    }
-
+  };
 }

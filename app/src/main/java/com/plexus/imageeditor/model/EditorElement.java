@@ -101,7 +101,7 @@ public final class EditorElement implements Parcelable {
     }
 
     /**
-     * Iff Visible,
+     * If Visible,
      * Renders tree with the following localMatrix:
      * <p>
      * viewModelMatrix * localMatrix * editorMatrix * animationMatrix

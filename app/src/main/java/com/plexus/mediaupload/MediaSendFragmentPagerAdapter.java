@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.annimon.stream.Stream;
 import com.plexus.dependecies.PlexusDependencies;
+import com.plexus.scribbles.ImageEditorFragment;
 import com.plexus.utils.MediaConstraints;
 import com.plexus.utils.MediaUtil;
 

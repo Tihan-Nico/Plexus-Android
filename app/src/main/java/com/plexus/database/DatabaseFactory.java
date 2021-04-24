@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.plexus.crypto.AttachmentSecret;
 import com.plexus.crypto.DatabaseSecret;
 import com.plexus.crypto.DatabaseSecretProvider;
 import com.plexus.crypto.MasterSecret;
@@ -11,6 +12,7 @@ import com.plexus.database.helpers.ClassicOpenHelper;
 import com.plexus.database.helpers.SQLCipherMigrationHelper;
 import com.plexus.database.helpers.SQLCipherOpenHelper;
 import com.plexus.migrations.LegacyMigrationJob;
+import com.plexus.providers.AttachmentSecretProvider;
 import com.plexus.utils.PlexusPreferences;
 import com.plexus.utils.SqlUtil;
 
@@ -23,14 +25,10 @@ public class DatabaseFactory {
     private static volatile DatabaseFactory instance;
 
     private final SQLCipherOpenHelper databaseHelper;
-
-    private DatabaseFactory(@NonNull Context context) {
-        SQLiteDatabase.loadLibs(context);
-
-        DatabaseSecret databaseSecret = DatabaseSecretProvider.getOrCreateDatabaseSecret(context);
-
-        this.databaseHelper = new SQLCipherOpenHelper(context, databaseSecret);
-    }
+    private final AttachmentDatabase attachments;
+    private final StickerDatabase stickerDatabase;
+    private final OneTimePreKeyDatabase preKeyDatabase;
+    private final SignedPreKeyDatabase signedPreKeyDatabase;
 
     public static DatabaseFactory getInstance(Context context) {
         if (instance == null) {
@@ -41,6 +39,22 @@ public class DatabaseFactory {
             }
         }
         return instance;
+    }
+
+    public static OneTimePreKeyDatabase getPreKeyDatabase(Context context) {
+        return getInstance(context).preKeyDatabase;
+    }
+
+    public static SignedPreKeyDatabase getSignedPreKeyDatabase(Context context) {
+        return getInstance(context).signedPreKeyDatabase;
+    }
+
+    public static AttachmentDatabase getAttachmentDatabase(Context context) {
+        return getInstance(context).attachments;
+    }
+
+    public static StickerDatabase getStickerDatabase(Context context) {
+        return getInstance(context).stickerDatabase;
     }
 
     public static SQLiteDatabase getBackupDatabase(Context context) {
@@ -64,6 +78,19 @@ public class DatabaseFactory {
 
     public static boolean inTransaction(Context context) {
         return getInstance(context).databaseHelper.getWritableDatabase().inTransaction();
+    }
+
+    private DatabaseFactory(@NonNull Context context) {
+        SQLiteDatabase.loadLibs(context);
+
+        DatabaseSecret databaseSecret = DatabaseSecretProvider.getOrCreateDatabaseSecret(context);
+        AttachmentSecret attachmentSecret = AttachmentSecretProvider.getInstance(context).getOrCreateAttachmentSecret();
+
+        this.databaseHelper = new SQLCipherOpenHelper(context, databaseSecret);
+        this.attachments = new AttachmentDatabase(context, databaseHelper, attachmentSecret);
+        this.preKeyDatabase = new OneTimePreKeyDatabase(context, databaseHelper);
+        this.signedPreKeyDatabase = new SignedPreKeyDatabase(context, databaseHelper);
+        this.stickerDatabase = new StickerDatabase(context, databaseHelper, attachmentSecret);
     }
 
     public void onApplicationLevelUpgrade(@NonNull Context context, @NonNull MasterSecret masterSecret,
