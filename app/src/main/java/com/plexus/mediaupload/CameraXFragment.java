@@ -1,7 +1,9 @@
 package com.plexus.mediaupload;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,6 +31,7 @@ import androidx.camera.core.ImageProxy;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PlexusCameraView;
 import androidx.camera.view.PreviewView;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -36,6 +39,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.util.Executors;
 import com.plexus.LoggingFragment;
 import com.plexus.R;
+import com.plexus.components.TooltipPopup;
 import com.plexus.core.utils.logging.Log;
 import com.plexus.crypto.media.DecryptableStreamUriLoader;
 import com.plexus.mediaupload.camerax.CameraXFlashToggleView;
@@ -60,19 +64,19 @@ import static com.plexus.crypto.media.DecryptableStreamUriLoader.*;
 @RequiresApi(21)
 public class CameraXFragment extends LoggingFragment implements CameraFragment {
 
-    private static final String TAG              = Log.tag(CameraXFragment.class);
+    private static final String TAG = Log.tag(CameraXFragment.class);
     private static final String IS_VIDEO_ENABLED = "is_video_enabled";
 
-    private PlexusCameraView     camera;
-    private ViewGroup            controlsContainer;
-    private Controller           controller;
-    private MediaSendViewModel   viewModel;
-    private View                 selfieFlash;
+    private PlexusCameraView camera;
+    private ViewGroup controlsContainer;
+    private Controller controller;
+    private MediaSendViewModel viewModel;
+    private View selfieFlash;
     private MemoryFileDescriptor videoFileDescriptor;
 
     public static CameraXFragment newInstanceForAvatarCapture() {
         CameraXFragment fragment = new CameraXFragment();
-        Bundle          args     = new Bundle();
+        Bundle args = new Bundle();
 
         args.putBoolean(IS_VIDEO_ENABLED, false);
         fragment.setArguments(args);
@@ -107,14 +111,15 @@ public class CameraXFragment extends LoggingFragment implements CameraFragment {
     }
 
     @Override
-    public @Nullable View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public @Nullable
+    View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.camerax_fragment, container, false);
     }
 
     @SuppressLint("MissingPermission")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        this.camera            = view.findViewById(R.id.camerax_camera);
+        this.camera = view.findViewById(R.id.camerax_camera);
         this.controlsContainer = view.findViewById(R.id.camerax_controls_container);
 
         camera.bindToLifecycle(getViewLifecycleOwner());
@@ -122,7 +127,7 @@ public class CameraXFragment extends LoggingFragment implements CameraFragment {
 
         onOrientationChanged(getResources().getConfiguration().orientation);
 
-        viewModel.getMostRecentMediaItem().observe(getViewLifecycleOwner(), this::presentRecentItemThumbnail);
+        /*viewModel.getMostRecentMediaItem().observe(getViewLifecycleOwner(), this::presentRecentItemThumbnail);*/
         viewModel.getHudState().observe(getViewLifecycleOwner(), this::presentHud);
     }
 
@@ -130,6 +135,9 @@ public class CameraXFragment extends LoggingFragment implements CameraFragment {
     public void onResume() {
         super.onResume();
 
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
         camera.bindToLifecycle(getViewLifecycleOwner());
         viewModel.onCameraStarted();
         requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -287,8 +295,8 @@ public class CameraXFragment extends LoggingFragment implements CameraFragment {
 
             TooltipPopup.forTarget(captureButton)
                     .setOnDismissListener(this::neverDisplayVideoRecordingTooltipAgain)
-                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.core_ultramarine))
-                    .setTextColor(ContextCompat.getColor(requireContext(), R.color.Plexus_text_toolbar_title))
+                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.plexus))
+                    .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                     .setText(R.string.CameraXFragment_tap_for_photo_hold_for_video)
                     .show(displayRotation == Surface.ROTATION_0 || displayRotation == Surface.ROTATION_180 ? TooltipPopup.POSITION_ABOVE : TooltipPopup.POSITION_START);
         }

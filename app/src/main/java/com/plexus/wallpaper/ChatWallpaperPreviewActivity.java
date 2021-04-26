@@ -1,5 +1,6 @@
 package com.plexus.wallpaper;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -17,14 +18,17 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.annimon.stream.Stream;
 import com.plexus.BaseActivity;
 import com.plexus.R;
+import com.plexus.TracerActivity;
+import com.plexus.model.account.User;
 import com.plexus.utils.ActivityTransitionUtil;
 import com.plexus.utils.DynamicTheme;
 import com.plexus.utils.FullscreenHelper;
+import com.plexus.utils.MappingModel;
 import com.plexus.utils.WindowUtil;
 
 import java.util.Collections;
 
-public class ChatWallpaperPreviewActivity extends BaseActivity {
+public class ChatWallpaperPreviewActivity extends TracerActivity {
 
   public  static final String EXTRA_CHAT_WALLPAPER   = "extra.chat.wallpaper";
   private static final String EXTRA_DIM_IN_DARK_MODE = "extra.dim.in.dark.mode";
@@ -32,7 +36,7 @@ public class ChatWallpaperPreviewActivity extends BaseActivity {
 
   private final DynamicTheme dynamicTheme = new DynamicTheme();
 
-  public static @NonNull Intent create(@NonNull Context context, @NonNull ChatWallpaper selection, @NonNull RecipientId recipientId, boolean dimInDarkMode) {
+  public static @NonNull Intent create(@NonNull Context context, @NonNull ChatWallpaper selection, @NonNull User recipientId, boolean dimInDarkMode) {
     Intent intent = new Intent(context, ChatWallpaperPreviewActivity.class);
 
     intent.putExtra(EXTRA_CHAT_WALLPAPER, selection);
@@ -42,6 +46,7 @@ public class ChatWallpaperPreviewActivity extends BaseActivity {
     return intent;
   }
 
+  @SuppressLint("ResourceAsColor")
   @Override
   protected void onCreate(Bundle savedInstanceState, boolean ready) {
     dynamicTheme.onCreate(this);
@@ -78,11 +83,10 @@ public class ChatWallpaperPreviewActivity extends BaseActivity {
       finish();
     });
 
-    RecipientId recipientId = getIntent().getParcelableExtra(EXTRA_RECIPIENT_ID);
+    User recipientId = getIntent().getParcelableExtra(EXTRA_RECIPIENT_ID);
     if (recipientId != null) {
-      Recipient recipient = Recipient.live(recipientId).get();
-      bubble1.getBackground().setColorFilter(recipient.getColor().toConversationColor(this), PorterDuff.Mode.SRC_IN);
-      bubble2.setText(getString(R.string.ChatWallpaperPreviewActivity__set_wallpaper_for_s, recipient.getDisplayName(this)));
+      bubble1.getBackground().setColorFilter(R.color.plexus, PorterDuff.Mode.SRC_IN);
+      bubble2.setText(getString(R.string.ChatWallpaperPreviewActivity__set_wallpaper_for_s, recipientId.getName()));
     }
 
     new FullscreenHelper(this).showSystemUI();

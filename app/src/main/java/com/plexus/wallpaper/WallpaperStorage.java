@@ -83,10 +83,10 @@ public final class WallpaperStorage {
       return;
     }
 
-    int recipientCount = DatabaseFactory.getRecipientDatabase(context).getWallpaperUriUsageCount(uri);
+    /*int recipientCount = DatabaseFactory.getRecipientDatabase(context).getWallpaperUriUsageCount(uri);
     if (recipientCount > 0) {
       return;
-    }
+    }*/
 
     String filename      = PartAuthority.getWallpaperFilename(uri);
     File   directory     = context.getDir(DIRECTORY, Context.MODE_PRIVATE);

@@ -9,13 +9,12 @@
     android:layout_marginBottom="2dp"
     android:animateLayoutChanges="true">
 
-    <ImageView
+    <com.plexus.components.ThumbnailView
         android:id="@+id/mediapicker_image_item_thumbnail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        tools:src="@drawable/empty_inbox_1"/>
+        android:scaleType="centerCrop"/>
 
     <FrameLayout
         android:id="@+id/mediapicker_play_overlay"
@@ -32,9 +31,9 @@
             android:layout_height="18dp"
             android:layout_gravity="center"
             android:layout_marginStart="2dp"
-            android:tint="@color/core_ultramarine"
+            android:tint="@color/plexus"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/triangle_right" />
+            app:srcCompat="@drawable/ic_triangle_right" />
 
     </FrameLayout>
 

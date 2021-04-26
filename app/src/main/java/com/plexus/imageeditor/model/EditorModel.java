@@ -36,122 +36,75 @@ import java.util.UUID;
  */
 public final class EditorModel implements Parcelable, RendererContext.Ready {
 
-    public static final int Z_MASK = -1;
-    public static final int Z_DRAWING = 0;
+    public static final int Z_MASK     = -1;
+    public static final int Z_DRAWING  = 0;
     public static final int Z_STICKERS = 0;
-    public static final int Z_TEXT = 1;
-    public static final Creator<EditorModel> CREATOR = new Creator<EditorModel>() {
-        @Override
-        public EditorModel createFromParcel(Parcel in) {
-            return new EditorModel(in);
-        }
+    public static final int Z_TEXT     = 1;
 
-        @Override
-        public EditorModel[] newArray(int size) {
-            return new EditorModel[size];
-        }
-    };
     private static final Runnable NULL_RUNNABLE = () -> {
     };
+
     private static final int MINIMUM_OUTPUT_WIDTH = 1024;
-    private static final int MINIMUM_CROP_PIXEL_COUNT = 100;
-    private static final Point MINIMUM_RATIO = new Point(15, 1);
-    private final UndoRedoStacks undoRedoStacks;
-    private final UndoRedoStacks cropUndoRedoStacks;
-    private final InBoundsMemory inBoundsMemory = new InBoundsMemory();
-    private final RectF visibleViewPort = new RectF();
-    private final Point size;
-    private final boolean circleEditing;
+
+    private static final int   MINIMUM_CROP_PIXEL_COUNT = 100;
+    private static final Point MINIMUM_RATIO            = new Point(15, 1);
+
     @NonNull
     private Runnable invalidate = NULL_RUNNABLE;
+
     private UndoRedoStackListener undoRedoStackListener;
+
+    private final UndoRedoStacks undoRedoStacks;
+    private final UndoRedoStacks cropUndoRedoStacks;
+    private final InBoundsMemory inBoundsMemory     = new InBoundsMemory();
+
     private EditorElementHierarchy editorElementHierarchy;
 
-    public EditorModel() {
-        this(false, EditorElementHierarchy.create());
+    private final RectF          visibleViewPort = new RectF();
+    private final Point          size;
+    private final EditingPurpose editingPurpose;
+    private       float          fixedRatio;
+
+    private enum EditingPurpose {
+        IMAGE,
+        AVATAR_CIRCLE,
+        WALLPAPER
     }
 
     private EditorModel(@NonNull Parcel in) {
-        ClassLoader classLoader = getClass().getClassLoader();
-        this.circleEditing = in.readByte() == 1;
-        this.size = new Point(in.readInt(), in.readInt());
+        ClassLoader classLoader     = getClass().getClassLoader();
+        this.editingPurpose         = EditingPurpose.values()[in.readInt()];
+        this.fixedRatio             = in.readFloat();
+        this.size                   = new Point(in.readInt(), in.readInt());
         //noinspection ConstantConditions
         this.editorElementHierarchy = EditorElementHierarchy.create(in.readParcelable(classLoader));
-        this.undoRedoStacks = in.readParcelable(classLoader);
-        this.cropUndoRedoStacks = in.readParcelable(classLoader);
+        this.undoRedoStacks         = in.readParcelable(classLoader);
+        this.cropUndoRedoStacks     = in.readParcelable(classLoader);
     }
 
-    public EditorModel(boolean circleEditing, @NonNull EditorElementHierarchy editorElementHierarchy) {
-        this.circleEditing = circleEditing;
-        this.size = new Point(1024, 1024);
+    public EditorModel(@NonNull EditingPurpose editingPurpose, float fixedRatio, @NonNull EditorElementHierarchy editorElementHierarchy) {
+        this.editingPurpose         = editingPurpose;
+        this.fixedRatio             = fixedRatio;
+        this.size                   = new Point(1024, 1024);
         this.editorElementHierarchy = editorElementHierarchy;
-        this.undoRedoStacks = new UndoRedoStacks(50);
-        this.cropUndoRedoStacks = new UndoRedoStacks(50);
+        this.undoRedoStacks         = new UndoRedoStacks(50);
+        this.cropUndoRedoStacks     = new UndoRedoStacks(50);
     }
 
     public static EditorModel create() {
-        return new EditorModel(false, EditorElementHierarchy.create());
+        return new EditorModel(EditingPurpose.IMAGE, 0, EditorElementHierarchy.create());
     }
 
     public static EditorModel createForCircleEditing() {
-        EditorModel editorModel = new EditorModel(true, EditorElementHierarchy.createForCircleEditing());
+        EditorModel editorModel = new EditorModel(EditingPurpose.AVATAR_CIRCLE, 1, EditorElementHierarchy.createForCircleEditing());
         editorModel.setCropAspectLock(true);
         return editorModel;
     }
 
-    private static void restoreStateWithAnimations(@NonNull EditorElement fromRootElement, @NonNull EditorElement toRootElement, @NonNull Runnable onInvalidate, boolean keepEditorState) {
-        Map<UUID, EditorElement> fromMap = getElementMap(fromRootElement);
-        Map<UUID, EditorElement> toMap = getElementMap(toRootElement);
-
-        for (EditorElement fromElement : fromMap.values()) {
-            fromElement.stopAnimation();
-            EditorElement toElement = toMap.get(fromElement.getId());
-            if (toElement != null) {
-                toElement.animateFrom(fromElement.getLocalMatrixAnimating(), onInvalidate);
-
-                if (keepEditorState) {
-                    toElement.getEditorMatrix().set(fromElement.getEditorMatrix());
-                    toElement.getFlags().set(fromElement.getFlags());
-                }
-            } else {
-                // element is removed
-                EditorElement parentFrom = fromRootElement.parentOf(fromElement);
-                if (parentFrom != null) {
-                    EditorElement toParent = toMap.get(parentFrom.getId());
-                    if (toParent != null) {
-                        toParent.addDeletedChildFadingOut(fromElement, onInvalidate);
-                    }
-                }
-            }
-        }
-
-        for (EditorElement toElement : toMap.values()) {
-            if (!fromMap.containsKey(toElement.getId())) {
-                // new item
-                toElement.animateFadeIn(onInvalidate);
-            }
-        }
-    }
-
-    private static Map<UUID, EditorElement> getElementMap(@NonNull EditorElement element) {
-        final Map<UUID, EditorElement> result = new HashMap<>();
-        element.buildMap(result);
-        return result;
-    }
-
-    /**
-     * -1 iff a is a narrower ratio than b.
-     * +1 iff a is a squarer ratio than b.
-     * 0 if the ratios are the same.
-     */
-    private static int compareRatios(@NonNull Point a, @NonNull Point b) {
-        int smallA = Math.min(a.x, a.y);
-        int largeA = Math.max(a.x, a.y);
-
-        int smallB = Math.min(b.x, b.y);
-        int largeB = Math.max(b.x, b.y);
-
-        return Integer.compare(smallA * largeB, smallB * largeA);
+    public static EditorModel createForWallpaperEditing(float fixedRatio) {
+        EditorModel editorModel = new EditorModel(EditingPurpose.WALLPAPER, fixedRatio, EditorElementHierarchy.createForPinchAndPanCropping());
+        editorModel.setCropAspectLock(true);
+        return editorModel;
     }
 
     public void setInvalidate(@Nullable Runnable invalidate) {
@@ -198,8 +151,7 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
         }
     }
 
-    public @Nullable
-    Matrix findElementInverseMatrix(@NonNull EditorElement element, @NonNull Matrix viewMatrix) {
+    public @Nullable Matrix findElementInverseMatrix(@NonNull EditorElement element, @NonNull Matrix viewMatrix) {
         Matrix inverse = new Matrix();
         if (findElement(element, viewMatrix, inverse)) {
             return inverse;
@@ -207,8 +159,7 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
         return null;
     }
 
-    private @Nullable
-    Matrix findElementMatrix(@NonNull EditorElement element, @NonNull Matrix viewMatrix) {
+    private @Nullable Matrix findElementMatrix(@NonNull EditorElement element, @NonNull Matrix viewMatrix) {
         Matrix inverse = findElementInverseMatrix(element, viewMatrix);
         if (inverse != null) {
             Matrix regular = new Matrix();
@@ -236,8 +187,8 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
     }
 
     public void undo() {
-        boolean cropping = isCropping();
-        UndoRedoStacks stacks = getActiveUndoRedoStacks(cropping);
+        boolean        cropping = isCropping();
+        UndoRedoStacks stacks   = getActiveUndoRedoStacks(cropping);
 
         undoRedo(stacks.getUndoStack(), stacks.getRedoStack(), cropping);
 
@@ -245,8 +196,8 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
     }
 
     public void redo() {
-        boolean cropping = isCropping();
-        UndoRedoStacks stacks = getActiveUndoRedoStacks(cropping);
+        boolean        cropping = isCropping();
+        UndoRedoStacks stacks   = getActiveUndoRedoStacks(cropping);
 
         undoRedo(stacks.getRedoStack(), stacks.getUndoStack(), cropping);
 
@@ -255,7 +206,7 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
 
     private void undoRedo(@NonNull ElementStack fromStack, @NonNull ElementStack toStack, boolean keepEditorState) {
         final EditorElement oldRootElement = editorElementHierarchy.getRoot();
-        final EditorElement popped = fromStack.pop(oldRootElement);
+        final EditorElement popped         = fromStack.pop(oldRootElement);
 
         if (popped != null) {
             editorElementHierarchy = EditorElementHierarchy.create(popped);
@@ -271,6 +222,40 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
         }
     }
 
+    private static void restoreStateWithAnimations(@NonNull EditorElement fromRootElement, @NonNull EditorElement toRootElement, @NonNull Runnable onInvalidate, boolean keepEditorState) {
+        Map<UUID, EditorElement> fromMap = getElementMap(fromRootElement);
+        Map<UUID, EditorElement> toMap   = getElementMap(toRootElement);
+
+        for (EditorElement fromElement : fromMap.values()) {
+            fromElement.stopAnimation();
+            EditorElement toElement = toMap.get(fromElement.getId());
+            if (toElement != null) {
+                toElement.animateFrom(fromElement.getLocalMatrixAnimating(), onInvalidate);
+
+                if (keepEditorState) {
+                    toElement.getEditorMatrix().set(fromElement.getEditorMatrix());
+                    toElement.getFlags().set(fromElement.getFlags());
+                }
+            } else {
+                // element is removed
+                EditorElement parentFrom = fromRootElement.parentOf(fromElement);
+                if (parentFrom != null) {
+                    EditorElement toParent = toMap.get(parentFrom.getId());
+                    if (toParent != null) {
+                        toParent.addDeletedChildFadingOut(fromElement, onInvalidate);
+                    }
+                }
+            }
+        }
+
+        for (EditorElement toElement : toMap.values()) {
+            if (!fromMap.containsKey(toElement.getId())) {
+                // new item
+                toElement.animateFadeIn(onInvalidate);
+            }
+        }
+    }
+
     private void updateUndoRedoAvailableState(UndoRedoStacks currentStack) {
         if (undoRedoStackListener == null) return;
 
@@ -279,10 +264,18 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
         undoRedoStackListener.onAvailabilityChanged(currentStack.canUndo(root), currentStack.canRedo(root));
     }
 
+    private static Map<UUID, EditorElement> getElementMap(@NonNull EditorElement element) {
+        final Map<UUID, EditorElement> result = new HashMap<>();
+        element.buildMap(result);
+        return result;
+    }
+
     public void startCrop() {
+        float scaleIn = editingPurpose == EditingPurpose.WALLPAPER ? 1 : 0.8f;
+
         pushUndoPoint();
         cropUndoRedoStacks.clear(editorElementHierarchy.getRoot());
-        editorElementHierarchy.startCrop(invalidate);
+        editorElementHierarchy.startCrop(invalidate, scaleIn);
         inBoundsMemory.push(editorElementHierarchy.getMainImage(), editorElementHierarchy.getCropEditorElement());
         updateUndoRedoAvailableState(cropUndoRedoStacks);
     }
@@ -294,7 +287,7 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
 
     public void setCropAspectLock(boolean locked) {
         EditorFlags flags = editorElementHierarchy.getCropEditorElement().getFlags();
-        int currentState = flags.setAspectLocked(locked).getCurrentState();
+        int currentState  = flags.setAspectLocked(locked).getCurrentState();
 
         flags.reset();
         flags.setAspectLocked(locked)
@@ -391,10 +384,10 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
      * @return true iff fixed the element.
      */
     private boolean tryToFixTranslationOutOfBounds(@NonNull EditorElement element, @NonNull Matrix lastKnownGoodPosition) {
-        final Matrix elementMatrix = element.getLocalMatrix();
-        final Matrix original = new Matrix(elementMatrix);
-        final float[] current = new float[9];
-        final float[] lastGood = new float[9];
+        final Matrix  elementMatrix = element.getLocalMatrix();
+        final Matrix  original      = new Matrix(elementMatrix);
+        final float[] current       = new float[9];
+        final float[] lastGood      = new float[9];
         Matrix matrix;
 
         elementMatrix.getValues(current);
@@ -467,9 +460,9 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
      * and all points must be within the bounds.
      */
     private boolean currentCropIsAcceptable() {
-        Point outputSize = getOutputSize();
-        int outputPixelCount = outputSize.x * outputSize.y;
-        int minimumPixelCount = Math.min(size.x * size.y, MINIMUM_CROP_PIXEL_COUNT);
+        Point outputSize        = getOutputSize();
+        int   outputPixelCount  = outputSize.x * outputSize.y;
+        int   minimumPixelCount = Math.min(size.x * size.y, MINIMUM_CROP_PIXEL_COUNT);
 
         Point thinnestRatio = MINIMUM_RATIO;
 
@@ -481,6 +474,21 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
         return compareRatios(outputSize, thinnestRatio) >= 0 &&
                 outputPixelCount >= minimumPixelCount &&
                 cropIsWithinMainImageBounds();
+    }
+
+    /**
+     * -1 iff a is a narrower ratio than b.
+     * +1 iff a is a squarer ratio than b.
+     * 0 if the ratios are the same.
+     */
+    private static int compareRatios(@NonNull Point a, @NonNull Point b) {
+        int smallA = Math.min(a.x, a.y);
+        int largeA = Math.max(a.x, a.y);
+
+        int smallB = Math.min(b.x, b.y);
+        int largeB = Math.max(b.x, b.y);
+
+        return Integer.compare(smallA * largeB, smallB * largeA);
     }
 
     /**
@@ -524,6 +532,18 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
         return colors;
     }
 
+    public static final Creator<EditorModel> CREATOR = new Creator<EditorModel>() {
+        @Override
+        public EditorModel createFromParcel(Parcel in) {
+            return new EditorModel(in);
+        }
+
+        @Override
+        public EditorModel[] newArray(int size) {
+            return new EditorModel[size];
+        }
+    };
+
     @Override
     public int describeContents() {
         return 0;
@@ -531,7 +551,8 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeByte((byte) (circleEditing ? 1 : 0));
+        dest.writeInt(editingPurpose.ordinal());
+        dest.writeFloat(fixedRatio);
         dest.writeInt(size.x);
         dest.writeInt(size.y);
         dest.writeParcelable(editorElementHierarchy.getRoot(), flags);
@@ -543,8 +564,7 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
      * Blocking render of the model.
      */
     @WorkerThread
-    public @NonNull
-    Bitmap render(@NonNull Context context) {
+    public @NonNull Bitmap render(@NonNull Context context) {
         return render(context, null);
     }
 
@@ -552,11 +572,10 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
      * Blocking render of the model.
      */
     @WorkerThread
-    public @NonNull
-    Bitmap render(@NonNull Context context, @Nullable Point size) {
-        EditorElement image = editorElementHierarchy.getFlipRotate();
-        RectF cropRect = editorElementHierarchy.getCropRect();
-        Point outputSize = size != null ? size : getOutputSize();
+    public @NonNull Bitmap render(@NonNull Context context, @Nullable Point size) {
+        EditorElement image      = editorElementHierarchy.getFlipRotate();
+        RectF         cropRect   = editorElementHierarchy.getCropRect();
+        Point         outputSize = size != null ? size : getOutputSize();
 
         Bitmap bitmap = Bitmap.createBitmap(outputSize.x, outputSize.y, Bitmap.Config.ARGB_8888);
         try {
@@ -593,7 +612,7 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
     private Point getOutputSize() {
         PointF outputSize = editorElementHierarchy.getOutputSize(size);
 
-        int width = (int) Math.max(MINIMUM_OUTPUT_WIDTH, outputSize.x);
+        int width  = (int) Math.max(MINIMUM_OUTPUT_WIDTH, outputSize.x);
         int height = (int) (width * outputSize.y / outputSize.x);
 
         return new Point(width, height);
@@ -603,12 +622,12 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
     public Point getOutputSizeMaxWidth(int maxDimension) {
         PointF outputSize = editorElementHierarchy.getOutputSize(size);
 
-        int width = Math.min(maxDimension, (int) Math.max(MINIMUM_OUTPUT_WIDTH, outputSize.x));
+        int width  = Math.min(maxDimension, (int) Math.max(MINIMUM_OUTPUT_WIDTH, outputSize.x));
         int height = (int) (width * outputSize.y / outputSize.x);
 
         if (height > maxDimension) {
             height = maxDimension;
-            width = (int) (height * outputSize.x / outputSize.y);
+            width  = (int) (height * outputSize.x / outputSize.y);
         }
 
         return new Point(width, height);
@@ -617,16 +636,16 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
     @Override
     public void onReady(@NonNull Renderer renderer, @Nullable Matrix cropMatrix, @Nullable Point size) {
         if (cropMatrix != null && size != null && isRendererOfMainImage(renderer)) {
-            boolean changedBefore = isChanged();
-            Matrix imageCropMatrix = editorElementHierarchy.getImageCrop().getLocalMatrix();
+            boolean changedBefore   = isChanged();
+            Matrix  imageCropMatrix = editorElementHierarchy.getImageCrop().getLocalMatrix();
             this.size.set(size.x, size.y);
             if (imageCropMatrix.isIdentity()) {
                 imageCropMatrix.set(cropMatrix);
 
-                if (circleEditing) {
+                if (editingPurpose == EditingPurpose.AVATAR_CIRCLE || editingPurpose == EditingPurpose.WALLPAPER) {
                     Matrix userCropMatrix = editorElementHierarchy.getCropEditorElement().getLocalMatrix();
                     if (size.x > size.y) {
-                        userCropMatrix.setScale(size.y / (float) size.x, 1f);
+                        userCropMatrix.setScale(fixedRatio * size.y / (float) size.x, 1f);
                     } else {
                         userCropMatrix.setScale(1f, size.x / (float) size.y);
                     }
@@ -638,16 +657,40 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
                     undoRedoStacks.clear(editorElementHierarchy.getRoot());
                 }
 
-                if (circleEditing) {
-                    startCrop();
+                switch (editingPurpose) {
+                    case AVATAR_CIRCLE: {
+                        startCrop();
+                        break;
+                    }
+                    case WALLPAPER: {
+                        setFixedRatio(fixedRatio);
+                        startCrop();
+                        break;
+                    }
                 }
             }
         }
     }
 
+    public void setFixedRatio(float r) {
+        fixedRatio = r;
+        Matrix userCropMatrix = editorElementHierarchy.getCropEditorElement().getLocalMatrix();
+        float  w              = size.x;
+        float  h              = size.y;
+        float imageRatio = w / h;
+        if (imageRatio > r) {
+            userCropMatrix.setScale(r / imageRatio, 1f);
+        } else {
+            userCropMatrix.setScale(1f, imageRatio / r);
+        }
+
+        editorElementHierarchy.doneCrop(visibleViewPort, null);
+        startCrop();
+    }
+
     private boolean isRendererOfMainImage(@NonNull Renderer renderer) {
-        EditorElement mainImage = editorElementHierarchy.getMainImage();
-        Renderer mainImageRenderer = mainImage != null ? mainImage.getRenderer() : null;
+        EditorElement mainImage         = editorElementHierarchy.getMainImage();
+        Renderer      mainImageRenderer = mainImage != null ? mainImage.getRenderer() : null;
         return mainImageRenderer == renderer;
     }
 
@@ -678,7 +721,7 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
 
     public void addElementWithoutPushUndo(@NonNull EditorElement element) {
         EditorElement mainImage = editorElementHierarchy.getMainImage();
-        EditorElement parent = mainImage != null ? mainImage : editorElementHierarchy.getImageRoot();
+        EditorElement parent    = mainImage != null ? mainImage : editorElementHierarchy.getImageRoot();
 
         parent.addElement(element);
 
@@ -748,10 +791,9 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
      * @param to
      * @return
      */
-    @Nullable
-    Matrix findRelativeMatrix(@NonNull EditorElement from, @NonNull EditorElement to) {
+    @Nullable Matrix findRelativeMatrix(@NonNull EditorElement from, @NonNull EditorElement to) {
         Matrix matrix = findElementInverseMatrix(to, new Matrix());
-        Matrix outOf = findElementMatrix(from, new Matrix());
+        Matrix outOf  = findElementMatrix(from, new Matrix());
 
         if (outOf != null && matrix != null) {
             matrix.preConcat(outOf);
@@ -786,7 +828,7 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
         return editorElementHierarchy.getRoot();
     }
 
-    public EditorElement getMainImage() {
+    public @Nullable EditorElement getMainImage() {
         return editorElementHierarchy.getMainImage();
     }
 
@@ -794,8 +836,7 @@ public final class EditorModel implements Parcelable, RendererContext.Ready {
         editorElementHierarchy.getImageRoot().forAllInTree(element -> element.deleteChild(editorElement, invalidate));
     }
 
-    public @Nullable
-    EditorElement findById(@NonNull UUID uuid) {
+    public @Nullable EditorElement findById(@NonNull UUID uuid) {
         return getElementMap(getRoot()).get(uuid);
     }
 

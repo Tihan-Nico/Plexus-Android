@@ -2,6 +2,8 @@ package com.plexus.database.model;
 
 import androidx.annotation.NonNull;
 
+import com.plexus.model.attachments.Attachment;
+
 public class Sticker {
 
     private final String     packId;

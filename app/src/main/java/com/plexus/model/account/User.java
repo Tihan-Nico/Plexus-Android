@@ -3,8 +3,17 @@ package com.plexus.model.account;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.AnyThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
+
+import com.plexus.core.utils.guava.Preconditions;
+import com.plexus.core.utils.logging.Log;
+import com.plexus.dependecies.PlexusDependencies;
+import com.plexus.keyvalue.PlexusStore;
+import com.plexus.keyvalue.WallpaperValues;
+import com.plexus.wallpaper.ChatWallpaper;
 
 import java.util.Objects;
 
@@ -24,13 +33,18 @@ import java.util.Objects;
  *  limitations under the License.                                            *
  ******************************************************************************/
 
-public class User implements Parcelable {
+public class User {
+
+    private static final String TAG = Log.tag(User.class);
+
+    public static final User UNKNOWN = new User(UserId.UNKNOWN, null, true);
+
     public String username;
     public String name;
     public String surname;
     public String country;
     public String bio;
-    private String id;
+    private UserId id;
     private String imageurl;
     private String profile_cover;
     private String account_type;
@@ -54,161 +68,54 @@ public class User implements Parcelable {
     private String token;
     private long online;
     private boolean verifiedBefore;
+    public static ChatWallpaper wallpaper;
+    private final boolean                resolving;
 
     //Error
     private boolean encryption_error_fixed;
 
-    public User(
-            String id,
-            String username,
-            String name,
-            String surname,
-            String country,
-            String imageurl,
-            String profile_cover,
-            String bio,
-            String account_type,
-            Boolean verified,
-            Boolean user,
-            Boolean company,
-            Boolean artist,
-            String gender,
-            String birthday,
-            String website,
-            String feeling,
-            String presence,
-            String registration_time,
-            String blocked_timestamp,
-            String blocked_platform,
-            boolean active,
-            boolean private_account,
-            String nickname,
-            boolean banned,
-            boolean verifiedBefore,
-            boolean encryption_error_fixed) {
-        this.id = id;
-        this.username = username;
-        this.name = name;
-        this.surname = surname;
-        this.country = country;
-        this.imageurl = imageurl;
-        this.profile_cover = profile_cover;
-        this.bio = bio;
-        this.account_type = account_type;
-        this.verified = verified;
-        this.user = user;
-        this.company = company;
-        this.artist = artist;
-        this.gender = gender;
-        this.birthday = birthday;
-        this.website = website;
-        this.feeling = feeling;
-        this.registration_time = registration_time;
-        this.active = active;
-        this.online_presence = presence;
-        this.private_account = private_account;
-        this.blocked = blocked;
-        this.blocked_timestamp = blocked_timestamp;
-        this.blocked_platform = blocked_platform;
-        this.nickname = nickname;
-        this.banned = banned;
-        this.verifiedBefore = verifiedBefore;
-        this.encryption_error_fixed = encryption_error_fixed;
-
+    /**
+     * Returns a {@link LiveUser}, which contains a {@link User} that may or may not be
+     * populated with data. However, you can observe the value that's returned to be notified when the
+     * {@link User} changes.
+     */
+    @AnyThread
+    public static @NonNull LiveUser live(@NonNull  UserId user) {
+        Preconditions.checkNotNull(user, "ID cannot be null.");
+        return PlexusDependencies.getRecipientCache().getLive(user);
     }
 
-    public User() {
+    /**
+     * Returns a fully-populated {@link User}. May hit the disk, and therefore should be
+     * called on a background thread.
+     */
+    @WorkerThread
+    public static @NonNull User resolved(@NonNull UserId id) {
+        Preconditions.checkNotNull(id, "ID cannot be null.");
+        return live(id).resolve();
     }
 
-    protected User(Parcel in) {
-        username = in.readString();
-        name = in.readString();
-        surname = in.readString();
-        country = in.readString();
-        bio = in.readString();
-        id = in.readString();
-        imageurl = in.readString();
-        profile_cover = in.readString();
-        account_type = in.readString();
-        verified = in.readByte() != 0;
-        user = in.readByte() != 0;
-        company = in.readByte() != 0;
-        artist = in.readByte() != 0;
-        birthday = in.readString();
-        gender = in.readString();
-        website = in.readString();
-        feeling = in.readString();
-        registration_time = in.readString();
-        active = in.readByte() != 0;
-        online_presence = in.readString();
-        private_account = in.readByte() != 0;
-        blocked = in.readByte() != 0;
-        blocked_timestamp = in.readString();
-        blocked_platform = in.readString();
-        nickname = in.readString();
-        banned = in.readByte() != 0;
-        token = in.readString();
-        online = in.readLong();
-        verifiedBefore = in.readByte() != 0;
-        encryption_error_fixed = in.readByte() != 0;
+    User(@NonNull UserId id) {
+        this.id                          = id;
+        this.resolving                   = true;
+        this.username                    = null;
+        this.blocked                     = false;
+        this.wallpaper                   = null;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(username);
-        dest.writeString(name);
-        dest.writeString(surname);
-        dest.writeString(country);
-        dest.writeString(bio);
-        dest.writeString(id);
-        dest.writeString(imageurl);
-        dest.writeString(profile_cover);
-        dest.writeString(account_type);
-        dest.writeByte((byte) (verified ? 1 : 0));
-        dest.writeByte((byte) (user ? 1 : 0));
-        dest.writeByte((byte) (company ? 1 : 0));
-        dest.writeByte((byte) (artist ? 1 : 0));
-        dest.writeString(birthday);
-        dest.writeString(gender);
-        dest.writeString(website);
-        dest.writeString(feeling);
-        dest.writeString(registration_time);
-        dest.writeByte((byte) (active ? 1 : 0));
-        dest.writeString(online_presence);
-        dest.writeByte((byte) (private_account ? 1 : 0));
-        dest.writeByte((byte) (blocked ? 1 : 0));
-        dest.writeString(blocked_timestamp);
-        dest.writeString(blocked_platform);
-        dest.writeString(nickname);
-        dest.writeByte((byte) (banned ? 1 : 0));
-        dest.writeString(token);
-        dest.writeLong(online);
-        dest.writeByte((byte) (verifiedBefore ? 1 : 0));
-        dest.writeByte((byte) (encryption_error_fixed ? 1 : 0));
+    public User(@NonNull UserId id, @NonNull UserDetails details, boolean resolved) {
+        this.id                          = id;
+        this.resolving                   = !resolved;
+        this.username                    = details.username;
+        this.blocked                     = details.blocked;
+        this.wallpaper                   = details.wallpaper;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<User> CREATOR = new Creator<User>() {
-        @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
-        }
-
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
-
-    public String getId() {
+    public UserId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UserId id) {
         this.id = id;
     }
 
@@ -446,6 +353,46 @@ public class User implements Parcelable {
 
     public static User from(@NonNull String id) {
         return User.from(id);
+    }
+
+    public @Nullable
+    static ChatWallpaper getWallpaper() {
+        if (wallpaper != null) {
+            return wallpaper;
+        } else {
+            return PlexusStore.wallpaper().getWallpaper();
+        }
+    }
+
+    public static boolean hasOwnWallpaper() {
+        return wallpaper != null;
+    }
+
+    /**
+     * A cheap way to check if wallpaper is set without doing any unnecessary proto parsing.
+     */
+    public boolean hasWallpaper() {
+        return wallpaper != null || PlexusStore.wallpaper().hasWallpaperSet();
+    }
+
+    /**
+     * If this recipient is missing crucial data, this will return a populated copy. Otherwise it
+     * returns itself.
+     */
+    public @NonNull User resolve() {
+        if (resolving) {
+            return live().resolve();
+        } else {
+            return this;
+        }
+    }
+
+    public boolean isResolving() {
+        return resolving;
+    }
+
+    public @NonNull LiveUser live() {
+        return PlexusDependencies.getRecipientCache().getLive(id);
     }
 
 }

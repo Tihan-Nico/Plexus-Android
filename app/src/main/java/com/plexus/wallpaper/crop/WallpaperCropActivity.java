@@ -1,5 +1,6 @@
 package com.plexus.wallpaper.crop;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
@@ -30,6 +31,7 @@ import com.plexus.imageeditor.ImageEditorView;
 import com.plexus.imageeditor.model.EditorElement;
 import com.plexus.imageeditor.model.EditorModel;
 import com.plexus.imageeditor.renderers.FaceBlurRenderer;
+import com.plexus.model.account.User;
 import com.plexus.scribbles.UriGlideRenderer;
 import com.plexus.utils.AsynchronousCallback;
 import com.plexus.utils.DynamicTheme;
@@ -53,7 +55,7 @@ public final class WallpaperCropActivity extends BaseActivity {
   private WallpaperCropViewModel viewModel;
 
   public static Intent newIntent(@NonNull Context context,
-                                 @Nullable RecipientId recipientId,
+                                 @Nullable User recipientId,
                                  @NonNull Uri imageUri)
   {
     Intent intent = new Intent(context, WallpaperCropActivity.class);
@@ -68,13 +70,14 @@ public final class WallpaperCropActivity extends BaseActivity {
     super.attachBaseContext(newBase);
   }
 
+  @SuppressLint("ResourceAsColor")
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     dynamicTheme.onCreate(this);
     setContentView(R.layout.chat_wallpaper_crop_activity);
 
-    RecipientId recipientId = getIntent().getParcelableExtra(EXTRA_RECIPIENT_ID);
+    User recipientId = getIntent().getParcelableExtra(EXTRA_RECIPIENT_ID);
     Uri         inputImage  = Objects.requireNonNull(getIntent().getParcelableExtra(EXTRA_IMAGE_URI));
 
     Log.i(TAG, "Cropping wallpaper for " + (recipientId == null ? "default wallpaper" : recipientId));
@@ -110,11 +113,11 @@ public final class WallpaperCropActivity extends BaseActivity {
 
     viewModel.getRecipient()
              .observe(this, r -> {
-               if (r.getId().isUnknown()) {
+               if (r.getId() == null) {
                  bubble2Text.setText(R.string.WallpaperCropActivity__set_wallpaper_for_all_chats);
                } else {
-                 bubble2Text.setText(getString(R.string.WallpaperCropActivity__set_wallpaper_for_s, r.getDisplayName(this)));
-                 receivedBubble.getBackground().setColorFilter(r.getColor().toConversationColor(this), PorterDuff.Mode.SRC_IN);
+                 bubble2Text.setText(getString(R.string.WallpaperCropActivity__set_wallpaper_for_s, r.getName()));
+                 receivedBubble.getBackground().setColorFilter(R.color.plexus, PorterDuff.Mode.SRC_IN);
                }
              });
   }
@@ -210,7 +213,7 @@ public final class WallpaperCropActivity extends BaseActivity {
 
   private static final class DynamicWallpaperTheme extends DynamicTheme {
     protected @StyleRes int getTheme() {
-      return R.style.Signal_DayNight_WallpaperCropper;
+      return R.style.Plexus_DayNight_WallpaperCropper;
     }
   }
 }

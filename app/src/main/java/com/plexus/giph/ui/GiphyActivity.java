@@ -1,38 +1,25 @@
 package com.plexus.giph.ui;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.tabs.TabLayout;
 import com.plexus.R;
 import com.plexus.TracerActivity;
-import com.plexus.providers.BlobProvider;
+import com.plexus.giph.mp4.GiphyMp4Fragment;
+import com.plexus.giph.mp4.GiphyMp4SaveResult;
+import com.plexus.giph.mp4.GiphyMp4ViewModel;
 import com.plexus.utils.DynamicLanguage;
 import com.plexus.utils.DynamicTheme;
-import com.plexus.utils.MediaUtil;
 import com.plexus.utils.WindowUtil;
-import com.plexus.utils.logging.Log;
-
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
+import com.plexus.utils.views.SimpleProgressDialog;
 
 public class GiphyActivity extends TracerActivity implements GiphyActivityToolbar.OnFilterChangedListener {
 

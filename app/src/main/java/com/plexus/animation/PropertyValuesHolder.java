@@ -784,7 +784,7 @@ public class PropertyValuesHolder implements Cloneable {
 
         @Override
         void calculateValue(float fraction) {
-            mIntAnimatedValue = mIntKeyframeSet.getIntValue(fraction);
+            /*mIntAnimatedValue = mIntKeyframeSet.getIntValue(fraction);*/
         }
 
         @Override

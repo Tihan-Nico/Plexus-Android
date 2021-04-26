@@ -10,6 +10,7 @@ import com.plexus.core.utils.logging.Log;
 import com.plexus.database.DatabaseFactory;
 import com.plexus.dependecies.PlexusDependencies;
 import com.plexus.keyvalue.PlexusStore;
+import com.plexus.model.account.User;
 import com.plexus.wallpaper.ChatWallpaper;
 import com.plexus.wallpaper.WallpaperStorage;
 
@@ -21,10 +22,10 @@ final class WallpaperCropRepository {
 
   private static final String TAG = Log.tag(WallpaperCropRepository.class);
 
-  @Nullable private final RecipientId recipientId;
+  @Nullable private final User recipientId;
   private final           Context     context;
 
-  public WallpaperCropRepository(@Nullable RecipientId recipientId) {
+  public WallpaperCropRepository(@Nullable User recipientId) {
     this.context     = PlexusDependencies.getApplication();
     this.recipientId = recipientId;
   }
@@ -37,7 +38,7 @@ final class WallpaperCropRepository {
 
       if (recipientId != null) {
         Log.i(TAG, "Setting image wallpaper for " + recipientId);
-        DatabaseFactory.getRecipientDatabase(context).setWallpaper(recipientId, wallpaper);
+        /*DatabaseFactory.getRecipientDatabase(context).setWallpaper(recipientId, wallpaper);*/
       } else {
         Log.i(TAG, "Setting image wallpaper for default");
         PlexusStore.wallpaper().setWallpaper(context, wallpaper);

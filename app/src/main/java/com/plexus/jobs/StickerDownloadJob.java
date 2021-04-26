@@ -97,12 +97,12 @@ public class StickerDownloadJob extends BaseJob {
             return;
         }
 
-        SignalServiceMessageReceiver receiver     = PlexusDependencies.getSignalServiceMessageReceiver();
+        /*SignalServiceMessageReceiver receiver     = PlexusDependencies.getSignalServiceMessageReceiver();
         byte[]                       packIdBytes  = Hex.fromStringCondensed(sticker.getPackId ());
         byte[]                       packKeyBytes = Hex.fromStringCondensed(sticker.getPackKey());
         InputStream                  stream       = receiver.retrieveSticker(packIdBytes, packKeyBytes, sticker.getStickerId());
 
-        db.insertSticker(sticker, stream, notify);
+        db.insertSticker(sticker, stream, notify);*/
     }
 
     @Override

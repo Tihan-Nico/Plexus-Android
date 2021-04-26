@@ -110,7 +110,7 @@
                     android:background="@drawable/circle_tintable"
                     tools:backgroundTint="@color/core_ultramarine">
 
-                    <org.thoughtcrime.securesms.components.SendButton
+                    <com.plexus.components.SendButton
                         android:id="@+id/mediasend_send_button"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -119,9 +119,8 @@
                         android:paddingBottom="6dp"
                         android:paddingStart="6dp"
                         android:scaleType="fitCenter"
-                        android:contentDescription="@string/conversation_activity__send"
-                        android:tint="@color/core_white"
-                        app:srcCompat="@drawable/ic_send_unlock_24"
+                        android:tint="@color/white"
+                        app:srcCompat="@drawable/send"
                         android:background="@drawable/circle_touch_highlight_background" />
 
                 </FrameLayout>

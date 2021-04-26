@@ -42,37 +42,43 @@ import com.plexus.imageeditor.renderers.MultiLineTextRenderer;
  */
 public final class ImageEditorView extends FrameLayout {
 
-    private final Matrix viewMatrix = new Matrix();
-    private final RectF viewPort = Bounds.newFullBounds();
-    private final RectF visibleViewPort = Bounds.newFullBounds();
-    private final RectF screen = new RectF();
-    private final RendererContext.Invalidate rendererInvalidate = renderer -> invalidate();
     private HiddenEditText editText;
+
     @NonNull
     private Mode mode = Mode.MoveAndResize;
+
     @ColorInt
     private int color = 0xff000000;
+
     private float thickness = 0.02f;
+
     @NonNull
     private Paint.Cap cap = Paint.Cap.ROUND;
+
     private EditorModel model;
-    private final RendererContext.Ready rendererReady = new RendererContext.Ready() {
-        @Override
-        public void onReady(@NonNull Renderer renderer, @Nullable Matrix cropMatrix, @Nullable Point size) {
-            model.onReady(renderer, cropMatrix, size);
-            invalidate();
-        }
-    };
+
     private GestureDetectorCompat doubleTap;
+
     @Nullable
     private DrawingChangedListener drawingChangedListener;
+
+    @Nullable
+    private SizeChangedListener sizeChangedListener;
+
     @Nullable
     private UndoRedoStackListener undoRedoStackListener;
-    private TapListener tapListener;
+
+    private final Matrix viewMatrix      = new Matrix();
+    private final RectF  viewPort        = Bounds.newFullBounds();
+    private final RectF  visibleViewPort = Bounds.newFullBounds();
+    private final RectF  screen          = new RectF();
+
+    private TapListener     tapListener;
     private RendererContext rendererContext;
+
     @Nullable
     private EditSession editSession;
-    private boolean moreThanOnePointerUsedInSession;
+    private boolean     moreThanOnePointerUsedInSession;
 
     public ImageEditorView(Context context) {
         super(context);
@@ -89,22 +95,9 @@ public final class ImageEditorView extends FrameLayout {
         init();
     }
 
-    private static PointF getPoint(MotionEvent event) {
-        return getPoint(event, 0);
-    }
-
-    private static PointF getPoint(MotionEvent event, int p) {
-        return new PointF(event.getX(p), event.getY(p));
-    }
-
-    private static PointF getHistoricalPoint(MotionEvent event, int p, int historicalIndex) {
-        return new PointF(event.getHistoricalX(p, historicalIndex),
-                event.getHistoricalY(p, historicalIndex));
-    }
-
     private void init() {
         setWillNotDraw(false);
-        setModel(new EditorModel());
+        setModel(EditorModel.create());
 
         editText = createAHiddenTextEntryField();
 
@@ -167,10 +160,23 @@ public final class ImageEditorView extends FrameLayout {
         }
     }
 
+    private final RendererContext.Ready rendererReady = new RendererContext.Ready() {
+        @Override
+        public void onReady(@NonNull Renderer renderer, @Nullable Matrix cropMatrix, @Nullable Point size) {
+            model.onReady(renderer, cropMatrix, size);
+            invalidate();
+        }
+    };
+
+    private final RendererContext.Invalidate rendererInvalidate = renderer -> invalidate();
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         updateViewMatrix();
+        if (sizeChangedListener != null) {
+            sizeChangedListener.onSizeChanged(w, h);
+        }
     }
 
     private void updateViewMatrix() {
@@ -202,12 +208,26 @@ public final class ImageEditorView extends FrameLayout {
         invalidate();
     }
 
+    public void setModel(@NonNull EditorModel model) {
+        if (this.model != model) {
+            if (this.model != null) {
+                this.model.setInvalidate(null);
+                this.model.setUndoRedoStackListener(null);
+            }
+            this.model = model;
+            this.model.setInvalidate(this::invalidate);
+            this.model.setUndoRedoStackListener(this::onUndoRedoAvailabilityChanged);
+            this.model.setVisibleViewPort(visibleViewPort);
+            invalidate();
+        }
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN: {
-                Matrix inverse = new Matrix();
-                PointF point = getPoint(event);
+                Matrix        inverse  = new Matrix();
+                PointF        point    = getPoint(event);
                 EditorElement selected = model.findElementAtPoint(point, viewMatrix, inverse);
 
                 moreThanOnePointerUsedInSession = false;
@@ -226,7 +246,7 @@ public final class ImageEditorView extends FrameLayout {
             }
             case MotionEvent.ACTION_MOVE: {
                 if (editSession != null) {
-                    int historySize = event.getHistorySize();
+                    int historySize  = event.getHistorySize();
                     int pointerCount = Math.min(2, event.getPointerCount());
 
                     for (int h = 0; h < historySize; h++) {
@@ -298,8 +318,7 @@ public final class ImageEditorView extends FrameLayout {
         return super.onTouchEvent(event);
     }
 
-    private @Nullable
-    EditSession startEdit(@NonNull Matrix inverse, @NonNull PointF point, @Nullable EditorElement selected) {
+    private @Nullable EditSession startEdit(@NonNull Matrix inverse, @NonNull PointF point, @Nullable EditorElement selected) {
         if (mode == Mode.Draw || mode == Mode.Blur) {
             return startADrawingSession(point);
         } else {
@@ -309,7 +328,7 @@ public final class ImageEditorView extends FrameLayout {
 
     private EditSession startADrawingSession(@NonNull PointF point) {
         BezierDrawingRenderer renderer = new BezierDrawingRenderer(color, thickness * Bounds.FULL_BOUNDS.width(), cap, model.findCropRelativeToRoot());
-        EditorElement element = new EditorElement(renderer, mode == Mode.Blur ? EditorModel.Z_MASK : EditorModel.Z_DRAWING);
+        EditorElement element          = new EditorElement(renderer, mode == Mode.Blur ? EditorModel.Z_MASK : EditorModel.Z_DRAWING);
         model.addElementCentered(element, 1);
 
         Matrix elementInverseMatrix = model.findElementInverseMatrix(element, viewMatrix);
@@ -345,7 +364,7 @@ public final class ImageEditorView extends FrameLayout {
 
     public void startDrawing(float thickness, @NonNull Paint.Cap cap, boolean blur) {
         this.thickness = thickness;
-        this.cap = cap;
+        this.cap       = cap;
         setMode(blur ? Mode.Blur : Mode.Draw);
     }
 
@@ -360,26 +379,29 @@ public final class ImageEditorView extends FrameLayout {
         }
     }
 
+    private static PointF getPoint(MotionEvent event) {
+        return getPoint(event, 0);
+    }
+
+    private static PointF getPoint(MotionEvent event, int p) {
+        return new PointF(event.getX(p), event.getY(p));
+    }
+
+    private static PointF getHistoricalPoint(MotionEvent event, int p, int historicalIndex) {
+        return new PointF(event.getHistoricalX(p, historicalIndex),
+                event.getHistoricalY(p, historicalIndex));
+    }
+
     public EditorModel getModel() {
         return model;
     }
 
-    public void setModel(@NonNull EditorModel model) {
-        if (this.model != model) {
-            if (this.model != null) {
-                this.model.setInvalidate(null);
-                this.model.setUndoRedoStackListener(null);
-            }
-            this.model = model;
-            this.model.setInvalidate(this::invalidate);
-            this.model.setUndoRedoStackListener(this::onUndoRedoAvailabilityChanged);
-            this.model.setVisibleViewPort(visibleViewPort);
-            invalidate();
-        }
-    }
-
     public void setDrawingChangedListener(@Nullable DrawingChangedListener drawingChangedListener) {
         this.drawingChangedListener = drawingChangedListener;
+    }
+
+    public void setSizeChangedListener(@Nullable SizeChangedListener sizeChangedListener) {
+        this.sizeChangedListener = sizeChangedListener;
     }
 
     public void setUndoRedoStackListener(@Nullable UndoRedoStackListener undoRedoStackListener) {
@@ -404,29 +426,6 @@ public final class ImageEditorView extends FrameLayout {
         }
     }
 
-    private boolean allowTaps() {
-        return !model.isCropping() && mode != Mode.Draw && mode != Mode.Blur;
-    }
-
-    public enum Mode {
-        MoveAndResize,
-        Draw,
-        Blur
-    }
-
-    public interface DrawingChangedListener {
-        void onDrawingChanged();
-    }
-
-    public interface TapListener {
-
-        void onEntityDown(@Nullable EditorElement editorElement);
-
-        void onEntitySingleTap(@Nullable EditorElement editorElement);
-
-        void onEntityDoubleTap(@NonNull EditorElement editorElement);
-    }
-
     private final class DoubleTapGestureListener extends GestureDetector.SimpleOnGestureListener {
 
         @Override
@@ -438,8 +437,7 @@ public final class ImageEditorView extends FrameLayout {
         }
 
         @Override
-        public void onLongPress(MotionEvent e) {
-        }
+        public void onLongPress(MotionEvent e) {}
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
@@ -460,5 +458,32 @@ public final class ImageEditorView extends FrameLayout {
         public boolean onDown(MotionEvent e) {
             return false;
         }
+    }
+
+    private boolean allowTaps() {
+        return !model.isCropping() && mode != Mode.Draw && mode != Mode.Blur;
+    }
+
+    public enum Mode {
+        MoveAndResize,
+        Draw,
+        Blur
+    }
+
+    public interface DrawingChangedListener {
+        void onDrawingChanged();
+    }
+
+    public interface SizeChangedListener {
+        void onSizeChanged(int newWidth, int newHeight);
+    }
+
+    public interface TapListener {
+
+        void onEntityDown(@Nullable EditorElement editorElement);
+
+        void onEntitySingleTap(@Nullable EditorElement editorElement);
+
+        void onEntityDoubleTap(@NonNull EditorElement editorElement);
     }
 }

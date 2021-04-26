@@ -10,6 +10,10 @@ import androidx.annotation.Nullable;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.upstream.TransferListener;
+import com.plexus.database.AttachmentDatabase;
+import com.plexus.database.DatabaseFactory;
+import com.plexus.model.attachments.Attachment;
+import com.plexus.providers.PartUriParser;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -40,8 +44,8 @@ public class PartDataSource implements DataSource {
     this.uri = dataSpec.uri;
 
     AttachmentDatabase attachmentDatabase = DatabaseFactory.getAttachmentDatabase(context);
-    PartUriParser      partUri            = new PartUriParser(uri);
-    Attachment         attachment         = attachmentDatabase.getAttachment(partUri.getPartId());
+    PartUriParser partUri            = new PartUriParser(uri);
+    Attachment attachment         = attachmentDatabase.getAttachment(partUri.getPartId());
 
     if (attachment == null) throw new IOException("Attachment not found");
 

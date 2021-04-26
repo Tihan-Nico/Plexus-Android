@@ -28,10 +28,10 @@ public final class StickerPackPreviewRepository {
     private static final String TAG = Log.tag(StickerPackPreviewRepository.class);
 
     private final StickerDatabase stickerDatabase;
-    private final SignalServiceMessageReceiver receiver;
+    /*private final SignalServiceMessageReceiver receiver;*/
 
     public StickerPackPreviewRepository(@NonNull Context context) {
-        this.receiver        = PlexusDependencies.getSignalServiceMessageReceiver();
+        /*this.receiver        = PlexusDependencies.getSignalServiceMessageReceiver();*/
         this.stickerDatabase = DatabaseFactory.getStickerDatabase(context);
     }
 
@@ -75,7 +75,7 @@ public final class StickerPackPreviewRepository {
 
     @WorkerThread
     private Optional<StickerManifestResult> getManifestRemote(@NonNull String packId, @NonNull String packKey) {
-        try {
+        /*try {
             byte[]                       packIdBytes    = Hex.fromStringCondensed(packId);
             byte[]                       packKeyBytes   = Hex.fromStringCondensed(packKey);
             PlexusStickerManifest remoteManifest = receiver.retrieveStickerManifest(packIdBytes, packKeyBytes);
@@ -91,7 +91,7 @@ public final class StickerPackPreviewRepository {
             return Optional.of(new StickerManifestResult(localManifest, false));
         } catch (IOException | InvalidMessageException e) {
             Log.w(TAG, "Failed to retrieve pack manifest.", e);
-        }
+        }*/
 
         return Optional.absent();
     }

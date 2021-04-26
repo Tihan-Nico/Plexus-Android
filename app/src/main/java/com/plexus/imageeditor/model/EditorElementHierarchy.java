@@ -44,6 +44,22 @@ import com.plexus.imageeditor.renderers.OvalGuideRenderer;
  */
 final class EditorElementHierarchy {
 
+    static @NonNull EditorElementHierarchy create() {
+        return new EditorElementHierarchy(createRoot(CropStyle.RECTANGLE));
+    }
+
+    static @NonNull EditorElementHierarchy createForCircleEditing() {
+        return new EditorElementHierarchy(createRoot(CropStyle.CIRCLE));
+    }
+
+    static @NonNull EditorElementHierarchy createForPinchAndPanCropping() {
+        return new EditorElementHierarchy(createRoot(CropStyle.PINCH_AND_PAN));
+    }
+
+    static @NonNull EditorElementHierarchy create(@NonNull EditorElement root) {
+        return new EditorElementHierarchy(root);
+    }
+
     private final EditorElement root;
     private final EditorElement view;
     private final EditorElement flipRotate;
@@ -53,35 +69,37 @@ final class EditorElementHierarchy {
     private final EditorElement cropEditorElement;
     private final EditorElement blackout;
     private final EditorElement thumbs;
+
     private EditorElementHierarchy(@NonNull EditorElement root) {
-        this.root = root;
-        this.view = this.root.getChild(0);
-        this.flipRotate = this.view.getChild(0);
-        this.imageRoot = this.flipRotate.getChild(0);
-        this.overlay = this.flipRotate.getChild(1);
-        this.imageCrop = this.overlay.getChild(0);
+        this.root              = root;
+        this.view              = this.root.getChild(0);
+        this.flipRotate        = this.view.getChild(0);
+        this.imageRoot         = this.flipRotate.getChild(0);
+        this.overlay           = this.flipRotate.getChild(1);
+        this.imageCrop         = this.overlay.getChild(0);
         this.cropEditorElement = this.imageCrop.getChild(0);
-        this.blackout = this.cropEditorElement.getChild(0);
-        this.thumbs = this.cropEditorElement.getChild(1);
+        this.blackout          = this.cropEditorElement.getChild(0);
+        this.thumbs            = this.cropEditorElement.getChild(1);
     }
 
-    static @NonNull
-    EditorElementHierarchy create() {
-        return new EditorElementHierarchy(createRoot(false));
+    private enum CropStyle {
+        /**
+         * A rectangular overlay with 8 thumbs, corners and edges.
+         */
+        RECTANGLE,
+
+        /**
+         * Cropping with a circular template overlay with Corner thumbs only.
+         */
+        CIRCLE,
+
+        /**
+         * No overlay and no thumbs. Cropping achieved through pinching and panning.
+         */
+        PINCH_AND_PAN
     }
 
-    static @NonNull
-    EditorElementHierarchy createForCircleEditing() {
-        return new EditorElementHierarchy(createRoot(true));
-    }
-
-    static @NonNull
-    EditorElementHierarchy create(@NonNull EditorElement root) {
-        return new EditorElementHierarchy(root);
-    }
-
-    private static @NonNull
-    EditorElement createRoot(boolean circleEdit) {
+    private static @NonNull EditorElement createRoot(@NonNull CropStyle cropStyle) {
         EditorElement root = new EditorElement(null);
 
         EditorElement imageRoot = new EditorElement(null);
@@ -99,7 +117,8 @@ final class EditorElementHierarchy {
         EditorElement imageCrop = new EditorElement(null);
         overlay.addElement(imageCrop);
 
-        EditorElement cropEditorElement = new EditorElement(new CropAreaRenderer(R.color.crop_area_renderer_outer_color, !circleEdit));
+        boolean       renderCenterThumbs = cropStyle == CropStyle.RECTANGLE;
+        EditorElement cropEditorElement  = new EditorElement(new CropAreaRenderer(R.color.crop_area_renderer_outer_color, renderCenterThumbs));
 
         cropEditorElement.getFlags()
                 .setRotateLocked(true)
@@ -119,21 +138,24 @@ final class EditorElementHierarchy {
 
         cropEditorElement.addElement(blackout);
 
-        cropEditorElement.addElement(createThumbs(cropEditorElement, !circleEdit));
+        if (cropStyle == CropStyle.PINCH_AND_PAN) {
+            cropEditorElement.addElement(new EditorElement(null));
+        } else {
+            cropEditorElement.addElement(createThumbs(cropEditorElement, renderCenterThumbs));
 
-        if (circleEdit) {
-            EditorElement circle = new EditorElement(new OvalGuideRenderer(R.color.crop_circle_guide_color));
-            circle.getFlags().setSelectable(false)
-                    .persist();
+            if (cropStyle == CropStyle.CIRCLE) {
+                EditorElement circle = new EditorElement(new OvalGuideRenderer(R.color.crop_circle_guide_color));
+                circle.getFlags().setSelectable(false)
+                        .persist();
 
-            cropEditorElement.addElement(circle);
+                cropEditorElement.addElement(circle);
+            }
         }
 
         return root;
     }
 
-    private static @NonNull
-    EditorElement createThumbs(EditorElement cropEditorElement, boolean centerThumbs) {
+    private static @NonNull EditorElement createThumbs(EditorElement cropEditorElement, boolean centerThumbs) {
         EditorElement thumbs = new EditorElement(null);
 
         thumbs.getFlags()
@@ -158,8 +180,7 @@ final class EditorElementHierarchy {
         return thumbs;
     }
 
-    private static @NonNull
-    EditorElement newThumb(@NonNull EditorElement toControl, @NonNull ThumbRenderer.ControlPoint controlPoint) {
+    private static @NonNull EditorElement newThumb(@NonNull EditorElement toControl, @NonNull ThumbRenderer.ControlPoint controlPoint) {
         EditorElement element = new EditorElement(new CropThumbRenderer(controlPoint, toControl.getId()));
 
         element.getFlags()
@@ -169,15 +190,6 @@ final class EditorElementHierarchy {
         element.getLocalMatrix().preTranslate(controlPoint.getX(), controlPoint.getY());
 
         return element;
-    }
-
-    /**
-     * Extract the x scale from a matrix, which is the length of the first column.
-     */
-    static float xScale(@NonNull Matrix matrix) {
-        float[] values = new float[9];
-        matrix.getValues(values);
-        return (float) Math.sqrt(values[0] * values[0] + values[3] * values[3]);
     }
 
     EditorElement getRoot() {
@@ -191,8 +203,7 @@ final class EditorElementHierarchy {
     /**
      * The main image, null if not yet set.
      */
-    @Nullable
-    EditorElement getMainImage() {
+    @Nullable EditorElement getMainImage() {
         return imageRoot.getChildCount() > 0 ? imageRoot.getChild(0) : null;
     }
 
@@ -212,11 +223,14 @@ final class EditorElementHierarchy {
         return flipRotate;
     }
 
-    void startCrop(@NonNull Runnable invalidate) {
+    /**
+     * @param scaleIn Use 1 for no scale in, use less than 1 and it will zoom the image out
+     *                so user can see more of the surrounding image while cropping.
+     */
+    void startCrop(@NonNull Runnable invalidate, float scaleIn) {
         Matrix editor = new Matrix();
-        float scaleInForCrop = 0.8f;
 
-        editor.postScale(scaleInForCrop, scaleInForCrop);
+        editor.postScale(scaleIn, scaleIn);
         root.animateEditorTo(editor, invalidate);
 
         cropEditorElement.getFlags()
@@ -258,8 +272,7 @@ final class EditorElementHierarchy {
         view.animateLocalTo(temp, invalidate);
     }
 
-    private @NonNull
-    Matrix getCropFinalMatrix() {
+    private @NonNull Matrix getCropFinalMatrix() {
         Matrix matrix = new Matrix(flipRotate.getLocalMatrix());
         matrix.preConcat(imageCrop.getLocalMatrix());
         matrix.preConcat(cropEditorElement.getLocalMatrix());
@@ -271,8 +284,7 @@ final class EditorElementHierarchy {
      * <p>
      * i.e. if a mapped point is in bounds, then the point is on the visible image.
      */
-    @Nullable
-    Matrix imageMatrixRelativeToCrop() {
+    @Nullable Matrix imageMatrixRelativeToCrop() {
         EditorElement mainImage = getMainImage();
         if (mainImage == null) return null;
 
@@ -361,11 +373,20 @@ final class EditorElementHierarchy {
         }
 
         float[] dst = new float[4];
-        matrix.mapPoints(dst, new float[]{0, 0, inputSize.x, inputSize.y});
+        matrix.mapPoints(dst, new float[]{ 0, 0, inputSize.x, inputSize.y });
 
-        float widthF = Math.abs(dst[0] - dst[2]);
+        float widthF  = Math.abs(dst[0] - dst[2]);
         float heightF = Math.abs(dst[1] - dst[3]);
 
         return new PointF(widthF, heightF);
+    }
+
+    /**
+     * Extract the x scale from a matrix, which is the length of the first column.
+     */
+    static float xScale(@NonNull Matrix matrix) {
+        float[] values = new float[9];
+        matrix.getValues(values);
+        return (float) Math.sqrt(values[0] * values[0] + values[3] * values[3]);
     }
 }

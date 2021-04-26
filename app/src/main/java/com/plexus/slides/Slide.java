@@ -40,13 +40,13 @@ public abstract class Slide {
         return attachment.getUri();
     }
 
-    public @Nullable Uri getPublicUri() {
+    /*public @Nullable Uri getPublicUri() {
         if (Build.VERSION.SDK_INT >= 28) {
             return attachment.getPublicUri();
         } else {
             return attachment.getUri();
         }
-    }
+    }*/
 
     @NonNull
     public Optional<String> getBody() {
@@ -102,9 +102,9 @@ public abstract class Slide {
         return false;
     }
 
-    public boolean isVideoGif() {
+    /*public boolean isVideoGif() {
         return hasVideo() && attachment.isVideoGif();
-    }
+    }*/
 
     public @NonNull String getContentDescription() { return ""; }
 

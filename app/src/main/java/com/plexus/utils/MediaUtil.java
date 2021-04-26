@@ -23,6 +23,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.plexus.GlideApp;
 import com.plexus.core.utils.logging.Log;
+import com.plexus.database.DatabaseFactory;
+import com.plexus.model.attachments.AttachmentId;
 import com.plexus.providers.BlobProvider;
 import com.plexus.providers.PartAuthority;
 
@@ -322,7 +324,7 @@ public class MediaUtil {
                 MediaUtil.isVideoType(PartAuthority.getAttachmentContentType(context, uri)))
         {
             try {
-                AttachmentId    attachmentId = PartAuthority.requireAttachmentId(uri);
+                AttachmentId attachmentId = PartAuthority.requireAttachmentId(uri);
                 MediaDataSource source       = DatabaseFactory.getAttachmentDatabase(context).mediaDataSourceFor(attachmentId);
                 return extractFrame(source, timeUs);
             } catch (IOException e) {

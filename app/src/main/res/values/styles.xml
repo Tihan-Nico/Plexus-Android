@@ -418,9 +418,9 @@
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:letterSpacing" tools:targetApi="21">0.01</item>
         <item name="android:elevation" tools:ignore="NewApi">0dp</item>
-        <item name="android:textColor">@color/button_secondary_text</item>
+        <item name="android:textColor">@color/plexus</item>
         <item name="background">@color/core_grey_02</item>
-        <item name="rippleColor">@color/core_ultramarine</item>
+        <item name="rippleColor">@color/plexus</item>
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.Button.Rounded</item>
     </style>
 
@@ -451,7 +451,7 @@
 
     <style name="Widget.Button.Dialog" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textAppearance">@style/TextAppearance.Button.Dialog</item>
-        <item name="android:textColor">@color/button_secondary_text</item>
+        <item name="android:textColor">@color/plexus</item>
     </style>
 
     <style name="TextAppearance.Button.Dialog" parent="TextAppearance.MaterialComponents.Button">
@@ -531,7 +531,7 @@
 
         <item name="android:textColorPrimary">@color/core_grey_90</item>
 
-        <item name="colorAccent">@color/core_ultramarine</item>
+        <item name="colorAccent">@color/plexus</item>
 
         <item name="android:navigationBarColor" tools:ignore="NewApi">@color/white</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
@@ -546,11 +546,60 @@
 
         <item name="android:textColorPrimary">@color/core_grey_05</item>
 
-        <item name="colorAccent">@color/core_ultramarine_light</item>
+        <item name="colorAccent">@color/plexus</item>
 
         <item name="android:navigationBarColor" tools:ignore="NewApi">@color/core_grey_75</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
         <item name="android:statusBarColor" tools:ignore="NewApi">@color/transparent</item>
+    </style>
+
+    <style name="Plexus.LightNoActionBar" parent="@style/Plexus.BaseLightNoActionBar">
+        <!-- leave empty to allow overriding -->
+    </style>
+
+    <style name="Plexus.BaseLightNoActionBar" parent="@style/Plexus.LightTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionModeOverlay">true</item>
+
+        <item name="theme_type">light</item>
+        <item name="colorPrimary">@color/plexus</item>
+        <item name="colorPrimaryDark">@color/plexus</item>
+        <item name="colorAccent">@color/plexus</item>
+    </style>
+
+    <style name="Plexus.DarkNoActionBar" parent="@style/Plexus.BaseDarkNoActionBar">
+        <!-- leave empty to allow overriding -->
+    </style>
+
+    <style name="Plexus.BaseDarkNoActionBar" parent="@style/Plexus.BaseDarkTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionModeOverlay">true</item>
+
+        <item name="theme_type">dark</item>
+        <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat.Dark</item>
+        <item name="colorPrimary">@color/core_grey_95</item>
+        <item name="colorAccent">@color/plexus</item>
+    </style>
+
+    <style name="Theme.Plexus.WallpaperCropper" parent="@style/Plexus.DarkNoActionBar">
+        <item name="colorPrimaryDark">@color/wallpaper_preview_background</item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@color/wallpaper_preview_background</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">false</item>
+        <item name="android:navigationBarColor" tools:ignore="NewApi">@color/wallpaper_preview_background</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="Theme.Plexus.WallpaperCropper.Light" parent="@style/Plexus.LightNoActionBar">
+        <item name="colorPrimary">@color/wallpaper_preview_background</item>
+        <item name="colorPrimaryDark">@color/wallpaper_preview_background</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@color/wallpaper_preview_background</item>
+        <item name="android:navigationBarColor" tools:ignore="NewApi">@color/wallpaper_preview_background</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
     </style>
 
 </resources>

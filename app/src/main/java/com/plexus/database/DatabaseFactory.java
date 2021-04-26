@@ -4,6 +4,8 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import net.sqlcipher.database.SQLiteDatabase;
+
 import com.plexus.crypto.AttachmentSecret;
 import com.plexus.crypto.DatabaseSecret;
 import com.plexus.crypto.DatabaseSecretProvider;
@@ -16,8 +18,6 @@ import com.plexus.providers.AttachmentSecretProvider;
 import com.plexus.utils.PlexusPreferences;
 import com.plexus.utils.SqlUtil;
 
-import net.sqlcipher.database.SQLiteDatabase;
-
 public class DatabaseFactory {
 
     private static final Object lock = new Object();
@@ -29,6 +29,8 @@ public class DatabaseFactory {
     private final StickerDatabase stickerDatabase;
     private final OneTimePreKeyDatabase preKeyDatabase;
     private final SignedPreKeyDatabase signedPreKeyDatabase;
+    private final UserDatabase userDatabase;
+    private final RemappedRecordsDatabase  remappedRecordsDatabase;
 
     public static DatabaseFactory getInstance(Context context) {
         if (instance == null) {
@@ -61,6 +63,14 @@ public class DatabaseFactory {
         return getInstance(context).databaseHelper.getReadableDatabase().getSqlCipherDatabase();
     }
 
+    public static UserDatabase getRecipientDatabase(Context context) {
+        return getInstance(context).userDatabase;
+    }
+
+    static RemappedRecordsDatabase getRemappedRecordsDatabase(Context context) {
+        return getInstance(context).remappedRecordsDatabase;
+    }
+
     public static void upgradeRestored(Context context, SQLiteDatabase database) {
         synchronized (lock) {
             getInstance(context).databaseHelper.onUpgrade(database, database.getVersion(), -1);
@@ -91,6 +101,8 @@ public class DatabaseFactory {
         this.preKeyDatabase = new OneTimePreKeyDatabase(context, databaseHelper);
         this.signedPreKeyDatabase = new SignedPreKeyDatabase(context, databaseHelper);
         this.stickerDatabase = new StickerDatabase(context, databaseHelper, attachmentSecret);
+        this.userDatabase       = new UserDatabase(context, databaseHelper);
+        this.remappedRecordsDatabase = new RemappedRecordsDatabase(context, databaseHelper);
     }
 
     public void onApplicationLevelUpgrade(@NonNull Context context, @NonNull MasterSecret masterSecret,

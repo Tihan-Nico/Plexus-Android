@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.plexus.core.utils.concurrent.PlexusExecutors;
 import com.plexus.core.utils.logging.Log;
 import com.plexus.imageeditor.model.EditorModel;
+import com.plexus.model.account.User;
 import com.plexus.utils.AsynchronousCallback;
 import com.plexus.utils.BitmapUtil;
 import com.plexus.utils.livedata.LiveDataUtil;
@@ -30,14 +31,14 @@ final class WallpaperCropViewModel extends ViewModel {
 
   private final @NonNull WallpaperCropRepository  repository;
   private final @NonNull MutableLiveData<Boolean> blur;
-  private final @NonNull LiveData<Recipient>      recipient;
+  private @NonNull LiveData<User>      recipient;
 
-  public WallpaperCropViewModel(@Nullable RecipientId recipientId,
+  public WallpaperCropViewModel(@Nullable User recipientId,
                                 @NonNull WallpaperCropRepository repository)
   {
     this.repository = repository;
     this.blur       = new MutableLiveData<>(false);
-    this.recipient  = recipientId != null ? Recipient.live(recipientId).getLiveData() : LiveDataUtil.just(Recipient.UNKNOWN);
+    /*this.recipient  = recipientId != null ? Recipient.live(recipientId).getLiveData() : LiveDataUtil.just(Recipient.UNKNOWN);*/
   }
 
   void render(@NonNull Context context,
@@ -64,7 +65,7 @@ final class WallpaperCropViewModel extends ViewModel {
     return Transformations.distinctUntilChanged(blur);
   }
 
-  LiveData<Recipient> getRecipient() {
+  LiveData<User> getRecipient() {
     return recipient;
   }
 
@@ -75,9 +76,9 @@ final class WallpaperCropViewModel extends ViewModel {
 
   public static class Factory implements ViewModelProvider.Factory {
 
-    private final RecipientId recipientId;
+    private final User recipientId;
 
-    public Factory(@Nullable RecipientId recipientId) {
+    public Factory(@Nullable User recipientId) {
       this.recipientId = recipientId;
     }
 

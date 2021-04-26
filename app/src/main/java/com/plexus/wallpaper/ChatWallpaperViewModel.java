@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.annimon.stream.Stream;
 import com.plexus.core.utils.guava.Optional;
 import com.plexus.keyvalue.PlexusStore;
+import com.plexus.model.account.User;
 import com.plexus.utils.MappingModel;
 import com.plexus.utils.livedata.LiveDataUtil;
 
@@ -23,9 +24,9 @@ public class ChatWallpaperViewModel extends ViewModel {
   private final MutableLiveData<List<ChatWallpaper>>     builtins                = new MutableLiveData<>();
   private final MutableLiveData<Boolean>                 dimInDarkTheme          = new MutableLiveData<>();
   private final MutableLiveData<Boolean>                 enableWallpaperControls = new MutableLiveData<>();
-  private final RecipientId                              recipientId;
+  private final User recipientId;
 
-  private ChatWallpaperViewModel(@Nullable RecipientId recipientId) {
+  private ChatWallpaperViewModel(@Nullable User recipientId) {
     this.recipientId = recipientId;
 
     ChatWallpaper currentWallpaper = repository.getCurrentWallpaper(recipientId);
@@ -82,7 +83,7 @@ public class ChatWallpaperViewModel extends ViewModel {
     repository.resetAllWallpaper();
   }
 
-  @Nullable RecipientId getRecipientId() {
+  @Nullable User getRecipientId() {
     return recipientId;
   }
 
@@ -112,14 +113,14 @@ public class ChatWallpaperViewModel extends ViewModel {
 
   private boolean hasClearableWallpaper() {
     return (isGlobal() && PlexusStore.wallpaper().hasWallpaperSet()) ||
-           (recipientId != null && Recipient.live(recipientId).get().hasOwnWallpaper());
+           (recipientId != null && User.hasOwnWallpaper());
   }
 
   public static class Factory implements ViewModelProvider.Factory {
 
-    private final RecipientId recipientId;
+    private final User recipientId;
 
-    public Factory(@Nullable RecipientId recipientId) {
+    public Factory(@Nullable User recipientId) {
       this.recipientId = recipientId;
     }
 

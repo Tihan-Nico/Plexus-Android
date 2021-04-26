@@ -3,4 +3,6 @@
 
     <style name="Plexus.DayNight" parent="Plexus.DarkTheme" />
 
+    <style name="Plexus.DayNight.WallpaperCropper" parent="Theme.Plexus.WallpaperCropper" />
+
 </resources>

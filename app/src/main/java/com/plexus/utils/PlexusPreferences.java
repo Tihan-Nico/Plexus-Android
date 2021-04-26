@@ -79,6 +79,7 @@ public class PlexusPreferences {
     private static final String LOG_ENCRYPTED_SECRET   = "pref_log_encrypted_secret";
     private static final String LOG_UNENCRYPTED_SECRET = "pref_log_unencrypted_secret";
     public  static final String INCOGNITO_KEYBORAD_PREF          = "pref_incognito_keyboard";
+    private static final String HAS_SEEN_VIDEO_RECORDING_TOOLTIP = "camerax.fragment.has.dismissed.video.recording.tooltip";
 
     //APIs
     public static final String ANONYMOUS_TOKEN = "pref_anonymous_token";
@@ -587,7 +588,13 @@ public class PlexusPreferences {
         return getBooleanPreference(context, INCOGNITO_KEYBORAD_PREF, false);
     }
 
+    public static boolean hasSeenVideoRecordingTooltip(Context context) {
+        return getBooleanPreference(context, HAS_SEEN_VIDEO_RECORDING_TOOLTIP, false);
+    }
 
+    public static void setHasSeenVideoRecordingTooltip(Context context, boolean value) {
+        setBooleanPreference(context, HAS_SEEN_VIDEO_RECORDING_TOOLTIP, value);
+    }
 
 
 

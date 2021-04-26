@@ -15,16 +15,17 @@ import java.io.InputStream;
  */
 public final class StickerRemoteUriLoader implements ModelLoader<StickerRemoteUri, InputStream> {
 
-    private final SignalServiceMessageReceiver receiver;
+    /*private final SignalServiceMessageReceiver receiver;
 
     public StickerRemoteUriLoader(@NonNull SignalServiceMessageReceiver receiver) {
         this.receiver = receiver;
-    }
+    }*/
 
 
     @Override
     public @NonNull LoadData<InputStream> buildLoadData(@NonNull StickerRemoteUri sticker, int width, int height, @NonNull Options options) {
-        return new LoadData<>(sticker, new StickerRemoteUriFetcher(receiver, sticker));
+        /*return new LoadData<>(sticker, new StickerRemoteUriFetcher(receiver, sticker));*/
+        return null;
     }
 
     @Override
@@ -36,7 +37,8 @@ public final class StickerRemoteUriLoader implements ModelLoader<StickerRemoteUr
 
         @Override
         public @NonNull ModelLoader<StickerRemoteUri, InputStream> build(@NonNull MultiModelLoaderFactory multiFactory) {
-            return new StickerRemoteUriLoader(PlexusDependencies.getSignalServiceMessageReceiver());
+            /*return new StickerRemoteUriLoader(PlexusDependencies.getSignalServiceMessageReceiver());*/
+            return null;
         }
 
         @Override

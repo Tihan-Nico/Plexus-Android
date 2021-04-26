@@ -38,7 +38,6 @@ import com.plexus.GlideApp;
 import com.plexus.LoggingFragment;
 import com.plexus.R;
 import com.plexus.core.utils.logging.Log;
-import com.plexus.crypto.media.DecryptableStreamUriLoader;
 import com.plexus.utils.PlexusPreferences;
 import com.plexus.utils.ServiceUtil;
 import com.plexus.utils.Stopwatch;
@@ -112,7 +111,7 @@ public class Camera1Fragment extends LoggingFragment implements CameraFragment,
         GestureDetector gestureDetector = new GestureDetector(flipGestureListener);
         cameraPreview.setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
 
-        viewModel.getMostRecentMediaItem().observe(getViewLifecycleOwner(), this::presentRecentItemThumbnail);
+        /*viewModel.getMostRecentMediaItem().observe(getViewLifecycleOwner(), this::presentRecentItemThumbnail);*/
         viewModel.getHudState().observe(getViewLifecycleOwner(), this::presentHud);
     }
 

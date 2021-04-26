@@ -17,6 +17,7 @@ import androidx.annotation.RequiresApi;
 import com.plexus.R;
 import com.plexus.core.utils.logging.Log;
 import com.plexus.crypto.media.DecryptableUriMediaInput;
+import com.plexus.slides.VideoSlide;
 import com.plexus.utils.MediaUtil;
 import com.plexus.video.VideoBitRateCalculator;
 import com.plexus.video.VideoUtil;

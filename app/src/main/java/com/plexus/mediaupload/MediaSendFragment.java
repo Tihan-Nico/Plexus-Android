@@ -55,8 +55,8 @@ public class MediaSendFragment extends Fragment {
         fragmentPager             = view.findViewById(R.id.mediasend_pager);
         playbackControlsContainer = view.findViewById(R.id.mediasend_playback_controls_container);
 
-        fragmentPagerAdapter = new MediaSendFragmentPagerAdapter(getChildFragmentManager(), viewModel.isSms() ? MediaConstraints.getMmsMediaConstraints(-1) : MediaConstraints.getPushMediaConstraints());
-        fragmentPager.setAdapter(fragmentPagerAdapter);
+        /*fragmentPagerAdapter = new MediaSendFragmentPagerAdapter(getChildFragmentManager(), MediaConstraints.getMmsMediaConstraints(-1) : MediaConstraints.getPushMediaConstraints());
+        */fragmentPager.setAdapter(fragmentPagerAdapter);
 
         FragmentPageChangeListener pageChangeListener = new FragmentPageChangeListener();
         fragmentPager.addOnPageChangeListener(pageChangeListener);

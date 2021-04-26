@@ -50,7 +50,7 @@ public class UriAttachment extends Attachment {
                          @Nullable AudioHash audioHash,
                          @Nullable TransformProperties transformProperties)
     {
-        super(contentType, transferState, size, fileName, 0, null, null, null, null, fastPreflightId, voiceNote, borderless, videoGif, width, height, quote, 0, caption, stickerLocator, blurHash, audioHash, transformProperties);
+        super(contentType, transferState, size, fileName, 0, null, null, null, null, fastPreflightId, borderless, videoGif, width, height, quote, 0, caption, stickerLocator, blurHash, audioHash, null);
         this.dataUri = dataUri;
     }
 
@@ -60,7 +60,6 @@ public class UriAttachment extends Attachment {
         return dataUri;
     }
 
-    @Override
     public @Nullable Uri getPublicUri() {
         return null;
     }

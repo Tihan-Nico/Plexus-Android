@@ -38,7 +38,7 @@ final class StickerPackPreviewViewModel extends ViewModel {
             @Override
             public void onChange(boolean selfChange) {
                 if (!TextUtils.isEmpty(packId) && !TextUtils.isEmpty(packKey)) {
-                    previewRepository.getStickerManifest(packId, packKey, stickerManifest::postValue);
+                    /*previewRepository.getStickerManifest(packId, packKey, stickerManifest::postValue);*/
                 }
             }
         };
@@ -50,7 +50,7 @@ final class StickerPackPreviewViewModel extends ViewModel {
         this.packId  = packId;
         this.packKey = packKey;
 
-        previewRepository.getStickerManifest(packId, packKey, stickerManifest::postValue);
+        /*previewRepository.getStickerManifest(packId, packKey, stickerManifest::postValue);*/
 
         return stickerManifest;
     }

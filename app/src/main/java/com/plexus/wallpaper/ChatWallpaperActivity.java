@@ -13,10 +13,12 @@ import androidx.navigation.Navigation;
 
 import com.plexus.BaseActivity;
 import com.plexus.R;
+import com.plexus.TracerActivity;
+import com.plexus.model.account.User;
 import com.plexus.utils.ActivityTransitionUtil;
 import com.plexus.utils.DynamicTheme;
 
-public final class ChatWallpaperActivity extends BaseActivity {
+public final class ChatWallpaperActivity extends TracerActivity {
 
   private static final String EXTRA_RECIPIENT_ID = "extra.recipient.id";
 
@@ -26,7 +28,7 @@ public final class ChatWallpaperActivity extends BaseActivity {
     return createIntent(context, null);
   }
 
-  public static @NonNull Intent createIntent(@NonNull Context context, @Nullable RecipientId recipientId) {
+  public static @NonNull Intent createIntent(@NonNull Context context, @Nullable User recipientId) {
     Intent intent = new Intent(context, ChatWallpaperActivity.class);
     intent.putExtra(EXTRA_RECIPIENT_ID, recipientId);
     return intent;

@@ -1797,4 +1797,10 @@
     <string name="DateUtils_today">Today</string>
     <string name="DateUtils_yesterday">Yesterday</string>
 
+    <!-- CameraXFragment -->
+    <string name="CameraXFragment_tap_for_photo_hold_for_video">Tap for photo, hold for video</string>
+    <string name="CameraXFragment_capture_description">Capture</string>
+    <string name="CameraXFragment_change_camera_description">Change camera</string>
+    <string name="CameraXFragment_open_gallery_description">Open gallery</string>
+
 </resources>

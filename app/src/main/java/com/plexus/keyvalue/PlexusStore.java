@@ -17,6 +17,7 @@ public class PlexusStore {
     private final SettingsValue settingsValue;
     private final PlexusPayValues plexusPayValues;
     private final TooltipValues tooltipValues;
+    private final WallpaperValues wallpaperValues;
 
     private PlexusStore() {
         this.store = new KeyValueStore(PlexusDependencies.getApplication());
@@ -25,6 +26,7 @@ public class PlexusStore {
         this.settingsValue = new SettingsValue(store);
         this.plexusPayValues = new PlexusPayValues(store);
         this.tooltipValues = new TooltipValues(store);
+        this.wallpaperValues = new WallpaperValues(store);
     }
 
     public static void onFirstEverAppLaunch() {
@@ -33,6 +35,7 @@ public class PlexusStore {
         settingsValue().onFirstEverAppLaunch();
         plexusPayValues().onFirstEverAppLaunch();
         tooltipValues().onFirstEverAppLaunch();
+        wallpaper().onFirstEverAppLaunch();
     }
 
     public static List<String> getKeysToIncludeInBackup() {
@@ -42,6 +45,7 @@ public class PlexusStore {
         keys.addAll(settingsValue().getKeysToIncludeInBackup());
         keys.addAll(plexusPayValues().getKeysToIncludeInBackup());
         keys.addAll(tooltipValues().getKeysToIncludeInBackup());
+        keys.addAll(wallpaper().getKeysToIncludeInBackup());
         return keys;
     }
 
@@ -65,6 +69,10 @@ public class PlexusStore {
 
     public static @NonNull TooltipValues tooltipValues(){
         return INSTANCE.tooltipValues;
+    }
+
+    public static @NonNull WallpaperValues wallpaper() {
+        return INSTANCE.wallpaperValues;
     }
 
 

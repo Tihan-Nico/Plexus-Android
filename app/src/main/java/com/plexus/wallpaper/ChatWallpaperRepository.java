@@ -9,6 +9,7 @@ import com.plexus.core.utils.concurrent.PlexusExecutors;
 import com.plexus.database.DatabaseFactory;
 import com.plexus.dependecies.PlexusDependencies;
 import com.plexus.keyvalue.PlexusStore;
+import com.plexus.model.account.User;
 import com.plexus.utils.concurrent.SerialExecutor;
 
 import java.util.ArrayList;
@@ -21,9 +22,9 @@ class ChatWallpaperRepository {
   private static final Executor EXECUTOR = new SerialExecutor(PlexusExecutors.BOUNDED);
 
   @MainThread
-  @Nullable ChatWallpaper getCurrentWallpaper(@Nullable RecipientId recipientId) {
+  @Nullable ChatWallpaper getCurrentWallpaper(@Nullable User recipientId) {
     if (recipientId != null) {
-      return Recipient.live(recipientId).get().getWallpaper();
+      return User.getWallpaper();
     } else {
       return PlexusStore.wallpaper().getWallpaper();
     }
@@ -38,11 +39,11 @@ class ChatWallpaperRepository {
     });
   }
 
-  void saveWallpaper(@Nullable RecipientId recipientId, @Nullable ChatWallpaper chatWallpaper) {
+  void saveWallpaper(@Nullable User recipientId, @Nullable ChatWallpaper chatWallpaper) {
     if (recipientId != null) {
       //noinspection CodeBlock2Expr
       EXECUTOR.execute(() -> {
-        DatabaseFactory.getRecipientDatabase(PlexusDependencies.getApplication()).setWallpaper(recipientId, chatWallpaper);
+        /*DatabaseFactory.getRecipientDatabase(PlexusDependencies.getApplication()).setWallpaper(recipientId, chatWallpaper);*/
       });
     } else {
       PlexusStore.wallpaper().setWallpaper(PlexusDependencies.getApplication(), chatWallpaper);
@@ -52,22 +53,22 @@ class ChatWallpaperRepository {
   void resetAllWallpaper() {
     PlexusStore.wallpaper().setWallpaper(PlexusDependencies.getApplication(), null);
     EXECUTOR.execute(() -> {
-      DatabaseFactory.getRecipientDatabase(PlexusDependencies.getApplication()).resetAllWallpaper();
+      /*DatabaseFactory.getRecipientDatabase(PlexusDependencies.getApplication()).resetAllWallpaper();*/
     });
   }
 
-  void setDimInDarkTheme(@Nullable RecipientId recipientId, boolean dimInDarkTheme) {
+  void setDimInDarkTheme(@Nullable User recipientId, boolean dimInDarkTheme) {
     if (recipientId != null) {
       EXECUTOR.execute(() -> {
-        Recipient recipient = Recipient.resolved(recipientId);
-        if (recipient.hasOwnWallpaper()) {
-          DatabaseFactory.getRecipientDatabase(PlexusDependencies.getApplication()).setDimWallpaperInDarkTheme(recipientId, dimInDarkTheme);
+        User recipient = null;
+        if (User.hasOwnWallpaper()) {
+          /*DatabaseFactory.getRecipientDatabase(PlexusDependencies.getApplication()).setDimWallpaperInDarkTheme(recipientId, dimInDarkTheme);*/
         } else if (recipient.hasWallpaper()) {
-          DatabaseFactory.getRecipientDatabase(PlexusDependencies.getApplication())
+          /*DatabaseFactory.getRecipientDatabase(PlexusDependencies.getApplication())
                          .setWallpaper(recipientId,
                                        ChatWallpaperFactory.updateWithDimming(recipient.getWallpaper(),
                                                                               dimInDarkTheme ? ChatWallpaper.FIXED_DIM_LEVEL_FOR_DARK_THEME
-                                                                                             : 0f));
+                                                                                             : 0f));*/
         } else {
           throw new IllegalStateException("Unexpected call to setDimInDarkTheme, no wallpaper has been set on the given recipient or globally.");
         }

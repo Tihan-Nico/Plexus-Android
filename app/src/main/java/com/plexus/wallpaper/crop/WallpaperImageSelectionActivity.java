@@ -16,6 +16,7 @@ import com.plexus.mediaupload.Media;
 import com.plexus.mediaupload.MediaFolder;
 import com.plexus.mediaupload.MediaPickerFolderFragment;
 import com.plexus.mediaupload.MediaPickerItemFragment;
+import com.plexus.model.account.User;
 
 public final class WallpaperImageSelectionActivity extends AppCompatActivity
         implements MediaPickerFolderFragment.Controller,
@@ -26,7 +27,7 @@ public final class WallpaperImageSelectionActivity extends AppCompatActivity
 
   @RequiresPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
   public static Intent getIntent(@NonNull Context context,
-                                 @Nullable RecipientId recipientId)
+                                 @Nullable User recipientId)
   {
     Intent intent = new Intent(context, WallpaperImageSelectionActivity.class);
     intent.putExtra(EXTRA_RECIPIENT_ID, recipientId);
@@ -67,7 +68,7 @@ public final class WallpaperImageSelectionActivity extends AppCompatActivity
     startActivityForResult(WallpaperCropActivity.newIntent(this, getRecipientId(), media.getUri()), CROP);
   }
 
-  private RecipientId getRecipientId() {
+  private User getRecipientId() {
     return getIntent().getParcelableExtra(EXTRA_RECIPIENT_ID);
   }
 

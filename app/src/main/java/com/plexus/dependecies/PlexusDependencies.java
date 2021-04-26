@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import com.plexus.database.DatabaseObserver;
 import com.plexus.jobmanagers.JobManager;
 import com.plexus.megaphone.MegaphoneRepository;
+import com.plexus.model.account.LiveUserCache;
 import com.plexus.net.ContentProxySelector;
 import com.plexus.net.StandardUserAgentInterceptor;
 import com.plexus.notifications.MessageNotifier;
@@ -42,6 +43,7 @@ public class PlexusDependencies {
     private static volatile DatabaseObserver databaseObserver;
     private static volatile ShakeToReport shakeToReport;
     private static volatile OkHttpClient okHttpClient;
+    private static volatile LiveUserCache recipientCache;
 
     @MainThread
     public static void init(@NonNull Application application, @NonNull Provider provider) {
@@ -149,6 +151,18 @@ public class PlexusDependencies {
         return okHttpClient;
     }
 
+    public static @NonNull LiveUserCache getRecipientCache() {
+        if (recipientCache == null) {
+            synchronized (LOCK) {
+                if (recipientCache == null) {
+                    recipientCache = provider.provideRecipientCache();
+                }
+            }
+        }
+
+        return recipientCache;
+    }
+
     public static @NonNull
     AppForegroundObserver getAppForegroundObserver() {
         return appForegroundObserver;
@@ -177,6 +191,9 @@ public class PlexusDependencies {
 
         @NonNull
         AppForegroundObserver provideAppForegroundObserver();
+
+        @NonNull
+        LiveUserCache provideRecipientCache();
     }
 
 }

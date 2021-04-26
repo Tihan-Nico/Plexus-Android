@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/signal_transparent_60">
+    android:background="@color/transparent_black_60">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:gravity="center">
 
-        <org.thoughtcrime.securesms.components.emoji.EmojiTextView
+        <com.plexus.components.emoji.EmojiTextView
             android:id="@+id/sticker_popup_emoji"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
-            tools:src="@drawable/ic_contact_picture"/>
+            tools:src="@drawable/account_outline"/>
 
     </LinearLayout>
 
