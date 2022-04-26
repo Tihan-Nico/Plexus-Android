@@ -1,13 +1,19 @@
-name: CodeEdit Issues
-on:
+name: Issue Rename
+"on":
   issues:
     types:
       - opened
-
 jobs:
-  codeEditIssues:
+  issuesOpened:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          cache: npm
+          node-version: 16
+      - run: npm ci
+      - run: npm run build
       - uses: nanashili/CodeEdit-Github-Action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
