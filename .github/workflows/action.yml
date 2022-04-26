@@ -20,7 +20,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Runs a single command using the runners shell
-      - name: CodeEditBot
-        uses: nanashili/GitHubBot@v1.0.0
+      - name: CodeEdit Github Action
+        uses: nanashili/GitHubBot@Initial
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
