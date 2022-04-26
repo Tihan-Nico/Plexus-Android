@@ -22,3 +22,5 @@ jobs:
       # Runs a single command using the runners shell
       - name: CodeEditBot
         uses: nanashili/GitHubBot@IssueLabeling
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
