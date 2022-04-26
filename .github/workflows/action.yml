@@ -1,26 +1,13 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CodeEditBot
-
-# Controls when the workflow will run
+name: CodeEdit Issues
 on:
   issues:
     types:
       - opened
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  issuesOpened:
-    # The type of runner that the job will run on
+  codeEditIssues:
     runs-on: ubuntu-latest
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Runs a single command using the runners shell
-      - name: CodeEdit Github Action
-        uses: nanashili/GitHubBot@Initial
+      - uses: nanashili/GitHubBot@Initial
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
