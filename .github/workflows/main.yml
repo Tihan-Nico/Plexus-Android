@@ -21,4 +21,4 @@ jobs:
     steps:
       # Runs a single command using the runners shell
       - name: CodeEditBot
-        run: nanashili/GitHubBot@CodeEditBot
+        uses: nanashili/GitHubBot@CodeEditBot
